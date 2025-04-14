@@ -1,0 +1,85 @@
+{
+  "categories": [
+    {
+      "id": "voorgerechten",
+      "name": "Voorgerechten",
+      "items": [
+        {
+          "id": "starter-1",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        },
+        {
+          "id": "starter-2",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        },
+        {
+          "id": "starter-3",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        }
+      ]
+    },
+    {
+      "id": "hoofdgerechten",
+      "name": "Hoofdgerechten",
+      "items": [
+        {
+          "id": "main-1",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        },
+        {
+          "id": "main-2",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        },
+        {
+          "id": "main-3",
+          "name": "Lorem Ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "items": [
+        {
+          "id": "dessert-1",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        },
+        {
+          "id": "dessert-2",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        },
+        {
+          "id": "dessert-3",
+          "name": "Lorem ipsum",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod justo at magna tincidunt, in commodo nunc ultricies.",
+          "price": "€10.00",
+          "allergens": ["lorem", "ipsum", "dolor"]
+        }
+      ]
+    }
+  ]
+} 
