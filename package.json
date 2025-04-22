@@ -2,7 +2,6 @@
   "name": "base-website",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://username.github.io/BASE",
   "dependencies": {
     "@emotion/core": "^11.0.0",
     "@testing-library/dom": "^10.4.0",
