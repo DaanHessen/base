@@ -409,8 +409,8 @@
           },
           "price": "€3.95",
           "allergens": {
-            "nl": ["lorem"],
-            "en": ["lorem"]
+            "nl": [""],
+            "en": [""]
           },
           "vegan": false
         },
