@@ -1,7 +1,7 @@
 {
   "footer": {
     "address": "Biersteeg 10, 1211 GC Hilversum, Nederland",
-    "phone": "+12 345 6789",
+    "phone": "+31 6 12345678",
     "email": "info@base.nl",
     "openingHours": {
       "sunday": "GESLOTEN",
@@ -14,7 +14,8 @@
     },
     "socialMedia": {
       "instagram": "https://www.instagram.com/base.nl",
-      "linkedin": "https://www.linkedin.com/base.nl"
+      "linkedin": "https://www.linkedin.com/base.nl",
+      "monsees": "https://www.brasseriemonsees.nl/"
     }
   }
 }

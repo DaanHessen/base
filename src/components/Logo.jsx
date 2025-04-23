@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import logo from '../assets/base-logo.svg';
 
-const Logo = () => {
+const Logo = ({ className }) => {
   const primaryColor = { r: 255, g: 107, b: 53, rgb: '255, 107, 53' };
   
   const logoRef = useRef(null);
@@ -106,7 +106,7 @@ const Logo = () => {
   }, [primaryColor.rgb]);
   
   return (
-    <div className="relative w-36 h-auto py-2 md:w-48">
+    <div className={`relative py-4 ${className || 'w-36 h-auto md:w-48'}`}>
       <div 
         ref={glowLayerRef}
         className="absolute -inset-6 z-0 opacity-0 blur-lg"
