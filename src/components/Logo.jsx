@@ -106,7 +106,7 @@ const Logo = () => {
   }, [primaryColor.rgb]);
   
   return (
-    <div className="relative w-48 h-auto py-2">
+    <div className="relative w-36 h-auto py-2 md:w-48">
       <div 
         ref={glowLayerRef}
         className="absolute -inset-6 z-0 opacity-0 blur-lg"
