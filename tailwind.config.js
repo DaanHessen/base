@@ -9,7 +9,7 @@ module.exports = {
         primary: "#4F46E5",
         secondary: "#10B981",
         accent: "#FF6B35",
-        dark: "#2A2A35",
+        dark: "#121212",
         light: "#E8E9EC",
       },
       fontFamily: {
@@ -22,7 +22,7 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       backgroundColor: {
-        'dark-gradient': '#2A2A35',
+        'dark-gradient': '#121212',
       },
       textColor: {
         'pastel': {

@@ -1,26 +1,66 @@
 import React, { useState } from 'react';
+import { FaLeaf } from 'react-icons/fa';
 
-const MenuItem = ({ name, description, price, allergens = ['gluten', 'dairy', 'nuts'] }) => {
+// SVG for vegan icon - Replaced with React's leaf icon
+const VeganIcon = () => (
+  <FaLeaf className="w-5 h-5 text-green-500" />
+);
+
+const MenuItem = ({ name, description, price, allergens = [], vegan, language }) => {
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Show allergens only if they exist and are not empty
+  const hasAllergens = allergens && allergens.length > 0;
+  
+  // Translations
+  const translations = {
+    nl: {
+      allergens: "Allergenen",
+      vegan: "Veganistisch"
+    },
+    en: {
+      allergens: "Allergens",
+      vegan: "Vegan"
+    }
+  };
   
   return (
     <div 
-      className="p-6 rounded-lg border border-gray-800 backdrop-blur-sm bg-gray-900/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden"
+      className="group relative overflow-hidden rounded-lg border border-gray-800/80 backdrop-blur-sm bg-gray-900/30 h-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 hover:border-gray-700"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex justify-between items-start mb-3">
-        <h3 className="text-xl font-heading font-semibold text-white">{name}</h3>
-        <span className="text-accent font-bold ml-2">{price}</span>
-      </div>
-      <p className="text-gray-300 mb-4 font-body text-sm">{description}</p>
+      {/* Top accent border with gradient */}
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent/20 via-accent to-accent/20 transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></div>
       
-      <div 
-        className={`absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-3 rounded-b-lg transition-all duration-300 transform ${
-          isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-        }`}
-      >
-        <p className="text-xs text-gray-400">Allergens: {allergens.join(', ')}</p>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center">
+            <h3 className="text-xl font-heading font-semibold text-white group-hover:text-accent transition-colors duration-300">{name}</h3>
+            {vegan && (
+              <div className="ml-2 flex items-center" title={translations[language].vegan}>
+                <VeganIcon />
+              </div>
+            )}
+          </div>
+          <span className="text-accent font-bold ml-3 flex-shrink-0">{price}</span>
+        </div>
+        
+        <p className="text-pastel-light mb-4 font-body text-sm leading-relaxed">{description}</p>
+        
+        {/* Allergens info - always shown, but with opacity change on hover */}
+        {hasAllergens && (
+          <div 
+            className={`mt-auto pt-2 border-t border-gray-800/50 transition-all duration-300 ${
+              isHovered ? 'opacity-100' : 'opacity-60'
+            }`}
+          >
+            <p className="text-xs text-gray-400 flex items-center">
+              <span className="mr-2">⚠</span>
+              <span>{translations[language].allergens}: {allergens.join(', ')}</span>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

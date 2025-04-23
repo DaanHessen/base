@@ -106,10 +106,10 @@ const Logo = ({ className }) => {
   }, [primaryColor.rgb]);
   
   return (
-    <div className={`relative py-4 pt-10 mt-3 ${className || 'w-40 h-auto sm:w-52 md:w-60'}`}>
+    <div className={`relative py-4 ${className || 'w-40 h-auto sm:w-52 md:w-60'}`}>
       <div 
         ref={glowLayerRef}
-        className="absolute -inset-6 z-0 opacity-0 blur-lg mt-20"
+        className="absolute -inset-6 z-0 opacity-0 blur-lg"
         style={{ pointerEvents: 'none' }}
       ></div>
       

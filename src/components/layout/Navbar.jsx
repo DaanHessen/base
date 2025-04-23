@@ -35,7 +35,7 @@ const Navbar = () => {
 
   return (
     <header 
-      className="w-full z-40 transition-all duration-300 bg-dark"
+      className="w-full z-40 transition-all duration-300"
     >
       <div className="max-w-screen-xl mx-auto px-6 py-4 relative">
         {/* Top Bar Separator (visible when scrolled) */}
@@ -44,10 +44,10 @@ const Navbar = () => {
         )}
         
         <div className="flex items-center justify-between">        
-          {/* Logo - centered and larger */}
-          <div className="absolute left-1/2 transform -translate-x-1/2">
+          {/* Logo - responsive sizing with better mobile appearance */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 z-30">
             <Link to="/">
-              <Logo className="w-40 sm:w-52 md:w-60" />
+              <Logo className="w-28 sm:w-40 md:w-52 lg:w-60 pt-8 sm:pt-10 mt-2 sm:mt-3" />
             </Link>
           </div>
           
@@ -90,19 +90,54 @@ const Navbar = () => {
             </ul>
           </nav>
           
-          {/* Hamburger Menu Button (Mobile Only) - Fixed position with high z-index */}
-          <button 
-            className="block md:hidden text-pastel-light focus:outline-none z-50 fixed top-6 right-6"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle menu"
-            style={{ position: 'fixed', top: '1.5rem', right: '1.5rem' }}
+          {/* Hamburger Menu Button with improved mobile visibility */}
+          <div 
+            className="fixed top-4 left-4 z-[9999] block md:hidden"
+            style={{
+              position: 'fixed !important',
+              top: '1rem !important',
+              left: '1rem !important',
+              zIndex: '9999 !important',
+              display: 'block !important',
+              background: 'rgba(18, 18, 18, 0.7)',
+              backdropFilter: 'blur(4px)',
+              borderRadius: '6px',
+              padding: '8px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.5)'
+            }}
           >
-            <div className="w-10 h-8 flex flex-col items-end justify-center">
-              <span className={`block h-1 bg-pastel-light rounded-full transition-all duration-300 ease-out ${mobileMenuOpen ? 'w-10 transform rotate-45 translate-y-1.5' : 'w-10'}`}></span>
-              <span className={`block h-1 bg-pastel-light rounded-full my-1.5 transition-all duration-300 ease-out ${mobileMenuOpen ? 'opacity-0 w-0' : 'w-8'}`}></span>
-              <span className={`block h-1 bg-pastel-light rounded-full transition-all duration-300 ease-out ${mobileMenuOpen ? 'w-10 transform -rotate-45 -translate-y-1.5' : 'w-6'}`}></span>
-            </div>
-          </button>
+            <button 
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+              className="text-pastel-light focus:outline-none"
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="w-8 h-6 flex flex-col items-center justify-center">
+                <span 
+                  className="block h-0.5 bg-accent rounded-full transition-all duration-300 ease-in-out origin-center"
+                  style={{ 
+                    width: '100%',
+                    transform: mobileMenuOpen ? 'translateY(0.3rem) rotate(45deg)' : 'none'
+                  }}
+                ></span>
+                <span 
+                  className="block h-0.5 bg-accent rounded-full my-1.5 transition-all duration-300 ease-in-out"
+                  style={{ 
+                    width: '80%', 
+                    opacity: mobileMenuOpen ? 0 : 1,
+                    transform: mobileMenuOpen ? 'translateX(-0.5rem)' : 'none'
+                  }}
+                ></span>
+                <span 
+                  className="block h-0.5 bg-accent rounded-full transition-all duration-300 ease-in-out origin-center"
+                  style={{ 
+                    width: '60%',
+                    transform: mobileMenuOpen ? 'translateY(-0.3rem) rotate(-45deg) translateX(-0.33rem)' : 'none'
+                  }}
+                ></span>
+              </div>
+            </button>
+          </div>
           
           {/* Empty div for desktop layout balance */}
           <div className="hidden md:block md:flex-1"></div>

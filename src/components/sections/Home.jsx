@@ -18,40 +18,40 @@ const Home = () => {
           subtitleRef.current.style.opacity = '1';
           subtitleRef.current.style.transform = 'translateY(0)';
         }
-      }, 100);
+      }, 50);
       
       setTimeout(() => {
         if (contentRef.current) {
           contentRef.current.style.opacity = '1';
           contentRef.current.style.transform = 'translateY(0)';
         }
-      }, 150);
+      }, 75);
     };
     
-    setTimeout(animateElements, 50);
+    setTimeout(animateElements, 25);
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center pt-20">
+    <section className="min-h-screen flex items-center justify-center pt-36">
       <div className="max-w-screen-xl w-full px-6">
         <div className="flex flex-col items-start text-left sm:pl-8 md:pl-16">
           <h1 
             ref={titleRef}
-            className="text-5xl sm:text-6xl md:text-7xl font-bold text-pastel-light mb-6 leading-tight opacity-0 transform translate-y-4 transition-all duration-500"
+            className="text-5xl sm:text-6xl md:text-7xl font-bold text-pastel-light mb-6 leading-tight opacity-0 transform translate-y-4 transition-all duration-300"
           >
             Lorem <span className="text-accent">ipsum</span>
           </h1>
           
           <h2 
             ref={subtitleRef}
-            className="text-xl sm:text-2xl text-pastel-medium mb-8 font-light tracking-wide opacity-0 transform translate-y-4 transition-all duration-500"
+            className="text-xl sm:text-2xl text-pastel-medium mb-8 font-light tracking-wide opacity-0 transform translate-y-4 transition-all duration-300"
           >
             Lorem ipsum dolor sit amet consectetur
           </h2>
           
           <div 
             ref={contentRef}
-            className="text-base sm:text-lg text-pastel-dark opacity-0 transform translate-y-4 transition-all duration-500"
+            className="text-base sm:text-lg text-pastel-dark opacity-0 transform translate-y-4 transition-all duration-300"
           >
             <p className="mb-8 leading-relaxed max-w-2xl">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore 
