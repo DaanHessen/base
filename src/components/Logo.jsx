@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import logo from '../assets/logo.svg';
+import logo from '../assets/base-logo.svg';
 
 const Logo = () => {
   const primaryColor = { r: 255, g: 107, b: 53, rgb: '255, 107, 53' };

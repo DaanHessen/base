@@ -1,0 +1,20 @@
+{
+  "footer": {
+    "address": "Biersteeg 10, 1211 GC Hilversum, Nederland",
+    "phone": "+12 345 6789",
+    "email": "info@base.nl",
+    "openingHours": {
+      "sunday": "GESLOTEN",
+      "monday": "GESLOTEN",
+      "tuesday": "GESLOTEN",
+      "wednesday": "12:00 - 23:00",
+      "thursday": "12:00 - 23:00",
+      "friday": "12:00 - 23:00",
+      "saturday": "12:00 - 23:00"
+    },
+    "socialMedia": {
+      "instagram": "https://www.instagram.com/base.nl",
+      "linkedin": "https://www.linkedin.com/base.nl"
+    }
+  }
+}

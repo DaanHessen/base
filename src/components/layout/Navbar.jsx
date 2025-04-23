@@ -36,12 +36,12 @@ const Navbar = () => {
   return (
     <header 
       className={`w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-gray-900/90 backdrop-blur-lg shadow-lg' : ''
+        scrolled ? 'bg-gray-900/90 backdrop-blur-lg' : ''
       }`}
     >
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 pt-8 md:pt-24 pb-4 relative">
-        {/* Logo - centered on desktop, left-aligned on mobile */}
-        <div className="md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:top-4 z-20">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 pt-8 md:pt-16 pb-4 relative">
+        {/* Logo - centered on both mobile and desktop */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 top-6 md:top-6 z-20">
           <Link to="/">
             <Logo />
           </Link>
@@ -49,7 +49,7 @@ const Navbar = () => {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-1 justify-start">
-          <ul className="flex items-center space-x-6">
+          <ul className="flex items-center space-x-6 mt-8">
             <li>
               <Link 
                 to="/" 
@@ -88,7 +88,7 @@ const Navbar = () => {
         
         {/* Hamburger Menu Button (Mobile Only) */}
         <button 
-          className="md:hidden text-pastel-light focus:outline-none z-30"
+          className="md:hidden text-pastel-light focus:outline-none z-30 absolute top-8 right-6"
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
         >
@@ -100,7 +100,7 @@ const Navbar = () => {
         </button>
         
         {/* Empty div for desktop layout balance */}
-        <div className="hidden md:block md:flex-1"></div>
+        <div className="hidden md:block md:flex-1 md:mt-8"></div>
         
         {/* Mobile Menu */}
         <div 

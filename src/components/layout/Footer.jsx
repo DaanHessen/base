@@ -8,10 +8,10 @@ const Footer = () => {
   return (
     <footer className="bg-dark text-pastel-dark py-4">
       <div className="max-w-screen-xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-          {/* Left column - Address and phone */}
-          <div className="flex flex-col space-y-2">
-            <div className="flex items-start">
+        <div className="flex flex-wrap items-center justify-between">
+          {/* Left section - Location and phone */}
+          <div className="w-full md:w-auto mb-2 md:mb-0">
+            <div className="flex items-start mb-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-pastel-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -26,36 +26,38 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Middle column - Copyright and hours */}
-          <div className="flex flex-col items-center justify-center text-center">
-            <p className="text-sm leading-relaxed">Woensdag - Zaterdag: 12:00 - 23:00</p>
-            <p className="text-xs mt-2">© {currentYear} BASE</p>
+          {/* Middle section - Copyright */}
+          <div className="w-full md:w-auto text-center mb-2 md:mb-0">
+            <p className="text-xs">© {currentYear} BASE</p>
           </div>
 
-          {/* Right column - Social icons */}
-          <div className="flex flex-col items-end justify-center">
+          {/* Right section - Opening hours and icons */}
+          <div className="w-full md:w-auto flex flex-col items-end">
+            <div className="mb-2">
+              <p className="text-sm leading-relaxed">Woensdag - Zaterdag: 12:00 - 23:00</p>
+            </div>
+            
             <div className="flex space-x-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors duration-300" aria-label="Instagram">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors" aria-label="Instagram">
                 <FaInstagram size={20} />
               </a>
-              <a href="https://www.brasseriemonsees.nl/" target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors duration-300 group" aria-label="Monsees">
+              <a href="https://www.brasseriemonsees.nl/" target="_blank" rel="noopener noreferrer" className="text-pastel-light transition-colors group" aria-label="Monsees">
                 <img 
                   src={monseesLogo} 
                   alt="Monsees" 
-                  className="h-5 w-auto transition-all duration-300"
+                  className="h-5 w-auto transition-all duration-200" 
                   style={{ 
                     filter: 'brightness(0) invert(1)',
-                    opacity: 0.9
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.filter = 'invert(45%) sepia(95%) saturate(2151%) hue-rotate(346deg) brightness(101%) contrast(104%)';
+                    e.currentTarget.style.filter = 'brightness(0) saturate(100%) invert(49%) sepia(83%) saturate(2404%) hue-rotate(348deg) brightness(98%) contrast(95%)';
                   }}
                   onMouseOut={(e) => {
                     e.currentTarget.style.filter = 'brightness(0) invert(1)';
                   }}
                 />
               </a>
-              <a href="mailto:info@base.nl" className="text-pastel-light hover:text-accent transition-colors duration-300 flex items-center space-x-1" aria-label="Email us">
+              <a href="mailto:info@base.nl" className="text-pastel-light hover:text-accent transition-colors flex items-center space-x-1" aria-label="Email us">
                 <FaEnvelope size={18} />
                 <span className="text-sm font-medium">Contact</span>
               </a>
