@@ -44,10 +44,10 @@ const Navbar = () => {
         )}
         
         <div className="flex items-center justify-between">        
-          {/* Logo - centered and larger */}
+          {/* Logo - centered and larger with proper spacing */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link to="/">
-              <Logo className="w-40 sm:w-52 md:w-60" />
+              <Logo className="w-40 sm:w-52 md:w-60 pt-10 mt-3" />
             </Link>
           </div>
           

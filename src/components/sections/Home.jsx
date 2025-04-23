@@ -32,7 +32,7 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center pt-20">
+    <section className="min-h-screen flex items-center justify-center pt-36">
       <div className="max-w-screen-xl w-full px-6">
         <div className="flex flex-col items-start text-left sm:pl-8 md:pl-16">
           <h1 

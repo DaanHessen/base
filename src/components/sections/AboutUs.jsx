@@ -2,7 +2,7 @@ import React from 'react';
 
 const AboutUs = () => {
   return (
-    <section className="min-h-screen py-16">
+    <section className="min-h-screen py-10 pt-36">
       <div className="max-w-screen-xl mx-auto px-6">
         <h1 className="text-5xl font-heading font-bold text-center text-white mb-12">Over Ons</h1>
         

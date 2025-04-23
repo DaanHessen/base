@@ -95,20 +95,19 @@ const Footer = () => {
               <a href={footerData.footer.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors duration-200" aria-label="LinkedIn">
                 <FaLinkedin size={24} />
               </a>
-              <a href={footerData.footer.socialMedia.monsees} target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors duration-200" aria-label="Monsees">
+              <a 
+                href={footerData.footer.socialMedia.monsees} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="monsees-link transition-all duration-200" 
+                aria-label="Monsees"
+              >
                 <img 
                   src={monseesLogo} 
                   alt="Monsees" 
-                  className="h-6 w-auto" 
-                  style={{ 
+                  className="h-6 w-auto transition-all duration-200"
+                  style={{
                     filter: 'brightness(0) invert(1)',
-                    transition: 'filter 0.2s ease-in-out'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.filter = 'brightness(0) saturate(100%) invert(49%) sepia(83%) saturate(2404%) hue-rotate(348deg) brightness(98%) contrast(95%)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.filter = 'brightness(0) invert(1)';
                   }}
                 />
               </a>
@@ -128,6 +127,16 @@ const Footer = () => {
           <p className="text-xs font-medium opacity-80">© {currentYear} BASE</p>
         </div>
       </div>
+
+      {/* Custom CSS for Monsees logo transition */}
+      <style jsx="true">{`
+        .monsees-link img {
+          transition: filter 0.2s ease-in-out;
+        }
+        .monsees-link:hover img {
+          filter: brightness(0) saturate(100%) invert(49%) sepia(83%) saturate(2404%) hue-rotate(348deg) brightness(98%) contrast(95%) !important;
+        }
+      `}</style>
     </footer>
   );
 };
