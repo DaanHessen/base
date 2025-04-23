@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "title": {
+      "nl": "Lorem <span class=\"text-accent\">ipsum</span>",
+      "en": "Lorem <span class=\"text-accent\">ipsum</span>"
+    },
+    "subtitle": {
+      "nl": "Lorem ipsum dolor sit amet consectetur",
+      "en": "Lorem ipsum dolor sit amet consectetur"
+    },
+    "description": {
+      "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    }
+  },
+  "buttons": {
+    "reservation": {
+      "nl": "maak een reservering",
+      "en": "make a reservation"
+    },
+    "menu": {
+      "nl": "bekijk het menu",
+      "en": "view the menu"
+    }
+  }
+}

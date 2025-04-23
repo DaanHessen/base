@@ -1,8 +1,12 @@
 {
   "about-us": {
-    "title-nl": "Ons Verhaal",
-    "title-en": "Our Story",
-    "description-nl": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-    "description-en": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+    "title": {
+      "nl": "Ons Verhaal",
+      "en": "Our Story"
+    },
+    "description": {
+      "nl": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+      "en": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+    }
   }
 }

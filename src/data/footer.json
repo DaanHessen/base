@@ -3,10 +3,59 @@
     "address": "Biersteeg 10, 1211 GC Hilversum, Nederland",
     "phone": "+31 6 12345678",
     "email": "info@base.nl",
+    "translations": {
+      "openingHours": {
+        "nl": "Openingstijden",
+        "en": "Opening Hours"
+      },
+      "followUs": {
+        "nl": "Volg Ons",
+        "en": "Follow Us"
+      },
+      "days": {
+        "sunday": {
+          "nl": "Zondag",
+          "en": "Sunday"
+        },
+        "monday": {
+          "nl": "Maandag",
+          "en": "Monday"
+        },
+        "tuesday": {
+          "nl": "Dinsdag",
+          "en": "Tuesday"
+        },
+        "wednesday": {
+          "nl": "Woensdag",
+          "en": "Wednesday"
+        },
+        "thursday": {
+          "nl": "Donderdag",
+          "en": "Thursday"
+        },
+        "friday": {
+          "nl": "Vrijdag",
+          "en": "Friday"
+        },
+        "saturday": {
+          "nl": "Zaterdag",
+          "en": "Saturday"
+        }
+      }
+    },
     "openingHours": {
-      "sunday": "GESLOTEN",
-      "monday": "GESLOTEN",
-      "tuesday": "GESLOTEN",
+      "sunday": {
+        "nl": "GESLOTEN",
+        "en": "CLOSED"
+      },
+      "monday": {
+        "nl": "GESLOTEN",
+        "en": "CLOSED"
+      },
+      "tuesday": {
+        "nl": "GESLOTEN",
+        "en": "CLOSED"
+      },
       "wednesday": "12:00 - 23:00",
       "thursday": "12:00 - 23:00",
       "friday": "12:00 - 23:00",

@@ -3,21 +3,17 @@ import React, { useState, useEffect } from 'react';
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
-  const lang = 'en'; // Default to Dutch
   
   useEffect(() => {
-    // Check if user has already made their choice
     const consent = localStorage.getItem('cookieConsent');
     if (!consent) {
-      // If no consent found, show the banner after a slight delay
       const timer = setTimeout(() => {
         setIsVisible(true);
         
-        // Add animation after showing
         setTimeout(() => {
           setIsAnimated(true);
-        }, 25); // Reduced from 50ms to 25ms
-      }, 500); // Reduced from 1000ms to 500ms
+        }, 25);
+      }, 500);
       
       return () => clearTimeout(timer);
     }
@@ -33,7 +29,7 @@ const CookieConsent = () => {
     setTimeout(() => {
       setIsVisible(false);
       localStorage.setItem('cookieConsent', JSON.stringify(newPreferences));
-    }, 200); // Reduced from 300ms to 200ms
+    }, 200);
   };
 
   const handleNecessaryOnly = () => {
@@ -46,7 +42,7 @@ const CookieConsent = () => {
     setTimeout(() => {
       setIsVisible(false);
       localStorage.setItem('cookieConsent', JSON.stringify(newPreferences));
-    }, 200); // Reduced from 300ms to 200ms
+    }, 200);
   };
 
   if (!isVisible) return null;
