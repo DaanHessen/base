@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import aboutUsData from '../../data/about-us.json';
 import { getLanguage } from '../../utils/language';
-import { FaMapMarkerAlt, FaEnvelope, FaParking } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaParking } from 'react-icons/fa';
 import Image from '../../assets/loes-en-sander.jpg';
 
 const AboutUs = () => {
@@ -86,7 +86,7 @@ const AboutUs = () => {
               </div>
             </div>
           </div>
-          
+        
           <div className={`transition-all duration-300 delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-2">
               {language === 'nl' ? 'Locatie & Bereikbaarheid' : 'Location & Accessibility'}
@@ -124,13 +124,9 @@ const AboutUs = () => {
                 </div>
                 
                 <div className="md:col-span-2 p-6 sm:p-8 md:border-l border-gray-800/30">
-                  <h3 className="text-xl font-heading font-semibold text-white mb-4 pb-2 border-b border-gray-800/50">
-                    {language === 'nl' ? 'Adres & Bereikbaarheid' : 'Address & Information'}
-                  </h3>
-                  
                   <div className="space-y-5">
                     <div className="flex items-start">
-                      <FaMapMarkerAlt className="text-accent text-xl sm:text-2xl mt-1 mr-3" />
+                      <FaMapMarkerAlt className="text-accent text-3xl mt-1 mr-4" />
                       <div>
                         <h4 className="text-white font-medium mb-1">
                           {language === 'nl' ? 'Adres' : 'Address'}
@@ -140,23 +136,12 @@ const AboutUs = () => {
                     </div>
                     
                     <div className="flex items-start">
-                      <FaParking className="text-accent text-xl sm:text-2xl mt-1 mr-3" />
+                      <FaParking className="text-accent text-5xl mt-1 mr-4 ml-1" />
                       <div>
                         <h4 className="text-white font-medium mb-1">
                           {language === 'nl' ? 'Parkeren' : 'Parking'}
                         </h4>
                         <p className="text-pastel-light text-sm">{aboutUsData["about-us"].location.parking[language]}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <FaEnvelope className="text-accent text-xl sm:text-2xl mt-1 mr-3" />
-                      <div>
-                        <h4 className="text-white font-medium mb-1">
-                          {language === 'nl' ? 'Contact' : 'Contact'}
-                        </h4>
-                        <p className="text-pastel-light text-sm">Email: info@base.nl</p>
-                        <p className="text-pastel-light text-sm">Tel: +31 6 12345678</p>
                       </div>
                     </div>
                   </div>
