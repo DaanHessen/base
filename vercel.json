@@ -1,5 +1,12 @@
 {
   "rewrites": [
+    { "source": "/static/(.*)", "destination": "/static/$1" },
+    { "source": "/(.*)\\.js", "destination": "/$1.js" },
+    { "source": "/(.*)\\.css", "destination": "/$1.css" },
+    { "source": "/(.*)\\.png", "destination": "/$1.png" },
+    { "source": "/(.*)\\.json", "destination": "/$1.json" },
+    { "source": "/(.*)\\.ico", "destination": "/$1.ico" },
+    { "source": "/(.*)\\.svg", "destination": "/$1.svg" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 } 
