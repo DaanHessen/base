@@ -34,7 +34,7 @@ const Home = () => {
   return (
     <section className="min-h-screen flex items-center justify-center pt-20">
       <div className="max-w-screen-xl w-full px-6">
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-start text-left sm:pl-8 md:pl-16">
           <h1 
             ref={titleRef}
             className="text-5xl sm:text-6xl md:text-7xl font-bold text-pastel-light mb-6 leading-tight opacity-0 transform translate-y-4 transition-all duration-500"
@@ -58,16 +58,16 @@ const Home = () => {
               et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
               aliquip ex ea commodo consequat.
             </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-5 justify-center">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-5">
               <Link 
                 to="/about" 
-                className="px-6 py-3 bg-accent hover:bg-accent/90 text-white font-medium rounded transition-all shadow-md hover:shadow-lg hover:scale-105"
+                className="px-6 py-3 bg-accent hover:bg-accent/90 text-white font-medium rounded transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
               >
                 Reserveer een Tafel
               </Link>
               <Link 
                 to="/menu" 
-                className="px-6 py-3 border-2 border-pastel-light/20 text-pastel-light hover:bg-pastel-light/10 font-medium rounded transition-all hover:border-pastel-light/40"
+                className="px-6 py-3 border-2 border-pastel-light/20 text-pastel-light hover:bg-pastel-light/10 font-medium rounded transition-all duration-300 hover:border-pastel-light/40 hover:scale-105"
               >
                 Bekijk Menu
               </Link>

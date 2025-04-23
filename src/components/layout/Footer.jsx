@@ -21,11 +21,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-dark text-pastel-dark py-8">
+    <footer className="bg-dark text-pastel-dark py-5">
       <div className="max-w-screen-xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               <li className="flex items-start">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-pastel-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -49,11 +49,11 @@ const Footer = () => {
           </div>
 
           <div>
-            <div className="mb-5">
+            <div className="mb-3">
               <p className="leading-relaxed">Woensdag - Zaterdag: 12:00 - 23:00</p>
             </div>
             
-            <div className="flex space-x-4 mb-6">
+            <div className="flex space-x-4 mb-4">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors" aria-label="Instagram">
                 <FaInstagram size={24} />
               </a>
@@ -63,11 +63,11 @@ const Footer = () => {
             </div>
 
             <div>
-              <h4 className="text-pastel-light text-lg font-heading mb-3">Contact</h4>
+              <h4 className="text-pastel-light text-lg font-heading mb-2">Contact</h4>
               {submitted ? (
                 <p className="text-pastel-light">Bedankt voor je bericht!</p>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-3">
+                <form onSubmit={handleSubmit} className="space-y-2">
                   <div>
                     <input
                       type="email"
@@ -84,7 +84,7 @@ const Footer = () => {
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Je bericht"
                       required
-                      rows={3}
+                      rows={2}
                       className="w-full px-3 py-2 bg-gray-800 text-pastel-light border border-gray-700 rounded focus:outline-none focus:border-accent"
                     />
                   </div>
@@ -100,8 +100,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-gray-800 text-center md:text-left">
-          <p className="text-sm">© {currentYear} BASE | All rights reserved.</p>
+        <div className="mt-4 pt-3 border-t border-gray-800 text-center md:text-left">
+          <p className="text-sm">© {currentYear} BASE</p>
         </div>
       </div>
     </footer>

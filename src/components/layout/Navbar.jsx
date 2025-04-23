@@ -31,7 +31,7 @@ const Navbar = () => {
   return (
     <header 
       className={`w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-gray-900/90 backdrop-blur-lg shadow-lg border-b border-gray-800/50' : ''
+        scrolled ? 'bg-gray-900/90 backdrop-blur-lg shadow-lg' : ''
       }`}
     >
       <div className="max-w-screen-xl mx-auto flex items-center px-6 pt-24 pb-4">

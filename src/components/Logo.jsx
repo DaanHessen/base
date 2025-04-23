@@ -3,62 +3,47 @@ import logo from '../assets/logo.svg';
 
 const Logo = () => {
   const primaryColor = { r: 255, g: 107, b: 53, rgb: '255, 107, 53' };
-  const secondaryColor = {
-    r: primaryColor.r * 0.9,
-    g: primaryColor.g * 0.7,
-    b: primaryColor.b * 0.8,
-    rgb: `${Math.round(primaryColor.r * 0.9)}, ${Math.round(primaryColor.g * 0.7)}, ${Math.round(primaryColor.b * 0.8)}`
-  };
-
+  
   const logoRef = useRef(null);
   const glowLayerRef = useRef(null);
-  const containerRef = useRef(null);
   
   useEffect(() => {
-    if (!logoRef.current || !glowLayerRef.current || !containerRef.current) return;
+    if (!logoRef.current || !glowLayerRef.current) return;
     
     const logo = logoRef.current;
     const glowLayer = glowLayerRef.current;
-    const container = containerRef.current;
     
     let isRunning = true;
     
-    const baseIntensity = 0.8;
-    const dimIntensity = 0.6;
+    const baseIntensity = 0.75;
+    const dimIntensity = 0.5;
     
     const states = {
       bright: {
-        filter: `brightness(0) invert(1) saturate(1.5) 
-                drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
-                drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.9))
-                drop-shadow(0 0 3px rgba(${primaryColor.rgb}, 0.85))
-                drop-shadow(0 0 5px rgba(${primaryColor.rgb}, 0.8))
-                drop-shadow(0 0 8px rgba(${primaryColor.rgb}, 0.7))
-                drop-shadow(0 0 12px rgba(${primaryColor.rgb}, 0.5))`,
+        filter: `brightness(0) invert(1) 
+                drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
+                drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.85))
+                drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.75))
+                drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.5))`,
         glow: `radial-gradient(ellipse at center, 
-               rgba(${primaryColor.rgb}, 0.25) 0%, 
-               rgba(${primaryColor.rgb}, 0.15) 30%, 
-               rgba(${primaryColor.rgb}, 0.08) 60%, 
-               rgba(${primaryColor.rgb}, 0.03) 70%,
+               rgba(${primaryColor.rgb}, 0.2) 0%, 
+               rgba(${primaryColor.rgb}, 0.1) 40%, 
+               rgba(${primaryColor.rgb}, 0.05) 60%, 
                rgba(${primaryColor.rgb}, 0) 100%)`,
-        intensity: baseIntensity,
-        boxShadow: `0 0 15px 2px rgba(${primaryColor.rgb}, 0.15)`
+        intensity: baseIntensity
       },
       
       dimmed: {
-        filter: `brightness(0) invert(1) saturate(1.3) 
-                drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
-                drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.8))
-                drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.7))
-                drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.5))`,
+        filter: `brightness(0) invert(1)
+                drop-shadow(0 0 1px rgba(255, 255, 255, 0.85))
+                drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.7))
+                drop-shadow(0 0 3px rgba(${primaryColor.rgb}, 0.4))`,
         glow: `radial-gradient(ellipse at center, 
-               rgba(${primaryColor.rgb}, 0.15) 0%, 
-               rgba(${primaryColor.rgb}, 0.08) 30%, 
-               rgba(${primaryColor.rgb}, 0.05) 60%, 
-               rgba(${primaryColor.rgb}, 0.02) 80%,
+               rgba(${primaryColor.rgb}, 0.1) 0%, 
+               rgba(${primaryColor.rgb}, 0.05) 40%, 
+               rgba(${primaryColor.rgb}, 0.02) 70%,
                rgba(${primaryColor.rgb}, 0) 100%)`,
-        intensity: dimIntensity,
-        boxShadow: `0 0 10px 1px rgba(${primaryColor.rgb}, 0.1)`
+        intensity: dimIntensity
       }
     };
     
@@ -69,21 +54,18 @@ const Logo = () => {
       glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.23, 1, 0.32, 1), background ${duration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
       glowLayer.style.background = state.glow;
       glowLayer.style.opacity = state.intensity;
-      
-      container.style.transition = `box-shadow ${duration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
-      container.style.boxShadow = state.boxShadow;
     };
     
-    const flickerChance = () => Math.random() < (0.12 + (Math.random() * 0.1));
+    const flickerChance = () => Math.random() < (0.10 + (Math.random() * 0.08));
     const getRandomInterval = () => 2000 + (Math.random() * 3000);
     
     const subtleFlicker = async () => {
       if (!isRunning) return;
       
       if (flickerChance()) {
-        const dimDuration = 40 + Math.random() * 120;
-        const holdDuration = 60 + Math.random() * 100;
-        const brightDuration = 120 + Math.random() * 150;
+        const dimDuration = 30 + Math.random() * 100;
+        const holdDuration = 50 + Math.random() * 80;
+        const brightDuration = 100 + Math.random() * 130;
         
         applyState(states.dimmed, dimDuration);
         
@@ -99,8 +81,7 @@ const Logo = () => {
     const startupSequence = async () => {
       applyState({
         ...states.dimmed, 
-        intensity: 0.4,
-        boxShadow: `0 0 5px 0 rgba(${primaryColor.rgb}, 0.1)`
+        intensity: 0.3
       }, 0);
       
       await new Promise(r => setTimeout(r, 100));
@@ -122,13 +103,13 @@ const Logo = () => {
     return () => {
       isRunning = false;
     };
-  }, [primaryColor.rgb, secondaryColor.rgb]);
+  }, [primaryColor.rgb]);
   
   return (
-    <div ref={containerRef} className="relative w-48 h-auto py-4 filter-none">
+    <div className="relative w-48 h-auto py-2">
       <div 
         ref={glowLayerRef}
-        className="absolute -inset-10 z-0 opacity-0 blur-xl"
+        className="absolute -inset-6 z-0 opacity-0 blur-lg"
         style={{ pointerEvents: 'none' }}
       ></div>
       
@@ -136,7 +117,7 @@ const Logo = () => {
         ref={logoRef}
         src={logo} 
         alt="BASE" 
-        className="relative z-10 w-48 h-auto drop-shadow-md"
+        className="relative z-10 w-full h-auto"
         style={{ 
           imageRendering: 'auto',
           WebkitFontSmoothing: 'antialiased',
