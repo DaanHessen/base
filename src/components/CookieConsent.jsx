@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,13 +13,13 @@ const CookieConsent = () => {
         setTimeout(() => {
           setIsAnimated(true);
         }, 25);
-      }, 500);
+      }, 1000);
       
       return () => clearTimeout(timer);
     }
   }, []);
 
-  const handleAcceptAll = () => {
+  const handleAcceptAll = useCallback(() => {
     const newPreferences = {
       necessary: true,
       analytics: true,
@@ -30,9 +30,9 @@ const CookieConsent = () => {
       setIsVisible(false);
       localStorage.setItem('cookieConsent', JSON.stringify(newPreferences));
     }, 200);
-  };
+  }, []);
 
-  const handleNecessaryOnly = () => {
+  const handleNecessaryOnly = useCallback(() => {
     const newPreferences = {
       necessary: true,
       analytics: false,
@@ -43,7 +43,7 @@ const CookieConsent = () => {
       setIsVisible(false);
       localStorage.setItem('cookieConsent', JSON.stringify(newPreferences));
     }, 200);
-  };
+  }, []);
 
   if (!isVisible) return null;
 
@@ -59,14 +59,14 @@ const CookieConsent = () => {
             <button 
               onClick={handleNecessaryOnly} 
               className="px-3 py-1.5 text-xs text-pastel-light hover:text-white transition-colors cursor-pointer"
-              style={{ cursor: 'pointer' }}
+              aria-label="Accept only necessary cookies"
             >
               Necessary Only
             </button>
             <button 
               onClick={handleAcceptAll} 
               className="px-3 py-1.5 bg-accent hover:bg-accent/90 text-white text-xs transition-colors rounded-sm cursor-pointer"
-              style={{ cursor: 'pointer' }}
+              aria-label="Accept all cookies"
             >
               Accept All
             </button>
@@ -77,4 +77,4 @@ const CookieConsent = () => {
   );
 };
 
-export default CookieConsent; 
+export default memo(CookieConsent); 

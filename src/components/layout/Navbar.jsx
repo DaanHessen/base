@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../Logo';
 import { getLanguage, setLanguage } from '../../utils/language';
@@ -29,26 +29,19 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   
-  const [language, setLanguageState] = useState(() => {
-    return getLanguage();
-  });
+  const [language, setLanguageState] = useState(getLanguage);
+
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
+    setScrolled(currentScrollY > 50);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
   
   useEffect(() => {
     const handleLanguageChange = () => {
@@ -62,15 +55,15 @@ const Navbar = () => {
     };
   }, []);
   
-  const changeLanguage = (lang) => {
+  const changeLanguage = useCallback((lang) => {
     setLanguageState(lang);
     setLanguage(lang);
     setDropdownOpen(false);
-  };
+  }, []);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  const toggleDropdown = useCallback(() => {
+    setDropdownOpen(prev => !prev);
+  }, []);
   
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -79,25 +72,33 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [dropdownOpen]);
 
-  const isActive = (path) => {
+  const isActive = useCallback((path) => {
     return location.pathname === path;
-  };
+  }, [location.pathname]);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen(prev => !prev);
+  }, []);
   
-  const handleOverlayClick = (e) => {
+  const handleOverlayClick = useCallback((e) => {
     if (e.target === e.currentTarget) {
       setMobileMenuOpen(false);
     }
-  };
+  }, []);
+
+  const navigationLinks = useMemo(() => [
+    { path: '/', label: navTranslations.home[language] },
+    { path: '/menu', label: navTranslations.menu[language] },
+    { path: '/about', label: navTranslations.about[language] }
+  ], [language]);
 
   return (
     <header 
@@ -111,45 +112,25 @@ const Navbar = () => {
         <div className="flex items-center justify-between">        
           <nav className="hidden md:flex flex-1 justify-start">
             <ul className="flex items-start space-x-6 pt-1">
-              <li>
-                <Link 
-                  to="/" 
-                  className={`relative transition-all duration-300 py-2 text-xs uppercase tracking-widest font-heading ${isActive('/') ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent'}`}
-                >
-                  {navTranslations.home[language]}
-                  {isActive('/') && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent"></span>
-                  )}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/menu" 
-                  className={`relative transition-all duration-300 py-2 text-xs uppercase tracking-widest font-heading ${isActive('/menu') ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent'}`}
-                >
-                  {navTranslations.menu[language]}
-                  {isActive('/menu') && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent"></span>
-                  )}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/about" 
-                  className={`relative transition-all duration-300 py-2 text-xs uppercase tracking-widest font-heading ${isActive('/about') ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent'}`}
-                >
-                  {navTranslations.about[language]}
-                  {isActive('/about') && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent"></span>
-                  )}
-                </Link>
-              </li>
+              {navigationLinks.map(({ path, label }) => (
+                <li key={path}>
+                  <Link 
+                    to={path} 
+                    className={`relative transition-all duration-300 py-2 text-xs uppercase tracking-widest font-heading ${isActive(path) ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent'}`}
+                  >
+                    {label}
+                    {isActive(path) && (
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent"></span>
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
           
-          <div className="absolute left-1/2 transform -translate-x-1/2 z-30">
+          <div className="absolute left-1/2 transform -translate-x-1/2 z-30 mt-5">
             <Link to="/">
-              <Logo className="w-48 sm:w-52 md:w-56 lg:w-60 pt-6 sm:pt-8 mt-1 sm:mt-2" />
+              <Logo className="w-48 sm:w-52 md:w-56 lg:w-60" />
             </Link>
           </div>
           
@@ -158,14 +139,17 @@ const Navbar = () => {
               <button 
                 onClick={toggleDropdown}
                 className="px-3 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-md transition-colors duration-300 text-xs uppercase tracking-widest font-heading flex items-center border border-accent/20 hover:border-accent/40"
+                aria-expanded={dropdownOpen}
+                aria-haspopup="true"
               >
-                <span className="mr-2">{language === 'nl' ? 'NL' : 'EN'}</span>
+                <span className="mr-2">{language === 'nl' ? 'Nederlands' : 'English'}</span>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className={`h-3 w-3 transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`} 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -192,19 +176,11 @@ const Navbar = () => {
             </div>
           </div>
           
-          <div 
-            className="fixed top-5 left-5 z-[9999] block md:hidden"
-            style={{
-              position: 'fixed !important',
-              top: '1.25rem !important',
-              left: '1.25rem !important',
-              zIndex: '9999 !important',
-              display: 'block !important'
-            }}
-          >
+          <div className="fixed top-5 left-5 z-[9999] block md:hidden">
             <button 
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
               className="focus:outline-none relative w-7 h-6"
             >
               <span 
@@ -230,45 +206,24 @@ const Navbar = () => {
               mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
             }`}
             onClick={handleOverlayClick}
+            aria-hidden={!mobileMenuOpen}
           >
             <nav className="w-full max-w-sm">
               <ul className="flex flex-col items-center space-y-6">
-                <li className="w-full text-center">
-                  <Link 
-                    to="/" 
-                    className={`block relative text-2xl py-2 uppercase tracking-widest font-heading ${isActive('/') ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent transition-colors duration-200'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {navTranslations.home[language]}
-                    {isActive('/') && (
-                      <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-accent"></span>
-                    )}
-                  </Link>
-                </li>
-                <li className="w-full text-center">
-                  <Link 
-                    to="/menu" 
-                    className={`block relative text-2xl py-2 uppercase tracking-widest font-heading ${isActive('/menu') ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent transition-colors duration-200'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {navTranslations.menu[language]}
-                    {isActive('/menu') && (
-                      <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-accent"></span>
-                    )}
-                  </Link>
-                </li>
-                <li className="w-full text-center">
-                  <Link 
-                    to="/about" 
-                    className={`block relative text-2xl py-2 uppercase tracking-widest font-heading ${isActive('/about') ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent transition-colors duration-200'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {navTranslations.about[language]}
-                    {isActive('/about') && (
-                      <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-accent"></span>
-                    )}
-                  </Link>
-                </li>
+                {navigationLinks.map(({ path, label }) => (
+                  <li key={path} className="w-full text-center">
+                    <Link 
+                      to={path} 
+                      className={`block relative text-2xl py-2 uppercase tracking-widest font-heading ${isActive(path) ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent transition-colors duration-200'}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {label}
+                      {isActive(path) && (
+                        <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-accent"></span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
                 
                 <li className="w-full text-center pt-8 mt-4 border-t border-gray-800/30">
                   <div className="flex justify-center">
@@ -316,4 +271,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default React.memo(Navbar); 

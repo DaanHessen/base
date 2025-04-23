@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaInstagram, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import monseesLogo from '../../assets/monsees.svg';
 import footerData from '../../data/footer.json';
@@ -10,6 +10,11 @@ const Footer = () => {
   const [language, setLanguage] = useState(() => {
     return getLanguage();
   });
+  const [formData, setFormData] = useState({
+    email: '',
+    message: ''
+  });
+  const [formStatus, setFormStatus] = useState(null);
 
   useEffect(() => {
     const handleLanguageChange = () => {
@@ -49,12 +54,61 @@ const Footer = () => {
     );
   };
 
+  const handleInputChange = useCallback((e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  }, []);
+
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    
+    if (!formData.email || !formData.message) {
+      setFormStatus({
+        success: false,
+        message: language === 'nl' ? 'Vul alle velden in a.u.b.' : 'Please fill in all fields.'
+      });
+      return;
+    }
+    
+    if (!formData.email.includes('@') || !formData.email.includes('.')) {
+      setFormStatus({
+        success: false,
+        message: language === 'nl' ? 'Voer een geldig e-mailadres in' : 'Please enter a valid email address.'
+      });
+      return;
+    }
+    
+    const subject = `Contact form from ${formData.email}`;
+    const body = `Email: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+    const mailtoUrl = `mailto:info@base.nl?subject=${encodeURIComponent(subject)}&body=${body}`;
+    
+    window.location.href = mailtoUrl;
+    
+    setFormStatus({
+      success: true,
+      message: language === 'nl' 
+        ? 'Uw e-mail client is geopend, verzend het bericht om contact op te nemen.' 
+        : 'Your email client has been opened, send the message to contact us.'
+    });
+    
+    setTimeout(() => {
+      setFormStatus(null);
+      setFormData({
+        email: '',
+        message: ''
+      });
+    }, 5000);
+  }, [formData, language]);
+
   return (
     <footer className="bg-dark text-pastel-light pt-8 pb-6 relative">
       <div className="absolute top-0 left-0 right-0 h-px bg-gray-800"></div>
       
       <div className="max-w-screen-xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="flex flex-col space-y-4">
             <div className="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,13 +190,6 @@ const Footer = () => {
                 className="monsees-link transition-all duration-200" 
                 aria-label="Monsees"
               >
-              <a 
-                href={footerData.footer.socialMedia.monsees} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="monsees-link transition-all duration-200" 
-                aria-label="Monsees"
-              >
                 <img 
                   src={monseesLogo} 
                   alt="Monsees" 
@@ -152,8 +199,52 @@ const Footer = () => {
                   }}
                 />
               </a>
-              </a>
             </div>
+          </div>
+
+          <div className="flex flex-col">
+            <h3 className="text-accent text-sm font-medium mb-4 uppercase tracking-wide">
+              {language === 'nl' ? 'Stuur ons een bericht' : 'Send us a message'}
+            </h3>
+            
+            {formStatus && (
+              <div className={`mb-4 p-3 text-xs rounded-lg ${formStatus.success ? 'bg-green-900/30 text-green-300 border border-green-800/50' : 'bg-red-900/30 text-red-300 border border-red-800/50'}`}>
+                {formStatus.message}
+              </div>
+            )}
+            
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div>
+                <input 
+                  type="email" 
+                  id="email" 
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Email"
+                  className="w-full bg-gray-800/70 text-white border border-gray-700/50 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/70 focus:border-transparent transition-all"
+                  aria-label="Email"
+                />
+              </div>
+              
+              <div>
+                <textarea 
+                  id="message" 
+                  rows="3"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder={language === 'nl' ? 'Uw bericht' : 'Your message'}
+                  className="w-full bg-gray-800/70 text-white border border-gray-700/50 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/70 focus:border-transparent transition-all"
+                  aria-label={language === 'nl' ? 'Uw bericht' : 'Your message'}
+                ></textarea>
+              </div>
+              
+              <button 
+                type="submit" 
+                className="px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-medium rounded-lg transition-all shadow-lg hover:shadow-accent/20 w-full"
+              >
+                {language === 'nl' ? 'Versturen' : 'Send'}
+              </button>
+            </form>
           </div>
         </div>
 

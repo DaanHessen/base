@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { FaLeaf } from 'react-icons/fa';
 
-const VeganIcon = () => (
+const VeganIcon = memo(() => (
   <FaLeaf className="w-5 h-5 text-green-500" />
-);
+));
+
+VeganIcon.displayName = 'Vegan';
 
 const MenuItem = ({ name, description, price, allergens = [], vegan, language }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -23,32 +25,30 @@ const MenuItem = ({ name, description, price, allergens = [], vegan, language })
   
   return (
     <div 
-      className="group relative overflow-hidden rounded-lg border border-gray-800/80 backdrop-blur-sm bg-gray-900/30 h-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/5 hover:border-gray-700"
+      className="overflow-hidden rounded-lg bg-gray-700/40 border border-gray-600/20 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:bg-gray-700/60 hover:border-accent/30 group h-full w-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(!isHovered)}
     >
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent/20 via-accent to-accent/20 transform origin-left transition-transform duration-300 scale-x-0 group-hover:scale-x-100"></div>
-      
-      <div className="p-4 sm:p-6">
-        <div className="flex justify-between items-center mb-3">
-          <div className="flex items-center">
-            <h3 className="text-lg sm:text-xl font-heading font-semibold text-white group-hover:text-accent transition-colors duration-300">{name}</h3>
+      <div className="p-5 flex flex-col h-full">
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex items-start">
+            <h3 className="text-lg font-heading font-semibold text-white group-hover:text-accent transition-colors duration-300 pr-2">{name}</h3>
             {vegan && (
-              <div className="ml-2 flex items-center" title={translations[language].vegan}>
+              <div className="ml-1 mt-1 flex-shrink-0" title={translations[language].vegan}>
                 <VeganIcon />
               </div>
             )}
           </div>
-          <span className="text-accent font-bold ml-3 flex-shrink-0">{price}</span>
+          <span className="text-accent font-bold ml-2 flex-shrink-0 text-lg">{price}</span>
         </div>
         
-        <p className="text-pastel-light mb-4 font-body text-xs sm:text-sm leading-relaxed">{description}</p>
+        <p className="text-pastel-light font-body text-sm leading-relaxed flex-grow line-clamp-3">{description}</p>
         
         {hasAllergens && (
           <div 
-            className={`mt-auto pt-2 border-t border-gray-800/50 transition-all duration-300 ${
-              isHovered || window.innerWidth < 768 ? 'opacity-100' : 'opacity-60'
+            className={`mt-auto pt-2 border-t border-gray-600/30 transition-all duration-300 ${
+              isHovered || window.innerWidth < 768 ? 'opacity-100' : 'opacity-70'
             }`}
           >
             <p className="text-xs text-gray-400 flex items-center">
@@ -62,4 +62,4 @@ const MenuItem = ({ name, description, price, allergens = [], vegan, language })
   );
 };
 
-export default MenuItem; 
+export default memo(MenuItem); 

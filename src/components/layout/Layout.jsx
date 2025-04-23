@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieConsent from '../CookieConsent';
 
-const Layout = ({ children }) => {
+const Layout = memo(({ children }) => {
   return (
     <div className="flex flex-col min-h-screen bg-dark">
       <Navbar />
@@ -14,6 +14,8 @@ const Layout = ({ children }) => {
       <CookieConsent />
     </div>
   );
-};
+});
+
+Layout.displayName = 'Layout';
 
 export default Layout; 
