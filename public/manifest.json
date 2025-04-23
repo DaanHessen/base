@@ -8,6 +8,7 @@
       "type": "image/x-icon"
     },
     {
+<<<<<<< HEAD
       "src": "favicon.ico",
       "type": "image/x-icon",
       "sizes": "192x192"
@@ -20,6 +21,20 @@
     {
       "src": "favicon.ico",
       "type": "image/x-icon",
+=======
+      "src": "icons/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icons/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icons/apple-touch-icon.png",
+      "type": "image/png",
+>>>>>>> 6b752bd501ed3306c05f186608c01e5403de1e72
       "sizes": "180x180"
     }
   ],

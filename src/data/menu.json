@@ -57,6 +57,40 @@
             "en": ["lorem", "ipsum", "dolor"]
           },
           "vegan": false
+        },
+        {
+          "id": "starter-4",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": true
+        },
+        {
+          "id": "starter-5",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": false
         }
       ]
     },
@@ -106,6 +140,74 @@
           "name": {
             "nl": "Lorem Ipsum",
             "en": "Lorem Ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": true
+        },
+        {
+          "id": "main-4",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": false
+        },
+        {
+          "id": "main-5",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": true
+        },
+        {
+          "id": "main-6",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": false
+        },
+        {
+          "id": "main-7",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
           },
           "description": {
             "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -174,6 +276,40 @@
             "nl": ["lorem", "ipsum", "dolor"],
             "en": ["lorem", "ipsum", "dolor"]
           }
+        },
+        {
+          "id": "dessert-4",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": true
+        },
+        {
+          "id": "dessert-5",
+          "name": {
+            "nl": "Lorem ipsum",
+            "en": "Lorem ipsum"
+          },
+          "description": {
+            "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          },
+          "price": "€10.00",
+          "allergens": {
+            "nl": ["lorem", "ipsum", "dolor"],
+            "en": ["lorem", "ipsum", "dolor"]
+          },
+          "vegan": false
         }
       ]
     }

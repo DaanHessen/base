@@ -136,6 +136,13 @@ const Footer = () => {
                 className="monsees-link transition-all duration-200" 
                 aria-label="Monsees"
               >
+              <a 
+                href={footerData.footer.socialMedia.monsees} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="monsees-link transition-all duration-200" 
+                aria-label="Monsees"
+              >
                 <img 
                   src={monseesLogo} 
                   alt="Monsees" 
@@ -144,6 +151,7 @@ const Footer = () => {
                     filter: 'brightness(0) invert(1)',
                   }}
                 />
+              </a>
               </a>
             </div>
           </div>
