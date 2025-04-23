@@ -35,9 +35,7 @@ const Navbar = () => {
 
   return (
     <header 
-      className={`w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-dark backdrop-blur-lg' : 'bg-dark'
-      }`}
+      className="w-full z-40 transition-all duration-300 bg-dark"
     >
       <div className="max-w-screen-xl mx-auto px-6 py-4 relative">
         {/* Top Bar Separator (visible when scrolled) */}
@@ -47,9 +45,9 @@ const Navbar = () => {
         
         <div className="flex items-center justify-between">        
           {/* Logo - centered and larger */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link to="/">
-              <Logo className="w-40 sm:w-48 md:w-56" />
+              <Logo className="w-40 sm:w-52 md:w-60" />
             </Link>
           </div>
           
@@ -92,16 +90,17 @@ const Navbar = () => {
             </ul>
           </nav>
           
-          {/* Hamburger Menu Button (Mobile Only) */}
+          {/* Hamburger Menu Button (Mobile Only) - Fixed position with high z-index */}
           <button 
-            className="block md:hidden text-pastel-light focus:outline-none z-30 absolute right-6"
+            className="block md:hidden text-pastel-light focus:outline-none z-50 fixed top-6 right-6"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
+            style={{ position: 'fixed', top: '1.5rem', right: '1.5rem' }}
           >
-            <div className="w-7 flex flex-col items-end justify-center">
-              <span className={`block h-0.5 bg-pastel-light rounded-full transition-all duration-300 ease-out ${mobileMenuOpen ? 'w-7 transform rotate-45 translate-y-1.5' : 'w-7'}`}></span>
-              <span className={`block h-0.5 bg-pastel-light rounded-full my-1.5 transition-all duration-300 ease-out ${mobileMenuOpen ? 'opacity-0 w-0' : 'w-6'}`}></span>
-              <span className={`block h-0.5 bg-pastel-light rounded-full transition-all duration-300 ease-out ${mobileMenuOpen ? 'w-7 transform -rotate-45 -translate-y-1.5' : 'w-5'}`}></span>
+            <div className="w-10 h-8 flex flex-col items-end justify-center">
+              <span className={`block h-1 bg-pastel-light rounded-full transition-all duration-300 ease-out ${mobileMenuOpen ? 'w-10 transform rotate-45 translate-y-1.5' : 'w-10'}`}></span>
+              <span className={`block h-1 bg-pastel-light rounded-full my-1.5 transition-all duration-300 ease-out ${mobileMenuOpen ? 'opacity-0 w-0' : 'w-8'}`}></span>
+              <span className={`block h-1 bg-pastel-light rounded-full transition-all duration-300 ease-out ${mobileMenuOpen ? 'w-10 transform -rotate-45 -translate-y-1.5' : 'w-6'}`}></span>
             </div>
           </button>
           
@@ -110,7 +109,7 @@ const Navbar = () => {
           
           {/* Mobile Menu */}
           <div 
-            className={`fixed inset-0 bg-dark/98 backdrop-blur-lg flex flex-col items-center justify-center z-20 transition-all duration-300 ease-in-out ${
+            className={`fixed inset-0 bg-dark/98 backdrop-blur-lg flex flex-col items-center justify-center z-40 transition-all duration-300 ease-in-out ${
               mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
             }`}
           >

@@ -63,13 +63,13 @@ const Home = () => {
                 to="/about" 
                 className="px-6 py-3 bg-accent hover:bg-accent/90 text-white font-medium rounded transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
               >
-                Reserveer een Tafel
+                maak een reservering
               </Link>
               <Link 
                 to="/menu" 
                 className="px-6 py-3 border-2 border-pastel-light/20 text-pastel-light hover:bg-pastel-light/10 font-medium rounded transition-all duration-300 hover:border-pastel-light/40 hover:scale-105"
               >
-                Bekijk Menu
+                bekijk het menu
               </Link>
             </div>
           </div>
