@@ -25,11 +25,11 @@
     "description": "Explore our menu at BASE. From street food classics to innovative cocktails, there's something for everyone."
   },
   "food": {
-    "title": "Food Menu",
+    "title": "Food",
     "description": "Explore our food menu at BASE. From street food classics to gourmet dishes, enjoy our chef's special creations."
   },
   "drinks": {
-    "title": "Drinks Menu",
+    "title": "Drinks",
     "description": "Explore our drinks menu at BASE. From craft cocktails to fine wines and specialty coffees."
   },
   "dietary": {

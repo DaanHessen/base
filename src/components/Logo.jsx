@@ -15,9 +15,7 @@ const Logo = ({ className }) => {
   
   const states = useMemo(() => ({
     initial: {
-      filter: 'brightness(0)', // Start as black (or invisible if parent bg is dark)
-      glow: 'none',
-      intensity: 0
+      color: 'rgb(255, 192, 203)'
     },
     bright: {
       filter: `brightness(0) invert(1) 

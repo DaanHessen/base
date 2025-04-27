@@ -26,8 +26,19 @@ function MenuCategory({ category }) {
         // Ensure name and description exist for the current language
         const name = item.name && (item.name[currentLang] || item.name.en || item.name.nl || 'Unnamed Item');
         const description = item.description && (item.description[currentLang] || item.description.en || item.description.nl || '');
-        // More robust allergen retrieval
-        const allergens = item.allergens?.[currentLang] ?? [];
+        
+        // Improved allergen handling
+        let allergens = [];
+        if (item.allergens) {
+          // Check if allergens is an object with language keys
+          if (typeof item.allergens === 'object' && !Array.isArray(item.allergens)) {
+            // Try to get allergens for current language, fallback to English, then Dutch, or empty array
+            allergens = item.allergens[currentLang] || item.allergens.en || item.allergens.nl || [];
+          } else if (Array.isArray(item.allergens)) {
+            // If allergens is directly an array
+            allergens = item.allergens;
+          }
+        }
         
         return (
           <div 

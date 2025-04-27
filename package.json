@@ -10,14 +10,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^12.8.0",
-    "i18next": "^25.0.1",
+    "i18next": "^23.7.11",
     "i18next-browser-languagedetector": "^8.0.5",
     "i18next-http-backend": "^3.0.2",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
-    "react-i18next": "^15.5.1",
+    "react-i18next": "^14.0.5",
     "react-icons": "^5.5.0",
     "react-lazy-load-image-component": "^1.6.3",
     "react-router-dom": "^6.8.0",
@@ -31,7 +31,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-favicons": "node scripts/generate-favicons.js",
-    "install-favicon-deps": "npm install --save-dev sharp svg-to-png"
+    "install-favicon-deps": "npm install --save-dev sharp svg-to-png",
+    "postinstall": "echo 'Installation completed with --legacy-peer-deps'"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +55,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.5"
   }
 }

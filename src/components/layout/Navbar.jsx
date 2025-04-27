@@ -182,15 +182,15 @@ function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1 }} // Faster dropdown animation
-                    className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-onyx border border-gold/20 backdrop-blur-sm ring-1 ring-gold/30 z-50 py-1 overflow-hidden"
+                    className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-50 py-1 overflow-hidden"
                   >
                     <Link
                       to={getLocalizedPath('/menu/food', currentLang)}
                       onClick={handleMenuLinkClick}
                       className={`block px-4 py-2.5 text-sm ${
                         currentPath === '/menu' || currentPath === '/menu/food' 
-                          ? 'text-gold bg-caribbean-current/40' 
-                          : 'text-magnolia hover:text-gold hover:bg-caribbean-current/60'
+                          ? 'text-gold bg-onyx/80' 
+                          : 'text-magnolia hover:text-gold hover:bg-onyx/70'
                       } transition-all duration-150 w-full text-left`} // Faster transition
                     >
                       <div className="flex items-center">
@@ -203,8 +203,8 @@ function Navbar() {
                       onClick={handleMenuLinkClick}
                       className={`block px-4 py-2.5 text-sm ${
                         currentPath === '/menu/drinks' 
-                          ? 'text-gold bg-caribbean-current/40' 
-                          : 'text-magnolia hover:text-gold hover:bg-caribbean-current/60'
+                          ? 'text-gold bg-onyx/80' 
+                          : 'text-magnolia hover:text-gold hover:bg-onyx/70'
                       } transition-all duration-150 w-full text-left`} // Faster transition
                     >
                       <div className="flex items-center">
@@ -264,25 +264,25 @@ function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.1 }}
-                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-onyx border border-gold/20 backdrop-blur-sm ring-1 ring-gold/30 z-50 overflow-hidden"
+                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-50 overflow-hidden"
                   >
-                    <div className="p-2 grid grid-cols-2 gap-2">
+                    <div className="p-3 grid grid-cols-1 gap-2">
                       <button
                         onClick={() => changeLanguage('nl')}
-                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'nl' ? 'bg-gold text-onyx' : 'bg-caribbean-current/60 border border-gold/20 text-magnolia hover:bg-caribbean-current/40'
+                        className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
+                          currentLang === 'nl' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'
                         } transition-all duration-150 justify-center`}
                       >
-                        <span className="mr-2">🇳🇱</span>
+                        <span className="mr-2 text-base">🇳🇱</span>
                         Nederlands
                       </button>
                       <button
                         onClick={() => changeLanguage('en')}
-                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'en' ? 'bg-gold text-onyx' : 'bg-caribbean-current/60 border border-gold/20 text-magnolia hover:bg-caribbean-current/40'
+                        className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
+                          currentLang === 'en' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'
                         } transition-all duration-150 justify-center`}
                       >
-                        <span className="mr-2">🇬🇧</span>
+                        <span className="mr-2 text-base">🇬🇧</span>
                         English
                       </button>
                     </div>
@@ -390,8 +390,8 @@ function Navbar() {
                   }}
                   className={`py-3 rounded-lg text-base font-medium flex items-center justify-center ${
                     currentLang === 'nl' 
-                      ? 'bg-gold text-onyx' 
-                      : 'bg-transparent border border-gold/50 text-gold'
+                      ? 'bg-gold text-onyx shadow-md' 
+                      : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'
                   } transition-all duration-200`}
                 >
                   <span className="mr-2">🇳🇱</span>
@@ -404,8 +404,8 @@ function Navbar() {
                   }}
                   className={`py-3 rounded-lg text-base font-medium flex items-center justify-center ${
                     currentLang === 'en' 
-                      ? 'bg-gold text-onyx' 
-                      : 'bg-transparent border border-gold/50 text-gold'
+                      ? 'bg-gold text-onyx shadow-md' 
+                      : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'
                   } transition-all duration-200`}
                 >
                   <span className="mr-2">🇬🇧</span>

@@ -13,7 +13,7 @@ module.exports = {
         light: "#f8f1ff",
         "dim-gray": "#656176",
         gold: "#d4af37",
-        "caribbean-current": "#005f6a",
+        "caribbean-current": "#004858",
         magnolia: "#f8f1ff",
         thistle: "#decdf5",
         onyx: "#3e3e3e",
