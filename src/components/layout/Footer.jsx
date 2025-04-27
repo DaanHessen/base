@@ -185,7 +185,7 @@ function Footer() {
               </div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 text-center bg-gold hover:bg-gold/90 text-onyx font-medium rounded-md transition-colors duration-300"
+                className="w-full px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center"
               >
                 {t('footer.newsletter.button')}
               </button>

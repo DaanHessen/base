@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FaMapMarkerAlt, FaParking } from 'react-icons/fa';
 import Image from '../../assets/loes-en-sander.jpg';
 import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 
 // Simple Skeleton Component for the Map
 const MapSkeleton = () => (
@@ -27,12 +28,30 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // Use a generic map URL for the example, replace API_KEY
-    // return `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${address}&zoom=16`;
-    // For demonstration without a key, using a simple OpenStreetMap embed:
-    const coords = "51.8131,4.6716"; // Approximate coordinates for Dordrecht Houtmarkt
-    return `https://www.openstreetmap.org/export/embed.html?bbox=4.669,51.812,4.674,51.814&layer=mapnik&marker=${coords}`;
+    // TODO: figure out if it's fucked up to have my api key hardcoded, what the hell will someone do with my maps API key anyway
+    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.014162410744!2d5.1784721!3d52.2249605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66b69ba0738fb%3A0x9e7195eb6bb4517!2sBiersteeg%2010%2C%201211%20GC%20Hilversum!5e0!3m2!1snl!2snl!4v1745785019407!5m2!1snl!2snl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
   }, [t]);
+
+  // Animation variants (similar to Home.jsx)
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  };
 
   return (
     <>
@@ -48,23 +67,28 @@ function AboutUs() {
       
       <section className="py-16 pt-36 sm:pt-48">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="space-y-16">
-            <div className="home-title">
-              <h1 className="text-3xl sm:text-4xl font-heading font-semibold text-white mb-2">
+          <motion.div 
+            className="space-y-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div variants={itemVariants}>
+              <h1 className="text-3xl sm:text-4xl font-heading font-semibold text-magnolia mb-6 leading-tight">
                 {t('about:title')}
               </h1>
               <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
-            </div>
+            </motion.div>
             
-            <div className="home-subtitle">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div variants={itemVariants}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
                 <div className="md:col-span-2">
                   {[0, 1].map((index) => (
                     <div key={index} className={`${index > 0 ? 'mt-8' : ''}`}>
-                      <h3 className="text-lg sm:text-xl font-heading font-semibold text-white mb-3">
+                      <h3 className="text-lg sm:text-xl font-semibold text-magnolia mb-3">
                         {t(`about:sections.${index}.title`)}
                       </h3>
-                      <div className="text-pastel-light font-body text-sm sm:text-base leading-relaxed">
+                      <div className="text-thistle font-light text-base sm:text-lg leading-relaxed">
                         {t(`about:sections.${index}.content`)}
                       </div>
                     </div>
@@ -72,12 +96,12 @@ function AboutUs() {
                 </div>
                 
                 <div className="flex items-center justify-center">
-                  <div className="w-[85%] mx-auto">
-                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-lg relative">
+                  <div className="w-full max-w-xs sm:max-w-sm mx-auto">
+                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-lg relative group">
                       <img 
                         src={Image} 
-                        alt="Loes & Sander" 
-                        className="w-full h-full object-cover"
+                        alt={t('about:imageAlt', 'Loes & Sander')}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                         width="600"
                         height="800"
@@ -86,15 +110,15 @@ function AboutUs() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           
-            <div className="home-content">
-              <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-2">
+            <motion.div variants={itemVariants}>
+              <h2 className="text-3xl sm:text-4xl font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight">
                 {t('about:location.title')}
               </h2>
               <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
               
-              <div className="bg-gray-900/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-gray-800/30">
+              <div className="bg-onyx/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-gray-800/30">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                   <div className="md:col-span-3 h-full">
                     {!mapLoaded ? (
@@ -116,32 +140,32 @@ function AboutUs() {
                   </div>
                   
                   <div className="md:col-span-2 p-6 sm:p-8 md:border-l border-gray-800/30">
-                    <div className="space-y-5">
+                    <div className="space-y-6">
                       <div className="flex items-start">
-                        <FaMapMarkerAlt className="text-gold text-3xl mt-1 mr-4" />
+                        <FaMapMarkerAlt className="text-gold text-xl sm:text-2xl mt-1 mr-3 shrink-0" />
                         <div>
-                          <h4 className="text-white font-medium mb-1">
+                          <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Adres' : 'Address'}
                           </h4>
-                          <p className="text-pastel-light text-sm">{t('about:location.address')}</p>
+                          <p className="text-thistle text-sm sm:text-base">{t('about:location.address')}</p>
                         </div>
                       </div>
                       
                       <div className="flex items-start">
-                        <FaParking className="text-gold text-5xl mt-1 mr-4 ml-1" />
+                        <FaParking className="text-gold text-xl sm:text-2xl mt-1 mr-3 shrink-0" />
                         <div>
-                          <h4 className="text-white font-medium mb-1">
+                          <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Parkeren' : 'Parking'}
                           </h4>
-                          <p className="text-pastel-light text-sm">{t('about:location.parking')}</p>
+                          <p className="text-thistle text-sm sm:text-base">{t('about:location.parking')}</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </>

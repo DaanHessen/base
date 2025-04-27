@@ -14,6 +14,11 @@ const Logo = ({ className }) => {
   const isRunningRef = useRef(true);
   
   const states = useMemo(() => ({
+    initial: {
+      filter: 'brightness(0)', // Start as black (or invisible if parent bg is dark)
+      glow: 'none',
+      intensity: 0
+    },
     bright: {
       filter: `brightness(0) invert(1) 
               drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
@@ -34,6 +39,11 @@ const Logo = ({ className }) => {
     
     const logo = logoRef.current;
     const glowLayer = glowLayerRef.current;
+
+    // Immediately set initial non-animated state
+    logo.style.filter = states.initial.filter;
+    glowLayer.style.background = states.initial.glow;
+    glowLayer.style.opacity = states.initial.intensity;
     
     const applyState = (state, duration) => {
       if (!logo || !glowLayer) return;
@@ -47,8 +57,11 @@ const Logo = ({ className }) => {
     };
     
     // Simple clean animation (no flickering) for performance
+    // Use requestAnimationFrame to ensure initial styles are applied before animation starts
     const startupSequence = () => {
-      applyState(states.bright, 300);
+      requestAnimationFrame(() => {
+        applyState(states.bright, 300);
+      });
     };
     
     startupSequence();
@@ -64,13 +77,18 @@ const Logo = ({ className }) => {
         ref={glowLayerRef}
         className="absolute -inset-6 z-0 opacity-0 blur-md"
         aria-hidden="true"
+        style={{ background: states.initial.glow, opacity: states.initial.intensity }} // Apply initial style
       ></div>
       
       <img 
         ref={logoRef}
         src={logo} 
         alt="BASE" 
-        className="relative z-10 w-auto max-h-24 sm:max-h-28 md:max-h-32" 
+        className="relative z-10 w-auto max-h-24 md:max-h-28 lg:max-h-32"
+        style={{
+          maxHeight: 'clamp(6rem, 8vw + 3rem, 8rem)',
+          filter: states.initial.filter // Apply initial style
+        }}
         loading="eager"
         fetchpriority="high"
       />
