@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const CookieConsent = () => {
+function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
+  const { t } = useTranslation('common');
   
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent');
@@ -52,9 +54,9 @@ const CookieConsent = () => {
       <div className="fixed inset-x-0 bottom-4 mx-4 sm:mx-6 z-50">
         <div className={`max-w-md mx-auto bg-dark/95 backdrop-blur-sm shadow-2xl rounded-lg overflow-hidden border border-gray-800 transition-all duration-300 transform ${isAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="p-4">
-            <h3 className="text-gold font-medium text-sm mb-2">Cookie Settings</h3>
+            <h3 className="text-gold font-medium text-sm mb-2">{t('cookieConsent.title')}</h3>
             <p className="text-pastel-light text-xs mb-3">
-              We use cookies to improve your experience. Choose your preference below.
+              {t('cookieConsent.description')}
             </p>
             <div className="cursor-pointer flex items-center justify-end space-x-3">
               <button
@@ -63,7 +65,7 @@ const CookieConsent = () => {
                 aria-label="Accept only necessary cookies"
                 type="button"
               >
-                Necessary Only
+                {t('buttons.decline')}
               </button>
               <button
                 onClick={handleAcceptAll}
@@ -71,7 +73,7 @@ const CookieConsent = () => {
                 aria-label="Accept all cookies"
                 type="button"
               >
-                Accept All
+                {t('cookieConsent.accept')}
               </button>
             </div>
           </div>
@@ -79,6 +81,6 @@ const CookieConsent = () => {
       </div>
     </>
   );
-};
+}
 
 export default memo(CookieConsent); 

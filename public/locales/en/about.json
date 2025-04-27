@@ -1,0 +1,22 @@
+{
+  "title": "About Us",
+  "sections": [
+    {
+      "title": "Our Story",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    },
+    {
+      "title": "Our Philosophy",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    }
+  ],
+  "location": {
+    "title": "Location & Accessibility",
+    "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
+    "parking": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
+  "seo": {
+    "title": "About BASE Restaurant - Our Story",
+    "description": "Learn more about streetfood bar and restaurant BASE and it's team in Hilversum."
+  }
+} 

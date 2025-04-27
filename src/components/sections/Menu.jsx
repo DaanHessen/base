@@ -1,59 +1,124 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import MenuCategory from '../menu/MenuCategory';
 import menuData from '../../data/menu.json';
-import { getLanguage } from '../../utils/language';
 
-const Menu = () => {
-  const [language, setLanguage] = useState(getLanguage);
-  const [isVisible, setIsVisible] = useState(false);
+function Menu() {
+  const { t, i18n } = useTranslation(['menu', 'common']);
+  const currentLang = i18n.language;
+  const location = useLocation();
+  const foodRef = useRef(null);
+  const drinksRef = useRef(null);
 
-  const handleLanguageChange = useCallback(() => {
-    setLanguage(getLanguage());
-  }, []);
-
+  // Handle scrolling based on hash
   useEffect(() => {
-    handleLanguageChange();
+    // Add slight delay to ensure scroll happens after render/animation
+    const scrollTimer = setTimeout(() => {
+      if (location.hash === '#food' && foodRef.current) {
+        foodRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (location.hash === '#drinks' && drinksRef.current) {
+        drinksRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // If no hash and we're on the menu page, scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 100);
     
-    window.addEventListener('languageChange', handleLanguageChange);
-    
-    return () => {
-      window.removeEventListener('languageChange', handleLanguageChange);
-    };
-  }, [handleLanguageChange]);
+    return () => clearTimeout(scrollTimer);
+  }, [location.hash]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 30);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  const foodCategories = menuData.categories.filter(cat => cat.id !== 'drinks');
+  const drinksCategory = menuData.categories.find(cat => cat.id === 'drinks');
+
+  // Styled heading component with improved typography
+  const SectionHeading = ({ children, id }) => (
+    <div className="relative text-center mb-12">
+      <h2 className="inline-block relative z-10 px-8 py-2 font-heading font-bold text-4xl sm:text-5xl text-magnolia">
+        <span className="relative">
+          {children}
+          <span className="absolute -bottom-2 left-0 w-full h-1 bg-gold transform"></span>
+        </span>
+      </h2>
+    </div>
+  );
+
+  // Styled category heading with improved typography
+  const CategoryHeading = ({ children }) => (
+    <div className="relative mb-8 mt-4">
+      <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-gold inline-block pr-4">
+        {children}
+        <span className="absolute bottom-[-6px] left-0 w-3/4 h-px bg-gold/50"></span>
+      </h3>
+    </div>
+  );
 
   return (
-    <section className={`py-14 pt-24 sm:pt-32 transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {menuData.categories.map((category, categoryIndex) => (
-            <div 
-              id={`category-${category.id}`} 
-              key={category.id}
-              className={`transition-all duration-300 delay-${Math.min(categoryIndex * 100, 300)} transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <div className="relative mb-6">
-                <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-3">
-                  {category.name[language]}
-                </h2>
-                <div className="w-16 sm:w-24 h-1 bg-gold"></div>
-                <div className="w-24 sm:w-32 h-px bg-gold/30 mt-1"></div>
-              </div>
-              
-              <MenuCategory category={category} language={language} />
+    <>
+      <Helmet>
+        <title>{t('menu:seo.title')}</title>
+        <meta name="description" content={t('menu:seo.description')} />
+        <link rel="canonical" href={`${window.location.origin}/menu/${currentLang === 'en' ? 'en/' : ''}`} />
+        {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/menu/en/`} />}
+        {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/menu/`} />}
+        <meta name="og:title" content={t('menu:seo.title')} />
+        <meta name="og:description" content={t('menu:seo.description')} />
+      </Helmet>
+      
+      <section className="py-14 pt-40 sm:pt-48 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 w-full">
+          {/* Food Menu Section */}
+          <div id="food" ref={foodRef} className="mb-16 home-title">
+            <SectionHeading>
+              {currentLang === 'nl' ? 'Eten' : 'Food'}
+            </SectionHeading>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+              {foodCategories.map((category) => (
+                <div 
+                  id={`category-${category.id}`} 
+                  key={category.id}
+                  className="menu-category-item transition-all duration-150 hover:translate-y-[-5px]"
+                >
+                  <CategoryHeading>
+                    {category.name[currentLang]}
+                  </CategoryHeading>
+                  
+                  <MenuCategory category={category} />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Drinks Menu Section */}
+          {drinksCategory && (
+            <div id="drinks" ref={drinksRef} className="home-content">
+              <SectionHeading>
+                {drinksCategory.name[currentLang]}
+              </SectionHeading>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                {drinksCategory.subcategories.map((subcat) => (
+                  <div 
+                    id={`category-${subcat.id}`} 
+                    key={subcat.id}
+                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px]"
+                  >
+                    <CategoryHeading>
+                      {subcat.name[currentLang]}
+                    </CategoryHeading>
+                    
+                    <MenuCategory category={{ ...subcat, items: subcat.items, parentId: 'drinks' }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
-};
+}
 
 export default memo(Menu); 

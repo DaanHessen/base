@@ -1,147 +1,140 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
-import aboutUsData from '../../data/about-us.json';
-import { getLanguage } from '../../utils/language';
+import { useTranslation } from 'react-i18next';
 import { FaMapMarkerAlt, FaParking } from 'react-icons/fa';
 import Image from '../../assets/loes-en-sander.jpg';
+import { Helmet } from 'react-helmet-async';
 
-const AboutUs = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [language, setLanguage] = useState(getLanguage);
+// Simple Skeleton Component for the Map
+const MapSkeleton = () => (
+  <div className="w-full h-full min-h-[300px] md:min-h-[350px] bg-gray-800/50 animate-pulse flex items-center justify-center rounded-l-2xl md:rounded-l-none md:rounded-tl-2xl md:rounded-bl-2xl">
+    <FaMapMarkerAlt className="text-gold/50 text-4xl" />
+  </div>
+);
+
+function AboutUs() {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const { t, i18n } = useTranslation(['about', 'common']);
+  const currentLang = i18n.language;
 
-  const handleLanguageChange = useCallback(() => {
-    setLanguage(getLanguage());
-  }, []);
-
+  // Load map after a short delay
   useEffect(() => {
-    window.addEventListener('languageChange', handleLanguageChange);
+    const mapLoadTimer = setTimeout(() => {
+      setMapLoaded(true);
+    }, 300);
     
-    return () => {
-      window.removeEventListener('languageChange', handleLanguageChange);
-    };
-  }, [handleLanguageChange]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 30);
-    
-    return () => clearTimeout(timer);
+    return () => clearTimeout(mapLoadTimer);
   }, []);
-
-  useEffect(() => {
-    if (isVisible && !mapLoaded) {
-      const mapTimer = setTimeout(() => {
-        setMapLoaded(true);
-      }, 100);
-      
-      return () => clearTimeout(mapTimer);
-    }
-  }, [isVisible, mapLoaded]);
 
   const mapUrl = useMemo(() => {
-    const address = encodeURIComponent(aboutUsData["about-us"].location.address);
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${address}&zoom=16`;
-  }, []);
+    const address = encodeURIComponent(t('about:location.address'));
+    // Use a generic map URL for the example, replace API_KEY
+    // return `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${address}&zoom=16`;
+    // For demonstration without a key, using a simple OpenStreetMap embed:
+    const coords = "51.8131,4.6716"; // Approximate coordinates for Dordrecht Houtmarkt
+    return `https://www.openstreetmap.org/export/embed.html?bbox=4.669,51.812,4.674,51.814&layer=mapnik&marker=${coords}`;
+  }, [t]);
 
   return (
-    <section className={`py-16 pt-28 sm:pt-36 transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="space-y-16">
-          <div className={`transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <h1 className="text-3xl sm:text-4xl font-heading font-semibold text-white mb-2">
-              {aboutUsData["about-us"].title[language]}
-            </h1>
-            <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
-          </div>
-          
-          <div className={`transition-all duration-300 delay-75 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2">
-                {aboutUsData["about-us"].sections.map((section, index) => (
-                  <div key={index} className={`${index > 0 ? 'mt-8' : ''}`}>
-                    <h3 className="text-lg sm:text-xl font-heading font-semibold text-white mb-3">
-                      {section.title[language]}
-                    </h3>
-                    <div className="text-pastel-light font-body text-sm sm:text-base leading-relaxed">
-                      {section.content[language]}
+    <>
+      <Helmet>
+        <title>{t('about:seo.title')}</title>
+        <meta name="description" content={t('about:seo.description')} />
+        <link rel="canonical" href={`${window.location.origin}/about/${currentLang === 'en' ? 'en/' : ''}`} />
+        {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/about/en/`} />}
+        {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/about/`} />}
+        <meta name="og:title" content={t('about:seo.title')} />
+        <meta name="og:description" content={t('about:seo.description')} />
+      </Helmet>
+      
+      <section className="py-16 pt-36 sm:pt-48">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="space-y-16">
+            <div className="home-title">
+              <h1 className="text-3xl sm:text-4xl font-heading font-semibold text-white mb-2">
+                {t('about:title')}
+              </h1>
+              <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
+            </div>
+            
+            <div className="home-subtitle">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="md:col-span-2">
+                  {[0, 1].map((index) => (
+                    <div key={index} className={`${index > 0 ? 'mt-8' : ''}`}>
+                      <h3 className="text-lg sm:text-xl font-heading font-semibold text-white mb-3">
+                        {t(`about:sections.${index}.title`)}
+                      </h3>
+                      <div className="text-pastel-light font-body text-sm sm:text-base leading-relaxed">
+                        {t(`about:sections.${index}.content`)}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex items-center justify-center">
-                <div className="w-[85%] mx-auto">
-                  <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-lg relative">
-                    <img 
-                      src={Image} 
-                      alt="Loes & Sander" 
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      width="600"
-                      height="800"
-                    />
+                  ))}
+                </div>
+                
+                <div className="flex items-center justify-center">
+                  <div className="w-[85%] mx-auto">
+                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-lg relative">
+                      <img 
+                        src={Image} 
+                        alt="Loes & Sander" 
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        width="600"
+                        height="800"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        
-          <div className={`transition-all duration-300 delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-2">
-              {language === 'nl' ? 'Locatie & Bereikbaarheid' : 'Location & Accessibility'}
-            </h2>
-            <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
-            
-            <div className="bg-gray-900/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-gray-800/30">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
-                <div className="md:col-span-3 h-full">
-                  {mapLoaded ? (
-                    <div className="w-full h-full min-h-[300px] md:min-h-[350px] relative">
-                      <iframe
-                        title="Location Map"
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-                        loading="lazy"
-                        allowFullScreen
-                        referrerPolicy="no-referrer-when-downgrade"
-                        src={mapUrl}
-                      ></iframe>
-                    </div>
-                  ) : (
-                    <div className="w-full h-full min-h-[300px] md:min-h-[350px] flex items-center justify-center">
-                      <div className="animate-pulse flex flex-col items-center justify-center">
-                        <div className="w-16 h-16 flex items-center justify-center mb-4">
-                          <FaMapMarkerAlt className="text-gold text-2xl" />
+          
+            <div className="home-content">
+              <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-2">
+                {t('about:location.title')}
+              </h2>
+              <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
+              
+              <div className="bg-gray-900/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-gray-800/30">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
+                  <div className="md:col-span-3 h-full">
+                    {!mapLoaded ? (
+                      <MapSkeleton />
+                    ) : (
+                      <div className="w-full h-full min-h-[300px] md:min-h-[350px] relative rounded-l-2xl md:rounded-l-none md:rounded-tl-2xl md:rounded-bl-2xl overflow-hidden">
+                        <iframe
+                          title="Location Map"
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+                          loading="lazy"
+                          allowFullScreen
+                          referrerPolicy="no-referrer-when-downgrade"
+                          src={mapUrl}
+                        ></iframe>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="md:col-span-2 p-6 sm:p-8 md:border-l border-gray-800/30">
+                    <div className="space-y-5">
+                      <div className="flex items-start">
+                        <FaMapMarkerAlt className="text-gold text-3xl mt-1 mr-4" />
+                        <div>
+                          <h4 className="text-white font-medium mb-1">
+                            {currentLang === 'nl' ? 'Adres' : 'Address'}
+                          </h4>
+                          <p className="text-pastel-light text-sm">{t('about:location.address')}</p>
                         </div>
-                        <p className="text-gold text-center">
-                          {language === 'nl' ? 'Kaart laden...' : 'Loading map...'}
-                        </p>
                       </div>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="md:col-span-2 p-6 sm:p-8 md:border-l border-gray-800/30">
-                  <div className="space-y-5">
-                    <div className="flex items-start">
-                      <FaMapMarkerAlt className="text-gold text-3xl mt-1 mr-4" />
-                      <div>
-                        <h4 className="text-white font-medium mb-1">
-                          {language === 'nl' ? 'Adres' : 'Address'}
-                        </h4>
-                        <p className="text-pastel-light text-sm">{aboutUsData["about-us"].location.address}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start">
-                      <FaParking className="text-gold text-5xl mt-1 mr-4 ml-1" />
-                      <div>
-                        <h4 className="text-white font-medium mb-1">
-                          {language === 'nl' ? 'Parkeren' : 'Parking'}
-                        </h4>
-                        <p className="text-pastel-light text-sm">{aboutUsData["about-us"].location.parking[language]}</p>
+                      
+                      <div className="flex items-start">
+                        <FaParking className="text-gold text-5xl mt-1 mr-4 ml-1" />
+                        <div>
+                          <h4 className="text-white font-medium mb-1">
+                            {currentLang === 'nl' ? 'Parkeren' : 'Parking'}
+                          </h4>
+                          <p className="text-pastel-light text-sm">{t('about:location.parking')}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -150,9 +143,9 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
-};
+}
 
 export default memo(AboutUs); 

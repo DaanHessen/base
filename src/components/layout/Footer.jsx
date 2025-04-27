@@ -1,107 +1,88 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FaInstagram, FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import monseesLogo from '../../assets/monsees.svg';
-import footerData from '../../data/footer.json';
-import { getLanguage } from '../../utils/language';
 
-const Footer = () => {
+// Helper component for consistent social icon links
+const SocialIconLink = ({ href, label, children }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="text-magnolia hover:text-gold transition-colors duration-200 group" // Added group for targeting child img
+    aria-label={label}
+  >
+    {children}
+  </a>
+);
+
+// Custom component specifically for Monsees logo with proper transitions
+const MonseesLink = ({ href, label }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="transition-colors duration-200 group" 
+    aria-label={label}
+  >
+    <img 
+      src={monseesLogo} 
+      alt="Monsees" 
+      className="h-6 w-auto filter brightness-0 invert transition-all duration-200 group-hover:brightness-110 group-hover:invert-[85%] group-hover:sepia-[25%] group-hover:saturate-[800%] group-hover:hue-rotate-[330deg]"
+    />
+  </a>
+);
+
+function Footer() {
   const currentYear = new Date().getFullYear();
   const [copyMessage, setCopyMessage] = useState('');
-  const [language, setLanguage] = useState(() => {
-    return getLanguage();
-  });
+  const { t, i18n } = useTranslation('common');
+  const currentLang = i18n.language;
+  
   const [formData, setFormData] = useState({
     email: '',
     message: ''
   });
   const [formStatus, setFormStatus] = useState(null);
-
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setLanguage(getLanguage());
-    };
-
-    handleLanguageChange();
-
-    window.addEventListener('languageChange', handleLanguageChange);
-    
-    return () => {
-      window.removeEventListener('languageChange', handleLanguageChange);
-    };
-  }, []);
   
   const openMaps = (address) => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     const encodedAddress = encodeURIComponent(address);
-    
-    if (isIOS) {
-      window.open(`maps://maps.apple.com/?q=${encodedAddress}`, '_blank');
-    } else {
-      window.open(`https://maps.google.com/?q=${encodedAddress}`, '_blank');
-    }
+    const url = isIOS ? `maps://maps.apple.com/?q=${encodedAddress}` : `https://maps.google.com/?q=${encodedAddress}`;
+    window.open(url, '_blank');
   };
 
   const copyToClipboard = (text, type) => {
     navigator.clipboard.writeText(text).then(
-      () => {
-        setCopyMessage(`${type} copied!`);
-        setTimeout(() => setCopyMessage(''), 2000);
-      },
-      () => {
-        setCopyMessage('Failed to copy');
-        setTimeout(() => setCopyMessage(''), 2000);
-      }
-    );
+      () => setCopyMessage(`${type} ${currentLang === 'nl' ? 'gekopieerd!' : 'copied!'}`),
+      () => setCopyMessage(currentLang === 'nl' ? 'Kopiëren mislukt' : 'Failed to copy')
+    ).finally(() => setTimeout(() => setCopyMessage(''), 2000));
   };
 
   const handleInputChange = useCallback((e) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
+    setFormData(prev => ({ ...prev, [id]: value }));
   }, []);
 
+  // Updated handleSubmit for mailto functionality
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
+    const subject = encodeURIComponent(currentLang === 'nl' ? 'Nieuwsbrief aanmelding/bericht' : 'Newsletter sign-up/message');
+    const body = encodeURIComponent(`${currentLang === 'nl' ? 'Bericht van' : 'Message from'}: ${formData.email}\n\n${formData.message}`);
+    const mailtoLink = `mailto:${t('footer.contact.email')}?subject=${subject}&body=${body}`;
     
-    if (!formData.email || !formData.message) {
-      setFormStatus({
-        success: false,
-        message: language === 'nl' ? 'Vul alle velden in a.u.b.' : 'Please fill in all fields.'
-      });
-      return;
+    // Try to open mail client
+    try {
+      window.location.href = mailtoLink;
+      setFormStatus('success'); // Assume success if mailto link opens
+      setFormData({ email: '', message: '' });
+      setTimeout(() => setFormStatus(null), 3000);
+    } catch (error) {
+      console.error('Failed to open mail client:', error);
+      setFormStatus('error');
+      setTimeout(() => setFormStatus(null), 3000);
     }
-    
-    if (!formData.email.includes('@') || !formData.email.includes('.')) {
-      setFormStatus({
-        success: false,
-        message: language === 'nl' ? 'Voer een geldig e-mailadres in' : 'Please enter a valid email address.'
-      });
-      return;
-    }
-    
-    const subject = `Contact form from ${formData.email}`;
-    const body = `Email: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
-    const mailtoUrl = `mailto:info@base.nl?subject=${encodeURIComponent(subject)}&body=${body}`;
-    
-    window.location.href = mailtoUrl;
-    
-    setFormStatus({
-      success: true,
-      message: language === 'nl' 
-        ? 'Uw e-mail client is geopend, verzend het bericht om contact op te nemen.' 
-        : 'Your email client has been opened, send the message to contact us.'
-    });
-    
-    setTimeout(() => {
-      setFormStatus(null);
-      setFormData({
-        email: '',
-        message: ''
-      });
-    }, 5000);
-  }, [formData, language]);
+  }, [formData, currentLang, t]);
 
   return (
     <footer className="bg-onyx text-magnolia pt-8 pb-6 relative">
@@ -117,9 +98,9 @@ const Footer = () => {
               </svg>
               <button 
                 className="text-sm hover:text-gold transition-colors duration-200 text-left"
-                onClick={() => openMaps(footerData.footer.address)}
+                onClick={() => openMaps(t('footer.address'))}
               >
-                {footerData.footer.address}
+                {t('footer.address')}
               </button>
             </div>
             <div className="flex items-start">
@@ -128,149 +109,118 @@ const Footer = () => {
               </svg>
               <button 
                 className="text-sm hover:text-gold transition-colors duration-200"
-                onClick={() => copyToClipboard(footerData.footer.phone, 'Phone number')}
+                onClick={() => copyToClipboard(t('footer.contact.phone'), t('footer.contact.phoneType', 'Phone number'))}
               >
-                {footerData.footer.phone}
+                {t('footer.contact.phone')}
               </button>
             </div>
             <div className="flex items-start">
               <FaEnvelope className="h-5 w-5 mr-3 mt-0.5 text-gold" />
               <button 
                 className="text-sm hover:text-gold transition-colors duration-200"
-                onClick={() => copyToClipboard(footerData.footer.email, 'Email')}
+                onClick={() => copyToClipboard(t('footer.contact.email'), t('footer.contact.emailType', 'Email'))}
               >
-                {footerData.footer.email}
+                {t('footer.contact.email')}
               </button>
             </div>
           </div>
 
           <div className="flex flex-col space-y-2">
             <h3 className="text-gold text-sm font-medium mb-2 uppercase tracking-wide">
-              {footerData.footer.translations.openingHours[language]}
+              {t('footer.openingHours.title')}
             </h3>
             <div className="grid grid-cols-2 gap-1 text-sm">
-              <span>{footerData.footer.translations.days.sunday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.sunday === 'object' ? footerData.footer.openingHours.sunday[language] : footerData.footer.openingHours.sunday}</span>
-              
-              <span>{footerData.footer.translations.days.monday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.monday === 'object' ? footerData.footer.openingHours.monday[language] : footerData.footer.openingHours.monday}</span>
-              
-              <span>{footerData.footer.translations.days.tuesday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.tuesday === 'object' ? footerData.footer.openingHours.tuesday[language] : footerData.footer.openingHours.tuesday}</span>
-              
-              <span>{footerData.footer.translations.days.wednesday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.wednesday === 'object' ? footerData.footer.openingHours.wednesday[language] : footerData.footer.openingHours.wednesday}</span>
-              
-              <span>{footerData.footer.translations.days.thursday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.thursday === 'object' ? footerData.footer.openingHours.thursday[language] : footerData.footer.openingHours.thursday}</span>
-              
-              <span>{footerData.footer.translations.days.friday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.friday === 'object' ? footerData.footer.openingHours.friday[language] : footerData.footer.openingHours.friday}</span>
-              
-              <span>{footerData.footer.translations.days.saturday[language]}:</span>
-              <span>{typeof footerData.footer.openingHours.saturday === 'object' ? footerData.footer.openingHours.saturday[language] : footerData.footer.openingHours.saturday}</span>
+              {[ 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
+                <React.Fragment key={day}>
+                  <span>{t(`footer.${day}`)}</span>
+                  <span>{t(`footer.openingHours.${day}`)}</span>
+                </React.Fragment>
+              ))}
             </div>
           </div>
 
           <div className="flex flex-col">
             <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
-              {footerData.footer.translations.followUs[language]}
+              {t('footer.follow')}
             </h3>
             <div className="flex items-center space-x-6 mb-6">
-              <a href={footerData.footer.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="text-magnolia hover:text-gold transition-colors duration-200" aria-label="Instagram">
+              <SocialIconLink href="https://instagram.com/base" label="Instagram">
                 <FaInstagram size={24} />
-              </a>
-              <a href={footerData.footer.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="text-magnolia hover:text-gold transition-colors duration-200" aria-label="LinkedIn">
+              </SocialIconLink>
+              <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
                 <FaLinkedin size={24} />
-              </a>
-              <a 
-                href={footerData.footer.socialMedia.monsees} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="monsees-link transition-all duration-200" 
-                aria-label="Monsees"
-              >
-                <img 
-                  src={monseesLogo} 
-                  alt="Monsees" 
-                  className="h-6 w-auto transition-all duration-200"
-                  style={{
-                    filter: 'brightness(0) invert(1)',
-                  }}
-                />
-              </a>
+              </SocialIconLink>
+              {/* Replaced with specialized component for proper hover effect */}
+              <MonseesLink href="https://monsees.nl" label="Monsees" />
             </div>
           </div>
 
           <div className="flex flex-col">
             <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
-              {language === 'nl' ? 'Stuur ons een bericht' : 'Send us a message'}
+              {t('footer.newsletter.title')}
             </h3>
-            
-            {formStatus && (
-              <div className={`mb-4 p-3 text-xs rounded-lg ${formStatus.success ? 'bg-green-900/30 text-green-300 border border-green-800/50' : 'bg-red-900/30 text-red-300 border border-red-800/50'}`}>
-                {formStatus.message}
-              </div>
-            )}
-            
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <div>
-                <input 
-                  type="email" 
-                  id="email" 
+            <form onSubmit={handleSubmit} className="relative">
+              <div className="mb-3">
+                <label htmlFor="email" className="sr-only">{t('footer.newsletter.email')}</label>
+                <input
+                  id="email"
+                  type="email"
+                  required
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Email"
-                  className="w-full bg-dim-gray/20 text-magnolia border border-dim-gray/30 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold/70 focus:border-transparent transition-all"
-                  aria-label="Email"
+                  placeholder={t('footer.newsletter.email')}
+                  className="w-full px-4 py-2 bg-dim-gray/20 border border-dim-gray/30 rounded-md text-magnolia focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/50"
                 />
               </div>
-              
-              <div>
-                <textarea 
-                  id="message" 
-                  rows="3"
+              <div className="mb-3">
+                <label htmlFor="message" className="sr-only">Message</label>
+                <textarea
+                  id="message"
+                  rows="4"
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder={language === 'nl' ? 'Uw bericht' : 'Your message'}
-                  className="w-full bg-dim-gray/20 text-magnolia border border-dim-gray/30 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold/70 focus:border-transparent transition-all"
-                  aria-label={language === 'nl' ? 'Uw bericht' : 'Your message'}
+                  placeholder="Your message"
+                  className="w-full px-4 py-2 bg-dim-gray/20 border border-dim-gray/30 rounded-md text-magnolia focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/50"
                 ></textarea>
               </div>
-              
-              <button 
-                type="submit" 
-                className="px-4 py-2 bg-gold hover:bg-gold/90 text-onyx text-sm font-medium rounded-lg transition-all shadow-lg hover:shadow-gold/20 w-full"
+              <button
+                type="submit"
+                className="w-full px-4 py-2 text-center bg-gold hover:bg-gold/90 text-onyx font-medium rounded-md transition-colors duration-300"
               >
-                {language === 'nl' ? 'Versturen' : 'Send'}
+                {t('footer.newsletter.button')}
               </button>
+              
+              {formStatus === 'success' && (
+                <div className="mt-2 text-sm text-green-400">
+                  {currentLang === 'nl' ? 'Bedankt voor je bericht!' : 'Thank you for your message!'}
+                </div>
+              )}
+              
+              {formStatus === 'error' && (
+                <div className="mt-2 text-sm text-red-400">
+                  {currentLang === 'nl' ? 'Er ging iets mis. Probeer het later opnieuw.' : 'Something went wrong. Please try again later.'}
+                </div>
+              )}
             </form>
           </div>
         </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center mt-8 pt-8 border-t border-dim-gray/30">
-          <div className="text-xs text-thistle mb-4 md:mb-0 text-center md:text-left">
-            &copy; {currentYear} BASE. {language === 'nl' ? 'Alle rechten voorbehouden.' : 'All rights reserved.'}
+        
+        <div className="mt-8 pt-6 border-t border-dim-gray/20 flex flex-col-reverse md:flex-row justify-between items-center">
+          <div className="mt-4 md:mt-0 text-center md:text-left">
+            <p className="text-xs text-gray-400">
+              {t('footer.copyright').replace('{year}', currentYear)}
+            </p>
           </div>
           
           {copyMessage && (
-            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-caribbean-current text-magnolia rounded-lg text-sm shadow-lg z-50">
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-dim-gray px-4 py-2 rounded-md text-magnolia text-sm animate-fade-in-up z-50">
               {copyMessage}
             </div>
           )}
         </div>
       </div>
-
-      <style jsx="true">{`
-        .monsees-link img {
-          transition: filter 0.2s ease-in-out;
-        }
-        .monsees-link:hover img {
-          filter: brightness(0) saturate(100%) invert(49%) sepia(83%) saturate(2404%) hue-rotate(348deg) brightness(98%) contrast(95%) !important;
-        }
-      `}</style>
     </footer>
   );
-};
+}
 
 export default Footer; 

@@ -1,0 +1,21 @@
+{
+  "hero": {
+    "title": "Welcome to <span class=\"text-gold\">BASE</span>",
+    "subtitle": "The streetfood bar at the Groest in Hilversum - Opening soon!",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+  },
+  "buttons": {
+    "reservation": "Reserve Now",
+    "menu": "View Menu"
+  },
+  "sections": {
+    "welcome": {
+      "title": "A place to enjoy",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    }
+  },
+  "seo": {
+    "title": "BASE Restaurant - Home",
+    "description": "Welcome to BASE Restaurant in Hilversum. Enjoy our streetfood and exclusive cocktails in an atmospheric environment."
+  }
+} 

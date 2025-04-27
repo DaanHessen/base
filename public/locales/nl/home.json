@@ -1,0 +1,21 @@
+{
+  "hero": {
+    "title": "<span class=\"text-gold\"> BASE </span> by Monsees",
+    "subtitle": "De streetfood bar in Hilversum - binnenkort geopend!",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+  },
+  "buttons": {
+    "reservation": "Reserveren",
+    "menu": "Menu bekijken"
+  },
+  "sections": {
+    "welcome": {
+      "title": "Een plek om te genieten",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+    }
+  },
+  "seo": {
+    "title": "BASE Restaurant - Home",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+  }
+} 

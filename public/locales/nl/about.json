@@ -1,0 +1,22 @@
+{
+  "title": "Over Ons",
+  "sections": [
+    {
+      "title": "Ons Verhaal",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    },
+    {
+      "title": "Onze Filosofie",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+    }
+  ],
+  "location": {
+    "title": "Locatie & Bereikbaarheid",
+    "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
+    "parking": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  },
+  "seo": {
+    "title": "Over BASE Restaurant - Onze Verhaal",
+    "description": "Leer meer over BASE Restaurant in Hilversum. Ontdek ons verhaal en ons team."
+  }
+} 

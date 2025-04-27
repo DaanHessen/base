@@ -1,0 +1,67 @@
+{
+  "navigation": {
+    "home": "Home",
+    "menu": "Menu",
+    "about": "About Us",
+    "selectLanguage": "Select language"
+  },
+  "seo": {
+    "title": "BASE - Restaurant and Bar",
+    "description": "BASE, the sister restaurant of Brasserie Monsees (moving to 's Gravenland), is a new streetfood bar located on the Groest in Hilversum.",
+    "keywords": "BASE, restaurant, bar, food, streetfood, drinks, cocktails, dinner, lunch"
+  },
+  "buttons": {
+    "viewMenu": "View Menu",
+    "makeReservation": "Make Reservation",
+    "readMore": "Read More",
+    "close": "Close",
+    "accept": "Sure!",
+    "decline": "Nah..."
+  },
+  "cookieConsent": {
+    "title": "Cookie Notice",
+    "description": "We use cookies to provide you with the best experience on our website. By using our site, you agree to our cookie policy.",
+    "accept": "Sure!",
+    "settings": "Cookie Settings"
+  },
+  "loading": "Loading",
+  "error": {
+    "general": "Something went wrong. Please try again later.",
+    "notFound": "Page not found"
+  },
+  "footer": {
+    "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
+    "copyright": "© {year} BASE. All rights reserved.",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "openingHours": {
+      "title": "Opening Hours",
+      "monday": "CLOSED",
+      "tuesday": "CLOSED",
+      "wednesday": "10:00 - 22:00",
+      "thursday": "10:00 - 22:00",
+      "friday": "10:00 - 23:00",
+      "saturday": "11:00 - 23:00",
+      "sunday": "CLOSED"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "info@base-restaurant.nl",
+      "phone": "+31 (0)6 12345678",
+      "phoneType": "Phone number",
+      "emailType": "Email address"
+    },
+    "follow": "Follow us",
+    "newsletter": {
+      "title": "Send us a message",
+      "subscribe": "Provide feedback or contact us",
+      "email": "Email address",
+      "button": "Send Message"
+    }
+  }
+} 

@@ -1,0 +1,67 @@
+{
+  "navigation": {
+    "home": "Home",
+    "menu": "Menu",
+    "about": "Over Ons",
+    "selectLanguage": "Selecteer taal"
+  },
+  "seo": {
+    "title": "BASE - Restaurant en Bar",
+    "description": "BASE, het zusterrestaurant van Brasserie Monsees (verhuist naar 's Gravenland), is een nieuwe streetfood bar op de Groest in Hilversum.",
+    "keywords": "BASE, restaurant, bar, eten, streetfood, dranken, cocktails, diner, lunch"
+  },
+  "buttons": {
+    "viewMenu": "Bekijk Menu",
+    "makeReservation": "Reserveer",
+    "readMore": "Lees Meer",
+    "close": "Sluiten",
+    "accept": "Is goed!",
+    "decline": "Nope, thanks..."
+  },
+  "cookieConsent": {
+    "title": "Cookie Melding",
+    "description": "Wij gebruiken cookies om je de beste ervaring te bieden op onze website. Door onze site te gebruiken, ga je akkoord met ons cookiebeleid.",
+    "accept": "Accepteren",
+    "settings": "Cookie Instellingen"
+  },
+  "loading": "Laden",
+  "error": {
+    "general": "Er is iets misgegaan. Probeer het later opnieuw.",
+    "notFound": "Pagina niet gevonden"
+  },
+  "footer": {
+    "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
+    "copyright": "© {year} BASE. Alle rechten voorbehouden.",
+    "monday": "Maandag",
+    "tuesday": "Dinsdag",
+    "wednesday": "Woensdag",
+    "thursday": "Donderdag",
+    "friday": "Vrijdag",
+    "saturday": "Zaterdag",
+    "sunday": "Zondag",
+    "openingHours": {
+      "title": "Openingstijden",
+      "monday": "GESLOTEN",
+      "tuesday": "GESLOTEN",
+      "wednesday": "10:00 - 22:00",
+      "thursday": "10:00 - 22:00",
+      "friday": "10:00 - 23:00",
+      "saturday": "11:00 - 23:00",
+      "sunday": "GESLOTEN"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "info@base-restaurant.nl",
+      "phone": "+31 (0)6 12345678",
+      "phoneType": "Telefoonnummer",
+      "emailType": "E-mailadres"
+    },
+    "follow": "Volg ons",
+    "newsletter": {
+      "title": "Stuur ons een bericht",
+      "subscribe": "Geef feedback of neem contact op",
+      "email": "E-mailadres",
+      "button": "Verstuur bericht"
+    }
+  }
+} 
