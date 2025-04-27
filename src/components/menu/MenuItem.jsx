@@ -25,25 +25,28 @@ const MenuItem = ({ name, description, price, allergens = [], vegan, language })
   
   return (
     <div 
-      className="overflow-hidden rounded-md bg-gray-900/20 backdrop-blur-sm border border-gray-800/30 transition-all duration-300 hover:shadow-lg hover:shadow-accent/10 hover:bg-gray-900/30 hover:border-accent/30 group h-full w-full"
+      className="flex flex-col p-3 sm:p-3.5 border border-dim-gray/20 rounded-lg bg-onyx/30 transition-all duration-300 hover:shadow-[0_4px_20px_-2px_rgba(197,167,95,0.2)] hover:bg-dim-gray/10 hover:border-gold/30 group h-full w-full relative overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(!isHovered)}
     >
-      <div className="p-3.5 flex flex-col h-full">
+      {/* Gold accent line that appears on hover */}
+      <div className="absolute top-0 left-0 w-0 h-1 bg-gold transition-all duration-300 group-hover:w-full"></div>
+      
+      <div className="p-2 sm:p-3 flex flex-col h-full relative">
         <div className="flex justify-between items-start mb-1.5">
-          <div className="flex items-center">
-            <h3 className="text-base font-heading font-semibold text-white group-hover:text-accent transition-colors duration-300">{name}</h3>
+          <div className="flex items-center max-w-[70%]">
+            <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-300 truncate">{name}</h3>
             {vegan && (
               <div className="ml-1.5 flex-shrink-0" title={translations[language].vegan}>
                 <VeganIcon />
               </div>
             )}
           </div>
-          <span className="text-accent font-bold ml-2 flex-shrink-0 text-base">{price}</span>
+          <span className="text-gold font-bold ml-1 flex-shrink-0 text-base bg-onyx/60 px-2 py-0.5 rounded">{price}</span>
         </div>
         
-        <p className="text-pastel-light/90 font-body text-sm leading-relaxed flex-grow line-clamp-2">{description}</p>
+        <p className="text-thistle/90 font-body text-sm leading-relaxed flex-grow line-clamp-2">{description}</p>
         
         {hasAllergens && (
           <div 
@@ -52,7 +55,7 @@ const MenuItem = ({ name, description, price, allergens = [], vegan, language })
             }`}
           >
             <p className="text-xs text-gray-400/90 flex items-center">
-              <span className="mr-1.5 text-xs">⚠</span>
+              <span className="mr-1 text-xs">⚠</span>
               <span className="truncate">{translations[language].allergens}: {allergens.join(', ')}</span>
             </p>
           </div>

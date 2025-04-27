@@ -52,7 +52,7 @@ const AboutUs = () => {
             <h1 className="text-3xl sm:text-4xl font-heading font-semibold text-white mb-2">
               {aboutUsData["about-us"].title[language]}
             </h1>
-            <div className="w-16 sm:w-20 h-1 bg-accent mb-6"></div>
+            <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
           </div>
           
           <div className={`transition-all duration-300 delay-75 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -91,7 +91,7 @@ const AboutUs = () => {
             <h2 className="text-2xl sm:text-3xl font-heading font-semibold text-white mb-2">
               {language === 'nl' ? 'Locatie & Bereikbaarheid' : 'Location & Accessibility'}
             </h2>
-            <div className="w-16 sm:w-20 h-1 bg-accent mb-6"></div>
+            <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
             
             <div className="bg-gray-900/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-gray-800/30">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
@@ -113,9 +113,9 @@ const AboutUs = () => {
                     <div className="w-full h-full min-h-[300px] md:min-h-[350px] flex items-center justify-center">
                       <div className="animate-pulse flex flex-col items-center justify-center">
                         <div className="w-16 h-16 flex items-center justify-center mb-4">
-                          <FaMapMarkerAlt className="text-accent text-2xl" />
+                          <FaMapMarkerAlt className="text-gold text-2xl" />
                         </div>
-                        <p className="text-accent text-center">
+                        <p className="text-gold text-center">
                           {language === 'nl' ? 'Kaart laden...' : 'Loading map...'}
                         </p>
                       </div>
@@ -126,7 +126,7 @@ const AboutUs = () => {
                 <div className="md:col-span-2 p-6 sm:p-8 md:border-l border-gray-800/30">
                   <div className="space-y-5">
                     <div className="flex items-start">
-                      <FaMapMarkerAlt className="text-accent text-3xl mt-1 mr-4" />
+                      <FaMapMarkerAlt className="text-gold text-3xl mt-1 mr-4" />
                       <div>
                         <h4 className="text-white font-medium mb-1">
                           {language === 'nl' ? 'Adres' : 'Address'}
@@ -136,7 +136,7 @@ const AboutUs = () => {
                     </div>
                     
                     <div className="flex items-start">
-                      <FaParking className="text-accent text-5xl mt-1 mr-4 ml-1" />
+                      <FaParking className="text-gold text-5xl mt-1 mr-4 ml-1" />
                       <div>
                         <h4 className="text-white font-medium mb-1">
                           {language === 'nl' ? 'Parkeren' : 'Parking'}

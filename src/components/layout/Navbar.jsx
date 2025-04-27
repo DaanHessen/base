@@ -106,7 +106,7 @@ const Navbar = () => {
     >
       <div className="max-w-screen-xl mx-auto px-6 py-4 relative">
         {scrolled && (
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gray-800"></div>
+          <div className="absolute inset-x-0 bottom-0 h-px bg-dim-gray"></div>
         )}
         
         <div className="flex items-center justify-between">        
@@ -116,11 +116,11 @@ const Navbar = () => {
                 <li key={path}>
                   <Link 
                     to={path} 
-                    className={`relative transition-all duration-300 py-2 text-xs uppercase tracking-widest font-heading ${isActive(path) ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent'}`}
+                    className={`relative transition-all duration-300 py-2 text-xs uppercase tracking-widest font-heading ${isActive(path) ? 'text-gold font-medium' : 'text-magnolia hover:text-gold'}`}
                   >
                     {label}
                     {isActive(path) && (
-                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent"></span>
+                      <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gold"></span>
                     )}
                   </Link>
                 </li>
@@ -138,7 +138,7 @@ const Navbar = () => {
             <div className="relative" ref={dropdownRef}>
               <button 
                 onClick={toggleDropdown}
-                className="px-3 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-md transition-colors duration-300 text-xs uppercase tracking-widest font-heading flex items-center border border-accent/20 hover:border-accent/40"
+                className="px-3 py-2 bg-gold/10 hover:bg-gold/20 text-gold rounded-md transition-colors duration-300 text-xs uppercase tracking-widest font-heading flex items-center border border-gold/20 hover:border-gold/40"
                 aria-expanded={dropdownOpen}
                 aria-haspopup="true"
               >
@@ -156,17 +156,17 @@ const Navbar = () => {
               </button>
               
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-dark/95 backdrop-blur-sm border border-accent/20 z-50 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-onyx/95 backdrop-blur-sm border border-gold/20 z-50 overflow-hidden">
                   <div className="py-1">
                     <button
                       onClick={() => changeLanguage('nl')}
-                      className={`block w-full text-left px-4 py-2 text-xs uppercase tracking-widest font-heading ${language === 'nl' ? 'bg-accent/20 text-accent' : 'text-pastel-light hover:bg-accent/10 hover:text-accent'} transition-colors duration-300`}
+                      className={`block w-full text-left px-4 py-2 text-xs uppercase tracking-widest font-heading ${language === 'nl' ? 'bg-gold/20 text-gold' : 'text-magnolia hover:bg-gold/10 hover:text-gold'} transition-colors duration-300`}
                     >
                       Nederlands
                     </button>
                     <button
                       onClick={() => changeLanguage('en')}
-                      className={`block w-full text-left px-4 py-2 text-xs uppercase tracking-widest font-heading ${language === 'en' ? 'bg-accent/20 text-accent' : 'text-pastel-light hover:bg-accent/10 hover:text-accent'} transition-colors duration-300`}
+                      className={`block w-full text-left px-4 py-2 text-xs uppercase tracking-widest font-heading ${language === 'en' ? 'bg-gold/20 text-gold' : 'text-magnolia hover:bg-gold/10 hover:text-gold'} transition-colors duration-300`}
                     >
                       English
                     </button>
@@ -184,17 +184,17 @@ const Navbar = () => {
               className="focus:outline-none relative w-7 h-6"
             >
               <span 
-                className={`absolute h-0.5 bg-accent rounded-full transition-all duration-300 ease-in-out ${
+                className={`absolute h-0.5 bg-gold rounded-full transition-all duration-300 ease-in-out ${
                   mobileMenuOpen ? 'top-2.5 w-7 rotate-45' : 'top-0 w-7'
                 }`}
               ></span>
               <span 
-                className={`absolute top-2.5 h-0.5 bg-accent rounded-full transition-all duration-300 ease-in-out ${
+                className={`absolute top-2.5 h-0.5 bg-gold rounded-full transition-all duration-300 ease-in-out ${
                   mobileMenuOpen ? 'opacity-0 w-0' : 'w-5 opacity-100'
                 }`}
               ></span>
               <span 
-                className={`absolute h-0.5 bg-accent rounded-full transition-all duration-300 ease-in-out ${
+                className={`absolute h-0.5 bg-gold rounded-full transition-all duration-300 ease-in-out ${
                   mobileMenuOpen ? 'top-2.5 w-7 -rotate-45' : 'top-5 w-3'
                 }`}
               ></span>
@@ -202,7 +202,7 @@ const Navbar = () => {
           </div>
           
           <div 
-            className={`fixed inset-0 bg-dark/95 backdrop-blur-lg flex flex-col items-center justify-center z-40 transition-all duration-300 ease-in-out ${
+            className={`fixed inset-0 bg-onyx/95 backdrop-blur-lg flex flex-col items-center justify-center z-40 transition-all duration-300 ease-in-out ${
               mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
             }`}
             onClick={handleOverlayClick}
@@ -214,21 +214,21 @@ const Navbar = () => {
                   <li key={path} className="w-full text-center">
                     <Link 
                       to={path} 
-                      className={`block relative text-2xl py-2 uppercase tracking-widest font-heading ${isActive(path) ? 'text-accent font-medium' : 'text-pastel-light hover:text-accent transition-colors duration-200'}`}
+                      className={`block relative text-2xl py-2 uppercase tracking-widest font-heading ${isActive(path) ? 'text-gold font-medium' : 'text-magnolia hover:text-gold transition-colors duration-200'}`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {label}
                       {isActive(path) && (
-                        <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-accent"></span>
+                        <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-10 h-0.5 bg-gold"></span>
                       )}
                     </Link>
                   </li>
                 ))}
                 
-                <li className="w-full text-center pt-8 mt-4 border-t border-gray-800/30">
+                <li className="w-full text-center pt-8 mt-4 border-t border-dim-gray/30">
                   <div className="flex justify-center">
                     <div className="p-4 w-56">
-                      <p className="text-xs uppercase tracking-widest text-pastel-light/70 mb-3 text-center">
+                      <p className="text-xs uppercase tracking-widest text-magnolia/70 mb-3 text-center">
                         {navTranslations.selectLanguage[language]}
                       </p>
                       <div className="flex justify-center gap-4">
@@ -239,8 +239,8 @@ const Navbar = () => {
                           }}
                           className={`px-5 py-2 rounded-md transition-all duration-300 ${
                             language === 'nl' 
-                              ? 'bg-accent text-white shadow-md' 
-                              : 'text-pastel-light border border-pastel-light/20 hover:border-pastel-light/40'
+                              ? 'bg-gold text-onyx shadow-md' 
+                              : 'text-magnolia border border-magnolia/20 hover:border-magnolia/40'
                           }`}
                         >
                           NL
@@ -252,8 +252,8 @@ const Navbar = () => {
                           }}
                           className={`px-5 py-2 rounded-md transition-all duration-300 ${
                             language === 'en' 
-                              ? 'bg-accent text-white shadow-md' 
-                              : 'text-pastel-light border border-pastel-light/20 hover:border-pastel-light/40'
+                              ? 'bg-gold text-onyx shadow-md' 
+                              : 'text-magnolia border border-magnolia/20 hover:border-magnolia/40'
                           }`}
                         >
                           EN
@@ -271,4 +271,4 @@ const Navbar = () => {
   );
 };
 
-export default React.memo(Navbar); 
+export default Navbar; 

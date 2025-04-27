@@ -5,11 +5,18 @@
 @tailwind utilities;
 
 :root {
-  background-color: #121212;
+  --caribbean-current: #005f6a;
+  --magnolia: #f8f1ff;
+  --thistle: #decdf5;
+  --dim-gray: #656176;
+  --onyx: #3e3e3e;
+  --gold: #d4af37;
+  
+  background-color: var(--onyx);
 }
 
 html, body {
-  background-color: #121212;
+  background-color: var(--onyx);
   min-height: 100%;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -22,7 +29,7 @@ html::-webkit-scrollbar {
 @layer base {
   body {
     @apply font-body bg-dark text-light overflow-x-hidden;
-    background-color: #121212 !important;
+    background-color: var(--onyx) !important;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -46,10 +53,29 @@ header nav a::after {
   bottom: -4px;
   width: 0;
   height: 2px;
-  background-color: #FF6B35;
+  background-color: var(--gold);
   transition: width 0.3s ease-in-out;
 }
 
 header nav a:hover::after {
   width: 100%;
+}
+
+/* Page transition effect */
+.page-transition-enter {
+  opacity: 0;
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
 }

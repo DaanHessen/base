@@ -56,21 +56,21 @@ const Home = () => {
         <div className="flex flex-col items-start text-left sm:pl-8 md:pl-16">
           <h1 
             ref={titleRef}
-            className="text-5xl sm:text-6xl md:text-7xl font-bold text-pastel-light mb-6 leading-tight opacity-0 transform translate-y-4 transition-all duration-300"
+            className="text-5xl sm:text-6xl md:text-7xl font-bold text-magnolia mb-6 leading-tight opacity-0 transform translate-y-4 transition-all duration-300"
             dangerouslySetInnerHTML={{ __html: homeData.hero.title[language] }}
           >
           </h1>
           
           <h2 
             ref={subtitleRef}
-            className="text-xl sm:text-2xl text-pastel-medium mb-8 font-light tracking-wide opacity-0 transform translate-y-4 transition-all duration-300"
+            className="text-xl sm:text-2xl text-thistle mb-8 font-light tracking-wide opacity-0 transform translate-y-4 transition-all duration-300"
           >
             {homeData.hero.subtitle[language]}
           </h2>
           
           <div 
             ref={contentRef}
-            className="text-base sm:text-lg text-pastel-dark opacity-0 transform translate-y-4 transition-all duration-300"
+            className="text-base sm:text-lg text-thistle opacity-0 transform translate-y-4 transition-all duration-300"
           >
             <p className="mb-8 leading-relaxed max-w-2xl">
               {homeData.hero.description[language]}
@@ -78,13 +78,13 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-5">
               <Link 
                 to="/about" 
-                className="px-6 py-3 bg-accent hover:bg-accent/90 text-white font-medium rounded transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+                className="px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded transition-all duration-300 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px]"
               >
                 {homeData.buttons.reservation[language]}
               </Link>
               <Link 
                 to="/menu" 
-                className="px-6 py-3 border-2 border-pastel-light/20 text-pastel-light hover:bg-pastel-light/10 font-medium rounded transition-all duration-300 hover:border-pastel-light/40 hover:scale-105"
+                className="px-6 py-3 border-2 border-magnolia/20 text-magnolia hover:bg-magnolia/10 font-medium rounded transition-all duration-300 hover:border-magnolia/40 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px]"
               >
                 {homeData.buttons.menu[language]}
               </Link>

@@ -104,39 +104,39 @@ const Footer = () => {
   }, [formData, language]);
 
   return (
-    <footer className="bg-dark text-pastel-light pt-8 pb-6 relative">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gray-800"></div>
+    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative">
+      <div className="absolute top-0 left-0 right-0 h-px bg-dim-gray/30"></div>
       
       <div className="max-w-screen-xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="flex flex-col space-y-4">
             <div className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <button 
-                className="text-sm hover:text-accent transition-colors duration-200 text-left"
+                className="text-sm hover:text-gold transition-colors duration-200 text-left"
                 onClick={() => openMaps(footerData.footer.address)}
               >
                 {footerData.footer.address}
               </button>
             </div>
             <div className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
               <button 
-                className="text-sm hover:text-accent transition-colors duration-200"
+                className="text-sm hover:text-gold transition-colors duration-200"
                 onClick={() => copyToClipboard(footerData.footer.phone, 'Phone number')}
               >
                 {footerData.footer.phone}
               </button>
             </div>
             <div className="flex items-start">
-              <FaEnvelope className="h-5 w-5 mr-3 mt-0.5 text-accent" />
+              <FaEnvelope className="h-5 w-5 mr-3 mt-0.5 text-gold" />
               <button 
-                className="text-sm hover:text-accent transition-colors duration-200"
+                className="text-sm hover:text-gold transition-colors duration-200"
                 onClick={() => copyToClipboard(footerData.footer.email, 'Email')}
               >
                 {footerData.footer.email}
@@ -145,7 +145,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col space-y-2">
-            <h3 className="text-accent text-sm font-medium mb-2 uppercase tracking-wide">
+            <h3 className="text-gold text-sm font-medium mb-2 uppercase tracking-wide">
               {footerData.footer.translations.openingHours[language]}
             </h3>
             <div className="grid grid-cols-2 gap-1 text-sm">
@@ -173,14 +173,14 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col">
-            <h3 className="text-accent text-sm font-medium mb-4 uppercase tracking-wide">
+            <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
               {footerData.footer.translations.followUs[language]}
             </h3>
             <div className="flex items-center space-x-6 mb-6">
-              <a href={footerData.footer.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors duration-200" aria-label="Instagram">
+              <a href={footerData.footer.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="text-magnolia hover:text-gold transition-colors duration-200" aria-label="Instagram">
                 <FaInstagram size={24} />
               </a>
-              <a href={footerData.footer.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="text-pastel-light hover:text-accent transition-colors duration-200" aria-label="LinkedIn">
+              <a href={footerData.footer.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="text-magnolia hover:text-gold transition-colors duration-200" aria-label="LinkedIn">
                 <FaLinkedin size={24} />
               </a>
               <a 
@@ -203,7 +203,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col">
-            <h3 className="text-accent text-sm font-medium mb-4 uppercase tracking-wide">
+            <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
               {language === 'nl' ? 'Stuur ons een bericht' : 'Send us a message'}
             </h3>
             
@@ -221,7 +221,7 @@ const Footer = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email"
-                  className="w-full bg-gray-800/70 text-white border border-gray-700/50 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/70 focus:border-transparent transition-all"
+                  className="w-full bg-dim-gray/20 text-magnolia border border-dim-gray/30 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold/70 focus:border-transparent transition-all"
                   aria-label="Email"
                 />
               </div>
@@ -233,14 +233,14 @@ const Footer = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   placeholder={language === 'nl' ? 'Uw bericht' : 'Your message'}
-                  className="w-full bg-gray-800/70 text-white border border-gray-700/50 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent/70 focus:border-transparent transition-all"
+                  className="w-full bg-dim-gray/20 text-magnolia border border-dim-gray/30 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold/70 focus:border-transparent transition-all"
                   aria-label={language === 'nl' ? 'Uw bericht' : 'Your message'}
                 ></textarea>
               </div>
               
               <button 
                 type="submit" 
-                className="px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm font-medium rounded-lg transition-all shadow-lg hover:shadow-accent/20 w-full"
+                className="px-4 py-2 bg-gold hover:bg-gold/90 text-onyx text-sm font-medium rounded-lg transition-all shadow-lg hover:shadow-gold/20 w-full"
               >
                 {language === 'nl' ? 'Versturen' : 'Send'}
               </button>
@@ -248,14 +248,16 @@ const Footer = () => {
           </div>
         </div>
 
-        {copyMessage && (
-          <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 bg-accent text-white px-4 py-2 rounded-md shadow-lg z-50 transition-opacity duration-300">
-            {copyMessage}
+        <div className="flex flex-col md:flex-row justify-between items-center mt-8 pt-8 border-t border-dim-gray/30">
+          <div className="text-xs text-thistle mb-4 md:mb-0 text-center md:text-left">
+            &copy; {currentYear} BASE. {language === 'nl' ? 'Alle rechten voorbehouden.' : 'All rights reserved.'}
           </div>
-        )}
-        
-        <div className="mt-8 pt-4 border-t border-gray-800 text-center">
-          <p className="text-xs font-medium opacity-80">© {currentYear} BASE</p>
+          
+          {copyMessage && (
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-caribbean-current text-magnolia rounded-lg text-sm shadow-lg z-50">
+              {copyMessage}
+            </div>
+          )}
         </div>
       </div>
 

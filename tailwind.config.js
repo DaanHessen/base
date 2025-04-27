@@ -6,11 +6,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#4F46E5",
-        secondary: "#10B981",
-        accent: "#FF6B35",
-        dark: "#121212",
-        light: "#E8E9EC",
+        primary: "#005f6a",
+        secondary: "#decdf5",
+        accent: "#d4af37",
+        dark: "#3e3e3e",
+        light: "#f8f1ff",
+        "dim-gray": "#656176",
+        gold: "#d4af37",
+        "caribbean-current": "#005f6a",
+        magnolia: "#f8f1ff",
+        thistle: "#decdf5",
+        onyx: "#3e3e3e",
       },
       fontFamily: {
         sans: ['Outfit', 'ui-sans-serif', 'system-ui'],
@@ -22,13 +28,13 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       backgroundColor: {
-        'dark-gradient': '#121212',
+        'dark-gradient': '#3e3e3e',
       },
       textColor: {
         'pastel': {
-          'light': '#E8E9EC',
-          'medium': '#D1D2D6',
-          'dark': '#ABACB3',
+          'light': '#f8f1ff',
+          'medium': '#decdf5',
+          'dark': '#656176',
         }
       }
     },

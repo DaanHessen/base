@@ -1,16 +1,16 @@
 {
   "hero": {
     "title": {
-      "nl": "Lorem <span class=\"text-accent\">ipsum</span>",
-      "en": "Lorem <span class=\"text-accent\">ipsum</span>"
+      "nl": "BASE <span class=\"text-gold\">By Monsees</span>",
+      "en": "BASE <span class=\"text-gold\">By Monsees</span>"
     },
     "subtitle": {
-      "nl": "Lorem ipsum dolor sit amet consectetur",
-      "en": "Lorem ipsum dolor sit amet consectetur"
+      "nl": "De gezelligste streetfood bar in Hilversum",
+      "en": "The most cozy streetfood bar in Hilversum"
     },
     "description": {
-      "nl": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      "nl": "Met de verhuizing van Monsees naar 's-Graveland, werd het tijd voor iets nieuws. BASE is een nieuwe streetfood bar gelegen op de Biersteeg in Hilversum. De beste cocktails, gepaard met het beste streetfood.",
+      "en": "With the move of Monsees to 's-Graveland, it was time for something new. BASE is a new streetfood bar located on the Biersteeg in Hilversum. The best cocktails, paired with the best streetfood."
     }
   },
   "buttons": {
@@ -19,8 +19,8 @@
       "en": "make a reservation"
     },
     "menu": {
-      "nl": "bekijk het menu",
-      "en": "view the menu"
+      "nl": "bekijk ons menu",
+      "en": "view our menu"
     }
   }
 }
