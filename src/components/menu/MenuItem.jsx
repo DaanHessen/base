@@ -41,10 +41,10 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       onTouchStart={() => setIsHovered(!isHovered)}
     >
       {/* Neon border effect with visible dimmed initial state */}
-      <div className="absolute top-0 left-0 w-0 h-0.5 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:w-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
-      <div className="absolute top-0 right-0 w-0.5 h-0 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:h-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
-      <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:w-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
-      <div className="absolute bottom-0 left-0 w-0.5 h-0 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:h-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
+      <div className="absolute top-0 left-0 w-full h-0.5 bg-gold/30 shadow-[0_0_3px_0px_rgba(212,175,55,0.15)] transition-all duration-300 group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
+      <div className="absolute top-0 right-0 w-0.5 h-full bg-gold/30 shadow-[0_0_3px_0px_rgba(212,175,55,0.15)] transition-all duration-300 group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
+      <div className="absolute bottom-0 right-0 w-full h-0.5 bg-gold/30 shadow-[0_0_3px_0px_rgba(212,175,55,0.15)] transition-all duration-300 group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
+      <div className="absolute bottom-0 left-0 w-0.5 h-full bg-gold/30 shadow-[0_0_3px_0px_rgba(212,175,55,0.15)] transition-all duration-300 group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
       
       <div className="p-2 sm:p-3 flex flex-col h-full relative">
         <div className="flex justify-between items-start mb-2">

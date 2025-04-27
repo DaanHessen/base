@@ -2,8 +2,8 @@
   "hero": {
     "title": "Welcome to <span class=\"text-gold\">BASE</span>",
     "subtitle": "The streetfood bar at the Groest in Hilversum - Opening soon!",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-  },
+    "description": " with the moving of Monsees to 's-Graveland, it's time for something new. BASE is a new streetfood bar located at the Biersteeg in Hilversum. The best cocktails paired with the best streetfood."
+  }, 
   "buttons": {
     "reservation": "Reserve Now",
     "menu": "View Menu"
