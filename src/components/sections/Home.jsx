@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { getLanguage } from '../../utils/language';
 
 function Home() {
   const { t, i18n } = useTranslation(['home', 'common']);
   const currentLang = i18n.language;
 
-  // Animation variants
+  // Helper function to generate properly localized paths
+  const getLocalizedPath = (basePath) => {
+    const lang = getLanguage();
+    if (lang === 'en') return `/en${basePath}`;
+    return basePath;
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,7 +57,7 @@ function Home() {
         <meta name="og:description" content={t('home:seo.description')} />
       </Helmet>
       
-      <section className="min-h-screen flex items-center pt-16 md:pt-0">
+      <section className="min-h-screen flex items-center pt-20 pb-12 sm:pt-16 md:pt-0 md:pb-0">
         <div className="w-full px-5 sm:px-8 max-w-screen-xl mx-auto">
           <motion.div 
             className="flex flex-col items-center md:items-start text-center md:text-left"
@@ -59,20 +66,22 @@ function Home() {
             animate="visible"
           >
             <motion.h1 
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight"
               variants={itemVariants}
               dangerouslySetInnerHTML={{ __html: t('home:hero.title') }}
             />
             
-            <motion.h2 
-              className="text-lg sm:text-xl md:text-2xl text-thistle mb-6 sm:mb-8 font-light tracking-wide max-w-xl"
-              variants={itemVariants}
-            >
-              {t('home:hero.subtitle')}
-            </motion.h2>
+            <motion.div className="relative mb-5 sm:mb-6" variants={itemVariants}>
+              <motion.h2 
+                className="text-lg sm:text-xl md:text-2xl text-thistle font-light tracking-wide max-w-xl relative z-10"
+              >
+                {t('home:hero.subtitle')}
+              </motion.h2>
+              <div className="absolute -left-3 -right-3 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10 hidden xs:block"></div>
+            </motion.div>
             
             <motion.div
-              className="text-base sm:text-lg text-thistle max-w-2xl"
+              className="text-sm sm:text-base md:text-lg text-thistle max-w-2xl backdrop-blur-sm sm:backdrop-blur-none px-4 py-3 sm:p-0 rounded-lg sm:rounded-none bg-onyx/50 sm:bg-transparent"
               variants={itemVariants}
             >
               <p className="mb-6 sm:mb-8 leading-relaxed">
@@ -80,29 +89,40 @@ function Home() {
               </p>
               
               <motion.div 
-                className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+                className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-center md:justify-start"
                 variants={itemVariants}
               >
                 <Link 
-                  to="/about" 
-                  className="px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center"
+                  to={getLocalizedPath('/about')} 
+                  className="px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto"
                 >
                   {t('home:buttons.reservation')}
                 </Link>
                 <Link 
-                  to="/menu" 
-                  className="px-6 py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center"
+                  to={getLocalizedPath('/menu')} 
+                  className="px-6 py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto"
                 >
                   {t('home:buttons.menu')}
                 </Link>
               </motion.div>
             </motion.div>
             
-            {/* Mobile decoration - subtle visual element */}
             <motion.div 
-              className="w-24 h-1 bg-gold/50 mt-12 rounded-full block md:hidden mx-auto"
+              className="w-24 h-1 bg-gold/70 mt-12 rounded-full block md:hidden mx-auto shadow-[0_0_10px_rgba(212,175,55,0.5)]"
               variants={decorationVariants}
             />
+            
+            <motion.div 
+              className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gold/70 md:hidden"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.5 }}
+            >
+              <div className="text-xs font-light mb-2">{t('home:scrollForMore')}</div>
+              <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
+            </motion.div>
           </motion.div>
         </div>
       </section>

@@ -1,22 +1,29 @@
 import Cookies from 'js-cookie';
 import i18n from 'i18next';
 
-const LANGUAGE_COOKIE = 'base_language';
+const LANGUAGE_KEY = 'base_language';
 const DEFAULT_LANGUAGE = 'nl';
 const COOKIE_EXPIRES = 365;
 
 export const getLanguage = () => {
-  return Cookies.get(LANGUAGE_COOKIE) || DEFAULT_LANGUAGE;
+  // Try localStorage first, then cookie, then default
+  const localStorageLang = localStorage.getItem(LANGUAGE_KEY);
+  const cookieLang = Cookies.get(LANGUAGE_KEY);
+  
+  // Return the first available value, with priority to localStorage
+  return localStorageLang || cookieLang || DEFAULT_LANGUAGE;
 };
 
 export const setLanguage = (lang) => {
   if (lang !== getLanguage()) {
-    Cookies.set(LANGUAGE_COOKIE, lang, { expires: COOKIE_EXPIRES, sameSite: 'strict' });
+    // Save to both localStorage and cookies for redundancy
+    localStorage.setItem(LANGUAGE_KEY, lang);
+    Cookies.set(LANGUAGE_KEY, lang, { expires: COOKIE_EXPIRES, sameSite: 'strict' });
     
-    // Update i18n instance
+    // Update i18next
     i18n.changeLanguage(lang);
     
-    // Dispatch a custom event for components that need to respond to language changes
+    // Dispatch event for any listeners
     window.dispatchEvent(new CustomEvent('languageChange', { detail: { language: lang } }));
   }
 }; 

@@ -5,7 +5,6 @@ import App from './App';
 import './i18n';
 import { HelmetProvider } from 'react-helmet-async';
 
-// Loading indicator component
 const LoadingIndicator = () => (
   <div className="min-h-screen flex items-center justify-center bg-onyx">
     <div className="flex space-x-2">

@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaMapMarkerAlt, FaParking } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaParking, FaClock, FaPhone } from 'react-icons/fa';
 import Image from '../../assets/loes-en-sander.jpg';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 
-// Simple Skeleton Component for the Map
 const MapSkeleton = () => (
-  <div className="w-full h-full min-h-[300px] md:min-h-[350px] bg-gray-800/50 animate-pulse flex items-center justify-center rounded-l-2xl md:rounded-l-none md:rounded-tl-2xl md:rounded-bl-2xl">
+  <div className="w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] bg-gray-800/50 animate-pulse flex items-center justify-center rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl">
     <FaMapMarkerAlt className="text-gold/50 text-4xl" />
   </div>
 );
@@ -17,7 +16,6 @@ function AboutUs() {
   const { t, i18n } = useTranslation(['about', 'common']);
   const currentLang = i18n.language;
 
-  // Load map after a short delay
   useEffect(() => {
     const mapLoadTimer = setTimeout(() => {
       setMapLoaded(true);
@@ -28,11 +26,10 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // TODO: figure out if it's fucked up to have my api key hardcoded, what the hell will someone do with my maps API key anyway
-    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.014162410744!2d5.1784721!3d52.2249605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66b69ba0738fb%3A0x9e7195eb6bb4517!2sBiersteeg%2010%2C%201211%20GC%20Hilversum!5e0!3m2!1snl!2snl!4v1745785019407!5m2!1snl!2snl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
+    // TODO: figure out how fucked up it is to have my maps api key hardcoded, but what the hell will someone do with my maps api key anyway?
+    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.014162410744!2d5.1784721!3d52.2249605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66b69ba0738fb%3A0x9e7195eb6bb4517!2sBiersteeg%2010%2C%201211%20GC%20Hilversum!5e0!3m2!1snl!2snl!4v1745785019407!5m2!1snl!2snl`
   }, [t]);
 
-  // Animation variants (similar to Home.jsx)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -65,39 +62,27 @@ function AboutUs() {
         <meta name="og:description" content={t('about:seo.description')} />
       </Helmet>
       
-      <section className="py-16 pt-36 sm:pt-48">
+      <section className="py-14 pt-32 sm:pt-40 md:pt-48">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div 
-            className="space-y-16"
+            className="space-y-12 sm:space-y-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             <motion.div variants={itemVariants}>
-              <h1 className="text-3xl sm:text-4xl font-heading font-semibold text-magnolia mb-6 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-magnolia mb-4 sm:mb-6 leading-tight">
                 {t('about:title')}
               </h1>
-              <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
+              <div className="w-14 sm:w-16 md:w-20 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)]"></div>
             </motion.div>
             
             <motion.div variants={itemVariants}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-                <div className="md:col-span-2">
-                  {[0, 1].map((index) => (
-                    <div key={index} className={`${index > 0 ? 'mt-8' : ''}`}>
-                      <h3 className="text-lg sm:text-xl font-semibold text-magnolia mb-3">
-                        {t(`about:sections.${index}.title`)}
-                      </h3>
-                      <div className="text-thistle font-light text-base sm:text-lg leading-relaxed">
-                        {t(`about:sections.${index}.content`)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex items-center justify-center">
-                  <div className="w-full max-w-xs sm:max-w-sm mx-auto">
-                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-lg relative group">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8">
+                {/* Mobile image placement */}
+                <div className="block md:hidden">
+                  <div className="w-full max-w-xs mx-auto mb-6">
+                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group">
                       <img 
                         src={Image} 
                         alt={t('about:imageAlt', 'Loes & Sander')}
@@ -106,6 +91,37 @@ function AboutUs() {
                         width="600"
                         height="800"
                       />
+                      <div className="absolute inset-0 shadow-inner pointer-events-none border border-white/10 rounded-lg"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="md:col-span-2">
+                  {[0, 1].map((index) => (
+                    <div key={index} className={`${index > 0 ? 'mt-6 sm:mt-8' : ''}`}>
+                      <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
+                        {t(`about:sections.${index}.title`)}
+                      </h3>
+                      <div className="text-thistle font-light text-sm sm:text-base leading-relaxed">
+                        {t(`about:sections.${index}.content`)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Desktop image placement */}
+                <div className="hidden md:flex items-center justify-center">
+                  <div className="w-full max-w-xs sm:max-w-sm mx-auto">
+                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group">
+                      <img 
+                        src={Image} 
+                        alt={t('about:imageAlt', 'Loes & Sander')}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                        width="600"
+                        height="800"
+                      />
+                      <div className="absolute inset-0 shadow-inner pointer-events-none border border-white/10 rounded-lg"></div>
                     </div>
                   </div>
                 </div>
@@ -113,18 +129,20 @@ function AboutUs() {
             </motion.div>
           
             <motion.div variants={itemVariants}>
-              <h2 className="text-3xl sm:text-4xl font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight">
-                {t('about:location.title')}
-              </h2>
-              <div className="w-16 sm:w-20 h-1 bg-gold mb-6"></div>
+              <div className="py-4">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight">
+                  {t('about:location.title')}
+                </h2>
+                <div className="w-14 sm:w-16 md:w-20 h-1 bg-gold mb-6 shadow-[0_0_10px_rgba(212,175,55,0.3)]"></div>
+              </div>
               
-              <div className="bg-onyx/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl border border-gray-800/30">
+              <div className="bg-onyx/60 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-800/30">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                   <div className="md:col-span-3 h-full">
                     {!mapLoaded ? (
                       <MapSkeleton />
                     ) : (
-                      <div className="w-full h-full min-h-[300px] md:min-h-[350px] relative rounded-l-2xl md:rounded-l-none md:rounded-tl-2xl md:rounded-bl-2xl overflow-hidden">
+                      <div className="w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] relative rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl overflow-hidden">
                         <iframe
                           title="Location Map"
                           width="100%"
@@ -139,10 +157,10 @@ function AboutUs() {
                     )}
                   </div>
                   
-                  <div className="md:col-span-2 p-6 sm:p-8 md:border-l border-gray-800/30">
-                    <div className="space-y-6">
+                  <div className="md:col-span-2 p-5 sm:p-6 md:p-8 md:border-l border-gray-800/30">
+                    <div className="space-y-5 sm:space-y-6">
                       <div className="flex items-start">
-                        <FaMapMarkerAlt className="text-gold text-xl sm:text-2xl mt-1 mr-3 shrink-0" />
+                        <FaMapMarkerAlt className="text-gold text-xl mt-1 mr-3 shrink-0" />
                         <div>
                           <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Adres' : 'Address'}
@@ -151,14 +169,40 @@ function AboutUs() {
                         </div>
                       </div>
                       
+                      {/* <div className="flex items-start">
+                        <FaClock className="text-gold text-xl mt-1 mr-3 shrink-0" />
+                        <div>
+                          <h4 className="text-magnolia font-medium mb-1">
+                            {currentLang === 'nl' ? 'Openingstijden' : 'Opening Hours'}
+                          </h4>
+                          <p className="text-thistle text-sm sm:text-base">
+                            {t('about:location.openingHours', 'Mon-Thu: 16:00-00:00\nFri-Sat: 16:00-01:00\nSun: Closed')}
+                          </p>
+                        </div>
+                      </div> */}
+                      
                       <div className="flex items-start">
-                        <FaParking className="text-gold text-xl sm:text-2xl mt-1 mr-3 shrink-0" />
+                        <FaParking className="text-gold text-xl mt-1 mr-3 shrink-0" />
                         <div>
                           <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Parkeren' : 'Parking'}
                           </h4>
                           <p className="text-thistle text-sm sm:text-base">{t('about:location.parking')}</p>
                         </div>
+                      </div>
+                      
+                      <div className="pt-2 mt-2 border-t border-gray-800/30">
+                        <a 
+                          href="https://maps.google.com/?q=Biersteeg+10,+1211+GC+Hilversum" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center w-full py-3 px-4 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-lg text-gold transition-all duration-200 mt-2"
+                        >
+                          <span className="mr-2">{currentLang === 'nl' ? 'Routebeschrijving' : 'Get Directions'}</span>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                          </svg>
+                        </a>
                       </div>
                     </div>
                   </div>

@@ -22,14 +22,12 @@ const AppContent = () => {
   
   return (
     <Routes location={location}>
-      {/* Default Dutch routes */}
       <Route path="/" element={<Layout><Home /></Layout>} />
       <Route path="/menu" element={<Layout><FoodMenu /></Layout>} />
       <Route path="/menu/food" element={<Layout><FoodMenu /></Layout>} />
       <Route path="/menu/drinks" element={<Layout><DrinksMenu /></Layout>} />
       <Route path="/about" element={<Layout><AboutUs /></Layout>} />
       
-      {/* English routes */}
       <Route path="/en" element={<Layout><Home /></Layout>} />
       <Route path="/en/menu" element={<Layout><FoodMenu /></Layout>} />
       <Route path="/en/menu/food" element={<Layout><FoodMenu /></Layout>} />

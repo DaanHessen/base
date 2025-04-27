@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+// import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieConsent from '../CookieConsent';
@@ -15,10 +15,9 @@ function Layout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
-  const nodeRef = useRef(null); 
+  // const nodeRef = useRef(null); 
   const bgRef = useRef(null);
   
-  // Extract the base path without language prefix
   const getBasePath = (path) => {
     if (path.startsWith('/en')) return path.substring(3);
     return path;
@@ -26,7 +25,6 @@ function Layout({ children }) {
   
   const currentPath = getBasePath(location.pathname);
 
-  // Detect mobile screen
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -40,12 +38,10 @@ function Layout({ children }) {
     };
   }, []);
 
-  // Improved background handling
   useEffect(() => {
     const isHome = currentPath === '/';
     setIsHomePage(isHome);
     
-    // Preload the image
     if (isHome) {
       const img = new Image();
       img.src = '/home_placeholder.jpg';
@@ -53,19 +49,14 @@ function Layout({ children }) {
         setBgImage('/home_placeholder.jpg');
       };
       
-      // Set fallback in case image doesn't load
       const timeout = setTimeout(() => {
         if (!bgImage) setBgImage('/home_placeholder.jpg');
       }, 100);
       
       return () => clearTimeout(timeout);
-    } else {
-      // When leaving homepage, keep the image but apply zero opacity via CSS
-      // This prevents the background from disappearing abruptly
     }
   }, [currentPath]);
 
-  // Animation variants for page transitions
   const pageVariants = {
     initial: { opacity: 0, y: 8 },
     animate: { 
@@ -81,7 +72,6 @@ function Layout({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-onyx overflow-x-hidden">
-      {/* Background with improved transition */}
       <div 
         ref={bgRef}
         className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'}`}
@@ -93,7 +83,6 @@ function Layout({ children }) {
         }}
       ></div>
       
-      {/* Main Content - Ensure it's above the background */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Helmet>
           <html lang={currentLang} />

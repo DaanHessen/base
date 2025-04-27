@@ -21,7 +21,7 @@
   "cookieConsent": {
     "title": "Cookie Melding",
     "description": "Wij gebruiken cookies om je de beste ervaring te bieden op onze website. Door onze site te gebruiken, ga je akkoord met ons cookiebeleid.",
-    "accept": "Accepteren",
+    "accept": "Is goed!",
     "settings": "Cookie Instellingen"
   },
   "loading": "Laden",
@@ -31,7 +31,7 @@
   },
   "footer": {
     "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
-    "copyright": "© {year} BASE. Alle rechten voorbehouden.",
+    "copyright": "© {year} BASE.",
     "monday": "Maandag",
     "tuesday": "Dinsdag",
     "wednesday": "Woensdag",

@@ -1,22 +1,21 @@
 import React, { useState, useCallback } from 'react';
 import { FaInstagram, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
-import monseesLogo from '../../assets/monsees.svg';
+import monseesLogo from '../../assets/monsees-optimized.svg';
 
-// Helper component for consistent social icon links
 const SocialIconLink = ({ href, label, children }) => (
   <a 
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="text-magnolia hover:text-gold transition-colors duration-200 group" // Added group for targeting child img
+    className="text-magnolia hover:text-gold transition-colors duration-200 group"
     aria-label={label}
   >
     {children}
   </a>
 );
 
-// Custom component specifically for Monsees logo with proper transitions
+// TODO: fix the hover shit: it's black now and it doesn't have a transition. TOO LAZY NOW
 const MonseesLink = ({ href, label }) => (
   <a 
     href={href} 
@@ -64,17 +63,15 @@ function Footer() {
     setFormData(prev => ({ ...prev, [id]: value }));
   }, []);
 
-  // Updated handleSubmit for mailto functionality
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const subject = encodeURIComponent(currentLang === 'nl' ? 'Nieuwsbrief aanmelding/bericht' : 'Newsletter sign-up/message');
     const body = encodeURIComponent(`${currentLang === 'nl' ? 'Bericht van' : 'Message from'}: ${formData.email}\n\n${formData.message}`);
     const mailtoLink = `mailto:${t('footer.contact.email')}?subject=${subject}&body=${body}`;
     
-    // Try to open mail client
     try {
       window.location.href = mailtoLink;
-      setFormStatus('success'); // Assume success if mailto link opens
+      setFormStatus('success');
       setFormData({ email: '', message: '' });
       setTimeout(() => setFormStatus(null), 3000);
     } catch (error) {
@@ -150,7 +147,6 @@ function Footer() {
               <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
                 <FaLinkedin size={24} />
               </SocialIconLink>
-              {/* Replaced with specialized component for proper hover effect */}
               <MonseesLink href="https://monsees.nl" label="Monsees" />
             </div>
           </div>

@@ -38,7 +38,6 @@ const Logo = ({ className }) => {
     const logo = logoRef.current;
     const glowLayer = glowLayerRef.current;
 
-    // Immediately set initial non-animated state
     logo.style.filter = states.initial.filter;
     glowLayer.style.background = states.initial.glow;
     glowLayer.style.opacity = states.initial.intensity;
@@ -54,8 +53,6 @@ const Logo = ({ className }) => {
       glowLayer.style.opacity = state.intensity;
     };
     
-    // Simple clean animation (no flickering) for performance
-    // Use requestAnimationFrame to ensure initial styles are applied before animation starts
     const startupSequence = () => {
       requestAnimationFrame(() => {
         applyState(states.bright, 300);
@@ -75,17 +72,17 @@ const Logo = ({ className }) => {
         ref={glowLayerRef}
         className="absolute -inset-6 z-0 opacity-0 blur-md"
         aria-hidden="true"
-        style={{ background: states.initial.glow, opacity: states.initial.intensity }} // Apply initial style
+        style={{ background: states.initial.glow, opacity: states.initial.intensity }}
       ></div>
       
       <img 
         ref={logoRef}
         src={logo} 
         alt="BASE" 
-        className="relative z-10 w-auto max-h-24 md:max-h-28 lg:max-h-32"
+        className="relative z-10 w-auto max-h-28 md:max-h-32 lg:max-h-40"
         style={{
-          maxHeight: 'clamp(6rem, 8vw + 3rem, 8rem)',
-          filter: states.initial.filter // Apply initial style
+          maxHeight: 'clamp(7.5rem, 9vw + 3.5rem, 10rem)',
+          filter: states.initial.filter
         }}
         loading="eager"
         fetchpriority="high"

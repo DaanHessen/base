@@ -12,16 +12,13 @@ function Menu() {
   const foodRef = useRef(null);
   const drinksRef = useRef(null);
 
-  // Handle scrolling based on hash
   useEffect(() => {
-    // Add slight delay to ensure scroll happens after render/animation
     const scrollTimer = setTimeout(() => {
       if (location.hash === '#food' && foodRef.current) {
         foodRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else if (location.hash === '#drinks' && drinksRef.current) {
         drinksRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
-        // If no hash and we're on the menu page, scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }, 100);
@@ -32,7 +29,6 @@ function Menu() {
   const foodCategories = menuData.categories.filter(cat => cat.id !== 'drinks');
   const drinksCategory = menuData.categories.find(cat => cat.id === 'drinks');
 
-  // Styled heading component with improved typography
   const SectionHeading = ({ children, id }) => (
     <div className="relative text-center mb-12">
       <h2 className="inline-block relative z-10 px-8 py-2 font-heading font-bold text-4xl sm:text-5xl text-magnolia">
@@ -44,7 +40,6 @@ function Menu() {
     </div>
   );
 
-  // Styled category heading with improved typography
   const CategoryHeading = ({ children }) => (
     <div className="relative mb-8 mt-4">
       <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-gold inline-block pr-4">
@@ -68,7 +63,6 @@ function Menu() {
       
       <section className="py-14 pt-40 sm:pt-48 overflow-hidden">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 w-full">
-          {/* Food Menu Section */}
           <div id="food" ref={foodRef} className="mb-16 home-title">
             <SectionHeading>
               {currentLang === 'nl' ? 'Eten' : 'Food'}
@@ -91,7 +85,6 @@ function Menu() {
             </div>
           </div>
 
-          {/* Drinks Menu Section */}
           {drinksCategory && (
             <div id="drinks" ref={drinksRef} className="home-content">
               <SectionHeading>
