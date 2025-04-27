@@ -54,11 +54,20 @@ function Navbar() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Disable body scroll when mobile menu is open
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeoutRef.current);
+      document.body.style.overflow = '';
     };
-  }, [handleScroll]);
+  }, [handleScroll, mobileMenuOpen]);
   
   const changeLanguage = useCallback((lang) => {
     i18n.changeLanguage(lang);
@@ -119,7 +128,7 @@ function Navbar() {
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-        scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-2' : 'bg-transparent py-8'
+        scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-2' : 'bg-transparent py-4 md:py-8'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,7 +296,7 @@ function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
+              className="inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 relative z-50"
               aria-expanded={mobileMenuOpen}
             >
               {/* Hamburger/Close Icons */} 
@@ -298,7 +307,7 @@ function Navbar() {
         </div>
       </div>
       
-      {/* Mobile menu - fullscreen with blur background */} 
+      {/* Mobile menu - improved fullscreen design */} 
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
@@ -306,98 +315,104 @@ function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 backdrop-blur-md bg-onyx/80 flex items-center justify-center"
+            className="fixed inset-0 z-40 bg-gradient-to-b from-onyx/95 to-onyx/90 backdrop-blur-md flex flex-col justify-between overflow-y-auto"
           >
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="w-full max-w-md px-6 py-8"
-            >
-              <div className="space-y-6">
+            <div className="flex-1 flex flex-col justify-center px-6 py-4">              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="space-y-6 max-w-sm mx-auto"
+              >
                 <Link
                   to={getLocalizedPath('/', currentLang)}
-                  className={`block py-3 text-xl font-medium text-center ${
-                    currentPath === '/' ? 'text-gold' : 'text-magnolia hover:text-gold transition-colors duration-300'
-                  }`}
+                  className={`block py-3 text-center text-xl font-medium rounded-lg ${
+                    currentPath === '/' 
+                      ? 'text-onyx bg-gold shadow-md' 
+                      : 'text-gold border border-gold/30 hover:bg-gold/10'
+                  } transition-all duration-200`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {t('navigation.home')}
                 </Link>
                 
-                {/* Mobile Menu Links */}
-                <div className="py-2 text-xl font-medium text-gold text-center">{t('navigation.menu')}</div>
+                {/* Food Menu Link */}
                 <Link
                   to={getLocalizedPath('/menu/food', currentLang)}
-                  className={`block py-3 text-center text-lg font-medium ${
+                  className={`flex items-center justify-center py-3 text-xl font-medium rounded-lg ${
                     currentPath === '/menu' || currentPath === '/menu/food' 
-                      ? 'text-gold' 
-                      : 'text-thistle hover:text-gold transition-colors duration-300'
-                  }`}
+                      ? 'text-onyx bg-gold shadow-md' 
+                      : 'text-gold border border-gold/30 hover:bg-gold/10'
+                  } transition-all duration-200`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <div className="flex items-center justify-center">
-                    <span className="mr-2">🍽️</span>
-                    {currentLang === 'nl' ? 'Eten' : 'Food'}
-                  </div>
-                </Link>
-                <Link
-                  to={getLocalizedPath('/menu/drinks', currentLang)}
-                  className={`block py-3 text-center text-lg font-medium ${
-                    currentPath === '/menu/drinks' 
-                      ? 'text-gold' 
-                      : 'text-thistle hover:text-gold transition-colors duration-300'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <div className="flex items-center justify-center">
-                    <span className="mr-2">🍹</span>
-                    {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
-                  </div>
+                  <span className="mr-2">🍽️</span>
+                  {currentLang === 'nl' ? 'Eten' : 'Food'}
                 </Link>
                 
+                {/* Drinks Menu Link */}
+                <Link
+                  to={getLocalizedPath('/menu/drinks', currentLang)}
+                  className={`flex items-center justify-center py-3 text-xl font-medium rounded-lg ${
+                    currentPath === '/menu/drinks' 
+                      ? 'text-onyx bg-gold shadow-md' 
+                      : 'text-gold border border-gold/30 hover:bg-gold/10'
+                  } transition-all duration-200`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="mr-2">🍹</span>
+                  {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
+                </Link>
+                
+                {/* About Link */}
                 <Link
                   to={getLocalizedPath('/about', currentLang)}
-                  className={`block py-3 text-xl font-medium text-center ${
-                    currentPath === '/about' ? 'text-gold' : 'text-magnolia hover:text-gold transition-colors duration-300'
-                  }`}
+                  className={`block py-3 text-center text-xl font-medium rounded-lg ${
+                    currentPath === '/about' 
+                      ? 'text-onyx bg-gold shadow-md' 
+                      : 'text-gold border border-gold/30 hover:bg-gold/10'
+                  } transition-all duration-200`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {t('navigation.about')}
                 </Link>
-                
-                {/* Language Selection in Mobile Menu */}
-                <div className="mt-8 pt-6 border-t border-gold/20">
-                  <div className="text-center text-lg font-medium text-gold mb-4">{t('navigation.selectLanguage')}</div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <button
-                      onClick={() => {
-                        changeLanguage('nl');
-                        setMobileMenuOpen(false);
-                      }}
-                      className={`px-4 py-3 rounded-md text-base font-medium flex items-center justify-center ${
-                        currentLang === 'nl' ? 'bg-gold text-onyx' : 'bg-caribbean-current/60 border border-gold/20 text-magnolia'
-                      }`}
-                    >
-                      <span className="mr-2">🇳🇱</span>
-                      Nederlands
-                    </button>
-                    <button
-                      onClick={() => {
-                        changeLanguage('en');
-                        setMobileMenuOpen(false);
-                      }}
-                      className={`px-4 py-3 rounded-md text-base font-medium flex items-center justify-center ${
-                        currentLang === 'en' ? 'bg-gold text-onyx' : 'bg-caribbean-current/60 border border-gold/20 text-magnolia'
-                      }`}
-                    >
-                      <span className="mr-2">🇬🇧</span>
-                      English
-                    </button>
-                  </div>
-                </div>
+              </motion.div>
+            </div>
+            
+            {/* Language Selection at bottom */}
+            <div className="pt-4 pb-8 px-6">
+              <div className="text-center text-lg font-medium text-gold mb-4">{t('navigation.selectLanguage')}</div>
+              <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto">
+                <button
+                  onClick={() => {
+                    changeLanguage('nl');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`py-3 rounded-lg text-base font-medium flex items-center justify-center ${
+                    currentLang === 'nl' 
+                      ? 'bg-gold text-onyx' 
+                      : 'bg-transparent border border-gold/50 text-gold'
+                  } transition-all duration-200`}
+                >
+                  <span className="mr-2">🇳🇱</span>
+                  Nederlands
+                </button>
+                <button
+                  onClick={() => {
+                    changeLanguage('en');
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`py-3 rounded-lg text-base font-medium flex items-center justify-center ${
+                    currentLang === 'en' 
+                      ? 'bg-gold text-onyx' 
+                      : 'bg-transparent border border-gold/50 text-gold'
+                  } transition-all duration-200`}
+                >
+                  <span className="mr-2">🇬🇧</span>
+                  English
+                </button>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

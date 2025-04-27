@@ -21,6 +21,16 @@ html, body {
   min-height: 100%;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  font-size: 16px;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Responsive font size adjustments */
+@media (max-width: 640px) {
+  html, body {
+    font-size: 15px;
+  }
 }
 
 html::-webkit-scrollbar {
@@ -43,6 +53,18 @@ html::-webkit-scrollbar {
   }
 }
 
+/* Improve mobile touch targets */
+@media (max-width: 768px) {
+  button, a {
+    @apply touch-manipulation;
+  }
+  
+  button, a.button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 header nav a {
   position: relative;
 }
@@ -62,59 +84,15 @@ header nav a:hover::after {
   width: 100%;
 }
 
-/* Page Transitions - improved for smoother experience */
-.page-transition-enter {
-  opacity: 0;
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in-out; 
-}
-
-.page-transition-exit {
-  opacity: 1;
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-in-out;
-}
-
-/* Home Page Animation - using CSS animation instead of JS */
-.home-title {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 400ms forwards;
-  animation-delay: 150ms;
-}
-
-.home-subtitle {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 400ms forwards;
-  animation-delay: 300ms;
-}
-
-.home-content {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 400ms forwards;
-  animation-delay: 450ms;
-}
-
-/* Menu category item animation */
-.menu-category-item {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 400ms forwards;
-  animation-delay: 500ms;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/* Enhanced mobile-specific styling */
+@media (max-width: 768px) {
+  .page-content {
+    padding-bottom: 2rem;
+  }
+  
+  /* Reduce box-shadow size on mobile for better performance */
+  .shadow-lg, .shadow-md, .shadow-xl {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -134,5 +112,10 @@ header nav a:hover::after {
 @layer utilities {
   .filter-gold {
     filter: invert(71%) sepia(99%) saturate(408%) hue-rotate(358deg) brightness(89%) contrast(90%);
+  }
+  
+  /* Mobile-friendly focus states */
+  .mobile-focus-ring {
+    @apply focus:outline-none focus-visible:ring focus-visible:ring-gold/50 focus-visible:ring-opacity-75;
   }
 }

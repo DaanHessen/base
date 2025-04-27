@@ -70,7 +70,10 @@ const Logo = ({ className }) => {
         ref={logoRef}
         src={logo} 
         alt="BASE" 
-        className="relative z-10 w-auto max-h-24 sm:max-h-28 md:max-h-32" 
+        className="relative z-10 w-auto max-h-24 md:max-h-28 lg:max-h-32" 
+        style={{
+          maxHeight: 'clamp(6rem, 8vw + 3rem, 8rem)'
+        }}
         loading="eager"
         fetchpriority="high"
       />

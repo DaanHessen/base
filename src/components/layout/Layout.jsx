@@ -6,12 +6,13 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieConsent from '../CookieConsent';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function Layout({ children }) {
   const location = useLocation();
   const [isHomePage, setIsHomePage] = useState(false);
   const [bgImage, setBgImage] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
   const nodeRef = useRef(null); 
@@ -24,6 +25,20 @@ function Layout({ children }) {
   };
   
   const currentPath = getBasePath(location.pathname);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
 
   // Improved background handling
   useEffect(() => {
@@ -50,15 +65,31 @@ function Layout({ children }) {
     }
   }, [currentPath]);
 
+  // Animation variants for page transitions
+  const pageVariants = {
+    initial: { opacity: 0, y: 8 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
+    },
+    exit: { 
+      opacity: 0,
+      transition: { duration: 0.2, ease: "easeIn" }
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen bg-onyx">
+    <div className="flex flex-col min-h-screen bg-onyx overflow-x-hidden">
       {/* Background with improved transition */}
       <div 
         ref={bgRef}
-        className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat bg-fixed ${isHomePage ? 'opacity-100' : 'opacity-0'}`}
+        className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'}`}
         style={{
           backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
-          boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.4)'
+          backgroundPosition: isMobile ? 'center center' : 'center',
+          backgroundSize: 'cover',
+          boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)'
         }}
       ></div>
       
@@ -69,6 +100,7 @@ function Layout({ children }) {
           <title>{t('seo.title')}</title>
           <meta name="description" content={t('seo.description')} />
           <meta name="keywords" content={t('seo.keywords')} />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
           <link rel="canonical" href={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
           {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/en${currentPath}`} />}
           {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}${currentPath}`} />}
@@ -76,19 +108,18 @@ function Layout({ children }) {
         <Navbar />
         
         <main className="flex-grow">
-          <TransitionGroup component={null}>
-            <CSSTransition
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
               key={location.pathname}
-              nodeRef={nodeRef}
-              timeout={300} 
-              classNames="page-transition"
-              unmountOnExit
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageVariants}
+              className="w-full"
             >
-              <div ref={nodeRef} className="page-content">
-                {children}
-              </div>
-            </CSSTransition>
-          </TransitionGroup>
+              {children}
+            </motion.div>
+          </AnimatePresence>
         </main>
         <Footer />
         <CookieConsent />

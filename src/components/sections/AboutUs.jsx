@@ -27,11 +27,8 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // Use a generic map URL for the example, replace API_KEY
-    // return `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${address}&zoom=16`;
-    // For demonstration without a key, using a simple OpenStreetMap embed:
-    const coords = "51.8131,4.6716"; // Approximate coordinates for Dordrecht Houtmarkt
-    return `https://www.openstreetmap.org/export/embed.html?bbox=4.669,51.812,4.674,51.814&layer=mapnik&marker=${coords}`;
+    // TODO: figure out if it's fucked up to have my api key hardcoded, what the hell will someone do with my maps API key anyway
+    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.014162410744!2d5.1784721!3d52.2249605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66b69ba0738fb%3A0x9e7195eb6bb4517!2sBiersteeg%2010%2C%201211%20GC%20Hilversum!5e0!3m2!1snl!2snl!4v1745785019407!5m2!1snl!2snl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
   }, [t]);
 
   return (
