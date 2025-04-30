@@ -81,16 +81,16 @@ function Home() {
             </motion.div>
             
             <motion.div
-              className="text-sm sm:text-base md:text-lg text-thistle max-w-2xl backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50 sm:backdrop-blur-sm sm:px-4 sm:py-3 sm:rounded-lg sm:bg-onyx/50"
+              className="text-sm sm:text-base md:text-lg text-thistle backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50 sm:backdrop-blur-sm sm:px-4 sm:py-3 sm:rounded-lg sm:bg-onyx/50 w-fit mx-auto md:mx-0"
               variants={itemVariants}
             >
-              <p className="mb-6 sm:mb-8 leading-relaxed">
+              <p className="leading-relaxed">
                 {t('home:hero.description')}
               </p>
             </motion.div>
             
             <motion.div 
-              className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-center md:justify-start mt-6 sm:mt-8"
+              className="flex flex-col xs:flex-row gap-3 xs:w-auto justify-center md:justify-start mt-6 sm:mt-8 w-fit mx-auto md:mx-0"
               variants={itemVariants}
             >
               <Link 
