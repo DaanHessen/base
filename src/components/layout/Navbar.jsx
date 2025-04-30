@@ -200,9 +200,13 @@ function Navbar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
         scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-3' : 'bg-transparent py-5 md:py-10'
       }`}
+      style={{
+        transform: `translate3d(0, 0, 0)`,
+        backfaceVisibility: 'hidden'
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex justify-between items-center h-16 md:h-18">
