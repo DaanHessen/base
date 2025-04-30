@@ -183,9 +183,24 @@ function Navbar() {
     }
   };
   
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen(prev => !prev);
+  }, []);
+  
+  // Add this function to handle mobile menu positioning
+  const getMobileMenuStyle = () => {
+    if (typeof window === 'undefined') return {};
+    
+    return {
+      top: scrolled ? '64px' : '80px', // Adjust based on navbar height
+      maxHeight: `calc(100vh - ${scrolled ? '64px' : '80px'})`,
+      overflow: 'auto'
+    };
+  };
+
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
         scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-3' : 'bg-transparent py-5 md:py-10'
       }`}
     >
@@ -355,7 +370,7 @@ function Navbar() {
           <div className="md:hidden flex items-center justify-between w-full z-20">
             {/* Mobile menu button - left side */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={toggleMobileMenu}
               className="inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 relative z-20 h-10 w-10 bg-onyx/70 border border-gold/30"
               aria-expanded={mobileMenuOpen}
             >
@@ -428,13 +443,14 @@ function Navbar() {
       {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
+            key="mobile-menu"
             initial="closed"
             animate="open"
             exit="closed"
             variants={mobileMenuVariants}
-            className="fixed inset-0 z-40 bg-gradient-to-br from-onyx/95 to-onyx/95 backdrop-blur-md flex items-center justify-center"
-            onClick={() => setMobileMenuOpen(false)}
+            className="md:hidden fixed inset-x-0 bg-onyx/95 backdrop-blur-sm shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] border-t border-gold/10"
+            style={getMobileMenuStyle()}
           >
             <div className="absolute inset-0 bg-pattern opacity-5 z-0"></div>
             
