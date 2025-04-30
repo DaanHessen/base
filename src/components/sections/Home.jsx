@@ -77,11 +77,11 @@ function Home() {
               >
                 {t('home:hero.subtitle')}
               </motion.h2>
-              <div className="absolute -left-3 -right-3 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10 hidden xs:block"></div>
+              <div className="absolute -left-3 -right-3 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10"></div>
             </motion.div>
             
             <motion.div
-              className="text-sm sm:text-base md:text-lg text-thistle max-w-2xl backdrop-blur-sm sm:backdrop-blur-none px-4 py-3 sm:p-0 rounded-lg sm:rounded-none bg-onyx/50 sm:bg-transparent"
+              className="text-sm sm:text-base md:text-lg text-thistle max-w-2xl backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50"
               variants={itemVariants}
             >
               <p className="mb-6 sm:mb-8 leading-relaxed">
