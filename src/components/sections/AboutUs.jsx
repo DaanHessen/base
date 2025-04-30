@@ -26,8 +26,8 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // TODO: figure out how fucked up it is to have my maps api key hardcoded, but what the hell will someone do with my maps api key anyway?
-    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.014162410744!2d5.1784721!3d52.2249605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66b69ba0738fb%3A0x9e7195eb6bb4517!2sBiersteeg%2010%2C%201211%20GC%20Hilversum!5e0!3m2!1snl!2snl!4v1745785019407!5m2!1snl!2snl`
+    // Using a public embed URL without API key requirements
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyDaVljHzw1hvrG4bXsE0olyDy3xG6oC4hw&q=${address}`;
   }, [t]);
 
   const containerVariants = {
@@ -152,6 +152,7 @@ function AboutUs() {
                           allowFullScreen
                           referrerPolicy="no-referrer-when-downgrade"
                           src={mapUrl}
+                          sandbox="allow-scripts allow-same-origin"
                         ></iframe>
                       </div>
                     )}
