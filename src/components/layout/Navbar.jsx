@@ -17,6 +17,7 @@ function Navbar() {
   const menuDropdownRef = useRef(null);
   const menuTimeoutRef = useRef(null);
   const scrollTimeoutRef = useRef(null);
+  const scrollPositionRef = useRef(0);
   
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
@@ -70,15 +71,31 @@ function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     if (mobileMenuOpen) {
+      // Store current scroll position before locking
+      scrollPositionRef.current = window.scrollY;
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+      document.body.style.width = '100%';
     } else {
+      // Restore scroll position after unlocking
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollPositionRef.current > 0) {
+        window.scrollTo(0, scrollPositionRef.current);
+      }
     }
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeoutRef.current);
+      // Ensure we clean up body styles
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [handleScroll, mobileMenuOpen]);
   
@@ -186,17 +203,6 @@ function Navbar() {
   const toggleMobileMenu = useCallback(() => {
     setMobileMenuOpen(prev => !prev);
   }, []);
-  
-  // Add this function to handle mobile menu positioning
-  const getMobileMenuStyle = () => {
-    if (typeof window === 'undefined') return {};
-    
-    return {
-      top: scrolled ? '64px' : '80px', // Adjust based on navbar height
-      maxHeight: `calc(100vh - ${scrolled ? '64px' : '80px'})`,
-      overflow: 'auto'
-    };
-  };
 
   return (
     <nav 
@@ -453,14 +459,13 @@ function Navbar() {
             animate="open"
             exit="closed"
             variants={mobileMenuVariants}
-            className="md:hidden fixed inset-x-0 bg-onyx/95 backdrop-blur-sm shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] border-t border-gold/10"
-            style={getMobileMenuStyle()}
+            className="md:hidden fixed inset-0 top-[64px] bg-onyx/95 backdrop-blur-sm shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] border-t border-gold/10 z-50"
           >
             <div className="absolute inset-0 bg-pattern opacity-5 z-0"></div>
             
             {/* Mobile Navigation Links */}
             <div 
-              className="relative z-10 w-full max-w-sm px-5"
+              className="relative z-10 w-full max-w-sm mx-auto px-5 h-full flex flex-col pt-8"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="grid gap-y-4">
@@ -524,9 +529,6 @@ function Navbar() {
                   </Link>
                 </motion.div>
               </nav>
-              
-              {/* Decorative element */}
-              <div className="mt-8 w-16 h-px bg-gold/30 mx-auto"></div>
             </div>
           </motion.div>
         )}

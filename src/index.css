@@ -147,6 +147,23 @@ header nav a:hover::after {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+svg {
+  display: inline-block;
+}
+
+stop {
+  transition: .4s ease;
+}
+
+/* Use the colors to transition to */
+svg:hover stop:first-child {
+  stop-color: #d4af37;
+}
+
+svg:hover stop:last-child {
+  stop-color: #d4af37;
+}
+
 @layer utilities {
   .filter-gold {
     filter: invert(71%) sepia(99%) saturate(408%) hue-rotate(358deg) brightness(89%) contrast(90%);

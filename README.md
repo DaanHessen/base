@@ -1,14 +1,33 @@
 # BASE
 
-BASE is a new streetfood bar opening soon in Hilversum, Biersteeg 10. This is it's website, which is currently in development. It's hosted on Vercel and can be opened by navigating to [base website](https://base-lac-xi.vercel.app/).
+The website of BASE, a new streetfood (cocktail) bar located at the Biersteeg 10 in Hilversum. It is built with React, and (for now) hosted online with Vercel.
 
-## Built with
+## Description
 
-* [![Next][Next.js]][Next-url]
-* [![Vercel][vercel.com]][Vercel-url]]
+This is a website built with React. It has a menu page listing both the food and drinks menu, and an about us page. 
 
-## uren
+## Getting Started
 
-20/04: 19:41 - 21:02 (1:21)
-22/04: 14:03 - 16:10 / 21:01 - 22:50 (3:56)
-23/04: 12:32 - 
+### Dependencies
+
+* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
+* ex. Windows 10
+
+### Installing
+
+run the website locally by running:
+
+```md
+* npm install
+* npm run dev
+```
+
+## Authors
+
+This website has been made by:
+  
+[@DaanHessen](https://daanhessen.nl)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details

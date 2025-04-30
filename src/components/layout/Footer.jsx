@@ -15,20 +15,27 @@ const SocialIconLink = ({ href, label, children }) => (
   </a>
 );
 
-// TODO: fix the hover shit: it's black now and it doesn't have a transition. TOO LAZY NOW
+// Implement SVG hover effect matching other icons
 const MonseesLink = ({ href, label }) => (
   <a 
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="transition-colors duration-200 group" 
+    className="text-magnolia hover:text-gold transition-colors duration-200 group" 
     aria-label={label}
   >
-    <img 
-      src={monseesLogo} 
-      alt="Monsees" 
-      className="h-6 w-auto filter brightness-0 invert transition-all duration-200 group-hover:brightness-110 group-hover:invert-[85%] group-hover:sepia-[25%] group-hover:saturate-[800%] group-hover:hue-rotate-[330deg]"
-    />
+    <svg width="96" height="24" viewBox="0 0 96 24" className="h-6 w-auto">
+      <defs>
+        <linearGradient id="monsees-gradient" gradientUnits="userSpaceOnUse" fy="90%">
+          <stop offset="0" stop-color="white" />
+          <stop offset="1" stop-color="white" />
+        </linearGradient>
+        <mask id="monsees-mask">
+          <image href={monseesLogo} width="96" height="24" />
+        </mask>
+      </defs>
+      <rect width="96" height="24" fill="url(#monsees-gradient)" mask="url(#monsees-mask)" />
+    </svg>
   </a>
 );
 
@@ -147,7 +154,7 @@ function Footer() {
               <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
                 <FaLinkedin size={24} />
               </SocialIconLink>
-              <MonseesLink href="https://monsees.nl" label="Monsees" />
+              <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
             </div>
           </div>
 

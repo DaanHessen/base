@@ -26,8 +26,8 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // Using a public embed URL without API key requirements
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyDaVljHzw1hvrG4bXsE0olyDy3xG6oC4hw&q=${address}`;
+    // Using a completely unrestricted embed URL
+    return `https://maps.google.com/maps?q=${address}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
   }, [t]);
 
   const containerVariants = {
@@ -152,7 +152,10 @@ function AboutUs() {
                           allowFullScreen
                           referrerPolicy="no-referrer-when-downgrade"
                           src={mapUrl}
-                          sandbox="allow-scripts allow-same-origin"
+                          frameBorder="0"
+                          scrolling="no"
+                          marginHeight="0"
+                          marginWidth="0"
                         ></iframe>
                       </div>
                     )}

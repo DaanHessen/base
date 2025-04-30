@@ -60,7 +60,7 @@ function Home() {
       <section className="min-h-screen flex items-center pt-20 pb-12 sm:pt-16 md:pt-0 md:pb-0">
         <div className="w-full px-5 sm:px-8 max-w-screen-xl mx-auto">
           <motion.div 
-            className="flex flex-col items-center md:items-start text-center md:text-left"
+            className="flex flex-col items-start text-left"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -71,41 +71,43 @@ function Home() {
               dangerouslySetInnerHTML={{ __html: t('home:hero.title') }}
             />
             
-            <motion.div className="relative mb-5 sm:mb-6" variants={itemVariants}>
-              <motion.h2 
-                className="text-lg sm:text-xl md:text-2xl text-thistle font-light tracking-wide max-w-xl relative z-10"
+            <div className="max-w-xl">
+              <motion.div className="relative mb-5 sm:mb-6" variants={itemVariants}>
+                <motion.h2 
+                  className="text-lg sm:text-xl md:text-2xl text-thistle font-light tracking-wide relative z-10"
+                >
+                  {t('home:hero.subtitle')}
+                </motion.h2>
+                <div className="absolute -left-3 -right-3 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10"></div>
+              </motion.div>
+              
+              <motion.div
+                className="text-sm sm:text-base md:text-lg text-thistle backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50"
+                variants={itemVariants}
               >
-                {t('home:hero.subtitle')}
-              </motion.h2>
-              <div className="absolute -left-3 -right-3 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10"></div>
-            </motion.div>
-            
-            <motion.div
-              className="text-sm sm:text-base md:text-lg text-thistle w-fit mx-auto md:mx-0 backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50 sm:backdrop-blur-sm sm:px-4 sm:py-3 sm:rounded-lg sm:bg-onyx/50"
-              variants={itemVariants}
-            >
-              <p className="leading-relaxed">
-                {t('home:hero.description')}
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              className="flex w-fit mx-auto md:mx-0 gap-3 mt-6 sm:mt-8"
-              variants={itemVariants}
-            >
-              <Link 
-                to={getLocalizedPath('/about')} 
-                className="w-1/2 px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap"
-              >
-                {t('home:buttons.reservation')}
-              </Link>
-              <Link 
-                to={getLocalizedPath('/menu')} 
-                className="w-1/2 px-6 py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap"
-              >
-                {t('home:buttons.menu')}
-              </Link>
-            </motion.div>
+                <p className="mb-6 sm:mb-8 leading-relaxed">
+                  {t('home:hero.description')}
+                </p>
+                
+                <motion.div 
+                  className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-start"
+                  variants={itemVariants}
+                >
+                  <Link 
+                    to={getLocalizedPath('/about')} 
+                    className="px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto"
+                  >
+                    {t('home:buttons.reservation')}
+                  </Link>
+                  <Link 
+                    to={getLocalizedPath('/menu')} 
+                    className="px-6 py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto"
+                  >
+                    {t('home:buttons.menu')}
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </div>
             
             <motion.div 
               className="w-24 h-1 bg-gold/70 mt-12 rounded-full block md:hidden mx-auto shadow-[0_0_10px_rgba(212,175,55,0.5)]"

@@ -111,7 +111,7 @@ function DrinksMenu() {
                   <div 
                     id={`subcategory-${subcategory.id}`} 
                     key={subcategory.id}
-                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28"
+                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
                   >
                     <CategoryHeading>
                       {subcategory.name[currentLang]}

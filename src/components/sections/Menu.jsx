@@ -96,7 +96,7 @@ function Menu() {
                   <div 
                     id={`category-${subcat.id}`} 
                     key={subcat.id}
-                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px]"
+                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] w-full"
                   >
                     <CategoryHeading>
                       {subcat.name[currentLang]}

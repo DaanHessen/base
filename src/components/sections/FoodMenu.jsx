@@ -95,7 +95,7 @@ function FoodMenu() {
                     <div 
                       id={`category-${category.id}`} 
                       key={category.id}
-                      className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28"
+                      className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
                     >
                       <CategoryHeading>
                         {category.name[currentLang]}
@@ -115,15 +115,15 @@ function FoodMenu() {
                     <div 
                       id={`category-${category.id}`} 
                       key={category.id}
-                      className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28"
-              >
-                <CategoryHeading>
-                  {category.name[currentLang]}
-                </CategoryHeading>
-                
-                <MenuCategory category={category} />
-              </div>
-            ))}
+                      className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
+                    >
+                      <CategoryHeading>
+                        {category.name[currentLang]}
+                      </CategoryHeading>
+                      
+                      <MenuCategory category={category} />
+                    </div>
+                  ))}
               </div>
               
               {/* Third row: sides centered */}

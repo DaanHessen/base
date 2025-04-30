@@ -50,20 +50,22 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       
       <div className="p-2 sm:p-3 flex flex-col h-full relative">
         <div className="flex justify-between items-start mb-2.5">
-          <div className="flex items-center pr-2 w-[calc(100%-65px)]">
-            <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-150 break-words">{name}</h3>
-            {showVeganInfo && (
-              <div className="ml-1.5 flex-shrink-0" title={t('vegan')}>
-                <VeganIcon />
-              </div>
-            )}
+          <div className="flex-1 pr-2 min-w-0">
+            <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-150 truncate flex items-center">
+              <span className="truncate">{name}</span>
+              {showVeganInfo && (
+                <div className="ml-1.5 flex-shrink-0" title={t('vegan')}>
+                  <VeganIcon />
+                </div>
+              )}
+            </h3>
           </div>
-          <span className="text-gold font-body font-medium price-tag flex-shrink-0 bg-onyx/80 px-2 py-0.5 rounded-md shadow-sm flex items-center justify-center ml-2 self-start">{price}</span>
+          <span className="text-gold font-body font-medium price-tag flex-shrink-0 bg-onyx/80 px-2 py-0.5 rounded-md shadow-sm flex items-center justify-center ml-2 self-start whitespace-nowrap">{price}</span>
         </div>
         
         <div className="flex-grow">
           <p 
-            className={`text-thistle/90 font-body text-sm leading-relaxed ${isExpanded ? '' : 'line-clamp-3'} ${description.length > 100 ? 'mb-1' : 'mb-0'}`}
+            className={`text-thistle/90 font-body text-sm leading-relaxed ${isExpanded ? '' : 'line-clamp-3'}`}
           >
             {description}
           </p>
@@ -71,7 +73,7 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
           {description.length > 100 && (
             <button 
               onClick={handleToggleExpand}
-              className="text-xs text-gold/80 hover:text-gold mt-0.5 focus:outline-none"
+              className="text-xs text-gold/80 hover:text-gold mt-1 focus:outline-none"
             >
               {isExpanded ? t('readLess') : t('readMore')}
             </button>
@@ -86,7 +88,7 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
           >
             <p className="text-xs text-gray-400/90 flex items-start">
               <span className="mr-1 text-xs mt-0.5">⚠</span>
-              <span className="leading-tight">{t('allergens.title')}: {translatedAllergens.join(', ')}</span>
+              <span className="leading-tight break-words">{t('allergens.title')}: {translatedAllergens.join(', ')}</span>
             </p>
           </div>
         )}
