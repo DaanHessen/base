@@ -29,6 +29,23 @@ function DrinksMenu() {
     </div>
   );
 
+  // Determine if we have an odd number of subcategories for proper layout
+  const hasSubcategories = drinksCategory.subcategories && drinksCategory.subcategories.length > 0;
+  const totalSubcategories = hasSubcategories ? drinksCategory.subcategories.length : 0;
+  const hasOddNumberOfSubcategories = totalSubcategories % 2 !== 0;
+  
+  // Get the last subcategory if we have an odd number
+  const lastSubcategory = hasOddNumberOfSubcategories && totalSubcategories > 0 
+    ? drinksCategory.subcategories[totalSubcategories - 1] 
+    : null;
+  
+  // Get all subcategories except the last one for the main grid
+  const mainGridSubcategories = hasSubcategories 
+    ? (hasOddNumberOfSubcategories 
+        ? drinksCategory.subcategories.slice(0, -1) 
+        : drinksCategory.subcategories)
+    : [];
+
   return (
     <>
       <Helmet>
@@ -49,7 +66,7 @@ function DrinksMenu() {
           </div>
           
           {/* Categories selection on mobile */}
-          {drinksCategory.subcategories && drinksCategory.subcategories.length > 0 && (
+          {hasSubcategories && (
             <div className="md:hidden overflow-x-auto pb-4 mb-4 whitespace-nowrap no-scrollbar">
               <div className="flex space-x-3">
                 {drinksCategory.subcategories.map((subcategory) => (
@@ -68,12 +85,13 @@ function DrinksMenu() {
             </div>
           )}
           
-          <div className="home-content grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-10 md:gap-y-16">
-            {drinksCategory.subcategories && drinksCategory.subcategories.map((subcategory) => (
+          {/* Mobile view - all subcategories in one column */}
+          <div className="block md:hidden">
+            {hasSubcategories && drinksCategory.subcategories.map((subcategory) => (
               <div 
                 id={`subcategory-${subcategory.id}`} 
                 key={subcategory.id}
-                className="menu-category-item transition-all duration-150 hover:translate-y-[-2px] md:hover:translate-y-[-5px] scroll-mt-28"
+                className="menu-category-item mb-10 transition-all duration-150 hover:translate-y-[-2px] scroll-mt-28"
               >
                 <CategoryHeading>
                   {subcategory.name[currentLang]}
@@ -82,6 +100,45 @@ function DrinksMenu() {
                 <MenuCategory category={subcategory} />
               </div>
             ))}
+          </div>
+          
+          {/* Desktop view - custom grid layout */}
+          <div className="hidden md:block">
+            {/* Main grid with all categories except the last one if odd number */}
+            {mainGridSubcategories.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-10 md:gap-y-16 mb-16">
+                {mainGridSubcategories.map((subcategory) => (
+                  <div 
+                    id={`subcategory-${subcategory.id}`} 
+                    key={subcategory.id}
+                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28"
+                  >
+                    <CategoryHeading>
+                      {subcategory.name[currentLang]}
+                    </CategoryHeading>
+                    
+                    <MenuCategory category={subcategory} />
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {/* Last category centered if odd number */}
+            {lastSubcategory && (
+              <div className="md:w-1/2 mx-auto">
+                <div 
+                  id={`subcategory-${lastSubcategory.id}`} 
+                  key={lastSubcategory.id}
+                  className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
+                >
+                  <CategoryHeading>
+                    {lastSubcategory.name[currentLang]}
+                  </CategoryHeading>
+                  
+                  <MenuCategory category={lastSubcategory} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
