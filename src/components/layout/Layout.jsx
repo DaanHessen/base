@@ -91,9 +91,41 @@ function Layout({ children }) {
           <meta name="description" content={t('seo.description')} />
           <meta name="keywords" content={t('seo.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+          
+          {/* Security headers */}
+          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:;" />
+          <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+          <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+          <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+          <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+          
           <link rel="canonical" href={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
           {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/en${currentPath}`} />}
           {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}${currentPath}`} />}
+          
+          {/* Open Graph metadata */}
+          <meta property="og:site_name" content="BASE" />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
+          <meta property="og:title" content={t('seo.title')} />
+          <meta property="og:description" content={t('seo.description')} />
+          <meta property="og:image" content={`${window.location.origin}/og-image.jpg`} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          
+          {/* Twitter Card metadata */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={t('seo.title')} />
+          <meta name="twitter:description" content={t('seo.description')} />
+          <meta name="twitter:image" content={`${window.location.origin}/og-image.jpg`} />
+          
+          {/* Additional SEO tags */}
+          <meta name="robots" content="index, follow" />
+          <meta name="author" content="BASE Restaurant" />
+          <meta name="geo.region" content="NL" />
+          <meta name="geo.placename" content="Amsterdam" />
+          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         </Helmet>
         <Navbar />
         
