@@ -79,6 +79,7 @@ function Layout({ children }) {
           backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
           backgroundPosition: isMobile ? 'center center' : 'center',
           backgroundSize: 'cover',
+          backgroundAttachment: 'fixed',
           boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)'
         }}
       ></div>
