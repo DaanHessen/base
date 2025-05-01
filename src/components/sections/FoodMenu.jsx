@@ -38,7 +38,8 @@ function FoodMenu() {
         {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/menu/food/`} />}
       </Helmet>
       
-      <section className="py-14 pt-32 sm:pt-40 md:pt-48 overflow-hidden">
+      {/* Standardized top padding */}
+      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
           <div className="home-title mb-8">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-magnolia mb-4 sm:mb-6 leading-tight">

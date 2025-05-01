@@ -60,42 +60,61 @@ function Navbar() {
     }
     
     if (currentScrollY <= 10 && scrolled) {
-      clearTimeout(scrollTimeoutRef.current);
-      
+      // Remove timeout to eliminate the delay
       setScrolled(false);
       setWasScrolled(false);
     }
   }, [scrolled]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Use requestAnimationFrame for smoother scrolling
+    let ticking = false;
+    const scrollListener = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', scrollListener, { passive: true });
     
     if (mobileMenuOpen) {
       // Store current scroll position before locking
       scrollPositionRef.current = window.scrollY;
+      // Lock body scroll
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
+      document.body.style.position = 'fixed'; // Use fixed to prevent jump
       document.body.style.top = `-${scrollPositionRef.current}px`;
       document.body.style.width = '100%';
     } else {
       // Restore scroll position after unlocking
+      const scrollY = scrollPositionRef.current;
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      if (scrollPositionRef.current > 0) {
-        window.scrollTo(0, scrollPositionRef.current);
+      // Only scroll if position was saved
+      if (scrollY > 0) {
+        window.scrollTo(0, scrollY);
       }
+      // Reset scroll position ref
+      scrollPositionRef.current = 0;
     }
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', scrollListener);
       clearTimeout(scrollTimeoutRef.current);
-      // Ensure we clean up body styles
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
+      // Ensure we clean up body styles on component unmount or when menu closes
+      if (document.body.style.position === 'fixed') { // Only reset if we set it
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        // No need to scroll here, focus is on cleanup
+      }
     };
   }, [handleScroll, mobileMenuOpen]);
   
@@ -312,8 +331,7 @@ function Navbar() {
           
           <div className="absolute left-1/2 top-1 transform -translate-x-1/2 z-10">
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-{/*               <div className="absolute inset-0 rounded-full bg-onyx/40 -bottom-1 backdrop-blur-sm -z-10 scale-[0.85] translate-y-1/4 shadow-xl"></div>
-  */}             <Logo />
+              <Logo />
             </Link>
           </div>
           
@@ -376,27 +394,46 @@ function Navbar() {
             </div>
           </div>
           
-          {/* Mobile navbar elements */}
-          <div className="md:hidden flex items-center justify-between w-full z-20">
-            {/* Mobile menu button - left side */}
+          {/* Mobile - Hamburger Button (Left) & Language Button (Right) - Always visible */} 
+          <div className="md:hidden flex items-center justify-between w-full">
+            {/* Hamburger/Close Button Container */}
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 relative z-20 h-10 w-10 bg-onyx/70 border border-gold/30"
+              className="relative z-[1000] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
               aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
-              {mobileMenuOpen ? (
-                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+              <motion.div
+                animate={mobileMenuOpen ? "open" : "closed"}
+                initial={false}
+                className="space-y-1.5"
+              >
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: 45, y: 6 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    closed: { opacity: 1 },
+                    open: { opacity: 0 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: -45, y: -6 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+              </motion.div>
             </button>
-            
-            {/* Mobile language switcher - right side */}
+
+            {/* Mobile language switcher */} 
             <div className="relative">
               <button
                 onClick={toggleLangDropdown}
@@ -421,9 +458,7 @@ function Navbar() {
                     <div className="p-2 flex flex-col gap-1">
                       <button
                         onClick={() => changeLanguage('nl')}
-                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'nl' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'
-                        } transition-all duration-150 justify-center`}
+                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${currentLang === 'nl' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'} transition-all duration-150 justify-center`}
                       >
                         <div className="flex items-center">
                           <span className="mr-2 text-base">🇳🇱</span>
@@ -432,9 +467,7 @@ function Navbar() {
                       </button>
                       <button
                         onClick={() => changeLanguage('en')}
-                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'en' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'
-                        } transition-all duration-150 justify-center`}
+                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${currentLang === 'en' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'} transition-all duration-150 justify-center`}
                       >
                         <div className="flex items-center">
                           <span className="mr-2 text-base">🇬🇧</span>
@@ -450,7 +483,7 @@ function Navbar() {
         </div>
       </div>
       
-      {/* Mobile menu */}
+      {/* Mobile menu Overlay - Takes full screen */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -459,72 +492,75 @@ function Navbar() {
             animate="open"
             exit="closed"
             variants={mobileMenuVariants}
-            className="md:hidden fixed inset-0 top-[64px] bg-onyx/95 backdrop-blur-sm shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] border-t border-gold/10 z-50"
+            // Use fixed positioning, ensure high z-index, cover full screen
+            className="md:hidden fixed inset-0 bg-onyx/95 backdrop-blur-sm shadow-xl z-[999] h-screen overflow-y-auto pt-20"
+            // Added pt-20 to push content below the fixed header buttons
           >
             <div className="absolute inset-0 bg-pattern opacity-5 z-0"></div>
             
-            {/* Mobile Navigation Links */}
+            {/* Mobile Navigation Links: Centered vertically and horizontally within the remaining space */}
             <div 
-              className="relative z-10 w-full max-w-sm mx-auto px-5 h-full flex flex-col pt-8"
+              className="relative z-10 min-h-full flex flex-col items-center justify-center pb-20" // Added pb-20 to balance pt-20
               onClick={(e) => e.stopPropagation()}
             >
-              <nav className="grid gap-y-4">
-                <motion.div variants={mobileMenuItemVariants}>
+              <nav className="w-full max-w-xs mx-auto px-4 flex flex-col items-center">
+                 {/* Links remain the same structure */}
+                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaHome className="mr-4 text-gold/80 text-xl" />
+                    <FaHome className="mr-3 text-gold/80" />
                     {t('navigation.home')}
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants}>
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/menu' || currentPath === '/menu/food' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaUtensils className="mr-4 text-gold/80 text-xl" />
+                    <FaUtensils className="mr-3 text-gold/80" />
                     {currentLang === 'nl' ? 'Eten' : 'Food'}
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants}>
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/menu/drinks' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaCocktail className="mr-4 text-gold/80 text-xl" />
+                    <FaCocktail className="mr-3 text-gold/80" />
                     {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants}>
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/about' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaInfoCircle className="mr-4 text-gold/80 text-xl" />
+                    <FaInfoCircle className="mr-3 text-gold/80" />
                     {t('navigation.about')}
                   </Link>
                 </motion.div>

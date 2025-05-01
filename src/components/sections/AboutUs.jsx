@@ -26,7 +26,9 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // Using a completely unrestricted embed URL
+    // Reverting to basic embed URL as API key is not authorized.
+    // For production, generate a valid key restricted to your domain.
+    // return `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${address}`;
     return `https://maps.google.com/maps?q=${address}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
   }, [t]);
 
@@ -62,7 +64,7 @@ function AboutUs() {
         <meta name="og:description" content={t('about:seo.description')} />
       </Helmet>
       
-      <section className="py-14 pt-32 sm:pt-40 md:pt-48">
+      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div 
             className="space-y-12 sm:space-y-16"
@@ -82,14 +84,15 @@ function AboutUs() {
                 {/* Mobile image placement */}
                 <div className="block md:hidden">
                   <div className="w-full max-w-xs mx-auto mb-6">
-                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group">
+                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group will-change-transform">
                       <img 
                         src={Image} 
                         alt={t('about:imageAlt', 'Loes & Sander')}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transform-gpu translate-z-0 transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                         width="600"
                         height="800"
+                        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
                       />
                       <div className="absolute inset-0 shadow-inner pointer-events-none border border-white/10 rounded-lg"></div>
                     </div>
@@ -112,14 +115,15 @@ function AboutUs() {
                 {/* Desktop image placement */}
                 <div className="hidden md:flex items-center justify-center">
                   <div className="w-full max-w-xs sm:max-w-sm mx-auto">
-                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group">
+                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group will-change-transform">
                       <img 
                         src={Image} 
                         alt={t('about:imageAlt', 'Loes & Sander')}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transform-gpu translate-z-0 transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                         width="600"
                         height="800"
+                        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
                       />
                       <div className="absolute inset-0 shadow-inner pointer-events-none border border-white/10 rounded-lg"></div>
                     </div>
@@ -150,7 +154,6 @@ function AboutUs() {
                           style={{ border: 0, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
                           loading="lazy"
                           allowFullScreen
-                          referrerPolicy="no-referrer-when-downgrade"
                           src={mapUrl}
                           frameBorder="0"
                           scrolling="no"

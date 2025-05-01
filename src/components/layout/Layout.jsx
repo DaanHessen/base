@@ -77,9 +77,10 @@ function Layout({ children }) {
         className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'}`}
         style={{
           backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
-          backgroundPosition: isMobile ? 'center center' : 'center',
+          backgroundPosition: 'center center',
           backgroundSize: 'cover',
-          backgroundAttachment: 'fixed',
+          // Use scroll on mobile to prevent parallax issues, fixed on desktop
+          backgroundAttachment: isMobile ? 'scroll' : 'fixed',
           boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)'
         }}
       ></div>
@@ -92,8 +93,8 @@ function Layout({ children }) {
           <meta name="keywords" content={t('seo.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
           
-          {/* Security headers */}
-          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:;" />
+          {/* Security headers - Reverted for basic Google Maps */}
+          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com/;" />
           <meta http-equiv="X-Content-Type-Options" content="nosniff" />
           <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
           <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -121,16 +122,16 @@ function Layout({ children }) {
           
           {/* Additional SEO tags */}
           <meta name="robots" content="index, follow" />
-          <meta name="author" content="BASE Restaurant" />
+          <meta name="author" content="BASE Restaurant & bar" />
           <meta name="geo.region" content="NL" />
-          <meta name="geo.placename" content="Amsterdam" />
+          <meta name="geo.placename" content="Hilversum" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         </Helmet>
         <Navbar />
         
         <main className="flex-grow">
-          <AnimatePresence mode="wait" initial={false}>
+          <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
               initial="initial"
