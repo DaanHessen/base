@@ -21,14 +21,18 @@ const MonseesLink = ({ href, label }) => (
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="text-magnolia hover:text-gold transition-colors duration-200 group" 
+    className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center" 
     aria-label={label}
   >
-    <svg width="96" height="24" viewBox="0 0 96 24" className="h-6 w-auto">
+    <svg 
+      viewBox="0 0 96 24" 
+      className="h-6 md:h-8 w-auto"
+      preserveAspectRatio="xMidYMid meet"
+    >
       <defs>
         <linearGradient id="monsees-gradient" gradientUnits="userSpaceOnUse" fy="90%">
-          <stop offset="0" stop-color="white" />
-          <stop offset="1" stop-color="white" />
+          <stop offset="0" stop-color="currentColor" />
+          <stop offset="1" stop-color="currentColor" />
         </linearGradient>
         <mask id="monsees-mask">
           <image href={monseesLogo} width="96" height="24" />
@@ -119,7 +123,7 @@ function Footer() {
               </button>
             </div>
             <div className="flex items-start">
-              <FaEnvelope className="h-5 w-5 mr-3 mt-0.5 text-gold" />
+              <FaEnvelope className="h-5 w-5 mr-3 mt-0.5 text-gold flex-shrink-0" />
               <button 
                 className="text-sm hover:text-gold transition-colors duration-200"
                 onClick={() => copyToClipboard(t('footer.contact.email'), t('footer.contact.emailType', 'Email'))}

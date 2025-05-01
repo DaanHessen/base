@@ -60,42 +60,61 @@ function Navbar() {
     }
     
     if (currentScrollY <= 10 && scrolled) {
-      clearTimeout(scrollTimeoutRef.current);
-      
+      // Remove timeout to eliminate the delay
       setScrolled(false);
       setWasScrolled(false);
     }
   }, [scrolled]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Use requestAnimationFrame for smoother scrolling
+    let ticking = false;
+    const scrollListener = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', scrollListener, { passive: true });
     
     if (mobileMenuOpen) {
       // Store current scroll position before locking
       scrollPositionRef.current = window.scrollY;
+      // Lock body scroll
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
+      document.body.style.position = 'fixed'; // Use fixed to prevent jump
       document.body.style.top = `-${scrollPositionRef.current}px`;
       document.body.style.width = '100%';
     } else {
       // Restore scroll position after unlocking
+      const scrollY = scrollPositionRef.current;
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      if (scrollPositionRef.current > 0) {
-        window.scrollTo(0, scrollPositionRef.current);
+      // Only scroll if position was saved
+      if (scrollY > 0) {
+        window.scrollTo(0, scrollY);
       }
+      // Reset scroll position ref
+      scrollPositionRef.current = 0;
     }
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', scrollListener);
       clearTimeout(scrollTimeoutRef.current);
-      // Ensure we clean up body styles
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
+      // Ensure we clean up body styles on component unmount or when menu closes
+      if (document.body.style.position === 'fixed') { // Only reset if we set it
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        // No need to scroll here, focus is on cleanup
+      }
     };
   }, [handleScroll, mobileMenuOpen]);
   
@@ -381,19 +400,38 @@ function Navbar() {
             {/* Mobile menu button - left side */}
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 relative z-20 h-10 w-10 bg-onyx/70 border border-gold/30"
+              className="relative z-20 inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
               aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
-              {mobileMenuOpen ? (
-                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+              <motion.div
+                animate={mobileMenuOpen ? "open" : "closed"}
+                initial={false}
+                className="space-y-1.5"
+              >
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: 45, y: 6 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    closed: { opacity: 1 },
+                    open: { opacity: 0 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: -45, y: -6 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+              </motion.div>
             </button>
             
             {/* Mobile language switcher - right side */}
@@ -459,72 +497,83 @@ function Navbar() {
             animate="open"
             exit="closed"
             variants={mobileMenuVariants}
-            className="md:hidden fixed inset-0 top-[64px] bg-onyx/95 backdrop-blur-sm shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] border-t border-gold/10 z-50"
+            className="md:hidden fixed inset-0 bg-onyx/95 backdrop-blur-sm shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] z-[999] h-screen overflow-y-auto"
           >
             <div className="absolute inset-0 bg-pattern opacity-5 z-0"></div>
             
-            {/* Mobile Navigation Links */}
+            {/* Close button (optional, but good UX) */}
+            <button
+              onClick={toggleMobileMenu}
+              className="absolute top-4 right-4 z-20 p-2 rounded-full text-magnolia hover:text-gold bg-onyx/50 hover:bg-onyx/70 transition-colors"
+              aria-label="Close menu"
+            >
+              <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            {/* Mobile Navigation Links: Centered vertically and horizontally */}
             <div 
-              className="relative z-10 w-full max-w-sm mx-auto px-5 h-full flex flex-col pt-8"
+              className="relative z-10 min-h-full flex flex-col items-center justify-center py-20"
               onClick={(e) => e.stopPropagation()}
             >
-              <nav className="grid gap-y-4">
-                <motion.div variants={mobileMenuItemVariants}>
+              <nav className="w-full max-w-xs mx-auto px-4 flex flex-col items-center">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaHome className="mr-4 text-gold/80 text-xl" />
+                    <FaHome className="mr-3 text-gold/80" />
                     {t('navigation.home')}
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants}>
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/menu' || currentPath === '/menu/food' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaUtensils className="mr-4 text-gold/80 text-xl" />
+                    <FaUtensils className="mr-3 text-gold/80" />
                     {currentLang === 'nl' ? 'Eten' : 'Food'}
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants}>
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/menu/drinks' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaCocktail className="mr-4 text-gold/80 text-xl" />
+                    <FaCocktail className="mr-3 text-gold/80" />
                     {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants}>
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center text-lg font-medium px-4 py-3 rounded-lg ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/about' 
-                        ? 'bg-gold/10 text-gold border border-gold/30' 
-                        : 'text-magnolia hover:bg-onyx/50 border border-transparent'
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaInfoCircle className="mr-4 text-gold/80 text-xl" />
+                    <FaInfoCircle className="mr-3 text-gold/80" />
                     {t('navigation.about')}
                   </Link>
                 </motion.div>

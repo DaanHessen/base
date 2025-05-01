@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaLeaf } from 'react-icons/fa';
 
@@ -13,7 +13,25 @@ VeganIcon.displayName = 'Vegan';
 function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { t } = useTranslation('menu');
+  
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkIsMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
   
   const hasAllergens = Array.isArray(allergens) && allergens.length > 0 && allergens[0] !== "";
   const isVegan = vegan === true;
@@ -49,24 +67,22 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       <div className="absolute bottom-0 left-0 w-0.5 h-0 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:h-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
       
       <div className="p-2 sm:p-3 flex flex-col h-full relative">
-        <div className="flex justify-between items-start mb-2.5">
-          <div className="flex-1 pr-2 min-w-0">
-            <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-150 truncate flex items-center">
-              <span className="truncate">{name}</span>
+        <div className="flex justify-between items-start gap-2 mb-2.5">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-150 flex items-center">
+              <span className="break-words pr-1">{name}</span>
               {showVeganInfo && (
-                <div className="ml-1.5 flex-shrink-0" title={t('vegan')}>
+                <div className="ml-1 flex-shrink-0" title={t('vegan')}>
                   <VeganIcon />
                 </div>
               )}
             </h3>
           </div>
-          <span className="text-gold font-body font-medium price-tag flex-shrink-0 bg-onyx/80 px-2 py-0.5 rounded-md shadow-sm flex items-center justify-center ml-2 self-start whitespace-nowrap">{price}</span>
+          <span className="text-gold font-body font-medium price-tag flex-shrink-0 bg-onyx/80 px-2 py-0.5 rounded-md shadow-sm flex items-center justify-center self-start whitespace-nowrap">{price}</span>
         </div>
         
         <div className="flex-grow">
-          <p 
-            className={`text-thistle/90 font-body text-sm leading-relaxed ${isExpanded ? '' : 'line-clamp-3'}`}
-          >
+          <p className="text-thistle/90 font-body text-sm leading-relaxed mb-2 break-words">
             {description}
           </p>
           
@@ -82,8 +98,8 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
         
         {showAllergens && (
           <div 
-            className={`mt-auto pt-1.5 border-t border-gray-800/40 transition-all duration-150 ${
-              isHovered || window.innerWidth < 768 ? 'opacity-100' : 'opacity-70'
+            className={`mt-auto pt-1.5 ${!isMobile ? 'border-t border-onyx/80' : ''} transition-all duration-150 ${
+              isHovered || isMobile ? 'opacity-100' : 'opacity-70'
             }`}
           >
             <p className="text-xs text-gray-400/90 flex items-start">

@@ -153,7 +153,7 @@ const Logo = ({ className }) => {
     <div className={`relative ${className || 'w-auto h-auto'}`} style={{ marginTop: '0.2rem' }}>
       <div 
         ref={glowLayerRef}
-        className="absolute -inset-6 z-0 opacity-0 blur-md"
+        className="absolute -inset-6 z-0 opacity-0 blur-md hover:cursor-pointer"
         aria-hidden="true"
         style={{ background: states.initial.glow, opacity: states.initial.intensity }}
       ></div>
@@ -165,6 +165,8 @@ const Logo = ({ className }) => {
         className="relative z-10 w-auto max-h-28 md:max-h-32 lg:max-h-40"
         style={{
           maxHeight: 'clamp(7.5rem, 9vw + 3.5rem, 10rem)',
+          objectFit: 'contain',
+          aspectRatio: 'auto',
           filter: states.initial.filter
         }}
         loading="eager"

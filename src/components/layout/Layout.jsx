@@ -92,8 +92,8 @@ function Layout({ children }) {
           <meta name="keywords" content={t('seo.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
           
-          {/* Security headers */}
-          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:;" />
+          {/* Security headers - Updated for Google Maps */}
+          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: *.googleapis.com *.gstatic.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: *.googleapis.com; frame-src 'self' https://www.google.com/maps/;" />
           <meta http-equiv="X-Content-Type-Options" content="nosniff" />
           <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
           <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -121,16 +121,16 @@ function Layout({ children }) {
           
           {/* Additional SEO tags */}
           <meta name="robots" content="index, follow" />
-          <meta name="author" content="BASE Restaurant" />
+          <meta name="author" content="BASE Restaurant & bar" />
           <meta name="geo.region" content="NL" />
-          <meta name="geo.placename" content="Amsterdam" />
+          <meta name="geo.placename" content="Hilversum" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         </Helmet>
         <Navbar />
         
         <main className="flex-grow">
-          <AnimatePresence mode="wait" initial={false}>
+          <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
               initial="initial"
