@@ -218,15 +218,15 @@ function Navbar() {
   // Hamburger -> Close animation variants
   const topBarVariants = {
     closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { rotate: 45, y: 5, transition: { duration: 0.3, ease: "easeInOut" } }, // Adjusted y value slightly if needed
+    open: { rotate: 45, y: 5, transition: { duration: 0.3, ease: "easeInOut" } }, // User adjusted y value
   };
   const middleBarVariants = {
     closed: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { opacity: 0, transition: { duration: 0.08, ease: "easeInOut" } }, // Faster fade out
+    open: { opacity: 0, transition: { duration: 0.08, ease: "easeInOut" } }, // User adjusted duration
   };
   const bottomBarVariants = {
     closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { rotate: -45, y: -6, transition: { duration: 0.3, ease: "easeInOut" } }, // Adjusted y value slightly if needed
+    open: { rotate: -45, y: -6, transition: { duration: 0.3, ease: "easeInOut" } }, 
   };
 
   return (
