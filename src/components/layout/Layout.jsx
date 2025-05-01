@@ -44,13 +44,13 @@ function Layout({ children }) {
     
     if (isHome) {
       const img = new Image();
-      img.src = '/home_placeholder.jpg';
+      img.src = '/1000010663.png';
       img.onload = () => {
-        setBgImage('/home_placeholder.jpg');
+        setBgImage('/1000010663.png');
       };
       
       const timeout = setTimeout(() => {
-        if (!bgImage) setBgImage('/home_placeholder.jpg');
+        if (!bgImage) setBgImage('/1000010663.png');
       }, 100);
       
       return () => clearTimeout(timeout);
