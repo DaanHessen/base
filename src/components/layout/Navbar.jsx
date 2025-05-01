@@ -9,14 +9,12 @@ import Logo from '../Logo';
 function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const [wasScrolled, setWasScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
   const langDropdownRef = useRef(null);
   const menuDropdownRef = useRef(null);
   const menuTimeoutRef = useRef(null);
-  const scrollTimeoutRef = useRef(null);
   const scrollPositionRef = useRef(0);
   
   const { t, i18n } = useTranslation('common');
@@ -49,74 +47,70 @@ function Navbar() {
       // Use history.replace to avoid creating a new history entry
       window.history.replaceState({}, '', newPath + location.search + location.hash);
     }
-  }, [currentLang, location.pathname]);
+  }, [currentLang, location.pathname, location.search, location.hash]);
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     
     if (currentScrollY > 10 && !scrolled) {
       setScrolled(true);
-      setWasScrolled(true);
     }
     
     if (currentScrollY <= 10 && scrolled) {
-      // Remove timeout to eliminate the delay
       setScrolled(false);
-      setWasScrolled(false);
     }
   }, [scrolled]);
 
   useEffect(() => {
-    // Use requestAnimationFrame for smoother scrolling
-    let ticking = false;
-    const scrollListener = () => {
-      if (!ticking) {
+    let localTicking = false;
+    const localScrollListener = () => {
+      if (!localTicking) {
         window.requestAnimationFrame(() => {
           handleScroll();
-          ticking = false;
+          localTicking = false;
         });
-        ticking = true;
+        localTicking = true;
       }
     };
     
-    window.addEventListener('scroll', scrollListener, { passive: true });
-    
-    if (mobileMenuOpen) {
-      // Store current scroll position before locking
-      scrollPositionRef.current = window.scrollY;
-      // Lock body scroll
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed'; // Use fixed to prevent jump
-      document.body.style.top = `-${scrollPositionRef.current}px`;
-      document.body.style.width = '100%';
-    } else {
-      // Restore scroll position after unlocking
-      const scrollY = scrollPositionRef.current;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      // Only scroll if position was saved
-      if (scrollY > 0) {
-        window.scrollTo(0, scrollY);
-      }
-      // Reset scroll position ref
-      scrollPositionRef.current = 0;
-    }
+    window.addEventListener('scroll', localScrollListener, { passive: true });
     
     return () => {
-      window.removeEventListener('scroll', scrollListener);
-      clearTimeout(scrollTimeoutRef.current);
-      // Ensure we clean up body styles on component unmount or when menu closes
-      if (document.body.style.position === 'fixed') { // Only reset if we set it
+      window.removeEventListener('scroll', localScrollListener);
+    };
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const storedScrollY = window.scrollY;
+      scrollPositionRef.current = storedScrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${storedScrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      if (document.body.style.position === 'fixed') {
+        const scrollYToRestore = scrollPositionRef.current;
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
-        // No need to scroll here, focus is on cleanup
+        if (scrollYToRestore > 0) {
+          window.scrollTo(0, scrollYToRestore);
+        }
+        scrollPositionRef.current = 0;
+      }
+    }
+    
+    return () => {
+      if (document.body.style.position === 'fixed') {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
       }
     };
-  }, [handleScroll, mobileMenuOpen]);
+  }, [mobileMenuOpen]);
   
   const changeLanguage = useCallback((lang) => {
     setLanguage(lang);
@@ -164,7 +158,6 @@ function Navbar() {
     };
   }, []);
   
-  // Mobile menu animation variants
   const mobileMenuVariants = {
     closed: {
       opacity: 0,
@@ -197,7 +190,6 @@ function Navbar() {
     }
   };
   
-  // Lang dropdown mobile animation variants
   const langDropdownMobileVariants = {
     closed: { 
       opacity: 0,
@@ -223,6 +215,20 @@ function Navbar() {
     setMobileMenuOpen(prev => !prev);
   }, []);
 
+  // Hamburger -> Close animation variants
+  const topBarVariants = {
+    closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
+    open: { rotate: 45, y: 5, transition: { duration: 0.3, ease: "easeInOut" } }, // Adjusted y value slightly if needed
+  };
+  const middleBarVariants = {
+    closed: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
+    open: { opacity: 0, transition: { duration: 0.08, ease: "easeInOut" } }, // Faster fade out
+  };
+  const bottomBarVariants = {
+    closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
+    open: { rotate: -45, y: -6, transition: { duration: 0.3, ease: "easeInOut" } }, // Adjusted y value slightly if needed
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
@@ -235,6 +241,35 @@ function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex justify-between items-center h-16 md:h-18">
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={toggleMobileMenu}
+              className="relative z-[1001] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
+              aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              <motion.div 
+                animate={mobileMenuOpen ? "open" : "closed"} 
+                initial={false}
+                className="flex flex-col justify-between w-5 h-3.5"
+              >
+                <motion.span
+                  variants={topBarVariants}
+                  className="block h-0.5 w-full bg-current rounded-full"
+                  style={{ originX: "0.5", originY: "0" }}
+                ></motion.span>
+                <motion.span
+                  variants={middleBarVariants}
+                  className="block h-0.5 w-full bg-current rounded-full"
+                ></motion.span>
+                <motion.span
+                  variants={bottomBarVariants}
+                  className="block h-0.5 w-full bg-current rounded-full"
+                  style={{ originX: "0.5", originY: "1" }}
+                ></motion.span>
+              </motion.div>
+            </button>
+          </div>
           <div className="hidden md:flex items-center space-x-8">
             <Link
               to={getLocalizedPath('/', currentLang)}
@@ -329,14 +364,14 @@ function Navbar() {
             </Link>
           </div>
           
-          <div className="absolute left-1/2 top-1 transform -translate-x-1/2 z-10">
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
               <Logo />
             </Link>
           </div>
           
-          <div className="hidden md:flex items-center">
-            <div className="relative" ref={langDropdownRef}>
+          <div className="flex items-center">
+            <div className="hidden md:block relative" ref={langDropdownRef}>
               <button
                 type="button"
                 onClick={toggleLangDropdown}
@@ -368,8 +403,7 @@ function Navbar() {
                       <button
                         onClick={() => changeLanguage('nl')}
                         className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'nl' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'
-                        } transition-all duration-150 justify-center`}
+                          currentLang === 'nl' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}
                       >
                         <div className="flex items-center">
                           <span className="mr-2 text-base">🇳🇱</span>
@@ -379,8 +413,7 @@ function Navbar() {
                       <button
                         onClick={() => changeLanguage('en')}
                         className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'en' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'
-                        } transition-all duration-150 justify-center`}
+                          currentLang === 'en' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}
                       >
                         <div className="flex items-center">
                           <span className="mr-2 text-base">🇬🇧</span>
@@ -392,49 +425,7 @@ function Navbar() {
                 )}
               </AnimatePresence>
             </div>
-          </div>
-          
-          {/* Mobile - Hamburger Button (Left) & Language Button (Right) - Always visible */} 
-          <div className="md:hidden flex items-center justify-between w-full">
-            {/* Hamburger/Close Button Container */}
-            <button
-              onClick={toggleMobileMenu}
-              className="relative z-[1000] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
-              aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-            >
-              <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
-              <motion.div
-                animate={mobileMenuOpen ? "open" : "closed"}
-                initial={false}
-                className="space-y-1.5"
-              >
-                <motion.span
-                  variants={{
-                    closed: { rotate: 0, y: 0 },
-                    open: { rotate: 45, y: 6 },
-                  }}
-                  className="block h-0.5 w-5 bg-current"
-                ></motion.span>
-                <motion.span
-                  variants={{
-                    closed: { opacity: 1 },
-                    open: { opacity: 0 },
-                  }}
-                  className="block h-0.5 w-5 bg-current"
-                ></motion.span>
-                <motion.span
-                  variants={{
-                    closed: { rotate: 0, y: 0 },
-                    open: { rotate: -45, y: -6 },
-                  }}
-                  className="block h-0.5 w-5 bg-current"
-                ></motion.span>
-              </motion.div>
-            </button>
-
-            {/* Mobile language switcher */} 
-            <div className="relative">
+            <div className="md:hidden relative">
               <button
                 onClick={toggleLangDropdown}
                 className="flex items-center justify-center h-10 px-3 rounded-md bg-onyx/70 border border-gold/30 shadow-sm"
@@ -443,8 +434,6 @@ function Navbar() {
                 <span className="text-base mr-1.5">{currentLang === 'nl' ? '🇳🇱' : '🇬🇧'}</span>
                 <span className="text-sm text-magnolia">{currentLang === 'nl' ? 'NL' : 'EN'}</span>
               </button>
-              
-              {/* Mobile language dropdown inline */}
               <AnimatePresence>
                 {langDropdownOpen && (
                   <motion.div
@@ -483,7 +472,6 @@ function Navbar() {
         </div>
       </div>
       
-      {/* Mobile menu Overlay - Takes full screen */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -492,19 +480,15 @@ function Navbar() {
             animate="open"
             exit="closed"
             variants={mobileMenuVariants}
-            // Use fixed positioning, ensure high z-index, cover full screen
-            className="md:hidden fixed inset-0 bg-onyx/95 backdrop-blur-sm shadow-xl z-[999] h-screen overflow-y-auto pt-20"
-            // Added pt-20 to push content below the fixed header buttons
+            className="md:hidden fixed inset-0 bg-onyx/95 backdrop-blur-sm shadow-xl z-[1000] h-screen overflow-y-auto pt-16"
           >
             <div className="absolute inset-0 bg-pattern opacity-5 z-0"></div>
             
-            {/* Mobile Navigation Links: Centered vertically and horizontally within the remaining space */}
             <div 
-              className="relative z-10 min-h-full flex flex-col items-center justify-center pb-20" // Added pb-20 to balance pt-20
+              className="relative z-10 min-h-full flex flex-col items-center justify-center pb-16"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="w-full max-w-xs mx-auto px-4 flex flex-col items-center">
-                 {/* Links remain the same structure */}
                  <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
