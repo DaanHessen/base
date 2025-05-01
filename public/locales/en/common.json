@@ -43,15 +43,15 @@
       "title": "Opening Hours",
       "monday": "CLOSED",
       "tuesday": "CLOSED",
-      "wednesday": "10:00 - 22:00",
-      "thursday": "10:00 - 22:00",
-      "friday": "10:00 - 23:00",
-      "saturday": "11:00 - 23:00",
+      "wednesday": "15:00 - 22:00",
+      "thursday": "15:00 - 22:00",
+      "friday": "15:00 - 22:00",
+      "saturday": "15:00 - 22:00",
       "sunday": "CLOSED"
     },
     "contact": {
       "title": "Contact",
-      "email": "info@base-restaurant.nl",
+      "email": "info@basebymonsees.nl",
       "phone": "+31 (0)6 12345678",
       "phoneType": "Phone number",
       "emailType": "Email address"
