@@ -24,6 +24,7 @@ html, body {
   font-size: 16px;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
 @media (max-width: 640px) {
@@ -48,6 +49,26 @@ html::-webkit-scrollbar {
 
   button {
     @apply cursor-pointer;
+  }
+}
+
+/* Fixed background image for better mobile experience */
+@media (max-width: 767px) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-color: var(--onyx);
+  }
+
+  .fixed-bg {
+    background-attachment: scroll !important;
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 
@@ -97,6 +118,11 @@ header nav a::after {
 
 header nav a:hover::after {
   width: 100%;
+}
+
+/* Logo animation */
+.logo-container {
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 @media (max-width: 768px) {

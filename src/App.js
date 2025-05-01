@@ -3,10 +3,11 @@ import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'reac
 import { useTranslation } from 'react-i18next';
 import Layout from './components/layout/Layout';
 import Home from './components/sections/Home';
-import Menu from './components/sections/Menu';
+// import Menu from './components/sections/Menu';
 import FoodMenu from './components/sections/FoodMenu';
 import DrinksMenu from './components/sections/DrinksMenu';
 import AboutUs from './components/sections/AboutUs';
+// import { Analytics } from "@vercel/analytics/react";
 
 const AppContent = () => {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
   return (
     <Router>
       <AppContent />
+      {/* <Analytics /> */}
     </Router>
   );
 }

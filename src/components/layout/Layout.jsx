@@ -44,13 +44,13 @@ function Layout({ children }) {
     
     if (isHome) {
       const img = new Image();
-      img.src = '/1000010663.png';
+      img.src = '/home_placeholder.jpg';
       img.onload = () => {
-        setBgImage('/1000010663.png');
+        setBgImage('/home_placeholder.jpg');
       };
       
       const timeout = setTimeout(() => {
-        if (!bgImage) setBgImage('/1000010663.png');
+        if (!bgImage) setBgImage('/home_placeholder.jpg');
       }, 100);
       
       return () => clearTimeout(timeout);
@@ -79,8 +79,7 @@ function Layout({ children }) {
           backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
-          // Use scroll on mobile to prevent parallax issues, fixed on desktop
-          backgroundAttachment: isMobile ? 'scroll' : 'fixed',
+          backgroundAttachment: 'fixed',
           boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)'
         }}
       ></div>
@@ -91,7 +90,7 @@ function Layout({ children }) {
           <title>{t('seo.title')}</title>
           <meta name="description" content={t('seo.description')} />
           <meta name="keywords" content={t('seo.keywords')} />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           
           {/* Security headers - Reverted for basic Google Maps */}
           <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com/;" />
@@ -99,6 +98,27 @@ function Layout({ children }) {
           <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
           <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
           <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+          
+          {/* Add CSS fix for mobile devices */}
+          <style>
+            {`
+              @media (max-width: 767px) {
+                body::before {
+                  content: '';
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  z-index: -1;
+                  background-image: url(${bgImage || '/home_placeholder.jpg'});
+                  background-size: cover;
+                  background-position: center center;
+                  will-change: transform;
+                }
+              }
+            `}
+          </style>
           
           <link rel="canonical" href={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
           {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/en${currentPath}`} />}

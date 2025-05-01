@@ -232,7 +232,7 @@ function Navbar() {
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
-        scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-3' : 'bg-transparent py-5 md:py-10'
+        scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' : 'bg-transparent py-7 md:py-12'
       }`}
       style={{
         transform: `translate3d(0, 0, 0)`,
@@ -240,7 +240,7 @@ function Navbar() {
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex justify-between items-center h-16 md:h-18">
+        <div className="relative flex justify-between items-center h-18 md:h-20">
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleMobileMenu}
@@ -364,9 +364,13 @@ function Navbar() {
             </Link>
           </div>
           
-          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+          <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ${
+            scrolled ? '-translate-y-1/2' : '-translate-y-[calc(50%-0.5rem)]'
+          } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <Logo />
+              <div className={`logo-container transition-all duration-300 ease-out transform ${scrolled ? 'scale-75' : 'scale-100'}`}>
+                <Logo />
+              </div>
             </Link>
           </div>
           

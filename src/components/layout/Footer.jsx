@@ -26,7 +26,7 @@ const MonseesLink = ({ href, label }) => (
   >
     <svg 
       viewBox="0 0 96 24" 
-      className="h-6 md:h-8 w-auto"
+      className="h-4 md:h-6 w-auto"
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>
