@@ -61,6 +61,7 @@ function Navbar() {
     
     if (currentScrollY <= 10 && scrolled) {
       // Remove timeout to eliminate the delay
+      // Remove timeout to eliminate the delay
       setScrolled(false);
       setWasScrolled(false);
     }
@@ -80,17 +81,33 @@ function Navbar() {
     };
     
     window.addEventListener('scroll', scrollListener, { passive: true });
+    // Use requestAnimationFrame for smoother scrolling
+    let ticking = false;
+    const scrollListener = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', scrollListener, { passive: true });
     
     if (mobileMenuOpen) {
       // Store current scroll position before locking
       scrollPositionRef.current = window.scrollY;
       // Lock body scroll
+      // Lock body scroll
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed'; // Use fixed to prevent jump
       document.body.style.position = 'fixed'; // Use fixed to prevent jump
       document.body.style.top = `-${scrollPositionRef.current}px`;
       document.body.style.width = '100%';
     } else {
       // Restore scroll position after unlocking
+      const scrollY = scrollPositionRef.current;
       const scrollY = scrollPositionRef.current;
       document.body.style.overflow = '';
       document.body.style.position = '';
@@ -99,14 +116,28 @@ function Navbar() {
       // Only scroll if position was saved
       if (scrollY > 0) {
         window.scrollTo(0, scrollY);
+      // Only scroll if position was saved
+      if (scrollY > 0) {
+        window.scrollTo(0, scrollY);
       }
+      // Reset scroll position ref
+      scrollPositionRef.current = 0;
       // Reset scroll position ref
       scrollPositionRef.current = 0;
     }
     
     return () => {
       window.removeEventListener('scroll', scrollListener);
+      window.removeEventListener('scroll', scrollListener);
       clearTimeout(scrollTimeoutRef.current);
+      // Ensure we clean up body styles on component unmount or when menu closes
+      if (document.body.style.position === 'fixed') { // Only reset if we set it
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        // No need to scroll here, focus is on cleanup
+      }
       // Ensure we clean up body styles on component unmount or when menu closes
       if (document.body.style.position === 'fixed') { // Only reset if we set it
         document.body.style.overflow = '';
@@ -402,8 +433,36 @@ function Navbar() {
               className="relative z-[1000] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
+              <motion.div
+                animate={mobileMenuOpen ? "open" : "closed"}
+                initial={false}
+                className="space-y-1.5"
+              >
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: 45, y: 6 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    closed: { opacity: 1 },
+                    open: { opacity: 0 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+                <motion.span
+                  variants={{
+                    closed: { rotate: 0, y: 0 },
+                    open: { rotate: -45, y: -6 },
+                  }}
+                  className="block h-0.5 w-5 bg-current"
+                ></motion.span>
+              </motion.div>
               <motion.div
                 animate={mobileMenuOpen ? "open" : "closed"}
                 initial={false}
@@ -509,57 +568,76 @@ function Navbar() {
                   <Link
                     to={getLocalizedPath('/', currentLang)}
                     className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/' 
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaHome className="mr-3 text-gold/80" />
+                    <FaHome className="mr-3 text-gold/80" />
                     {t('navigation.home')}
                   </Link>
                 </motion.div>
                 
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/menu/food', currentLang)}
                     className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/menu' || currentPath === '/menu/food' 
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaUtensils className="mr-3 text-gold/80" />
+                    <FaUtensils className="mr-3 text-gold/80" />
                     {currentLang === 'nl' ? 'Eten' : 'Food'}
                   </Link>
                 </motion.div>
                 
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/menu/drinks', currentLang)}
                     className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/menu/drinks' 
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaCocktail className="mr-3 text-gold/80" />
+                    <FaCocktail className="mr-3 text-gold/80" />
                     {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
                   </Link>
                 </motion.div>
                 
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
                   <Link
                     to={getLocalizedPath('/about', currentLang)}
                     className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-xl font-medium py-4 ${
                       currentPath === '/about' 
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
                     } transition-all duration-200`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
+                    <FaInfoCircle className="mr-3 text-gold/80" />
                     <FaInfoCircle className="mr-3 text-gold/80" />
                     {t('navigation.about')}
                   </Link>

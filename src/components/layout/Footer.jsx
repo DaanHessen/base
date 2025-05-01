@@ -22,6 +22,7 @@ const MonseesLink = ({ href, label }) => (
     target="_blank" 
     rel="noopener noreferrer" 
     className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center" 
+    className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center" 
     aria-label={label}
   >
     <svg 
@@ -29,8 +30,15 @@ const MonseesLink = ({ href, label }) => (
       className="h-6 md:h-8 w-auto"
       preserveAspectRatio="xMidYMid meet"
     >
+    <svg 
+      viewBox="0 0 96 24" 
+      className="h-6 md:h-8 w-auto"
+      preserveAspectRatio="xMidYMid meet"
+    >
       <defs>
         <linearGradient id="monsees-gradient" gradientUnits="userSpaceOnUse" fy="90%">
+          <stop offset="0" stop-color="currentColor" />
+          <stop offset="1" stop-color="currentColor" />
           <stop offset="0" stop-color="currentColor" />
           <stop offset="1" stop-color="currentColor" />
         </linearGradient>

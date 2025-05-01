@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
@@ -8,6 +9,8 @@ import { getLanguage } from '../../utils/language';
 function Home() {
   const { t, i18n } = useTranslation(['home', 'common']);
   const currentLang = i18n.language;
+  const [isMobile, setIsMobile] = useState(false);
+  const [animationPlayed, setAnimationPlayed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [animationPlayed, setAnimationPlayed] = useState(false);
 
@@ -38,11 +41,34 @@ function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkIsMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Always enable animation on mount
+    setAnimationPlayed(false);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
+        staggerChildren: isMobile ? 0.1 : 0.15,
+        delayChildren: 0.05,
+        ease: "easeOut"
         staggerChildren: isMobile ? 0.1 : 0.15,
         delayChildren: 0.05,
         ease: "easeOut"
@@ -61,6 +87,12 @@ function Home() {
         // Use hardware acceleration for better performance on mobile
         type: "tween"
       }
+      transition: { 
+        duration: 0.4, 
+        ease: "easeOut",
+        // Use hardware acceleration for better performance on mobile
+        type: "tween"
+      }
     }
   };
 
@@ -69,6 +101,11 @@ function Home() {
     visible: { 
       opacity: 1, 
       width: 96,
+      transition: { 
+        delay: isMobile ? 0.6 : 0.8, 
+        duration: 0.5,
+        ease: "easeOut" 
+      }
       transition: { 
         delay: isMobile ? 0.6 : 0.8, 
         duration: 0.5,
@@ -97,15 +134,18 @@ function Home() {
             initial="hidden"
             animate="visible"
             style={{ backfaceVisibility: 'hidden' }}
+            style={{ backfaceVisibility: 'hidden' }}
           >
             <motion.h1 
               className="text-[clamp(2rem,6vw+1rem,4rem)] md:text-[clamp(3rem,7vw+1rem,5rem)] lg:text-[clamp(4rem,8vw+1rem,7rem)] font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight"
               variants={itemVariants}
               dangerouslySetInnerHTML={{ __html: t('home:hero.title') }}
               style={{ transform: 'translate3d(0, 0, 0)' }}
+              style={{ transform: 'translate3d(0, 0, 0)' }}
             />
             
             <div className="max-w-xl">
+              <motion.div className="relative mb-2 sm:mb-3" variants={itemVariants} style={{ transform: 'translate3d(0, 0, 0)' }}>
               <motion.div className="relative mb-2 sm:mb-3" variants={itemVariants} style={{ transform: 'translate3d(0, 0, 0)' }}>
                 <motion.h2 
                   className="text-[clamp(0.875rem,2vw+0.5rem,1rem)] md:text-[clamp(1rem,2.5vw+0.5rem,1.125rem)] text-thistle font-light tracking-wide relative z-10 px-4 py-2 whitespace-nowrap"
@@ -113,11 +153,13 @@ function Home() {
                   {t('home:hero.subtitle')}
                 </motion.h2>
                 <div className="absolute -left-0 -right-0 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10"></div>
+                <div className="absolute -left-0 -right-0 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10"></div>
               </motion.div>
               
               <motion.div
                 className="text-sm sm:text-base md:text-lg text-thistle backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50"
                 variants={itemVariants}
+                style={{ transform: 'translate3d(0, 0, 0)' }}
                 style={{ transform: 'translate3d(0, 0, 0)' }}
               >
                 <p className="mb-6 sm:mb-8 leading-relaxed">
@@ -127,6 +169,7 @@ function Home() {
                 <motion.div 
                   className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-start"
                   variants={itemVariants}
+                  style={{ transform: 'translate3d(0, 0, 0)' }}
                   style={{ transform: 'translate3d(0, 0, 0)' }}
                 >
                   <Link 
@@ -149,12 +192,15 @@ function Home() {
               className="w-24 h-1 bg-gold/70 mt-12 rounded-full block md:hidden mx-auto shadow-[0_0_10px_rgba(212,175,55,0.5)]"
               variants={decorationVariants}
               style={{ transform: 'translate3d(0, 0, 0)' }}
+              style={{ transform: 'translate3d(0, 0, 0)' }}
             />
             
             <motion.div 
               className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gold/70 md:hidden"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: isMobile ? 0.8 : 1.2, duration: 0.5, ease: "easeOut" }}
+              style={{ transform: 'translate3d(-50%, 0, 0)' }}
               transition={{ delay: isMobile ? 0.8 : 1.2, duration: 0.5, ease: "easeOut" }}
               style={{ transform: 'translate3d(-50%, 0, 0)' }}
             >

@@ -123,7 +123,9 @@ function Layout({ children }) {
           {/* Additional SEO tags */}
           <meta name="robots" content="index, follow" />
           <meta name="author" content="BASE Restaurant & bar" />
+          <meta name="author" content="BASE Restaurant & bar" />
           <meta name="geo.region" content="NL" />
+          <meta name="geo.placename" content="Hilversum" />
           <meta name="geo.placename" content="Hilversum" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -131,6 +133,7 @@ function Layout({ children }) {
         <Navbar />
         
         <main className="flex-grow">
+          <AnimatePresence mode="wait">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
