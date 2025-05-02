@@ -162,6 +162,17 @@ function Layout({ children }) {
                   left: 0;
                   z-index: -2;
                 }
+                
+                /* Force background to maintain position and size */
+                .bg-fixed-container {
+                  height: 100vh !important;
+                  overflow: hidden;
+                  position: fixed;
+                  width: 100%;
+                  top: 0;
+                  left: 0;
+                  z-index: -2;
+                }
               }
             `}
           </style>
