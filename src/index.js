@@ -7,8 +7,11 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // Set custom viewport height property for mobile browsers
 const setViewportHeight = () => {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  // Small delay to ensure we get accurate height after orientation change
+  setTimeout(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, 100);
 };
 
 // Set on initial load
@@ -16,7 +19,16 @@ setViewportHeight();
 
 // Update on resize and orientation change
 window.addEventListener('resize', setViewportHeight);
-window.addEventListener('orientationchange', setViewportHeight);
+window.addEventListener('orientationchange', () => {
+  // Run multiple times to catch iOS Safari's delayed height update
+  setViewportHeight();
+  setTimeout(setViewportHeight, 200);
+  setTimeout(setViewportHeight, 500);
+});
+
+// Also update on page load and DOMContentLoaded
+window.addEventListener('load', setViewportHeight);
+document.addEventListener('DOMContentLoaded', setViewportHeight);
 
 const LoadingIndicator = () => (
   <div className="min-h-screen flex items-center justify-center bg-onyx">

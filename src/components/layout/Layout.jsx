@@ -54,7 +54,28 @@ function Layout({ children }) {
       }, 100);
       
       return () => clearTimeout(timeout);
+    } else {
+      // Make sure to reset background when not on home page
+      setBgImage('');
     }
+  }, [currentPath, bgImage]);
+
+  // Force background reload on language change
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      // If on home page, reload background
+      if (currentPath === '/') {
+        setBgImage('');
+        setTimeout(() => {
+          setBgImage('/home_placeholder.jpg');
+        }, 50);
+      }
+    };
+    
+    window.addEventListener('languageChanged', handleLanguageChange);
+    return () => {
+      window.removeEventListener('languageChanged', handleLanguageChange);
+    };
   }, [currentPath]);
 
   const pageVariants = {
@@ -161,6 +182,15 @@ function Layout({ children }) {
                   top: 0;
                   left: 0;
                   z-index: -2;
+                }
+                
+                /* Remove duplicate rule */
+              }
+              
+              /* Ensure loading on orientation change */
+              @media (orientation: landscape) {
+                .bg-fixed-container {
+                  min-height: 100%;
                 }
               }
             `}

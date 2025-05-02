@@ -115,6 +115,14 @@ html::-webkit-scrollbar {
     min-height: calc(var(--vh, 1vh) * 100);
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  
+  /* Create a stacking context for proper z-index handling */
+  #root {
+    isolation: isolate;
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -311,7 +319,7 @@ body * {
   }
   
   .min-h-screen {
-    min-height: calc(100vh - 60px); /* Account for navbar height */
+    min-height: calc(var(--vh, 1vh) * 100 - 60px) !important; /* Account for navbar height */
   }
   
   section {
@@ -328,14 +336,120 @@ body * {
     font-size: 0.875rem !important;
   }
   
-  /* Additional font size control for very small screens */
-  @media (max-width: 360px) {
-    html, body {
-      font-size: 14px;
-    }
-    
-    h1 {
-      font-size: clamp(1.5rem, 4vw + 1rem, 3rem) !important;
-    }
+  /* Layout improvements for small screens */
+  .container {
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
+}
+
+/* Additional font size control for very small screens */
+@media (max-width: 360px) {
+  html, body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: clamp(1.5rem, 4vw + 1rem, 3rem) !important;
+  }
+  
+  /* Adjust spacing for very small screens */
+  .py-12 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .my-8 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+/* Special fixes for tall/narrow phones */
+@media (max-height: 720px) and (max-width: 480px) {
+  .min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  .py-16, .py-20, .py-24 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Reduce unnecessary margins/paddings */
+  .space-y-8 > * + * {
+    margin-top: 1.5rem !important;
+  }
+}
+
+/* Fixes for landscape mode on mobile */
+@media (max-height: 480px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: 480px !important;
+  }
+  
+  .py-12, .py-16, .py-20 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Adjust navbar in landscape */
+  .fixed-nav {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .bg-fixed-container {
+    height: 100% !important;
+  }
+}
+
+/* Prevent flash of unstyled content and grey screen issues */
+html.wf-loading {
+  visibility: hidden;
+}
+
+html.wf-active, html.wf-inactive {
+  visibility: visible;
+}
+
+/* Add proper fallback for backgrounds */
+.bg-fixed-container,
+.fixed-bg,
+[class*="bg-fixed"] {
+  background-color: var(--onyx) !important;
+}
+
+/* Improve reliability of fixed elements on mobile */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific fixes */
+  .fixed-bg,
+  .bg-fixed-custom {
+    background-attachment: scroll !important;
+  }
+  
+  .min-h-screen {
+    min-height: -webkit-fill-available !important;
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  body, html {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  body {
+    /* Prevent body from getting stuck */
+    touch-action: manipulation;
+  }
+}
+
+/* Ensure React app container spans full height */
+#root {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-direction: column;
 }

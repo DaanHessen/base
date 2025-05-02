@@ -44,8 +44,11 @@ function Navbar() {
         ? `/en${location.pathname}`
         : location.pathname.replace(/^\/en/, '');
       
-      // Use history.replace to avoid creating a new history entry
-      window.history.replaceState({}, '', newPath + location.search + location.hash);
+      // Add a small delay to prevent navigation issues
+      setTimeout(() => {
+        // Use history.replace to avoid creating a new history entry
+        window.history.replaceState({}, '', newPath + location.search + location.hash);
+      }, 0);
     }
   }, [currentLang, location.pathname, location.search, location.hash]);
 
@@ -113,9 +116,26 @@ function Navbar() {
   }, [mobileMenuOpen]);
   
   const changeLanguage = useCallback((lang) => {
-    setLanguage(lang);
+    // First close the dropdown
     setLangDropdownOpen(false);
-  }, []);
+    
+    // Store the current path for proper redirect
+    const basePath = getBasePath(location.pathname);
+    
+    // Set language in utils/localStorage/cookies
+    setLanguage(lang);
+    
+    // Manually handle URL change instead of relying on the effect
+    const newPath = lang === 'en' 
+      ? `/en${basePath}` 
+      : basePath;
+    
+    // Use history.replace to avoid creating a new history entry
+    window.history.replaceState({}, '', newPath + location.search + location.hash);
+    
+    // Force a clean re-render without full page reload
+    window.dispatchEvent(new Event('languageChanged'));
+  }, [location.pathname, location.search, location.hash]);
 
   const toggleLangDropdown = useCallback(() => setLangDropdownOpen(prev => !prev), []);
   
