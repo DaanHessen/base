@@ -57,14 +57,13 @@ function Navbar() {
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     
-    if (currentScrollY > 10 && !scrolled) {
+    // Remove scrolled condition check to apply for both desktop and mobile
+    if (currentScrollY > 10) {
       setScrolled(true);
-    }
-    
-    if (currentScrollY <= 10 && scrolled) {
+    } else {
       setScrolled(false);
     }
-  }, [scrolled]);
+  }, []);
 
   useEffect(() => {
     let localTicking = false;
@@ -523,11 +522,11 @@ function Navbar() {
                  <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
                       currentPath === '/' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200`}
+                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaHome className="mr-3 text-gold/80" />
@@ -538,11 +537,11 @@ function Navbar() {
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
                       currentPath === '/menu' || currentPath === '/menu/food' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200`}
+                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaUtensils className="mr-3 text-gold/80" />
@@ -553,11 +552,11 @@ function Navbar() {
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
                       currentPath === '/menu/drinks' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200`}
+                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaCocktail className="mr-3 text-gold/80" />
@@ -568,11 +567,11 @@ function Navbar() {
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
                       currentPath === '/about' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200`}
+                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaInfoCircle className="mr-3 text-gold/80" />
