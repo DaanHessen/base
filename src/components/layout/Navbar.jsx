@@ -56,22 +56,9 @@ function Navbar() {
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
-    
-    // Force scrolled state on mobile
-    const isMobile = window.innerWidth < 768;
-    
-    // Always set scrolled to true on mobile regardless of scroll position
-    if (isMobile) {
-      setScrolled(true);
-      return;
-    }
-    
-    // For desktop, use normal scroll detection
-    if (currentScrollY > 5) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
+    // Apply scrolled state based on scroll position
+    const newScrolledState = currentScrollY > 5;
+    setScrolled(newScrolledState);
   }, []);
 
   useEffect(() => {
@@ -288,7 +275,9 @@ function Navbar() {
   return (
     <nav 
       className={`fixed fixed-nav top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out will-change-transform ${
-        scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' : 'bg-transparent py-7 md:py-12'
+        scrolled 
+          ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' 
+          : 'bg-transparent py-7 md:py-12'
       }`}
       style={{
         transform: `translate3d(0, 0, 0)`,
@@ -298,6 +287,7 @@ function Navbar() {
         perspective: '1000px',
         WebkitPerspective: '1000px'
       }}
+      data-scrolled={scrolled ? 'true' : 'false'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex justify-between items-center h-18 md:h-20">

@@ -124,6 +124,11 @@ html::-webkit-scrollbar {
     position: relative;
     z-index: 1;
   }
+
+  /* Override mobile min-h-screen height to allow scrolling */
+  .min-h-screen {
+    height: auto !important;
+  }
 }
 
 @media (min-width: 400px) {

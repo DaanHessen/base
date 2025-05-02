@@ -164,7 +164,8 @@ function Layout({ children }) {
                   word-wrap: break-word;
                 }
                 
-                /* Prevent nav bar from affecting background */
+                /* Styling for fixed-nav should be handled by Navbar component's classes */
+                /* Removed rules that forced background-color */
                 nav.fixed-nav {
                   transform: translateZ(0);
                   -webkit-transform: translateZ(0);
@@ -172,6 +173,8 @@ function Layout({ children }) {
                   perspective: 1000;
                   will-change: transform;
                 }
+                
+                /* Removed rule for nav.fixed-nav.bg-onyx\/95 */
                 
                 /* Force background to maintain position and size */
                 .bg-fixed-container {
@@ -183,8 +186,6 @@ function Layout({ children }) {
                   left: 0;
                   z-index: -2;
                 }
-                
-                /* Remove duplicate rule */
               }
               
               /* Ensure loading on orientation change */
