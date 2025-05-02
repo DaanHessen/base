@@ -13,7 +13,7 @@ function MenuCategory({ category }) {
   const isDrinks = category.id === 'drinks' || (category.parentId === 'drinks');
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 px-1 sm:px-0 max-w-full mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 px-1 sm:px-0 w-full max-w-full mx-auto md:max-w-5xl">
       {category.items.map((item, index) => {
         if (!item || !item.name || !item.description) {
           console.error('Invalid menu item:', item);
@@ -38,7 +38,8 @@ function MenuCategory({ category }) {
             className="h-auto min-h-[120px] transition-all duration-300 animate-fadeIn w-full"
             style={{ 
               animationDelay: `${index * 50}ms`,
-              animationFillMode: 'both' 
+              animationFillMode: 'both',
+              maxWidth: '100%'
             }}
           >
             <MenuItem 

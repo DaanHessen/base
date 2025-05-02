@@ -57,11 +57,17 @@ function Navbar() {
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     
-    // Force scrolled state on mobile if needed
+    // Force scrolled state on mobile
     const isMobile = window.innerWidth < 768;
     
-    // More aggressive scroll detection for mobile
-    if (currentScrollY > 5 || (isMobile && currentScrollY > 0)) {
+    // Always set scrolled to true on mobile regardless of scroll position
+    if (isMobile) {
+      setScrolled(true);
+      return;
+    }
+    
+    // For desktop, use normal scroll detection
+    if (currentScrollY > 5) {
       setScrolled(true);
     } else {
       setScrolled(false);
@@ -82,38 +88,34 @@ function Navbar() {
     
     window.addEventListener('scroll', localScrollListener, { passive: true });
     
+    // Force an initial check on mount
+    handleScroll();
+    
     return () => {
       window.removeEventListener('scroll', localScrollListener);
     };
   }, [handleScroll]);
 
-  // Add a special mobile scroll detection
+  // Special mobile event handler
   useEffect(() => {
     // Check if we're on mobile
     const isMobile = window.innerWidth < 768;
     if (!isMobile) return;
     
-    // Force an initial scroll check
-    handleScroll();
+    // Force scrolled state on mobile
+    setScrolled(true);
     
-    // Additional scroll listener specifically for mobile
-    const mobileScrollCheck = () => {
-      if (window.scrollY > 0) {
+    // Additional resize handler to maintain scrolled state on mobile
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
         setScrolled(true);
       }
     };
     
-    window.addEventListener('touchmove', mobileScrollCheck, { passive: true });
-    window.addEventListener('scroll', mobileScrollCheck, { passive: true });
-    
-    // Force scrolled state on initial load for mobile if already scrolled
-    if (window.scrollY > 0) {
-      setScrolled(true);
-    }
+    window.addEventListener('resize', handleResize, { passive: true });
     
     return () => {
-      window.removeEventListener('touchmove', mobileScrollCheck);
-      window.removeEventListener('scroll', mobileScrollCheck);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -286,7 +288,7 @@ function Navbar() {
 
   return (
     <nav 
-      className={`fixed fixed-nav top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
+      className={`fixed fixed-nav top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out will-change-transform ${
         scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' : 'bg-transparent py-7 md:py-12'
       }`}
       style={{

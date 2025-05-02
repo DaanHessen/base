@@ -56,7 +56,7 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
   
   return (
     <div 
-      className="flex flex-col p-3 sm:p-4 border border-dim-gray/30 rounded-lg bg-onyx/60 transition-all duration-150 hover:shadow-[0_4px_20px_-2px_rgba(212,175,55,0.4)] hover:bg-dim-gray/20 hover:border-gold/40 group h-full w-full relative overflow-hidden hover:-translate-y-1 max-w-[95%] mx-auto md:max-w-full"
+      className="flex flex-col p-3 sm:p-4 border border-dim-gray/30 rounded-lg bg-onyx/60 transition-all duration-150 hover:shadow-[0_4px_20px_-2px_rgba(212,175,55,0.4)] hover:bg-dim-gray/20 hover:border-gold/40 group h-full w-full relative overflow-hidden hover:-translate-y-1 max-w-[100%] mx-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(!isHovered)}
@@ -68,9 +68,9 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       
       <div className="p-2 sm:p-3 flex flex-col h-full relative">
         <div className="flex justify-between items-start gap-2 mb-2.5">
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 max-w-full">
             <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-150 flex items-center">
-              <span className="break-words pr-1 truncate block max-w-[300px] md:max-w-full">{name}</span>
+              <span className="break-words pr-1 block md:max-w-full max-w-[200px] truncate">{name}</span>
               {showVeganInfo && (
                 <div className="ml-1 flex-shrink-0" title={t('vegan')}>
                   <VeganIcon />
@@ -82,7 +82,7 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
         </div>
         
         <div className="flex-grow">
-          <p className={`text-thistle/90 font-body text-sm leading-relaxed mb-2 break-words ${isMobile ? 'line-clamp-4' : ''}`}>
+          <p className={`text-thistle/90 font-body text-sm leading-relaxed mb-2 break-words ${isMobile ? 'line-clamp-3' : ''}`}>
             {description}
           </p>
           
