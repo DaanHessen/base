@@ -150,19 +150,6 @@ function Home() {
               variants={decorationVariants}
               style={{ transform: 'translate3d(0, 0, 0)' }}
             />
-            
-            <motion.div 
-              className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-gold/70 md:hidden"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: isMobile ? 0.8 : 1.2, duration: 0.5, ease: "easeOut" }}
-              style={{ transform: 'translate3d(-50%, 0, 0)' }}
-            >
-              <div className="text-xs font-light mb-2">{t('home:scrollForMore')}</div>
-              <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-              </svg>
-            </motion.div>
           </motion.div>
         </div>
       </section>

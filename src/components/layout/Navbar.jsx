@@ -33,24 +33,26 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // Detect if we need to redirect based on URL and current language
-    const shouldRedirect = (
+    // With HashRouter we need to be more careful with redirects
+    // Only redirect if the URL structure is invalid (like /en/#/en)
+    const isInvalidUrl = (
       (currentLang === 'en' && !location.pathname.startsWith('/en')) ||
       (currentLang === 'nl' && location.pathname.startsWith('/en'))
     );
     
-    if (shouldRedirect) {
+    // Check for duplicated language path like /en/#/en
+    const hasDoubleEn = location.pathname.startsWith('/en') && location.hash.includes('#/en');
+    
+    if (isInvalidUrl || hasDoubleEn) {
+      const basePath = getBasePath(location.pathname);
       const newPath = currentLang === 'en'
-        ? `/en${location.pathname}`
-        : location.pathname.replace(/^\/en/, '');
+        ? `/en${basePath}`
+        : basePath;
       
-      // Add a small delay to prevent navigation issues
-      setTimeout(() => {
-        // Use history.replace to avoid creating a new history entry
-        window.history.replaceState({}, '', newPath + location.search + location.hash);
-      }, 0);
+      // Use replace to avoid pushing a new history entry
+      window.location.replace(`/#${newPath}`);
     }
-  }, [currentLang, location.pathname, location.search, location.hash]);
+  }, [currentLang, location.pathname, location.hash]);
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
@@ -119,23 +121,24 @@ function Navbar() {
     // First close the dropdown
     setLangDropdownOpen(false);
     
-    // Store the current path for proper redirect
+    // Get the base path without language prefix
     const basePath = getBasePath(location.pathname);
     
     // Set language in utils/localStorage/cookies
     setLanguage(lang);
     
-    // Manually handle URL change instead of relying on the effect
+    // Build the new path based on selected language
     const newPath = lang === 'en' 
       ? `/en${basePath}` 
       : basePath;
     
-    // Use history.replace to avoid creating a new history entry
-    window.history.replaceState({}, '', newPath + location.search + location.hash);
+    // With HashRouter, we need to navigate to /#/path
+    window.location.replace(`/#${newPath}`);
     
-    // Force a clean re-render without full page reload
-    window.dispatchEvent(new Event('languageChanged'));
-  }, [location.pathname, location.search, location.hash]);
+    // Force reload to ensure everything is reset properly
+    // This is necessary to avoid the gray screen issue
+    window.location.reload();
+  }, [location.pathname]);
 
   const toggleLangDropdown = useCallback(() => setLangDropdownOpen(prev => !prev), []);
   
@@ -389,10 +392,10 @@ function Navbar() {
           </div>
           
           <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ${
-            scrolled ? '-translate-y-1/2' : '-translate-y-[calc(50%-0.5rem)]'
+            scrolled ? '-translate-y-1/2 scale-75' : '-translate-y-[calc(50%-0.5rem)] scale-100'
           } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <div className={`logo-container transition-all duration-300 ease-out transform ${scrolled ? 'scale-75' : 'scale-100'}`}>
+              <div className={`logo-container transition-all duration-300 ease-out transform`}>
                 <Logo />
               </div>
             </Link>
@@ -520,7 +523,7 @@ function Navbar() {
                  <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 ${
                       currentPath === '/' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
@@ -532,10 +535,10 @@ function Navbar() {
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 ${
                       currentPath === '/menu' || currentPath === '/menu/food' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
@@ -547,10 +550,10 @@ function Navbar() {
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 ${
                       currentPath === '/menu/drinks' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
@@ -562,10 +565,10 @@ function Navbar() {
                   </Link>
                 </motion.div>
                 
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-2 pt-2">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center justify-center text-xl font-medium py-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-3 ${
                       currentPath === '/about' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
