@@ -57,8 +57,11 @@ function Navbar() {
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
     
-    // Remove scrolled condition check to apply for both desktop and mobile
-    if (currentScrollY > 10) {
+    // Force scrolled state on mobile if needed
+    const isMobile = window.innerWidth < 768;
+    
+    // More aggressive scroll detection for mobile
+    if (currentScrollY > 5 || (isMobile && currentScrollY > 0)) {
       setScrolled(true);
     } else {
       setScrolled(false);
@@ -83,6 +86,36 @@ function Navbar() {
       window.removeEventListener('scroll', localScrollListener);
     };
   }, [handleScroll]);
+
+  // Add a special mobile scroll detection
+  useEffect(() => {
+    // Check if we're on mobile
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+    
+    // Force an initial scroll check
+    handleScroll();
+    
+    // Additional scroll listener specifically for mobile
+    const mobileScrollCheck = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      }
+    };
+    
+    window.addEventListener('touchmove', mobileScrollCheck, { passive: true });
+    window.addEventListener('scroll', mobileScrollCheck, { passive: true });
+    
+    // Force scrolled state on initial load for mobile if already scrolled
+    if (window.scrollY > 0) {
+      setScrolled(true);
+    }
+    
+    return () => {
+      window.removeEventListener('touchmove', mobileScrollCheck);
+      window.removeEventListener('scroll', mobileScrollCheck);
+    };
+  }, []);
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -522,14 +555,14 @@ function Navbar() {
                  <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
                       currentPath === '/' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
+                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaHome className="mr-3 text-gold/80" />
+                    <FaHome className="mr-2 text-gold/80" />
                     {t('navigation.home')}
                   </Link>
                 </motion.div>
@@ -537,14 +570,14 @@ function Navbar() {
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
                       currentPath === '/menu' || currentPath === '/menu/food' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
+                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaUtensils className="mr-3 text-gold/80" />
+                    <FaUtensils className="mr-2 text-gold/80" />
                     {currentLang === 'nl' ? 'Eten' : 'Food'}
                   </Link>
                 </motion.div>
@@ -552,14 +585,14 @@ function Navbar() {
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
                       currentPath === '/menu/drinks' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
+                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaCocktail className="mr-3 text-gold/80" />
+                    <FaCocktail className="mr-2 text-gold/80" />
                     {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
                   </Link>
                 </motion.div>
@@ -567,14 +600,14 @@ function Navbar() {
                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
                   <Link
                     to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-3 px-4 ${
+                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
                       currentPath === '/about' 
                         ? 'text-gold' 
                         : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[200px] mx-auto rounded-lg`}
+                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <FaInfoCircle className="mr-3 text-gold/80" />
+                    <FaInfoCircle className="mr-2 text-gold/80" />
                     {t('navigation.about')}
                   </Link>
                 </motion.div>
