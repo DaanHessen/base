@@ -231,7 +231,7 @@ function Navbar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
+      className={`fixed fixed-nav top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
         scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' : 'bg-transparent py-7 md:py-12'
       }`}
       style={{

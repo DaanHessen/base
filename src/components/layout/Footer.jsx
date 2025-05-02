@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FaInstagram, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import monseesLogo from '../../assets/monsees-optimized.svg';
@@ -48,12 +48,26 @@ function Footer() {
   const [copyMessage, setCopyMessage] = useState('');
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
+  const [isMobile, setIsMobile] = useState(false);
   
   const [formData, setFormData] = useState({
     email: '',
     message: ''
   });
   const [formStatus, setFormStatus] = useState(null);
+  
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
   
   const openMaps = (address) => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -67,6 +81,25 @@ function Footer() {
       () => setCopyMessage(`${type} ${currentLang === 'nl' ? 'gekopieerd!' : 'copied!'}`),
       () => setCopyMessage(currentLang === 'nl' ? 'Kopiëren mislukt' : 'Failed to copy')
     ).finally(() => setTimeout(() => setCopyMessage(''), 2000));
+  };
+  
+  const handlePhoneClick = () => {
+    const phoneNumber = t('footer.contact.phone').replace(/\s+/g, '');
+    if (isMobile) {
+      window.location.href = `tel:${phoneNumber}`;
+    } else {
+      copyToClipboard(t('footer.contact.phone'), t('footer.contact.phoneType', 'Phone number'));
+    }
+  };
+  
+  const handleEmailClick = () => {
+    const email = t('footer.contact.email');
+    if (isMobile) {
+      window.location.href = `mailto:${email}`;
+    } else {
+      const subject = encodeURIComponent(currentLang === 'nl' ? 'Contact vanuit website' : 'Contact from website');
+      window.location.href = `mailto:${email}?subject=${subject}`;
+    }
   };
 
   const handleInputChange = useCallback((e) => {
@@ -117,7 +150,7 @@ function Footer() {
               </svg>
               <button 
                 className="text-sm hover:text-gold transition-colors duration-200"
-                onClick={() => copyToClipboard(t('footer.contact.phone'), t('footer.contact.phoneType', 'Phone number'))}
+                onClick={handlePhoneClick}
               >
                 {t('footer.contact.phone')}
               </button>
@@ -126,7 +159,7 @@ function Footer() {
               <FaEnvelope className="h-5 w-5 text-gold flex-shrink-0" />
               <button 
                 className="text-sm hover:text-gold transition-colors duration-200"
-                onClick={() => copyToClipboard(t('footer.contact.email'), t('footer.contact.emailType', 'Email'))}
+                onClick={handleEmailClick}
               >
                 {t('footer.contact.email')}
               </button>

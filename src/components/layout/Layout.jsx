@@ -84,7 +84,28 @@ function Layout({ children }) {
         }}
       ></div>
       
-      <div className="relative z-10 flex flex-col min-h-screen">
+      {isHomePage && (
+        <div className="bg-fixed-container">
+          <div 
+            style={{
+              backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              backgroundAttachment: 'fixed',
+              boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)',
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0
+            }}
+          ></div>
+        </div>
+      )}
+      
+      <div className="relative z-10 flex flex-col min-h-screen overflow-x-hidden">
         <Helmet>
           <html lang={currentLang} />
           <title>{t('seo.title')}</title>
@@ -109,12 +130,47 @@ function Layout({ children }) {
                   top: 0;
                   left: 0;
                   width: 100%;
-                  height: 100%;
+                  height: 100vh;
                   z-index: -1;
                   background-image: url(${bgImage || '/home_placeholder.jpg'});
                   background-size: cover;
                   background-position: center center;
+                  background-attachment: fixed;
                   will-change: transform;
+                }
+                
+                /* Prevent content overflow */
+                .overflow-container {
+                  max-width: 100vw;
+                  overflow-x: hidden;
+                  word-break: break-word;
+                }
+                
+                /* Ensure text is visible and not cut off */
+                h1, h2, h3, p {
+                  max-width: 100%;
+                  overflow-wrap: break-word;
+                  word-wrap: break-word;
+                }
+                
+                /* Prevent nav bar from affecting background */
+                nav.fixed-nav {
+                  transform: translateZ(0);
+                  -webkit-transform: translateZ(0);
+                  backface-visibility: hidden;
+                  perspective: 1000;
+                  will-change: transform;
+                }
+                
+                /* Force background to maintain position and size */
+                .bg-fixed-container {
+                  height: 100vh !important;
+                  overflow: hidden;
+                  position: fixed;
+                  width: 100%;
+                  top: 0;
+                  left: 0;
+                  z-index: -2;
                 }
               }
             `}

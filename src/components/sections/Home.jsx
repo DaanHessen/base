@@ -89,8 +89,8 @@ function Home() {
         <meta name="og:description" content={t('home:seo.description')} />
       </Helmet>
       
-      <section className="min-h-screen flex items-center pt-20 pb-12 sm:pt-16 md:pt-0 md:pb-0">
-        <div className="w-full px-5 sm:px-8 max-w-screen-xl mx-auto">
+      <section className="min-h-screen flex items-center pt-28 pb-12 sm:pt-32 md:pt-20 md:pb-0">
+        <div className="w-full px-4 sm:px-8 max-w-screen-xl mx-auto">
           <motion.div 
             className="flex flex-col items-start text-left"
             variants={containerVariants}
@@ -99,16 +99,16 @@ function Home() {
             style={{ backfaceVisibility: 'hidden' }}
           >
             <motion.h1 
-              className="text-[clamp(2rem,6vw+1rem,4rem)] md:text-[clamp(3rem,7vw+1rem,5rem)] lg:text-[clamp(4rem,8vw+1rem,7rem)] font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight"
+              className="text-[clamp(1.75rem,5vw+1rem,4rem)] md:text-[clamp(3rem,7vw+1rem,5rem)] lg:text-[clamp(4rem,8vw+1rem,7rem)] font-bold text-magnolia mb-3 sm:mb-6 leading-tight tracking-tight"
               variants={itemVariants}
               dangerouslySetInnerHTML={{ __html: t('home:hero.title') }}
               style={{ transform: 'translate3d(0, 0, 0)' }}
             />
             
-            <div className="max-w-xl">
+            <div className="max-w-xl w-full">
               <motion.div className="relative mb-2 sm:mb-3" variants={itemVariants} style={{ transform: 'translate3d(0, 0, 0)' }}>
                 <motion.h2 
-                  className="text-[clamp(0.875rem,2vw+0.5rem,1rem)] md:text-[clamp(1rem,2.5vw+0.5rem,1.125rem)] text-thistle font-light tracking-wide relative z-10 px-4 py-2 whitespace-nowrap"
+                  className="text-[clamp(0.875rem,2vw+0.5rem,1rem)] md:text-[clamp(1rem,2.5vw+0.5rem,1.125rem)] text-thistle font-light tracking-wide relative z-10 px-4 py-2 break-words"
                 >
                   {t('home:hero.subtitle')}
                 </motion.h2>
@@ -131,13 +131,13 @@ function Home() {
                 >
                   <Link 
                     to={getLocalizedPath('/about')} 
-                    className="px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto"
+                    className="px-6 py-3 sm:py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
                   >
                     {t('home:buttons.reservation')}
                   </Link>
                   <Link 
                     to={getLocalizedPath('/menu')} 
-                    className="px-6 py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto"
+                    className="px-6 py-3 sm:py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
                   >
                     {t('home:buttons.menu')}
                   </Link>
