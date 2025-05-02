@@ -6,14 +6,7 @@ The website of BASE, a new streetfood (cocktail) bar located at the Biersteeg 10
 
 This is a website built with React. It has a menu page listing both the food and drinks menu, and an about us page. 
 
-## Getting Started
-
-### Dependencies
-
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
-### Installing
+## Installing
 
 run the website locally by running:
 
@@ -30,4 +23,4 @@ This website has been made by:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE file for details
