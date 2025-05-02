@@ -231,12 +231,16 @@ function Navbar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
+      className={`fixed fixed-nav top-0 left-0 right-0 z-50 transition-all duration-400 ease-in-out will-change-transform ${
         scrolled ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' : 'bg-transparent py-7 md:py-12'
       }`}
       style={{
         transform: `translate3d(0, 0, 0)`,
-        backfaceVisibility: 'hidden'
+        WebkitTransform: 'translate3d(0, 0, 0)',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        perspective: '1000px',
+        WebkitPerspective: '1000px'
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

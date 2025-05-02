@@ -74,17 +74,37 @@ function Layout({ children }) {
     <div className="flex flex-col min-h-screen bg-onyx overflow-x-hidden">
       <div 
         ref={bgRef}
-        className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'}`}
+        className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'} ${isMobile ? 'fixed-bg' : 'bg-fixed-custom'}`}
         style={{
           backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
-          backgroundAttachment: 'fixed',
           boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)'
         }}
       ></div>
       
-      <div className="relative z-10 flex flex-col min-h-screen">
+      {isHomePage && isMobile && (
+        <div className="bg-fixed-container">
+          <div 
+            style={{
+              backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              boxShadow: 'inset 0 0 0 2000px rgba(62, 62, 62, 0.6)',
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0
+            }}
+            className="fixed-bg"
+          ></div>
+        </div>
+      )}
+      
+      <div className="relative z-10 flex flex-col min-h-screen overflow-x-hidden">
         <Helmet>
           <html lang={currentLang} />
           <title>{t('seo.title')}</title>
@@ -103,18 +123,44 @@ function Layout({ children }) {
           <style>
             {`
               @media (max-width: 767px) {
-                body::before {
-                  content: '';
+                /* Fix iOS 100vh issue with custom viewport height */
+                .bg-fixed-container, 
+                [style*="height: 100vh"] {
+                  height: calc(var(--vh, 1vh) * 100) !important;
+                }
+                
+                /* Prevent content overflow */
+                .overflow-container {
+                  max-width: 100vw;
+                  overflow-x: hidden;
+                  word-break: break-word;
+                }
+                
+                /* Ensure text is visible and not cut off */
+                h1, h2, h3, p {
+                  max-width: 100%;
+                  overflow-wrap: break-word;
+                  word-wrap: break-word;
+                }
+                
+                /* Prevent nav bar from affecting background */
+                nav.fixed-nav {
+                  transform: translateZ(0);
+                  -webkit-transform: translateZ(0);
+                  backface-visibility: hidden;
+                  perspective: 1000;
+                  will-change: transform;
+                }
+                
+                /* Force background to maintain position and size */
+                .bg-fixed-container {
+                  height: calc(var(--vh, 1vh) * 100) !important;
+                  overflow: hidden;
                   position: fixed;
+                  width: 100%;
                   top: 0;
                   left: 0;
-                  width: 100%;
-                  height: 100%;
-                  z-index: -1;
-                  background-image: url(${bgImage || '/home_placeholder.jpg'});
-                  background-size: cover;
-                  background-position: center center;
-                  will-change: transform;
+                  z-index: -2;
                 }
               }
             `}

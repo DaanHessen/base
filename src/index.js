@@ -5,6 +5,19 @@ import App from './App';
 import './i18n';
 import { HelmetProvider } from 'react-helmet-async';
 
+// Set custom viewport height property for mobile browsers
+const setViewportHeight = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+
+// Set on initial load
+setViewportHeight();
+
+// Update on resize and orientation change
+window.addEventListener('resize', setViewportHeight);
+window.addEventListener('orientationchange', setViewportHeight);
+
 const LoadingIndicator = () => (
   <div className="min-h-screen flex items-center justify-center bg-onyx">
     <div className="flex space-x-2">
