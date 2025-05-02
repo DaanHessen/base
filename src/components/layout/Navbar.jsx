@@ -75,26 +75,25 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    let localTicking = false;
+    // Simpler scroll listener - directly call handleScroll
     const localScrollListener = () => {
-      if (!localTicking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          localTicking = false;
-        });
-        localTicking = true;
-      }
+      handleScroll();
     };
-    
+
+    // Add the scroll listener
     window.addEventListener('scroll', localScrollListener, { passive: true });
-    
-    // Force an initial check on mount
-    handleScroll();
-    
+
+    // Perform an initial check shortly after mount to allow layout stabilization
+    const initialCheckTimeout = setTimeout(() => {
+      handleScroll();
+    }, 100); // Keep 100ms delay
+
+    // Clean up the listener and timeout
     return () => {
+      clearTimeout(initialCheckTimeout);
       window.removeEventListener('scroll', localScrollListener);
     };
-  }, [handleScroll]);
+  }, [handleScroll]); // Dependency array includes handleScroll
 
   // Special mobile event handler
   useEffect(() => {

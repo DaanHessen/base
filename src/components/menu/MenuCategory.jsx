@@ -35,7 +35,7 @@ function MenuCategory({ category }) {
         return (
           <div 
             key={item.id || index} 
-            className="h-auto min-h-[120px] transition-all duration-300 animate-fadeIn w-full"
+            className="h-auto min-h-[120px] transition-all duration-300 animate-fadeIn w-full self-start"
             style={{ 
               animationDelay: `${index * 50}ms`,
               animationFillMode: 'both',
