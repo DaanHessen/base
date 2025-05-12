@@ -125,7 +125,7 @@ function Layout({ children }) {
         </div>
       )}
       
-      <div className="relative z-10 flex flex-col min-h-screen overflow-x-hidden">
+      <div className="layout-content relative z-10 flex flex-col min-h-screen overflow-x-hidden">
         <Helmet>
           <html lang={currentLang} />
           <title>{t('seo.title')}</title>
@@ -163,24 +163,35 @@ function Layout({ children }) {
                   word-wrap: break-word;
                 }
                 
-                /* Fix page title positioning on mobile */
+                /* Consistent spacing for all pages */
                 .max-w-7xl {
-                  padding-top: 5rem !important; 
+                  padding-top: 4.2rem;
                 }
                 
-                /* Additional mobile spacing fix for page content */
+                /* Consistent spacing for sections across all pages */
                 section {
-                  padding-top: 4.5rem !important;
+                  padding-top: 4.2rem !important;
+                }
+                
+                /* Reset reservation page adjustments to maintain consistency */
+                .reservation-page .max-w-7xl,
+                .reservation-page section {
+                  padding-top: 4.2rem;
+                }
+                
+                /* Apply consistent top padding for all pages */
+                .pt-28, .pt-32, .pt-40, .pt-48 {
+                  padding-top: 4.2rem !important;
                 }
                 
                 /* Consistent spacing for all content pages */
                 .min-h-screen, .bg-onyx {
-                  padding-top: 0;
+                  padding-top: 1rem;
                 }
                 
                 /* Make sure reservation page follows same spacing */
                 .reservation-widget {
-                  margin-top: 0;
+                  margin-top: 1rem;
                 }
                 
                 /* Styling for fixed-nav to ensure background is visible on mobile */
@@ -213,18 +224,30 @@ function Layout({ children }) {
               
               /* Desktop consistent spacing for all pages */
               @media (min-width: 768px) {
-                /* Add padding between titles and top bar */
+                /* Add padding between titles and top bar - consistent for all pages */
                 .max-w-7xl {
-                  padding-top: 8rem !important;
+                  padding-top: 5.5rem;
                 }
                 
+                /* Consistent section padding */
                 section {
-                  padding-top: 8.5rem !important;
+                  padding-top: 5.5rem !important;
+                }
+                
+                /* Reset reservation page adjustments to maintain consistency */
+                .reservation-page .max-w-7xl,
+                .reservation-page section {
+                  padding-top: 5.5rem;
+                }
+                
+                /* Apply consistent top padding for all pages */
+                .pt-28, .pt-32, .pt-40, .pt-48 {
+                  padding-top: 5.5rem !important;
                 }
                 
                 /* Specific adjustments for home page */
                 section.min-h-screen {
-                  padding-top: 6rem !important;
+                  padding-top: 5.5rem !important;
                 }
               }
               
@@ -267,7 +290,7 @@ function Layout({ children }) {
         </Helmet>
         <Navbar />
         
-        <main className="flex-grow">
+        <main className="flex-grow reservation-main-wrapper">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}

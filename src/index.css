@@ -128,34 +128,6 @@ html::-webkit-scrollbar {
   /* Override mobile min-h-screen height to allow scrolling */
   .min-h-screen {
     height: auto !important;
-    min-height: calc(100vh - 70px) !important;
-  }
-  
-  /* Fix padding on content area for better mobile layout */
-  .max-w-7xl {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-  
-  /* Ensure buttons are large enough for touch targets */
-  button, a.button, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-    touch-action: manipulation;
-  }
-  
-  /* Ensure content containers have proper spacing */
-  .container, .max-w-7xl, .max-w-6xl, .max-w-5xl, .max-w-4xl {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-  
-  /* Fix overflow issues */
-  .overflow-x-hidden {
-    overflow-x: hidden !important;
-    max-width: 100vw !important;
   }
 }
 
@@ -352,11 +324,13 @@ body * {
   }
   
   .min-h-screen {
-    min-height: calc(var(--vh, 1vh) * 100 - 60px) !important; /* Account for navbar height */
+    /* Adjusted to account for a typical mobile navbar height of around 56-64px */
+    min-height: calc(var(--vh, 1vh) * 100 - 56px);
   }
   
   section {
-    padding-top: 80px !important; /* Ensure content has enough room below the navbar */
+    /* Reduced default top padding for sections, specific pages should handle their own top padding for precise navbar alignment */
+    padding-top: 4rem; /* Approx 64px, can be overridden by page-specific pt- utilities */
   }
   
   /* Prevent horizontal overflow */
@@ -384,10 +358,10 @@ body * {
   }
   
   h1 {
-    font-size: 1.5rem !important;
-    line-height: 1.3 !important;
+    font-size: clamp(1.5rem, 4vw + 1rem, 3rem) !important;
   }
   
+  /* Adjust spacing for very small screens */
   .py-12 {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
@@ -396,21 +370,6 @@ body * {
   .my-8 {
     margin-top: 1.5rem !important;
     margin-bottom: 1.5rem !important;
-  }
-  
-  /* Additional small screen fixes */
-  .px-4 {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-  }
-  
-  /* Fix overlapping content */
-  .fixed-nav + * {
-    padding-top: 4rem !important;
-  }
-  
-  .max-w-7xl {
-    padding-top: 4rem !important;
   }
 }
 
@@ -500,4 +459,253 @@ html.wf-active, html.wf-inactive {
   min-height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
+}
+
+/* Additional mobile optimizations for very small screens */
+@media (max-width: 320px) {
+  html, body {
+    font-size: 13px;
+  }
+  
+  .navbar-logo {
+    /* Slightly smaller logo on very small screens if needed */
+    transform: scale(0.55) !important; 
+  }
+  
+  .py-4 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .px-4 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  button, a.button, [role="button"] {
+    padding-left: 0.65rem !important; /* Adjusted padding */
+    padding-right: 0.65rem !important; /* Adjusted padding */
+    font-size: 0.8rem !important; /* Adjusted font size */
+  }
+}
+
+/* Fix for mobile navbar height and logo scaling */
+@media (max-width: 480px) {
+  .fixed-nav {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  /* .logo-container specific scaling already handled by navbar-logo and inline classes */
+  
+  /* Universal adjustment for page content starting point below fixed navbar */
+  /* This selector targets direct children of Layout that are likely page containers */
+  .layout-content > div {
+    padding-top: 56px; /* Approximate height of mobile navbar */
+  }
+
+  /* More specific for sections if they are direct children, otherwise rely on page containers */
+  .layout-content > section {
+     padding-top: 56px;
+  }
+
+  /* Fallback for other direct children that might be pages */
+  .layout-content > * {
+    padding-top: 56px;
+  }
+
+  /* Ensure this doesn't over-pad nested elements by being too general */
+  /* The above selectors are more targeted. This is a broader override that might not be needed if pages structure correctly */
+  /* .pt-32, .pt-40 { 
+    padding-top: 4rem !important; 
+  } */
+}
+
+/* Fix iOS Safari 100vh issue more aggressively */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available !important;
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  /* Force hardware acceleration */
+  .fixed-nav, .bg-fixed-container {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Prevent content shift when address bar appears/disappears */
+  body {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Add scale-65 utility class for navbar logo */
+.scale-65 {
+  --tw-scale-x: 0.65;
+  --tw-scale-y: 0.65;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+/* Ensure root has full height on mobile */
+#root {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Specific fixes for the reservation page to ensure proper spacing below navbar */
+.reservation-page .max-w-7xl {
+  padding-top: inherit !important;
+}
+
+@media (max-width: 640px) {
+  .reservation-page .max-w-7xl {
+    padding-top: 4.2rem !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .reservation-page .max-w-7xl {
+    padding-top: 4.2rem !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .reservation-page .max-w-7xl {
+    padding-top: 5.5rem !important;
+  }
+}
+
+/* Reset conflicting styles from Layout.jsx inline styles */
+@media (max-width: 767px) {
+  .reservation-page .max-w-7xl {
+    padding-top: 160px !important;
+  }
+  
+  .reservation-page section {
+    padding-top: 160px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .reservation-page .max-w-7xl {
+    padding-top: 192px !important;
+  }
+  
+  .reservation-page section {
+    padding-top: 192px !important;
+  }
+}
+
+/* Scale-75 utility class was already defined previously */
+
+/* Update the navbar height calculation for content positioning */
+/* Ensures the layout-content has enough space below the navbar */
+.layout-content > div {
+  padding-top: 0; /* Reset any existing padding */
+}
+
+.reservation-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Ensure navbar doesn't take too much vertical space on mobile */
+@media (max-width: 480px) {
+  nav.fixed-nav {
+    height: auto !important;
+    min-height: 60px !important;
+  }
+  
+  /* Ensure buttons stay within navbar bounds */
+  nav.fixed-nav button {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Additional specific styling for very small screens */
+@media (max-width: 360px) {
+  .reservation-page .max-w-7xl {
+    padding-top: 140px !important;
+  }
+}
+
+/* Ensure the main content wrapper has the right spacing */
+.reservation-main-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Force the reservation page content to have correct spacing */
+.reservation-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .reservation-main-wrapper {
+    margin-top: 0;
+  }
+}
+
+/* Remove the logo offset when not scrolled which causes extra space */
+@media (max-width: 768px) {
+  nav.fixed-nav .logo-container {
+    transform: scale(0.75) !important;
+  }
+}
+
+/* Ensure top padding even when the classes get overridden */
+.reservation-page {
+  padding-top: calc(60px + 2rem) !important;
+}
+
+@media (min-width: 769px) {
+  .reservation-page {
+    padding-top: calc(80px + 2rem) !important;
+  }
+}
+
+/* Group booking section responsive adjustments */
+@media (max-width: 480px) {
+  .reservation-page .max-w-2xl > .bg-onyx\/70 {
+    padding: 1rem;
+  }
+  
+  .reservation-page h2 {
+    font-size: 1.15rem;
+  }
+  
+  .reservation-page h3 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Consistent spacing for all page sections */
+section {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  section.py-14, section.py-12 {
+    padding-top: 4.2rem !important;
+  }
+  
+  .max-w-7xl {
+    padding-top: 4.2rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  section.py-14, section.py-12 {
+    padding-top: 5.5rem !important;
+  }
+  
+  .max-w-7xl {
+    padding-top: 5.5rem !important;
+  }
 }

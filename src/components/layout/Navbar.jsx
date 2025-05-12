@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaHome, FaUtensils, FaCocktail, FaInfoCircle } from 'react-icons/fa';
+import { FaHome, FaUtensils, FaCocktail, FaInfoCircle, FaCalendarAlt } from 'react-icons/fa';
 import { setLanguage } from '../../utils/language';
 import Logo from '../Logo';
 
@@ -277,7 +277,7 @@ function Navbar() {
       className={`fixed fixed-nav top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out will-change-transform ${
         scrolled 
           ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-2' 
-          : 'bg-transparent py-4 md:py-8'
+          : 'bg-transparent py-4 md:py-6'
       }`}
       style={{
         transform: `translate3d(0, 0, 0)`,
@@ -290,7 +290,7 @@ function Navbar() {
       data-scrolled={scrolled ? 'true' : 'false'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex justify-between items-center h-18 md:h-20">
+        <div className="relative flex items-center justify-between h-16 md:h-18">
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleMobileMenu}
@@ -426,10 +426,10 @@ function Navbar() {
           </div>
           
           <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-200 ${
-            scrolled ? '-translate-y-1/2 scale-70 md:scale-75' : '-translate-y-1/2 scale-85 md:scale-100'
+            scrolled ? '-translate-y-1/2 scale-60 sm:scale-65 md:scale-75' : '-translate-y-1/2 scale-70 sm:scale-75 md:scale-100'
           } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <div className={`logo-container transition-all duration-200 ease-out transform`}>
+              <div className={`logo-container navbar-logo transition-all duration-200 ease-out transform`}>
                 <Logo />
               </div>
             </Link>

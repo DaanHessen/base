@@ -61,7 +61,7 @@ function Menu() {
         <meta name="og:description" content={t('menu:seo.description')} />
       </Helmet>
       
-      <section className="py-14 pt-40 sm:pt-48 overflow-hidden">
+      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 w-full">
           <div id="food" ref={foodRef} className="mb-16 home-title">
             <SectionHeading>

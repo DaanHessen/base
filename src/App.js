@@ -56,6 +56,30 @@ const AppContent = () => {
 };
 
 function App() {
+  // Handle mobile viewport height calculation
+  useEffect(() => {
+    // Fix for mobile viewport height issues
+    const setVhVariable = () => {
+      // First we get the viewport height and we multiply it by 1% to get a value for a vh unit
+      const vh = window.innerHeight * 0.01;
+      // Then we set the value in the --vh custom property to the root of the document
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Set the initial value
+    setVhVariable();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', setVhVariable);
+    window.addEventListener('orientationchange', setVhVariable);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', setVhVariable);
+      window.removeEventListener('orientationchange', setVhVariable);
+    };
+  }, []);
+
   return (
     <Router>
       <AppContent />

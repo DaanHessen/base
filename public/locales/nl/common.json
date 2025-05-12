@@ -31,15 +31,20 @@
     "notFound": "Pagina niet gevonden"
   },
   "reservation": {
-    "title": "Reserveer een Tafel",
+    "title": "Reserveer een tafel",
     "subtitle": "Reserveer een tafel bij BASE. Wij reserveren alleen binnen, niet op ons terras.",
     "loading": "Reserveringssysteem laden...",
-    "notConfigured": "Het reserveringssysteem wordt momenteel ingesteld. Kom later terug of neem rechtstreeks telefonisch contact met ons op.",
+    "notConfigured": "Reserveringssysteem momenteel niet beschikbaar",
     "success": "Je reservering is ontvangen. We kijken ernaar uit je te verwelkomen!",
-    "error": "Er is iets misgegaan met je reservering. Probeer het opnieuw of neem rechtstreeks contact met ons op.",
-    "alternativeContact": "Ons reserveringssysteem is nog niet actief. Je kunt direct bellen om een tafel te reserveren.",
+    "error": "Sorry, er is een probleem met het laden van het reserveringssysteem.",
+    "alternativeContact": "Neem telefonisch contact met ons op om een tafel te reserveren.",
     "callUs": "Bel ons",
-    "openingHours": "Openingstijden: woensdag t/m zondag van 17:00 tot 23:00"
+    "openingHours": "Open woensdag tot zondag van 17:00 tot 23:00",
+    "bookForGroups": "Reserveer voor groepen",
+    "hostEvent": "Organiseer uw event bij ons",
+    "groupsInfo": "Voor groepen vanaf 8 personen of voor het organiseren van een evenement, neem contact met ons op via e-mail.",
+    "sendEmail": "Stuur ons een e-mail",
+    "groupEmailHint": "Vermeld het aantal gasten, datum, tijd en gelegenheid"
   },
   "footer": {
     "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",

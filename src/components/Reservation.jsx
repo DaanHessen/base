@@ -53,7 +53,7 @@ const Reservation = ({ className }) => {
 
   return (
     <div className={`reservation-widget ${className || ''}`}>
-      <div className="bg-onyx/70 backdrop-blur-sm p-4 sm:p-6 border border-gold/30 rounded-lg shadow-lg w-full">
+      <div className="bg-onyx/70 backdrop-blur-sm p-3 sm:p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden">
         {restaurantId ? (
           // Only show the iframe when we have a restaurant ID
           <>
@@ -100,22 +100,22 @@ const Reservation = ({ className }) => {
         ) : (
           // Show a fallback reservation interface when restaurantId is not available
           <div className="text-center py-4 sm:py-6">
-            <FaCalendarAlt className="text-gold text-4xl mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gold mb-3">{t('reservation.notConfigured')}</h3>
-            <p className="text-magnolia/90 max-w-lg mx-auto mb-6">
+            <FaCalendarAlt className="text-gold text-3xl sm:text-4xl mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">{t('reservation.notConfigured')}</h3>
+            <p className="text-magnolia/90 max-w-lg mx-auto mb-4 sm:mb-6 text-sm sm:text-base">
               {t('reservation.alternativeContact')}
             </p>
             
-            <div className="mt-4 sm:mt-6 space-y-4">
+            <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
               <a 
                 href={`tel:${t('footer.contact.phone').replace(/\s+/g, '')}`}
-                className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[2px_2px_0px_rgba(197,167,95,0.6)]"
+                className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[2px_2px_0px_rgba(197,167,95,0.6)] text-sm sm:text-base"
               >
                 <FaPhone className="mr-2" />
                 {t('reservation.callUs')}
               </a>
               
-              <p className="text-sm text-thistle mt-4">
+              <p className="text-xs sm:text-sm text-thistle mt-3 sm:mt-4">
                 {t('reservation.openingHours')}
               </p>
             </div>

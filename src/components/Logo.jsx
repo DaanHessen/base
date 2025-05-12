@@ -162,11 +162,11 @@ const Logo = ({ className }) => {
         ref={logoRef}
         src={logo} 
         alt="BASE" 
-        className="relative z-10 w-auto max-h-24 md:max-h-28 lg:max-h-32"
+        className="relative z-10 w-auto max-h-28 md:max-h-32 lg:max-h-40"
         width="192"
         height="48"
         style={{
-          maxHeight: 'clamp(6rem, 8vw + 2.5rem, 8rem)',
+          maxHeight: 'clamp(7.5rem, 9vw + 3.5rem, 10rem)',
           objectFit: 'contain',
           aspectRatio: 'auto',
           filter: states.initial.filter
