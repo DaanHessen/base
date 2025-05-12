@@ -133,12 +133,11 @@ function Layout({ children }) {
           <meta name="keywords" content={t('seo.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           
-          {/* Security headers - Reverted for basic Google Maps */}
-          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com/;" />
+          {/* Security headers - Updated for Google Maps and Formitable */}
+          <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.formitable.com https://maps.googleapis.com https://maps.google.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com https://fonts.cdnfonts.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com https://www.google.com https://formitable.com; media-src 'self';" />
           <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-          <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
           <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-          <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+          <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
           
           {/* Add CSS fix for mobile devices */}
           <style>
@@ -164,8 +163,27 @@ function Layout({ children }) {
                   word-wrap: break-word;
                 }
                 
-                /* Styling for fixed-nav should be handled by Navbar component's classes */
-                /* Removed rules that forced background-color */
+                /* Fix page title positioning on mobile */
+                .max-w-7xl {
+                  padding-top: 5rem !important; 
+                }
+                
+                /* Additional mobile spacing fix for page content */
+                section {
+                  padding-top: 4.5rem !important;
+                }
+                
+                /* Consistent spacing for all content pages */
+                .min-h-screen, .bg-onyx {
+                  padding-top: 0;
+                }
+                
+                /* Make sure reservation page follows same spacing */
+                .reservation-widget {
+                  margin-top: 0;
+                }
+                
+                /* Styling for fixed-nav to ensure background is visible on mobile */
                 nav.fixed-nav {
                   transform: translateZ(0);
                   -webkit-transform: translateZ(0);
@@ -174,7 +192,12 @@ function Layout({ children }) {
                   will-change: transform;
                 }
                 
-                /* Removed rule for nav.fixed-nav.bg-onyx\/95 */
+                /* Force background color on mobile navbar when scrolled */
+                nav.fixed-nav[data-scrolled="true"] {
+                  background-color: rgba(62, 62, 62, 0.95) !important;
+                  backdrop-filter: blur(4px);
+                  -webkit-backdrop-filter: blur(4px);
+                }
                 
                 /* Force background to maintain position and size */
                 .bg-fixed-container {
@@ -185,6 +208,23 @@ function Layout({ children }) {
                   top: 0;
                   left: 0;
                   z-index: -2;
+                }
+              }
+              
+              /* Desktop consistent spacing for all pages */
+              @media (min-width: 768px) {
+                /* Add padding between titles and top bar */
+                .max-w-7xl {
+                  padding-top: 8rem !important;
+                }
+                
+                section {
+                  padding-top: 8.5rem !important;
+                }
+                
+                /* Specific adjustments for home page */
+                section.min-h-screen {
+                  padding-top: 6rem !important;
                 }
               }
               

@@ -3,7 +3,8 @@
     "home": "Home",
     "menu": "Menu",
     "about": "About Us",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "reservations": "Book a Table"
   },
   "seo": {
     "title": "BASE - Restaurant and Bar",
@@ -28,6 +29,17 @@
   "error": {
     "general": "Something went wrong. Please try again later.",
     "notFound": "Page not found"
+  },
+  "reservation": {
+    "title": "Book a Table",
+    "subtitle": "Reserve a table at BASE. We only reserve indoors, not on our terrace.",
+    "loading": "Loading reservation system...",
+    "notConfigured": "Reservation system is currently being set up. Please check back later or contact us directly by phone.",
+    "success": "Your reservation has been received. We look forward to welcoming you!",
+    "error": "Something went wrong with your reservation. Please try again or contact us directly.",
+    "alternativeContact": "Our reservation system is not active yet. You can call us directly to reserve a table.",
+    "callUs": "Call us",
+    "openingHours": "Opening hours: Wednesday to Sunday from 5:00 PM to 11:00 PM"
   },
   "footer": {
     "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",

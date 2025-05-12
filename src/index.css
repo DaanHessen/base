@@ -128,6 +128,34 @@ html::-webkit-scrollbar {
   /* Override mobile min-h-screen height to allow scrolling */
   .min-h-screen {
     height: auto !important;
+    min-height: calc(100vh - 70px) !important;
+  }
+  
+  /* Fix padding on content area for better mobile layout */
+  .max-w-7xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Ensure buttons are large enough for touch targets */
+  button, a.button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Ensure content containers have proper spacing */
+  .container, .max-w-7xl, .max-w-6xl, .max-w-5xl, .max-w-4xl {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Fix overflow issues */
+  .overflow-x-hidden {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
   }
 }
 
@@ -356,10 +384,10 @@ body * {
   }
   
   h1 {
-    font-size: clamp(1.5rem, 4vw + 1rem, 3rem) !important;
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
   }
   
-  /* Adjust spacing for very small screens */
   .py-12 {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
@@ -368,6 +396,21 @@ body * {
   .my-8 {
     margin-top: 1.5rem !important;
     margin-bottom: 1.5rem !important;
+  }
+  
+  /* Additional small screen fixes */
+  .px-4 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Fix overlapping content */
+  .fixed-nav + * {
+    padding-top: 4rem !important;
+  }
+  
+  .max-w-7xl {
+    padding-top: 4rem !important;
   }
 }
 

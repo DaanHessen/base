@@ -6,12 +6,16 @@
     "gluten": "Gluten",
     "lactose": "Lactose",
     "nuts": "Nuts",
+    "noten": "Nuts",
     "shellfish": "Shellfish",
     "eggs": "Eggs",
     "fish": "Fish",
     "soy": "Soy",
+    "soja": "Soy",
     "celery": "Celery"
   },
+  "readMore": "Read more",
+  "readLess": "Read less",
   "vegan": "Vegan",
   "vegetarian": "Vegetarian",
   "categories": {

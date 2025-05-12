@@ -56,7 +56,7 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
   
   return (
     <div 
-      className="flex flex-col p-3 sm:p-4 border border-dim-gray/30 rounded-lg bg-onyx/60 transition-all duration-150 hover:shadow-[0_4px_20px_-2px_rgba(212,175,55,0.4)] hover:bg-dim-gray/20 hover:border-gold/40 group w-full relative overflow-hidden hover:-translate-y-1 mx-auto"
+      className="flex flex-col p-3 sm:p-4 bg-onyx/70 backdrop-blur-sm border border-gold/30 rounded-lg shadow-lg transition-all duration-150 hover:shadow-[0_4px_20px_-2px_rgba(212,175,55,0.4)] hover:bg-dim-gray/20 hover:border-gold/40 group w-full relative overflow-hidden hover:-translate-y-1 mx-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(!isHovered)}

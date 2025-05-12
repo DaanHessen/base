@@ -7,6 +7,7 @@ import Home from './components/sections/Home';
 import FoodMenu from './components/sections/FoodMenu';
 import DrinksMenu from './components/sections/DrinksMenu';
 import AboutUs from './components/sections/AboutUs';
+import Reservations from './components/sections/Reservations';
 // import { Analytics } from "@vercel/analytics/react";
 
 const AppContent = () => {
@@ -39,6 +40,7 @@ const AppContent = () => {
       <Route path="/menu/food" element={<Layout><FoodMenu /></Layout>} />
       <Route path="/menu/drinks" element={<Layout><DrinksMenu /></Layout>} />
       <Route path="/about" element={<Layout><AboutUs /></Layout>} />
+      <Route path="/reservations" element={<Layout><Reservations /></Layout>} />
       
       {/* Keep these for direct loading of English URLs */}
       <Route path="/en" element={<Layout><Home /></Layout>} />
@@ -46,6 +48,7 @@ const AppContent = () => {
       <Route path="/en/menu/food" element={<Layout><FoodMenu /></Layout>} />
       <Route path="/en/menu/drinks" element={<Layout><DrinksMenu /></Layout>} />
       <Route path="/en/about" element={<Layout><AboutUs /></Layout>} />
+      <Route path="/en/reservations" element={<Layout><Reservations /></Layout>} />
       
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

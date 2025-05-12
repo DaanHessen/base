@@ -276,8 +276,8 @@ function Navbar() {
     <nav 
       className={`fixed fixed-nav top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out will-change-transform ${
         scrolled 
-          ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-4' 
-          : 'bg-transparent py-7 md:py-12'
+          ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-2' 
+          : 'bg-transparent py-4 md:py-8'
       }`}
       style={{
         transform: `translate3d(0, 0, 0)`,
@@ -412,13 +412,24 @@ function Navbar() {
             >
               {t('navigation.about')}
             </Link>
+
+            <Link
+              to={getLocalizedPath('/reservations', currentLang)}
+              className={`font-medium inline-flex items-center ${
+                currentPath === '/reservations' 
+                  ? 'text-gold' 
+                  : 'text-magnolia hover:text-gold transition-colors duration-300'
+              }`}
+            >
+              {t('navigation.reservations')}
+            </Link>
           </div>
           
-          <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ${
-            scrolled ? '-translate-y-1/2 scale-75' : '-translate-y-[calc(50%-0.5rem)] scale-100'
+          <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-200 ${
+            scrolled ? '-translate-y-1/2 scale-70 md:scale-75' : '-translate-y-1/2 scale-85 md:scale-100'
           } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <div className={`logo-container transition-all duration-300 ease-out transform`}>
+              <div className={`logo-container transition-all duration-200 ease-out transform`}>
                 <Logo />
               </div>
             </Link>
@@ -600,6 +611,23 @@ function Navbar() {
                   >
                     <FaInfoCircle className="mr-2 text-gold/80" />
                     {t('navigation.about')}
+                  </Link>
+                </motion.div>
+
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
+                  <Link
+                    to={getLocalizedPath('/reservations', currentLang)}
+                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
+                      currentPath === '/reservations' 
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
+                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-gold/80" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd" />
+                    </svg>
+                    {t('navigation.reservations')}
                   </Link>
                 </motion.div>
               </nav>

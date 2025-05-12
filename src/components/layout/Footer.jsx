@@ -31,8 +31,8 @@ const MonseesLink = ({ href, label }) => (
     >
       <defs>
         <linearGradient id="monsees-gradient" gradientUnits="userSpaceOnUse" fy="90%">
-          <stop offset="0" stop-color="currentColor" />
-          <stop offset="1" stop-color="currentColor" />
+          <stop offset="0" stopColor="currentColor" />
+          <stop offset="1" stopColor="currentColor" />
         </linearGradient>
         <mask id="monsees-mask">
           <image href={monseesLogo} width="96" height="24" />

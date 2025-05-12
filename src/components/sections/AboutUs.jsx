@@ -26,10 +26,8 @@ function AboutUs() {
 
   const mapUrl = useMemo(() => {
     const address = encodeURIComponent(t('about:location.address'));
-    // Reverting to basic embed URL as API key is not authorized.
-    // For production, generate a valid key restricted to your domain.
-    // return `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${address}`;
-    return `https://maps.google.com/maps?q=${address}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    // Using a different Maps embed URL format to avoid CORS issues
+    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2444.0277023245653!2d5.1700394!3d52.2218525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c66b5a9a1bb3f7%3A0xd0a9f0abb29bb2b5!2sBiersteeg%2010%2C%201211%20GC%20Hilversum!5e0!3m2!1sen!2snl!4v1620000000000!5m2!1sen!2snl`;
   }, [t]);
 
   const containerVariants = {
@@ -100,16 +98,25 @@ function AboutUs() {
                 </div>
                 
                 <div className="md:col-span-2">
-                  {[0, 1].map((index) => (
-                    <div key={index} className={`${index > 0 ? 'mt-6 sm:mt-8' : ''}`}>
+                  <div className="flex flex-col h-full space-y-6">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
-                        {t(`about:sections.${index}.title`)}
+                        {t(`about:sections.0.title`)}
                       </h3>
                       <div className="text-thistle font-light text-sm sm:text-base leading-relaxed">
-                        {t(`about:sections.${index}.content`)}
+                        {t(`about:sections.0.content`)}
                       </div>
                     </div>
-                  ))}
+
+                    <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                      <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
+                        {t(`about:sections.1.title`)}
+                      </h3>
+                      <div className="text-thistle font-light text-sm sm:text-base leading-relaxed">
+                        {t(`about:sections.1.content`)}
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
                 {/* Desktop image placement */}
@@ -133,14 +140,7 @@ function AboutUs() {
             </motion.div>
           
             <motion.div variants={itemVariants}>
-              <div className="py-4">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-magnolia mb-4 sm:mb-6 leading-tight tracking-tight">
-                  {t('about:location.title')}
-                </h2>
-                <div className="w-14 sm:w-16 md:w-20 h-1 bg-gold mb-6 shadow-[0_0_10px_rgba(212,175,55,0.3)]"></div>
-              </div>
-              
-              <div className="bg-onyx/60 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl border border-gray-800/30">
+              <div className="bg-onyx/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gold/30">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                   <div className="md:col-span-3 h-full">
                     {!mapLoaded ? (
@@ -164,7 +164,7 @@ function AboutUs() {
                     )}
                   </div>
                   
-                  <div className="md:col-span-2 p-5 sm:p-6 md:p-8 md:border-l border-gray-800/30">
+                  <div className="md:col-span-2 p-5 sm:p-6 md:p-8 md:border-l border-gold/30">
                     <div className="space-y-5 sm:space-y-6">
                       <div className="flex items-start">
                         <FaMapMarkerAlt className="text-gold text-xl mt-1 mr-3 shrink-0" />
@@ -198,15 +198,15 @@ function AboutUs() {
                         </div>
                       </div>
                       
-                      <div className="pt-2 mt-2 border-t border-gray-800/30">
+                      <div className="pt-2 mt-2 border-t border-gold/30">
                         <a 
                           href="https://maps.google.com/?q=Biersteeg+10,+1211+GC+Hilversum" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-full py-3 px-4 bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-lg text-gold transition-all duration-200 mt-2"
+                          className="inline-flex items-center justify-center w-full px-6 py-3 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px]"
                         >
-                          <span className="mr-2">{currentLang === 'nl' ? 'Routebeschrijving' : 'Get Directions'}</span>
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <span>{currentLang === 'nl' ? 'Routebeschrijving' : 'Get Directions'}</span>
+                          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                           </svg>
                         </a>
