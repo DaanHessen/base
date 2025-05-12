@@ -26,44 +26,49 @@ const Reservations = () => {
           <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
         </div>
         
-        {/* Regular Reservation */}
-        <div className="max-w-2xl mx-auto mb-12">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
-            <FaCalendarAlt className="inline-block mr-2 mb-1" />
-            {t('reservation.title')}
-          </h2>
-          <Reservation className="" />
-        </div>
-        
-        {/* Group/Party Reservation */}
-        <div className="max-w-2xl mx-auto mt-10 md:mt-16">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
-            <FaUsers className="inline-block mr-2 mb-1" />
-            {t('reservation.bookForGroups')}
-          </h2>
+        {/* Reservation Containers - Side by side on larger screens */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Regular Reservation */}
+          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
+              <FaCalendarAlt className="inline-block mr-2 mb-1" />
+              {t('reservation.title')}
+            </h2>
+            <div className="h-[calc(100%-3rem)]">
+              <Reservation className="h-full" />
+            </div>
+          </div>
           
-          <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden">
-            <div className="text-center py-6">
-              <FaUsers className="text-gold text-4xl mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gold mb-3">
-                {t('reservation.hostEvent')}
-              </h3>
-              <p className="text-magnolia/90 max-w-lg mx-auto mb-6">
-                {t('reservation.groupsInfo')}
-              </p>
-              
-              <div className="mt-6 space-y-4">
-                <a 
-                  href={`mailto:${t('footer.contact.email')}`}
-                  className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[2px_2px_0px_rgba(197,167,95,0.6)]"
-                >
-                  <FaEnvelope className="mr-2" />
-                  {t('reservation.sendEmail')}
-                </a>
-                
-                <p className="block text-sm text-thistle mt-4">
-                  {t('reservation.groupEmailHint')}
+          {/* Group/Party Reservation */}
+          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
+              <FaUsers className="inline-block mr-2 mb-1" />
+              {t('reservation.bookForGroups')}
+            </h2>
+            
+            <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden h-[calc(100%-3rem)] flex flex-col">
+              <div className="text-center py-6 flex-1 flex flex-col justify-center">
+                <FaUsers className="text-gold text-4xl mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gold mb-3">
+                  {t('reservation.hostEvent')}
+                </h3>
+                <p className="text-magnolia/90 max-w-lg mx-auto mb-6">
+                  {t('reservation.groupsInfo')}
                 </p>
+                
+                <div className="mt-auto space-y-4">
+                  <a 
+                    href={`mailto:${t('footer.contact.email')}`}
+                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[2px_2px_0px_rgba(197,167,95,0.6)]"
+                  >
+                    <FaEnvelope className="mr-2" />
+                    {t('reservation.sendEmail')}
+                  </a>
+                  
+                  <p className="block text-sm text-thistle mt-4">
+                    {t('reservation.groupEmailHint')}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

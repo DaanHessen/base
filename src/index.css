@@ -555,52 +555,6 @@ html.wf-active, html.wf-inactive {
   flex-direction: column;
 }
 
-/* Specific fixes for the reservation page to ensure proper spacing below navbar */
-.reservation-page .max-w-7xl {
-  padding-top: inherit !important;
-}
-
-@media (max-width: 640px) {
-  .reservation-page .max-w-7xl {
-    padding-top: 4.2rem !important;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 768px) {
-  .reservation-page .max-w-7xl {
-    padding-top: 4.2rem !important;
-  }
-}
-
-@media (min-width: 769px) {
-  .reservation-page .max-w-7xl {
-    padding-top: 5.5rem !important;
-  }
-}
-
-/* Reset conflicting styles from Layout.jsx inline styles */
-@media (max-width: 767px) {
-  .reservation-page .max-w-7xl {
-    padding-top: 160px !important;
-  }
-  
-  .reservation-page section {
-    padding-top: 160px !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .reservation-page .max-w-7xl {
-    padding-top: 192px !important;
-  }
-  
-  .reservation-page section {
-    padding-top: 192px !important;
-  }
-}
-
-/* Scale-75 utility class was already defined previously */
-
 /* Update the navbar height calculation for content positioning */
 /* Ensures the layout-content has enough space below the navbar */
 .layout-content > div {
@@ -626,24 +580,11 @@ html.wf-active, html.wf-inactive {
   }
 }
 
-/* Additional specific styling for very small screens */
-@media (max-width: 360px) {
-  .reservation-page .max-w-7xl {
-    padding-top: 140px !important;
-  }
-}
-
 /* Ensure the main content wrapper has the right spacing */
 .reservation-main-wrapper {
   min-height: 100vh;
   width: 100%;
   position: relative;
-}
-
-/* Force the reservation page content to have correct spacing */
-.reservation-page {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
 }
 
 @media (max-width: 768px) {
@@ -656,17 +597,6 @@ html.wf-active, html.wf-inactive {
 @media (max-width: 768px) {
   nav.fixed-nav .logo-container {
     transform: scale(0.75) !important;
-  }
-}
-
-/* Ensure top padding even when the classes get overridden */
-.reservation-page {
-  padding-top: calc(60px + 2rem) !important;
-}
-
-@media (min-width: 769px) {
-  .reservation-page {
-    padding-top: calc(80px + 2rem) !important;
   }
 }
 
@@ -688,24 +618,4 @@ html.wf-active, html.wf-inactive {
 /* Consistent spacing for all page sections */
 section {
   position: relative;
-}
-
-@media (max-width: 767px) {
-  section.py-14, section.py-12 {
-    padding-top: 4.2rem !important;
-  }
-  
-  .max-w-7xl {
-    padding-top: 4.2rem !important;
-  }
-}
-
-@media (min-width: 768px) {
-  section.py-14, section.py-12 {
-    padding-top: 5.5rem !important;
-  }
-  
-  .max-w-7xl {
-    padding-top: 5.5rem !important;
-  }
 }

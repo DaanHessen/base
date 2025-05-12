@@ -163,37 +163,6 @@ function Layout({ children }) {
                   word-wrap: break-word;
                 }
                 
-                /* Consistent spacing for all pages */
-                .max-w-7xl {
-                  padding-top: 4.2rem;
-                }
-                
-                /* Consistent spacing for sections across all pages */
-                section {
-                  padding-top: 4.2rem !important;
-                }
-                
-                /* Reset reservation page adjustments to maintain consistency */
-                .reservation-page .max-w-7xl,
-                .reservation-page section {
-                  padding-top: 4.2rem;
-                }
-                
-                /* Apply consistent top padding for all pages */
-                .pt-28, .pt-32, .pt-40, .pt-48 {
-                  padding-top: 4.2rem !important;
-                }
-                
-                /* Consistent spacing for all content pages */
-                .min-h-screen, .bg-onyx {
-                  padding-top: 1rem;
-                }
-                
-                /* Make sure reservation page follows same spacing */
-                .reservation-widget {
-                  margin-top: 1rem;
-                }
-                
                 /* Styling for fixed-nav to ensure background is visible on mobile */
                 nav.fixed-nav {
                   transform: translateZ(0);
@@ -219,35 +188,6 @@ function Layout({ children }) {
                   top: 0;
                   left: 0;
                   z-index: -2;
-                }
-              }
-              
-              /* Desktop consistent spacing for all pages */
-              @media (min-width: 768px) {
-                /* Add padding between titles and top bar - consistent for all pages */
-                .max-w-7xl {
-                  padding-top: 5.5rem;
-                }
-                
-                /* Consistent section padding */
-                section {
-                  padding-top: 5.5rem !important;
-                }
-                
-                /* Reset reservation page adjustments to maintain consistency */
-                .reservation-page .max-w-7xl,
-                .reservation-page section {
-                  padding-top: 5.5rem;
-                }
-                
-                /* Apply consistent top padding for all pages */
-                .pt-28, .pt-32, .pt-40, .pt-48 {
-                  padding-top: 5.5rem !important;
-                }
-                
-                /* Specific adjustments for home page */
-                section.min-h-screen {
-                  padding-top: 5.5rem !important;
                 }
               }
               

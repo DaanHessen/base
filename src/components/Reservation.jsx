@@ -53,7 +53,7 @@ const Reservation = ({ className }) => {
 
   return (
     <div className={`reservation-widget ${className || ''}`}>
-      <div className="bg-onyx/70 backdrop-blur-sm p-3 sm:p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden">
+      <div className="bg-onyx/70 backdrop-blur-sm p-3 sm:p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden h-full">
         {restaurantId ? (
           // Only show the iframe when we have a restaurant ID
           <>
@@ -99,7 +99,7 @@ const Reservation = ({ className }) => {
           </>
         ) : (
           // Show a fallback reservation interface when restaurantId is not available
-          <div className="text-center py-4 sm:py-6">
+          <div className="text-center py-4 sm:py-6 h-full flex flex-col justify-center">
             <FaCalendarAlt className="text-gold text-3xl sm:text-4xl mx-auto mb-3 sm:mb-4" />
             <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">{t('reservation.notConfigured')}</h3>
             <p className="text-magnolia/90 max-w-lg mx-auto mb-4 sm:mb-6 text-sm sm:text-base">

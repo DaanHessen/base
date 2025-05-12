@@ -131,7 +131,7 @@ function Footer() {
       
       <div className="max-w-screen-xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 h-full lg:min-h-[280px]">
             <div className="flex items-center space-x-3">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -166,7 +166,7 @@ function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 h-full lg:min-h-[280px]">
             <h3 className="text-gold text-sm font-medium mb-2 uppercase tracking-wide">
               {t('footer.openingHours.title')}
             </h3>
@@ -180,7 +180,7 @@ function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full lg:min-h-[280px]">
             <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
               {t('footer.follow')}
             </h3>
@@ -195,7 +195,7 @@ function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col h-full lg:min-h-[280px]">
             <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
               {t('footer.newsletter.title')}
             </h3>
@@ -232,7 +232,7 @@ function Footer() {
               
               {formStatus === 'success' && (
                 <div className="mt-2 text-sm text-green-400">
-                  {currentLang === 'nl' ? 'Bedankt voor je bericht!' : 'Thank you for your message!'}
+                  {currentLang === 'nl' ? 'We nemen binnenkort contact met je op!' : 'We will contact you soon!'}
                 </div>
               )}
               

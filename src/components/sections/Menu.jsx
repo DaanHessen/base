@@ -30,13 +30,11 @@ function Menu() {
   const drinksCategory = menuData.categories.find(cat => cat.id === 'drinks');
 
   const SectionHeading = ({ children, id }) => (
-    <div className="relative text-center mb-12">
-      <h2 className="inline-block relative z-10 px-8 py-2 font-heading font-bold text-4xl sm:text-5xl text-magnolia">
-        <span className="relative">
-          {children}
-          <span className="absolute -bottom-2 left-0 w-full h-1 bg-gold transform"></span>
-        </span>
+    <div className="relative mb-12">
+      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
+        {children}
       </h2>
+      <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
     </div>
   );
 
