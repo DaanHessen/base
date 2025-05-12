@@ -164,8 +164,7 @@ function Layout({ children }) {
                   word-wrap: break-word;
                 }
                 
-                /* Styling for fixed-nav should be handled by Navbar component's classes */
-                /* Removed rules that forced background-color */
+                /* Styling for fixed-nav to ensure background is visible on mobile */
                 nav.fixed-nav {
                   transform: translateZ(0);
                   -webkit-transform: translateZ(0);
@@ -174,7 +173,12 @@ function Layout({ children }) {
                   will-change: transform;
                 }
                 
-                /* Removed rule for nav.fixed-nav.bg-onyx\/95 */
+                /* Force background color on mobile navbar when scrolled */
+                nav.fixed-nav[data-scrolled="true"] {
+                  background-color: rgba(62, 62, 62, 0.95) !important;
+                  backdrop-filter: blur(4px);
+                  -webkit-backdrop-filter: blur(4px);
+                }
                 
                 /* Force background to maintain position and size */
                 .bg-fixed-container {

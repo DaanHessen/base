@@ -412,6 +412,17 @@ function Navbar() {
             >
               {t('navigation.about')}
             </Link>
+
+            <Link
+              to={getLocalizedPath('/reservations', currentLang)}
+              className={`font-medium inline-flex items-center ${
+                currentPath === '/reservations' 
+                  ? 'text-gold' 
+                  : 'text-magnolia hover:text-gold transition-colors duration-300'
+              }`}
+            >
+              {t('navigation.reservations')}
+            </Link>
           </div>
           
           <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ${
@@ -600,6 +611,23 @@ function Navbar() {
                   >
                     <FaInfoCircle className="mr-2 text-gold/80" />
                     {t('navigation.about')}
+                  </Link>
+                </motion.div>
+
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
+                  <Link
+                    to={getLocalizedPath('/reservations', currentLang)}
+                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
+                      currentPath === '/reservations' 
+                        ? 'text-gold' 
+                        : 'text-magnolia hover:text-gold'
+                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-gold/80" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd" />
+                    </svg>
+                    {t('navigation.reservations')}
                   </Link>
                 </motion.div>
               </nav>

@@ -130,7 +130,7 @@ function Home() {
                   style={{ transform: 'translate3d(0, 0, 0)' }}
                 >
                   <Link 
-                    to={getLocalizedPath('/about')} 
+                    to={getLocalizedPath('/reservations')} 
                     className="px-6 py-3 sm:py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
                   >
                     {t('home:buttons.reservation')}

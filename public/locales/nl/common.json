@@ -3,7 +3,8 @@
     "home": "Home",
     "menu": "Menu",
     "about": "Over Ons",
-    "selectLanguage": "Selecteer taal"
+    "selectLanguage": "Selecteer taal",
+    "reservations": "Reserveer een Tafel"
   },
   "seo": {
     "title": "BASE - Restaurant en Bar",
@@ -28,6 +29,14 @@
   "error": {
     "general": "Er is iets misgegaan. Probeer het later opnieuw.",
     "notFound": "Pagina niet gevonden"
+  },
+  "reservation": {
+    "title": "Reserveer een Tafel",
+    "subtitle": "Maak een reservering bij ons restaurant",
+    "loading": "Reserveringssysteem laden...",
+    "notConfigured": "Het reserveringssysteem wordt momenteel ingesteld. Kom later terug of neem rechtstreeks telefonisch contact met ons op.",
+    "success": "Je reservering is ontvangen. We kijken ernaar uit je te verwelkomen!",
+    "error": "Er is iets misgegaan met je reservering. Probeer het opnieuw of neem rechtstreeks contact met ons op."
   },
   "footer": {
     "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
