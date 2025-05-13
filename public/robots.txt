@@ -14,4 +14,4 @@ Crawl-delay: 10
 Allow: /sitemap.xml
 
 # Sitemap location
-Sitemap: https://base-restaurant.nl/sitemap.xml
+Sitemap: https://www.base-restaurant.nl/sitemap.xml
