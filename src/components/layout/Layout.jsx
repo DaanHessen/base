@@ -72,11 +72,36 @@ function Layout({ children }) {
       }
     };
     
-    window.addEventListener('languageChanged', handleLanguageChange);
+    i18n.on('languageChanged', handleLanguageChange);
     return () => {
-      window.removeEventListener('languageChanged', handleLanguageChange);
+      i18n.off('languageChanged', handleLanguageChange);
     };
-  }, [currentPath]);
+  }, [currentPath, i18n]);
+
+  // Fix mobile viewport height for better scrolling
+  React.useEffect(() => {
+    // Set correct viewport height for mobile browsers
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    // Initial set
+    setVH();
+    
+    // Reset on resize and orientation change
+    window.addEventListener('resize', setVH);
+    window.addEventListener('orientationchange', setVH);
+    
+    // Ensure body has correct scroll behavior
+    document.body.style.overflowY = 'auto';
+    document.body.style.height = 'auto';
+    
+    return () => {
+      window.removeEventListener('resize', setVH);
+      window.removeEventListener('orientationchange', setVH);
+    };
+  }, []);
 
   const pageVariants = {
     initial: { opacity: 0, y: 8 },
@@ -92,7 +117,7 @@ function Layout({ children }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-onyx overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-onyx overflow-x-hidden" id="root-container">
       <div 
         ref={bgRef}
         className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'} ${isMobile ? 'fixed-bg' : 'bg-fixed-custom'}`}
@@ -125,13 +150,13 @@ function Layout({ children }) {
         </div>
       )}
       
-      <div className="layout-content relative z-10 flex flex-col min-h-screen overflow-x-hidden">
+      <div className="layout-content relative z-10 flex flex-col flex-grow overflow-x-hidden">
         <Helmet>
           <html lang={currentLang} />
           <title>{t('seo.title')}</title>
           <meta name="description" content={t('seo.description')} />
           <meta name="keywords" content={t('seo.keywords')} />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
           
           {/* Security headers - Updated for Google Maps and Formitable */}
           <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.formitable.com https://maps.googleapis.com https://maps.google.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com https://fonts.cdnfonts.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com https://www.google.com https://formitable.com; media-src 'self';" />
@@ -203,8 +228,9 @@ function Layout({ children }) {
           <link rel="canonical" href={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
           {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/en${currentPath}`} />}
           {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}${currentPath}`} />}
+          <link rel="alternate" hrefLang="x-default" href={`${window.location.origin}${currentPath}`} />
           
-          {/* Open Graph metadata */}
+          {/* Open Graph metadata - enhanced */}
           <meta property="og:site_name" content="BASE" />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
@@ -213,24 +239,75 @@ function Layout({ children }) {
           <meta property="og:image" content={`${window.location.origin}/og-image.jpg`} />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
+          <meta property="og:locale" content={currentLang === 'en' ? 'en_US' : 'nl_NL'} />
           
-          {/* Twitter Card metadata */}
+          {/* Twitter Card metadata - enhanced */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={t('seo.title')} />
           <meta name="twitter:description" content={t('seo.description')} />
           <meta name="twitter:image" content={`${window.location.origin}/og-image.jpg`} />
+          <meta name="twitter:site" content="@baserestaurant" />
           
           {/* Additional SEO tags */}
           <meta name="robots" content="index, follow" />
           <meta name="author" content="BASE Restaurant & bar" />
           <meta name="geo.region" content="NL" />
           <meta name="geo.placename" content="Hilversum" />
+          <meta name="geo.position" content="52.223958;5.17502" />
+          <meta name="ICBM" content="52.223958, 5.17502" />
+          
+          {/* Favicon links */}
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          
+          {/* Structured data for local business */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Restaurant",
+              "name": "BASE Restaurant & Bar",
+              "image": `${window.location.origin}/og-image.jpg`,
+              "@id": `${window.location.origin}/#restaurant`,
+              "url": window.location.origin,
+              "telephone": t('footer.contact.phone'),
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Biersteeg 10, Kampstraat 22",
+                "addressLocality": "Hilversum",
+                "postalCode": "1211 GC",
+                "addressCountry": "NL"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 52.223958,
+                "longitude": 5.17502
+              },
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Sunday"],
+                  "opens": "00:00",
+                  "closes": "00:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Wednesday", "Thursday", "Friday", "Saturday"],
+                  "opens": "15:00",
+                  "closes": "22:00"
+                }
+              ],
+              "servesCuisine": "Streetfood",
+              "priceRange": "$$",
+              "menu": `${window.location.origin}/menu/`,
+              "acceptsReservations": "True"
+            })}
+          </script>
         </Helmet>
         <Navbar />
         
-        <main className="flex-grow reservation-main-wrapper">
+        <main className="flex-grow reservation-main-wrapper mobile-scroll-fix">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -238,7 +315,7 @@ function Layout({ children }) {
               animate="animate"
               exit="exit"
               variants={pageVariants}
-              className="w-full"
+              className="w-full mobile-scroll-fix"
             >
               {children}
             </motion.div>

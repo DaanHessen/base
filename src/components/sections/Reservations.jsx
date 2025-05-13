@@ -59,7 +59,7 @@ const Reservations = () => {
                 <div className="mt-auto space-y-4">
                   <a 
                     href={`mailto:${t('footer.contact.email')}`}
-                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[2px_2px_0px_rgba(197,167,95,0.6)]"
+                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
                   >
                     <FaEnvelope className="mr-2" />
                     {t('reservation.sendEmail')}

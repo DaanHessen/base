@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { FaInstagram, FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram, FaEnvelope, FaLinkedin, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import monseesLogo from '../../assets/monsees-optimized.svg';
 
@@ -50,12 +50,6 @@ function Footer() {
   const currentLang = i18n.language;
   const [isMobile, setIsMobile] = useState(false);
   
-  const [formData, setFormData] = useState({
-    email: '',
-    message: ''
-  });
-  const [formStatus, setFormStatus] = useState(null);
-  
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
@@ -102,89 +96,68 @@ function Footer() {
     }
   };
 
-  const handleInputChange = useCallback((e) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
-  }, []);
-
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(currentLang === 'nl' ? 'Nieuwsbrief aanmelding/bericht' : 'Newsletter sign-up/message');
-    const body = encodeURIComponent(`${currentLang === 'nl' ? 'Bericht van' : 'Message from'}: ${formData.email}\n\n${formData.message}`);
-    const mailtoLink = `mailto:${t('footer.contact.email')}?subject=${subject}&body=${body}`;
-    
-    try {
-      window.location.href = mailtoLink;
-      setFormStatus('success');
-      setFormData({ email: '', message: '' });
-      setTimeout(() => setFormStatus(null), 3000);
-    } catch (error) {
-      console.error('Failed to open mail client:', error);
-      setFormStatus('error');
-      setTimeout(() => setFormStatus(null), 3000);
-    }
-  }, [formData, currentLang, t]);
-
   return (
-    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative">
-      <div className="absolute top-0 left-0 right-0 h-px bg-dim-gray/30"></div>
-      
-      <div className="max-w-screen-xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="flex flex-col space-y-4 h-full lg:min-h-[280px]">
-            <div className="flex items-center space-x-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <button 
-                className="text-sm hover:text-gold transition-colors duration-200 text-left"
-                onClick={() => openMaps(t('footer.address'))}
-              >
-                {t('footer.address')}
-              </button>
-            </div>
-            <div className="flex items-center space-x-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              <button 
-                className="text-sm hover:text-gold transition-colors duration-200"
-                onClick={handlePhoneClick}
-              >
-                {t('footer.contact.phone')}
-              </button>
-            </div>
-            <div className="flex items-center space-x-3">
-              <FaEnvelope className="h-5 w-5 text-gold flex-shrink-0" />
-              <button 
-                className="text-sm hover:text-gold transition-colors duration-200"
-                onClick={handleEmailClick}
-              >
-                {t('footer.contact.email')}
-              </button>
+    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative border-t border-gold/10">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
+        {/* Desktop layout */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+          {/* Column 1: Contact Information */}
+          <div className="space-y-4">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
+              {t('footer.contact.title')}
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <FaMapMarkerAlt className="w-4 h-4 text-gold flex-shrink-0" />
+                <button 
+                  className="text-sm hover:text-gold transition-colors duration-200 text-left"
+                  onClick={() => openMaps(t('footer.address'))}
+                >
+                  {t('footer.address')}
+                </button>
+              </div>
+              <div className="flex items-center space-x-3">
+                <FaPhone className="w-4 h-4 text-gold flex-shrink-0" />
+                <button 
+                  className="text-sm hover:text-gold transition-colors duration-200"
+                  onClick={handlePhoneClick}
+                >
+                  {t('footer.contact.phone')}
+                </button>
+              </div>
+              <div className="flex items-center space-x-3">
+                <FaEnvelope className="w-4 h-4 text-gold flex-shrink-0" />
+                <button 
+                  className="text-sm hover:text-gold transition-colors duration-200"
+                  onClick={handleEmailClick}
+                >
+                  {t('footer.contact.email')}
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-col space-y-2 h-full lg:min-h-[280px]">
-            <h3 className="text-gold text-sm font-medium mb-2 uppercase tracking-wide">
+          {/* Column 2: Opening Hours */}
+          <div className="space-y-4">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
               {t('footer.openingHours.title')}
             </h3>
             <div className="grid grid-cols-2 gap-1 text-sm">
               {[ 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
                 <React.Fragment key={day}>
-                  <span>{t(`footer.${day}`)}</span>
+                  <span className="text-magnolia/80">{t(`footer.${day}`)}</span>
                   <span>{t(`footer.openingHours.${day}`)}</span>
                 </React.Fragment>
               ))}
             </div>
           </div>
 
-          <div className="flex flex-col h-full lg:min-h-[280px]">
-            <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
+          {/* Column 3: Social Links */}
+          <div className="space-y-4">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
               {t('footer.follow')}
             </h3>
-            <div className="flex items-center space-x-6 mb-6">
+            <div className="flex items-center space-x-6">
               <SocialIconLink href="https://instagram.com/base" label="Instagram">
                 <FaInstagram size={24} />
               </SocialIconLink>
@@ -195,58 +168,108 @@ function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col h-full lg:min-h-[280px]">
-            <h3 className="text-gold text-sm font-medium mb-4 uppercase tracking-wide">
+          {/* Column 4: Contact Button */}
+          <div className="space-y-4">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
               {t('footer.newsletter.title')}
             </h3>
-            <form onSubmit={handleSubmit} className="relative">
-              <div className="mb-3">
-                <label htmlFor="email" className="sr-only">{t('footer.newsletter.email')}</label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder={t('footer.newsletter.email')}
-                  className="w-full px-4 py-2 bg-dim-gray/20 border border-dim-gray/30 rounded-md text-magnolia focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/50"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="message" className="sr-only">Message</label>
-                <textarea
-                  id="message"
-                  rows="4"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Your message"
-                  className="w-full px-4 py-2 bg-dim-gray/20 border border-dim-gray/30 rounded-md text-magnolia focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/50"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center"
+            <div>
+              <a 
+                href={`mailto:${t('footer.contact.email')}`}
+                className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap text-sm sm:text-base"
               >
-                {t('footer.newsletter.button')}
-              </button>
-              
-              {formStatus === 'success' && (
-                <div className="mt-2 text-sm text-green-400">
-                  {currentLang === 'nl' ? 'We nemen binnenkort contact met je op!' : 'We will contact you soon!'}
+                <FaEnvelope className="mr-2" />
+                {t('reservation.sendEmail')}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile layout - more compact */}
+        <div className="md:hidden">
+          {/* Contact & Hours in 2 columns */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+            {/* Contact Info */}
+            <div>
+              <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3">
+                {t('footer.contact.title')}
+              </h3>
+              <div className="space-y-2.5">
+                <div className="flex items-center space-x-2">
+                  <FaMapMarkerAlt className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                  <button 
+                    className="text-xs hover:text-gold transition-colors duration-200 text-left"
+                    onClick={() => openMaps(t('footer.address'))}
+                  >
+                    {t('footer.address')}
+                  </button>
                 </div>
-              )}
-              
-              {formStatus === 'error' && (
-                <div className="mt-2 text-sm text-red-400">
-                  {currentLang === 'nl' ? 'Er ging iets mis. Probeer het later opnieuw.' : 'Something went wrong. Please try again later.'}
+                <div className="flex items-center space-x-2">
+                  <FaPhone className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                  <button 
+                    className="text-xs hover:text-gold transition-colors duration-200"
+                    onClick={handlePhoneClick}
+                  >
+                    {t('footer.contact.phone')}
+                  </button>
                 </div>
-              )}
-            </form>
+                <div className="flex items-center space-x-2">
+                  <FaEnvelope className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                  <button 
+                    className="text-xs hover:text-gold transition-colors duration-200"
+                    onClick={handleEmailClick}
+                  >
+                    {t('footer.contact.email')}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Hours - Compact */}
+            <div>
+              <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3">
+                {t('footer.openingHours.title')}
+              </h3>
+              <div className="grid grid-cols-2 gap-1 text-xs">
+                {[ 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
+                  <React.Fragment key={day}>
+                    <span className="text-magnolia/80">{t(`footer.${day}`)}</span>
+                    <span>{t(`footer.openingHours.${day}`)}</span>
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Social & Email */}
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-6 sm:space-y-0 sm:space-x-4">
+            {/* Social Icons */}
+            <div className="flex items-center justify-center space-x-5">
+              <SocialIconLink href="https://instagram.com/base" label="Instagram">
+                <FaInstagram size={20} />
+              </SocialIconLink>
+              <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
+                <FaLinkedin size={20} />
+              </SocialIconLink>
+              <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+            </div>
+            
+            {/* Email Button */}
+            <div>
+              <a 
+                href={`mailto:${t('footer.contact.email')}`}
+                className="inline-flex items-center justify-center px-4 py-2 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[3px_3px_0px_rgba(197,167,95,0.6)] hover:shadow-[1px_1px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap text-xs"
+              >
+                <FaEnvelope className="mr-1.5" />
+                {t('reservation.sendEmail')}
+              </a>
+            </div>
           </div>
         </div>
         
-        <div className="mt-8 pt-6 border-t border-dim-gray/20 flex flex-col-reverse md:flex-row justify-between items-center">
-          <div className="mt-4 md:mt-0 text-center md:text-left">
+        {/* Copyright - same for both layouts */}
+        <div className="mt-8 pt-4 border-t border-dim-gray/20 flex flex-col-reverse md:flex-row justify-between items-center">
+          <div className="mt-3 md:mt-0 text-center md:text-left">
             <p className="text-xs text-gray-400">
               {t('footer.copyright').replace('{year}', currentYear)}
             </p>

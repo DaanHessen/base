@@ -14,6 +14,7 @@
   --gold: #d4af37;
   
   background-color: var(--onyx);
+  --vh: 1vh;
 }
 
 html, body {
@@ -25,6 +26,8 @@ html, body {
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
+  position: relative;
+  height: auto !important;
 }
 
 @media (max-width: 640px) {
@@ -128,6 +131,45 @@ html::-webkit-scrollbar {
   /* Override mobile min-h-screen height to allow scrolling */
   .min-h-screen {
     height: auto !important;
+  }
+
+  /* Override any overflow hidden settings that might be causing the issue */
+  body, html {
+    overflow-y: visible !important; 
+    overflow-x: hidden !important;
+    height: auto !important;
+    position: static !important; /* Prevent fixed positioning */
+  }
+  
+  /* Make sure main content is scrollable */
+  #root, .layout-content, main {
+    overflow-y: visible !important;
+    min-height: unset !important; /* Don't force height */
+    height: auto !important;
+  }
+  
+  /* Fix scrolling in reservation-main-wrapper */
+  .reservation-main-wrapper {
+    min-height: unset !important; /* Don't force min-height that could be causing issues */
+    height: auto !important;
+    position: static !important; /* Prevent positioning issues */
+  }
+  
+  /* Ensure fixed elements don't interfere with scrolling */
+  .fixed-nav {
+    position: fixed !important;
+    z-index: 1000 !important;
+  }
+  
+  /* Fix any issues with page sections */
+  section, div[class*="min-h-screen"] {
+    min-height: unset !important;
+    height: auto !important;
+  }
+  
+  /* Improve touch scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -312,6 +354,31 @@ body * {
   .h-full, 
   [style*="height: 100vh"] {
     height: calc(var(--vh, 1vh) * 100) !important;
+  }
+
+  /* Allow full page scrolling on mobile */
+  body, html {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  #root {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    height: auto !important;
+  }
+  
+  /* Ensure footer doesn't block content */
+  footer {
+    position: relative;
+    width: 100%;
+    bottom: auto;
   }
 }
 
@@ -618,4 +685,87 @@ html.wf-active, html.wf-inactive {
 /* Consistent spacing for all page sections */
 section {
   position: relative;
+}
+
+/* Mobile scroll fix helper class */
+.mobile-scroll-fix {
+  width: 100%;
+  position: relative;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .mobile-scroll-fix {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch;
+    position: static !important;
+    min-height: unset !important;
+    height: auto !important;
+  }
+}
+
+/* Mobile scroll fixes - overrides any problematic styles */
+@media screen and (max-width: 767px) {
+  html, body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: relative !important; /* Keep relative for positioning context */
+    height: auto !important;
+    min-height: -webkit-fill-available; /* iOS vh fix */
+    min-height: calc(var(--vh, 1vh) * 100); /* Fallback using JS-set vh */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: -webkit-fill-available; 
+    overflow: visible; /* Allow content to scroll */
+  }
+
+  .layout-content, /* Ensure this class is used on the direct child of #root that wraps Navbar, main, Footer */
+  main,
+  .reservation-main-wrapper,
+  .mobile-scroll-fix {
+    position: relative; /* Changed from static to relative */
+    overflow-y: visible; /* Allow vertical scroll */
+    overflow-x: hidden;
+    flex-grow: 1; /* Allow main content to take available space */
+    height: auto; 
+    min-height: auto;
+  }
+
+  /* Remove the overly broad static override */
+  /* 
+  *:not(.modal-overlay):not(.modal-content) {
+    position: static !important;
+  }
+  */
+  
+  /* Ensure sections and other block elements behave correctly */
+  section, div {
+    /* Avoid blanket position:static unless specifically needed */
+  }
+
+  /* Allow all sections to naturally stack and scroll */
+  [style*="min-height:100vh"],
+  [style*="min-height: 100vh"],
+  [style*="height:100vh"],
+  [style*="height: 100vh"],
+  .h-screen,
+  .min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100) !important; /* Use dynamic vh */
+    height: auto !important;
+  }
+  
+  footer {
+    position: relative; /* Ensure footer is part of the normal flow */
+    z-index: 10; /* Keep footer above background but below modals */
+  }
+}
+
+/* Fix iOS height issues */
+:root {
+  --vh: 1vh;
 }
