@@ -10,5 +10,8 @@ Disallow: /*?*
 # Crawl delay to prevent server overload
 Crawl-delay: 10
 
+# Explicitly allow sitemap access
+Allow: /sitemap.xml
+
 # Sitemap location
 Sitemap: https://base-restaurant.nl/sitemap.xml
