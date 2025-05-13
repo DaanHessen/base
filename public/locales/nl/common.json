@@ -31,7 +31,8 @@
     "notFound": "Pagina niet gevonden"
   },
   "reservation": {
-    "title": "Reserveer een tafel",
+    "title": "Boek een Tafel",
+    "buttonText": "Dinner",
     "subtitle": "Reserveer een tafel bij BASE. Wij reserveren alleen binnen, niet op ons terras.",
     "loading": "Reserveringssysteem laden...",
     "notConfigured": "Reserveringssysteem momenteel niet beschikbaar",

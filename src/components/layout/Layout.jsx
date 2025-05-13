@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-// import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieConsent from '../CookieConsent';
@@ -15,7 +14,6 @@ function Layout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
-  // const nodeRef = useRef(null); 
   const bgRef = useRef(null);
   
   const getBasePath = (path) => {
@@ -55,15 +53,12 @@ function Layout({ children }) {
       
       return () => clearTimeout(timeout);
     } else {
-      // Make sure to reset background when not on home page
       setBgImage('');
     }
   }, [currentPath, bgImage]);
 
-  // Force background reload on language change
   useEffect(() => {
     const handleLanguageChange = () => {
-      // If on home page, reload background
       if (currentPath === '/') {
         setBgImage('');
         setTimeout(() => {
@@ -78,22 +73,17 @@ function Layout({ children }) {
     };
   }, [currentPath, i18n]);
 
-  // Fix mobile viewport height for better scrolling
   React.useEffect(() => {
-    // Set correct viewport height for mobile browsers
     const setVH = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     };
 
-    // Initial set
     setVH();
     
-    // Reset on resize and orientation change
     window.addEventListener('resize', setVH);
     window.addEventListener('orientationchange', setVH);
     
-    // Ensure body has correct scroll behavior
     document.body.style.overflowY = 'auto';
     document.body.style.height = 'auto';
     
@@ -158,37 +148,31 @@ function Layout({ children }) {
           <meta name="keywords" content={t('seo.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
           
-          {/* Security headers - Updated for Google Maps and Formitable */}
           <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.formitable.com https://maps.googleapis.com https://maps.google.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com https://fonts.cdnfonts.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com https://www.google.com https://formitable.com; media-src 'self';" />
           <meta http-equiv="X-Content-Type-Options" content="nosniff" />
           <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
           <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
           
-          {/* Add CSS fix for mobile devices */}
           <style>
             {`
               @media (max-width: 767px) {
-                /* Fix iOS 100vh issue with custom viewport height */
                 .bg-fixed-container, 
                 [style*="height: 100vh"] {
                   height: calc(var(--vh, 1vh) * 100) !important;
                 }
                 
-                /* Prevent content overflow */
                 .overflow-container {
                   max-width: 100vw;
                   overflow-x: hidden;
                   word-break: break-word;
                 }
                 
-                /* Ensure text is visible and not cut off */
                 h1, h2, h3, p {
                   max-width: 100%;
                   overflow-wrap: break-word;
                   word-wrap: break-word;
                 }
                 
-                /* Styling for fixed-nav to ensure background is visible on mobile */
                 nav.fixed-nav {
                   transform: translateZ(0);
                   -webkit-transform: translateZ(0);
@@ -197,14 +181,12 @@ function Layout({ children }) {
                   will-change: transform;
                 }
                 
-                /* Force background color on mobile navbar when scrolled */
                 nav.fixed-nav[data-scrolled="true"] {
                   background-color: rgba(62, 62, 62, 0.95) !important;
                   backdrop-filter: blur(4px);
                   -webkit-backdrop-filter: blur(4px);
                 }
                 
-                /* Force background to maintain position and size */
                 .bg-fixed-container {
                   height: calc(var(--vh, 1vh) * 100) !important;
                   overflow: hidden;
@@ -216,7 +198,6 @@ function Layout({ children }) {
                 }
               }
               
-              /* Ensure loading on orientation change */
               @media (orientation: landscape) {
                 .bg-fixed-container {
                   min-height: 100%;
@@ -230,7 +211,6 @@ function Layout({ children }) {
           {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}${currentPath}`} />}
           <link rel="alternate" hrefLang="x-default" href={`${window.location.origin}${currentPath}`} />
           
-          {/* Open Graph metadata - enhanced */}
           <meta property="og:site_name" content="BASE" />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
@@ -241,14 +221,12 @@ function Layout({ children }) {
           <meta property="og:image:height" content="630" />
           <meta property="og:locale" content={currentLang === 'en' ? 'en_US' : 'nl_NL'} />
           
-          {/* Twitter Card metadata - enhanced */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={t('seo.title')} />
           <meta name="twitter:description" content={t('seo.description')} />
           <meta name="twitter:image" content={`${window.location.origin}/og-image.jpg`} />
           <meta name="twitter:site" content="@baserestaurant" />
           
-          {/* Additional SEO tags */}
           <meta name="robots" content="index, follow" />
           <meta name="author" content="BASE Restaurant & bar" />
           <meta name="geo.region" content="NL" />
@@ -256,13 +234,11 @@ function Layout({ children }) {
           <meta name="geo.position" content="52.223958;5.17502" />
           <meta name="ICBM" content="52.223958, 5.17502" />
           
-          {/* Favicon links */}
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
           
-          {/* Structured data for local business */}
           <script type="application/ld+json">
             {JSON.stringify({
               "@context": "https://schema.org",

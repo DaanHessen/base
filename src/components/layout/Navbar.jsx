@@ -12,6 +12,7 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(false);
   const langDropdownRef = useRef(null);
   const menuDropdownRef = useRef(null);
   const menuTimeoutRef = useRef(null);
@@ -33,14 +34,11 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // With HashRouter we need to be more careful with redirects
-    // Only redirect if the URL structure is invalid (like /en/#/en)
     const isInvalidUrl = (
       (currentLang === 'en' && !location.pathname.startsWith('/en')) ||
       (currentLang === 'nl' && location.pathname.startsWith('/en'))
     );
     
-    // Check for duplicated language path like /en/#/en
     const hasDoubleEn = location.pathname.startsWith('/en') && location.hash.includes('#/en');
     
     if (isInvalidUrl || hasDoubleEn) {
@@ -49,49 +47,39 @@ function Navbar() {
         ? `/en${basePath}`
         : basePath;
       
-      // Use replace to avoid pushing a new history entry
       window.location.replace(`/#${newPath}`);
     }
   }, [currentLang, location.pathname, location.hash]);
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
-    // Apply scrolled state based on scroll position
     const newScrolledState = currentScrollY > 5;
     setScrolled(newScrolledState);
   }, []);
 
   useEffect(() => {
-    // Simpler scroll listener - directly call handleScroll
     const localScrollListener = () => {
       handleScroll();
     };
 
-    // Add the scroll listener
     window.addEventListener('scroll', localScrollListener, { passive: true });
 
-    // Perform an initial check shortly after mount to allow layout stabilization
     const initialCheckTimeout = setTimeout(() => {
       handleScroll();
-    }, 100); // Keep 100ms delay
+    }, 100);
 
-    // Clean up the listener and timeout
     return () => {
       clearTimeout(initialCheckTimeout);
       window.removeEventListener('scroll', localScrollListener);
     };
-  }, [handleScroll]); // Dependency array includes handleScroll
+  }, [handleScroll]);
 
-  // Special mobile event handler
   useEffect(() => {
-    // Check if we're on mobile
     const isMobile = window.innerWidth < 768;
     if (!isMobile) return;
     
-    // Force scrolled state on mobile
     setScrolled(true);
     
-    // Additional resize handler to maintain scrolled state on mobile
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setScrolled(true);
@@ -138,25 +126,18 @@ function Navbar() {
   }, [mobileMenuOpen]);
   
   const changeLanguage = useCallback((lang) => {
-    // First close the dropdown
     setLangDropdownOpen(false);
     
-    // Get the base path without language prefix
     const basePath = getBasePath(location.pathname);
     
-    // Set language in utils/localStorage/cookies
     setLanguage(lang);
     
-    // Build the new path based on selected language
     const newPath = lang === 'en' 
       ? `/en${basePath}` 
       : basePath;
     
-    // With HashRouter, we need to navigate to /#/path
     window.location.replace(`/#${newPath}`);
     
-    // Force reload to ensure everything is reset properly
-    // This is necessary to avoid the gray screen issue
     window.location.reload();
   }, [location.pathname]);
 
@@ -258,19 +239,31 @@ function Navbar() {
     setMobileMenuOpen(prev => !prev);
   }, []);
 
-  // Hamburger -> Close animation variants
   const topBarVariants = {
     closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { rotate: 45, y: 5, transition: { duration: 0.3, ease: "easeInOut" } }, // User adjusted y value
+    open: { rotate: 45, y: 5, transition: { duration: 0.3, ease: "easeInOut" } }, 
   };
   const middleBarVariants = {
     closed: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { opacity: 0, transition: { duration: 0.08, ease: "easeInOut" } }, // User adjusted duration
+    open: { opacity: 0, transition: { duration: 0.08, ease: "easeInOut" } },
   };
   const bottomBarVariants = {
     closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
     open: { rotate: -45, y: -6, transition: { duration: 0.3, ease: "easeInOut" } }, 
   };
+
+  useEffect(() => {
+    const checkScreenWidth = () => {
+      setIsNarrowScreen(window.innerWidth <= 1159);
+    };
+    
+    checkScreenWidth();
+    window.addEventListener('resize', checkScreenWidth);
+    
+    return () => {
+      window.removeEventListener('resize', checkScreenWidth);
+    };
+  }, []);
 
   return (
     <nav 
@@ -291,7 +284,7 @@ function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex justify-between items-center h-16 md:h-20">
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center xl:hidden">
             <button
               onClick={toggleMobileMenu}
               className="relative z-[1001] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
@@ -320,7 +313,7 @@ function Navbar() {
               </motion.div>
             </button>
           </div>
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden xl:flex items-center space-x-8">
             <Link
               to={getLocalizedPath('/', currentLang)}
               className={`font-medium ${
@@ -404,7 +397,7 @@ function Navbar() {
             
             <Link
               to={getLocalizedPath('/about', currentLang)}
-              className={`font-medium inline-flex items-center ${
+              className={`font-medium ${
                 currentPath === '/about' 
                   ? 'text-gold' 
                   : 'text-magnolia hover:text-gold transition-colors duration-300'
@@ -415,7 +408,7 @@ function Navbar() {
 
             <Link
               to={getLocalizedPath('/reservations', currentLang)}
-              className={`font-medium inline-flex items-center ${
+              className={`font-medium ${
                 currentPath === '/reservations' 
                   ? 'text-gold' 
                   : 'text-magnolia hover:text-gold transition-colors duration-300'
@@ -427,8 +420,8 @@ function Navbar() {
           
           <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-300 ease-out ${
             scrolled 
-              ? '-translate-y-1/2 scale-75' 
-              : '-translate-y-[45%] scale-100'
+              ? '-translate-y-1/2 scale-75 lg:scale-75' 
+              : '-translate-y-[45%] scale-90 lg:scale-100'
           } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
               <div className={`logo-container navbar-logo ${scrolled ? 'py-2' : ''}`}> 
@@ -438,7 +431,7 @@ function Navbar() {
           </div>
           
           <div className="flex items-center">
-            <div className="hidden md:block relative" ref={langDropdownRef}>
+            <div className="hidden xl:block relative" ref={langDropdownRef}>
               <button
                 type="button"
                 onClick={toggleLangDropdown}
@@ -556,7 +549,7 @@ function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="w-full max-w-xs mx-auto px-4 flex flex-col items-center">
-                 <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
+                <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
                   <Link
                     to={getLocalizedPath('/', currentLang)}
                     className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${

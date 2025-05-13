@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import './i18n';
 import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Set the viewport height CSS variable for mobile devices
 const setViewportHeight = () => {
@@ -32,6 +34,8 @@ root.render(
     <HelmetProvider>
       <Suspense fallback={<LoadingIndicator />}>
         <App />
+        <Analytics mode="auto" debug={false} />
+        <SpeedInsights sampleRate={0.5} />
       </Suspense>
     </HelmetProvider>
   </React.StrictMode>

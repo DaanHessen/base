@@ -31,7 +31,8 @@
     "notFound": "Page not found"
   },
   "reservation": {
-    "title": "Make a reservation",
+    "title": "Book a Table",
+    "buttonText": "Dinner",
     "notConfigured": "Reservation system currently unavailable",
     "alternativeContact": "Please contact us directly by phone to make a reservation.",
     "callUs": "Call us",

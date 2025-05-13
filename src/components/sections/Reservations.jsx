@@ -29,10 +29,10 @@ const Reservations = () => {
         {/* Reservation Containers - Side by side on larger screens */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Regular Reservation */}
-          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full">
+          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full mb-12 lg:mb-0">
             <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
               <FaCalendarAlt className="inline-block mr-2 mb-1" />
-              {t('reservation.title')}
+              {t('reservation.buttonText')}
             </h2>
             <div className="h-[calc(100%-3rem)]">
               <Reservation className="h-full" />
@@ -40,7 +40,7 @@ const Reservations = () => {
           </div>
           
           {/* Group/Party Reservation */}
-          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full">
+          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full pt-4 lg:pt-0">
             <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
               <FaUsers className="inline-block mr-2 mb-1" />
               {t('reservation.bookForGroups')}

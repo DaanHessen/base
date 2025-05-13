@@ -55,7 +55,6 @@ html::-webkit-scrollbar {
   }
 }
 
-/* Fixed background image for better mobile experience */
 @media (max-width: 767px) {
   body::before {
     content: '';
@@ -74,7 +73,6 @@ html::-webkit-scrollbar {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     will-change: transform;
-    /* Prevent resize during scroll */
     height: 100vh !important; 
     height: calc(var(--vh, 1vh) * 100) !important;
   }
@@ -106,7 +104,6 @@ html::-webkit-scrollbar {
     transform-style: preserve-3d;
   }
   
-  /* Hack to prevent iOS Safari from resizing the background */
   html {
     height: -webkit-fill-available;
     height: 100%;
@@ -121,53 +118,45 @@ html::-webkit-scrollbar {
     position: relative;
   }
   
-  /* Create a stacking context for proper z-index handling */
   #root {
     isolation: isolate;
     position: relative;
     z-index: 1;
   }
 
-  /* Override mobile min-h-screen height to allow scrolling */
   .min-h-screen {
     height: auto !important;
   }
 
-  /* Override any overflow hidden settings that might be causing the issue */
   body, html {
     overflow-y: visible !important; 
     overflow-x: hidden !important;
     height: auto !important;
-    position: static !important; /* Prevent fixed positioning */
+    position: static !important;
   }
   
-  /* Make sure main content is scrollable */
   #root, .layout-content, main {
     overflow-y: visible !important;
-    min-height: unset !important; /* Don't force height */
+    min-height: unset !important;
     height: auto !important;
   }
   
-  /* Fix scrolling in reservation-main-wrapper */
   .reservation-main-wrapper {
-    min-height: unset !important; /* Don't force min-height that could be causing issues */
+    min-height: unset !important;
     height: auto !important;
-    position: static !important; /* Prevent positioning issues */
+    position: static !important;
   }
   
-  /* Ensure fixed elements don't interfere with scrolling */
   .fixed-nav {
     position: fixed !important;
     z-index: 1000 !important;
   }
   
-  /* Fix any issues with page sections */
   section, div[class*="min-h-screen"] {
     min-height: unset !important;
     height: auto !important;
   }
   
-  /* Improve touch scrolling */
   * {
     -webkit-overflow-scrolling: touch;
   }
@@ -221,7 +210,6 @@ header nav a:hover::after {
   width: 100%;
 }
 
-/* Logo animation */
 .logo-container {
   transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -282,7 +270,6 @@ stop {
   transition: .4s ease;
 }
 
-/* Use the colors to transition to */
 svg:hover stop:first-child {
   stop-color: #d4af37;
 }
@@ -291,7 +278,6 @@ svg:hover stop:last-child {
   stop-color: #d4af37;
 }
 
-/* Fix for maps integration */
 iframe {
   border: 0;
   width: 100%;
@@ -300,7 +286,6 @@ iframe {
   transition: none !important;
 }
 
-/* Performance optimizations */
 body * {
   will-change: auto;
 }
@@ -311,7 +296,6 @@ body * {
   perspective: 1000px;
 }
 
-/* Improve animation performance for smooth transitions */
 @media (prefers-reduced-motion: no-preference) {
   .transition-all {
     transition-property: all;
@@ -332,7 +316,6 @@ body * {
     scroll-margin-top: 7rem;
   }
   
-  /* New utility for fixed backgrounds */
   .bg-fixed-custom {
     background-attachment: fixed;
     background-size: cover;
@@ -340,15 +323,12 @@ body * {
   }
 }
 
-/* Add this to the end of your CSS file */
 @media (max-width: 767px) {
-  /* Force hardware acceleration for smooth scrolling */
   * {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }
   
-  /* Prevent content shift when address bar appears/disappears */
   .h-screen, 
   .min-h-screen, 
   .h-full, 
@@ -356,7 +336,6 @@ body * {
     height: calc(var(--vh, 1vh) * 100) !important;
   }
 
-  /* Allow full page scrolling on mobile */
   body, html {
     height: auto !important;
     min-height: 100%;
@@ -374,7 +353,6 @@ body * {
     height: auto !important;
   }
   
-  /* Ensure footer doesn't block content */
   footer {
     position: relative;
     width: 100%;
@@ -382,7 +360,6 @@ body * {
   }
 }
 
-/* Mobile responsive text and layout improvements */
 @media (max-width: 480px) {
   h1, h2, h3 {
     overflow-wrap: break-word;
@@ -391,12 +368,10 @@ body * {
   }
   
   .min-h-screen {
-    /* Adjusted to account for a typical mobile navbar height of around 56-64px */
     min-height: calc(var(--vh, 1vh) * 100 - 56px);
   }
   
   section {
-    /* Reduced default top padding for sections, specific pages should handle their own top padding for precise navbar alignment */
     padding-top: 4rem; /* Approx 64px, can be overridden by page-specific pt- utilities */
   }
   

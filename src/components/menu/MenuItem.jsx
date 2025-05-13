@@ -2,7 +2,7 @@ import React, { useState, memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaLeaf } from 'react-icons/fa';
 
-// TODO: make sure the full description and title are shown. title now has one row and is cut off quickly. description probably has the same problem.
+// TODO: how do I solve the problem where long titles and descriptions are cut off?
 
 const VeganIcon = memo(() => (
   <FaLeaf className="w-4 h-4 text-green-500" />
@@ -21,13 +21,10 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       setIsMobile(window.innerWidth < 768);
     };
     
-    // Initial check
     checkIsMobile();
     
-    // Add event listener for window resize
     window.addEventListener('resize', checkIsMobile);
     
-    // Cleanup
     return () => {
       window.removeEventListener('resize', checkIsMobile);
     };

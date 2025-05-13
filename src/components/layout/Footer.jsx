@@ -15,30 +15,29 @@ const SocialIconLink = ({ href, label, children }) => (
   </a>
 );
 
-// Implement SVG hover effect matching other icons
 const MonseesLink = ({ href, label }) => (
   <a 
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center" 
+    className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center justify-center w-full h-full"
     aria-label={label}
   >
-    <svg 
+    <svg
       viewBox="0 0 96 24" 
-      className="h-4 md:h-6 w-auto"
+      className="w-full h-auto max-h-[20px]"
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>
-        <linearGradient id="monsees-gradient" gradientUnits="userSpaceOnUse" fy="90%">
+        <linearGradient id="monsees-footer-gradient" gradientUnits="userSpaceOnUse" fy="90%">
           <stop offset="0" stopColor="currentColor" />
           <stop offset="1" stopColor="currentColor" />
         </linearGradient>
-        <mask id="monsees-mask">
+        <mask id="monsees-footer-mask">
           <image href={monseesLogo} width="96" height="24" />
         </mask>
       </defs>
-      <rect width="96" height="24" fill="url(#monsees-gradient)" mask="url(#monsees-mask)" />
+      <rect width="96" height="24" fill="url(#monsees-footer-gradient)" mask="url(#monsees-footer-mask)" />
     </svg>
   </a>
 );
@@ -97,18 +96,16 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative border-t border-gold/10">
+    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative border-t border-gold/20">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
-        {/* Desktop layout */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-          {/* Column 1: Contact Information */}
-          <div className="space-y-4">
-            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
+        <div className="hidden md:grid md:grid-cols-12 gap-8">
+          <div className="col-span-4 bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-6 rounded-lg border border-gold/20 hover:border-gold/30 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-5 pb-2 border-b border-gold/20">
               {t('footer.contact.title')}
             </h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <FaMapMarkerAlt className="w-4 h-4 text-gold flex-shrink-0" />
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <FaMapMarkerAlt className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                 <button 
                   className="text-sm hover:text-gold transition-colors duration-200 text-left"
                   onClick={() => openMaps(t('footer.address'))}
@@ -116,8 +113,8 @@ function Footer() {
                   {t('footer.address')}
                 </button>
               </div>
-              <div className="flex items-center space-x-3">
-                <FaPhone className="w-4 h-4 text-gold flex-shrink-0" />
+              <div className="flex items-start space-x-3">
+                <FaPhone className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                 <button 
                   className="text-sm hover:text-gold transition-colors duration-200"
                   onClick={handlePhoneClick}
@@ -125,8 +122,8 @@ function Footer() {
                   {t('footer.contact.phone')}
                 </button>
               </div>
-              <div className="flex items-center space-x-3">
-                <FaEnvelope className="w-4 h-4 text-gold flex-shrink-0" />
+              <div className="flex items-start space-x-3">
+                <FaEnvelope className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                 <button 
                   className="text-sm hover:text-gold transition-colors duration-200"
                   onClick={handleEmailClick}
@@ -137,66 +134,64 @@ function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Opening Hours */}
-          <div className="space-y-4">
-            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
+          <div className="col-span-4 bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-6 rounded-lg border border-gold/20 hover:border-gold/30 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-5 pb-2 border-b border-gold/20">
               {t('footer.openingHours.title')}
             </h3>
-            <div className="grid grid-cols-2 gap-1 text-sm">
-              {[ 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
                 <React.Fragment key={day}>
-                  <span className="text-magnolia/80">{t(`footer.${day}`)}</span>
+                  <span className="text-gold/90 font-medium">{t(`footer.${day}`)}</span>
                   <span>{t(`footer.openingHours.${day}`)}</span>
                 </React.Fragment>
               ))}
             </div>
           </div>
 
-          {/* Column 3: Social Links */}
-          <div className="space-y-4">
-            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
+          <div className="col-span-4 bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-6 rounded-lg border border-gold/20 hover:border-gold/30 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-5 pb-2 border-b border-gold/20">
               {t('footer.follow')}
             </h3>
-            <div className="flex items-center space-x-6">
-              <SocialIconLink href="https://instagram.com/base" label="Instagram">
-                <FaInstagram size={24} />
-              </SocialIconLink>
-              <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
-                <FaLinkedin size={24} />
-              </SocialIconLink>
-              <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
-            </div>
-          </div>
-
-          {/* Column 4: Contact Button */}
-          <div className="space-y-4">
-            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-4">
-              {t('footer.newsletter.title')}
-            </h3>
-            <div>
-              <a 
-                href={`mailto:${t('footer.contact.email')}`}
-                className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap text-sm sm:text-base"
-              >
-                <FaEnvelope className="mr-2" />
-                {t('reservation.sendEmail')}
-              </a>
+            <div className="flex flex-col space-y-6">
+              <div className="flex items-center space-x-4">
+                <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-[42px] h-[42px] flex items-center justify-center">
+                    <FaInstagram size={22} />
+                  </div>
+                </SocialIconLink>
+                <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-[42px] h-[42px] flex items-center justify-center">
+                    <FaLinkedin size={22} />
+                  </div>
+                </SocialIconLink>
+                <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 flex items-center justify-center w-20 h-[42px]">
+                    <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                  </div>
+                </SocialIconLink>
+              </div>
+              <div className="mt-2">
+                <a 
+                  href={`mailto:${t('footer.contact.email')}`}
+                  className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg text-center whitespace-nowrap text-sm"
+                >
+                  <FaEnvelope className="mr-2" />
+                  {t('reservation.sendEmail')}
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Mobile layout - more compact */}
-        <div className="md:hidden">
-          {/* Contact & Hours in 2 columns */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            {/* Contact Info */}
-            <div>
-              <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3">
+        <div className="md:hidden space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-5 rounded-lg border border-gold/20 shadow-md">
+              <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3 pb-1.5 border-b border-gold/20">
                 {t('footer.contact.title')}
               </h3>
-              <div className="space-y-2.5">
-                <div className="flex items-center space-x-2">
-                  <FaMapMarkerAlt className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+              <div className="space-y-3 mt-3">
+                <div className="flex items-start space-x-2.5">
+                  <FaMapMarkerAlt className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                   <button 
                     className="text-xs hover:text-gold transition-colors duration-200 text-left"
                     onClick={() => openMaps(t('footer.address'))}
@@ -204,8 +199,8 @@ function Footer() {
                     {t('footer.address')}
                   </button>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <FaPhone className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                <div className="flex items-start space-x-2.5">
+                  <FaPhone className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                   <button 
                     className="text-xs hover:text-gold transition-colors duration-200"
                     onClick={handlePhoneClick}
@@ -213,8 +208,8 @@ function Footer() {
                     {t('footer.contact.phone')}
                   </button>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <FaEnvelope className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+                <div className="flex items-start space-x-2.5">
+                  <FaEnvelope className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                   <button 
                     className="text-xs hover:text-gold transition-colors duration-200"
                     onClick={handleEmailClick}
@@ -225,15 +220,14 @@ function Footer() {
               </div>
             </div>
 
-            {/* Hours - Compact */}
-            <div>
-              <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3">
+            <div className="bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-5 rounded-lg border border-gold/20 shadow-md">
+              <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3 pb-1.5 border-b border-gold/20">
                 {t('footer.openingHours.title')}
               </h3>
-              <div className="grid grid-cols-2 gap-1 text-xs">
-                {[ 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
+              <div className="grid grid-cols-2 gap-1.5 text-xs mt-3">
+                {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
                   <React.Fragment key={day}>
-                    <span className="text-magnolia/80">{t(`footer.${day}`)}</span>
+                    <span className="text-gold/90 font-medium">{t(`footer.${day}`)}</span>
                     <span>{t(`footer.openingHours.${day}`)}</span>
                   </React.Fragment>
                 ))}
@@ -241,24 +235,31 @@ function Footer() {
             </div>
           </div>
 
-          {/* Social & Email */}
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-6 sm:space-y-0 sm:space-x-4">
-            {/* Social Icons */}
-            <div className="flex items-center justify-center space-x-5">
-              <SocialIconLink href="https://instagram.com/base" label="Instagram">
-                <FaInstagram size={20} />
-              </SocialIconLink>
-              <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
-                <FaLinkedin size={20} />
-              </SocialIconLink>
-              <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
-            </div>
-            
-            {/* Email Button */}
-            <div>
+          <div className="bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-5 rounded-lg border border-gold/20 shadow-md">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3 pb-1.5 border-b border-gold/20">
+              {t('footer.follow')}
+            </h3>
+            <div className="flex flex-col space-y-4 mt-3">
+              <div className="flex items-center justify-between">
+                <SocialIconLink href="https://instagram.com/base" label="Instagram">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-[42px] h-[42px] flex items-center justify-center">
+                    <FaInstagram size={18} />
+                  </div>
+                </SocialIconLink>
+                <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-[42px] h-[42px] flex items-center justify-center">
+                    <FaLinkedin size={18} />
+                  </div>
+                </SocialIconLink>
+                <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 flex items-center justify-center w-[42px] h-[42px]">
+                    <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                  </div>
+                </SocialIconLink>
+              </div>
               <a 
                 href={`mailto:${t('footer.contact.email')}`}
-                className="inline-flex items-center justify-center px-4 py-2 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[3px_3px_0px_rgba(197,167,95,0.6)] hover:shadow-[1px_1px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap text-xs"
+                className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg text-center whitespace-nowrap text-xs"
               >
                 <FaEnvelope className="mr-1.5" />
                 {t('reservation.sendEmail')}
@@ -267,16 +268,15 @@ function Footer() {
           </div>
         </div>
         
-        {/* Copyright - same for both layouts */}
-        <div className="mt-8 pt-4 border-t border-dim-gray/20 flex flex-col-reverse md:flex-row justify-between items-center">
-          <div className="mt-3 md:mt-0 text-center md:text-left">
-            <p className="text-xs text-gray-400">
+        <div className="mt-8 pt-3 border-t border-gold/20 flex flex-col md:flex-row justify-between items-center">
+          <div className="mt-2 md:mt-0 text-center md:text-left">
+            <p className="text-xs text-magnolia/70">
               {t('footer.copyright').replace('{year}', currentYear)}
             </p>
           </div>
           
           {copyMessage && (
-            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-dim-gray px-4 py-2 rounded-md text-magnolia text-sm animate-fade-in-up z-50">
+            <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-dim-gray px-4 py-2 rounded-md text-magnolia text-sm animate-fade-in-up z-50 shadow-lg">
               {copyMessage}
             </div>
           )}
