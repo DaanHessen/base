@@ -276,7 +276,7 @@ function Navbar() {
     <nav 
       className={`fixed fixed-nav top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out will-change-transform ${
         scrolled 
-          ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-3' 
+          ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-5'
           : 'bg-transparent py-5 md:py-8'
       }`}
       style={{
@@ -431,8 +431,8 @@ function Navbar() {
               : '-translate-y-[45%] scale-100'
           } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <div className={`logo-container navbar-logo py-1`}>
-                <Logo className="transition-transform duration-300 ease-out" />
+              <div className={`logo-container navbar-logo ${scrolled ? 'py-2' : ''}`}> 
+                <Logo className={`transition-transform duration-300 ease-out`} /> 
               </div>
             </Link>
           </div>
