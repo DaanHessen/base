@@ -3,55 +3,55 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!-- Dutch (default) URLs -->
   <url>
-    <loc>https://www.base-restaurant.nl/</loc>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/"/>
+    <loc>https://www.basebymonsees.nl/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/menu/</loc>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/menu/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/menu/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/menu/"/>
+    <loc>https://www.basebymonsees.nl/menu/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/menu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/menu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/menu/"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/menu/food/</loc>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/menu/food/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/menu/food/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/menu/food/"/>
+    <loc>https://www.basebymonsees.nl/menu/food/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/menu/food/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/menu/food/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/menu/food/"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/menu/drinks/</loc>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/menu/drinks/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/menu/drinks/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/menu/drinks/"/>
+    <loc>https://www.basebymonsees.nl/menu/drinks/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/menu/drinks/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/menu/drinks/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/menu/drinks/"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/about/</loc>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/about/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/about/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/about/"/>
+    <loc>https://www.basebymonsees.nl/about/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/about/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/reservations/</loc>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/reservations/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/reservations/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/reservations/"/>
+    <loc>https://www.basebymonsees.nl/reservations/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/reservations/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/reservations/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/reservations/"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <lastmod>2025-04-13</lastmod>
@@ -59,55 +59,55 @@
   
   <!-- English URLs -->
   <url>
-    <loc>https://www.base-restaurant.nl/en/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/"/>
+    <loc>https://www.basebymonsees.nl/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/en/menu/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/menu/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/menu/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/menu/"/>
+    <loc>https://www.basebymonsees.nl/en/menu/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/menu/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/menu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/menu/"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/en/menu/food/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/menu/food/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/menu/food/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/menu/food/"/>
+    <loc>https://www.basebymonsees.nl/en/menu/food/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/menu/food/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/menu/food/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/menu/food/"/>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/en/menu/drinks/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/menu/drinks/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/menu/drinks/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/menu/drinks/"/>
+    <loc>https://www.basebymonsees.nl/en/menu/drinks/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/menu/drinks/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/menu/drinks/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/menu/drinks/"/>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/en/about/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/about/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/about/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/about/"/>
+    <loc>https://www.basebymonsees.nl/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/about/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2025-04-13</lastmod>
   </url>
   <url>
-    <loc>https://www.base-restaurant.nl/en/reservations/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.base-restaurant.nl/en/reservations/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://www.base-restaurant.nl/reservations/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.base-restaurant.nl/reservations/"/>
+    <loc>https://www.basebymonsees.nl/en/reservations/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.basebymonsees.nl/en/reservations/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.basebymonsees.nl/reservations/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.basebymonsees.nl/reservations/"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <lastmod>2025-04-13</lastmod>
