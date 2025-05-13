@@ -9,7 +9,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/menu/</loc>
@@ -18,7 +18,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/menu/"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/menu/food/</loc>
@@ -27,7 +27,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/menu/food/"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/menu/drinks/</loc>
@@ -36,7 +36,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/menu/drinks/"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/about/</loc>
@@ -45,7 +45,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/about/"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/reservations/</loc>
@@ -54,7 +54,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/reservations/"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   
   <!-- English URLs -->
@@ -65,7 +65,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/"/>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/en/menu/</loc>
@@ -74,7 +74,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/menu/"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/en/menu/food/</loc>
@@ -83,7 +83,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/menu/food/"/>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/en/menu/drinks/</loc>
@@ -92,7 +92,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/menu/drinks/"/>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/en/about/</loc>
@@ -101,7 +101,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/about/"/>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
   <url>
     <loc>https://base-restaurant.nl/en/reservations/</loc>
@@ -110,6 +110,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://base-restaurant.nl/reservations/"/>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2025-05-01</lastmod>
+    <lastmod>2025-04-13</lastmod>
   </url>
 </urlset> 
