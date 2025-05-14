@@ -87,6 +87,14 @@ html::-webkit-scrollbar {
     top: 0;
     left: 0;
     width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Ensure navbar background shows when scrolled */
+  .fixed-nav[data-scrolled="true"] {
+    background-color: rgba(62, 62, 62, 0.95) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
   
   .bg-fixed-container {
@@ -106,14 +114,13 @@ html::-webkit-scrollbar {
   
   html {
     height: -webkit-fill-available;
-    height: 100%;
   }
   
   body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
-    min-height: calc(var(--vh, 1vh) * 100);
-    overscroll-behavior: none;
+    overflow-x: hidden;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     position: relative;
   }
@@ -122,42 +129,37 @@ html::-webkit-scrollbar {
     isolation: isolate;
     position: relative;
     z-index: 1;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
   }
 
-  .min-h-screen {
-    height: auto !important;
+  .layout-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
   }
 
-  body, html {
-    overflow-y: visible !important; 
-    overflow-x: hidden !important;
-    height: auto !important;
-    position: static !important;
+  main {
+    flex: 1 0 auto;
+    position: relative;
+    padding-bottom: 2rem; /* Add spacing before footer */
+  }
+
+  footer {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+    margin-top: auto;
+    width: 100%;
+    /* Prevent iOS overscroll */
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
   }
   
-  #root, .layout-content, main {
-    overflow-y: visible !important;
-    min-height: unset !important;
-    height: auto !important;
-  }
-  
-  .reservation-main-wrapper {
-    min-height: unset !important;
-    height: auto !important;
-    position: static !important;
-  }
-  
-  .fixed-nav {
-    position: fixed !important;
-    z-index: 1000 !important;
-  }
-  
-  section, div[class*="min-h-screen"] {
-    min-height: unset !important;
-    height: auto !important;
-  }
-  
-  * {
+  /* Set maximum scroll range */
+  .mobile-scroll-fix {
+    position: relative;
     -webkit-overflow-scrolling: touch;
   }
 }
@@ -676,71 +678,170 @@ section {
     position: static !important;
     min-height: unset !important;
     height: auto !important;
+    overflow-y: visible !important;
   }
 }
 
-/* Mobile scroll fixes - overrides any problematic styles */
+/* Replace the existing mobile scroll fixes with cleaner ones */
 @media screen and (max-width: 767px) {
   html, body {
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    position: relative !important; /* Keep relative for positioning context */
+    position: relative !important;
     height: auto !important;
-    min-height: -webkit-fill-available; /* iOS vh fix */
-    min-height: calc(var(--vh, 1vh) * 100); /* Fallback using JS-set vh */
     -webkit-overflow-scrolling: touch;
   }
   
   #root {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
     min-height: calc(var(--vh, 1vh) * 100);
-    min-height: -webkit-fill-available; 
-    overflow: visible; /* Allow content to scroll */
+    min-height: -webkit-fill-available;
   }
 
-  .layout-content, /* Ensure this class is used on the direct child of #root that wraps Navbar, main, Footer */
-  main,
-  .reservation-main-wrapper,
-  .mobile-scroll-fix {
-    position: relative; /* Changed from static to relative */
-    overflow-y: visible; /* Allow vertical scroll */
-    overflow-x: hidden;
-    flex-grow: 1; /* Allow main content to take available space */
-    height: auto; 
-    min-height: auto;
-  }
-
-  /* Remove the overly broad static override */
-  /* 
-  *:not(.modal-overlay):not(.modal-content) {
-    position: static !important;
-  }
-  */
-  
-  /* Ensure sections and other block elements behave correctly */
-  section, div {
-    /* Avoid blanket position:static unless specifically needed */
-  }
-
-  /* Allow all sections to naturally stack and scroll */
-  [style*="min-height:100vh"],
-  [style*="min-height: 100vh"],
-  [style*="height:100vh"],
-  [style*="height: 100vh"],
-  .h-screen,
-  .min-h-screen {
-    min-height: calc(var(--vh, 1vh) * 100) !important; /* Use dynamic vh */
-    height: auto !important;
+  .layout-content, 
+  main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
   }
   
+  /* Make navigation links and menu bigger touch targets */
+  .fixed-nav a, 
+  .fixed-nav button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Ensure footer creates a natural boundary */
   footer {
-    position: relative; /* Ensure footer is part of the normal flow */
-    z-index: 10; /* Keep footer above background but below modals */
+    position: relative;
+    z-index: 10;
+    margin-top: auto; 
+    /* Stop at screen bottom */
+    max-height: calc(100vh - 100px);
+  }
+  
+  /* Fix page change issue */
+  a, button {
+    position: relative; /* Ensure positioned elements receive events */
+    z-index: 5; /* Ensure links are above other elements */
+  }
+}
+
+/* Fix for iOS momentum scrolling */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    body {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .fixed-nav {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
   }
 }
 
 /* Fix iOS height issues */
 :root {
   --vh: 1vh;
+}
+
+/* Prevent scrolling past footer */
+html {
+  height: 100%;
+  scroll-padding-bottom: 0;
+}
+
+body {
+  min-height: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+/* Specific mobile fixes */
+@media (max-width: 767px) {
+  #root {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: calc(var(--vh, 1vh) * 100);
+    max-height: 100vh; /* Restrict the maximum height to prevent overscroll */
+    max-height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden; /* Hide overflow at root level */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .layout-content {
+    flex: 1;
+    overflow-y: auto; /* Allow scrolling at this level */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    /* Add iOS-friendly bottom padding for content */
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  
+  main {
+    flex: 1 0 auto;
+  }
+  
+  footer {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+  }
+  
+  /* Force hardware acceleration and smooth scrolling on iOS */
+  .layout-content {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    will-change: transform;
+  }
+}
+
+/* iOS specific overscroll prevention */
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* Prevent overscroll bounce on iOS */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Move scrolling container to layout-content for iOS */
+  .layout-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }

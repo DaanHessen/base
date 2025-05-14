@@ -12,9 +12,12 @@ function Layout({ children }) {
   const [isHomePage, setIsHomePage] = useState(false);
   const [bgImage, setBgImage] = useState('');
   const [isMobile, setIsMobile] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
   const bgRef = useRef(null);
+  const mainRef = useRef(null);
+  const layoutContentRef = useRef(null);
   
   const getBasePath = (path) => {
     if (path.startsWith('/en')) return path.substring(3);
@@ -35,6 +38,40 @@ function Layout({ children }) {
       window.removeEventListener('resize', checkIsMobile);
     };
   }, []);
+
+  // Handle scroll events to set navbar background
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = isMobile 
+        ? (layoutContentRef.current?.scrollTop || 0) 
+        : window.scrollY;
+        
+      if (scrollPosition > 10) {
+        setIsScrolled(true);
+        document.querySelector('.fixed-nav')?.setAttribute('data-scrolled', 'true');
+      } else {
+        setIsScrolled(false);
+        document.querySelector('.fixed-nav')?.setAttribute('data-scrolled', 'false');
+      }
+    };
+    
+    // Listen to the correct scroll event based on device
+    if (isMobile && layoutContentRef.current) {
+      layoutContentRef.current.addEventListener('scroll', handleScroll, { passive: true });
+    } else {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    // Initial check
+    handleScroll();
+    
+    return () => {
+      if (layoutContentRef.current) {
+        layoutContentRef.current.removeEventListener('scroll', handleScroll);
+      }
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile]); // Dependency on isMobile to re-attach listeners when it changes
 
   useEffect(() => {
     const isHome = currentPath === '/';
@@ -77,6 +114,18 @@ function Layout({ children }) {
     const setVH = () => {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
+      
+      // Add safe area insets as CSS variables
+      if ('visualViewport' in window) {
+        document.documentElement.style.setProperty(
+          '--safe-area-inset-top',
+          `${window.visualViewport.offsetTop}px`
+        );
+        document.documentElement.style.setProperty(
+          '--safe-area-inset-bottom',
+          `${Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop)}px`
+        );
+      }
     };
 
     setVH();
@@ -84,12 +133,22 @@ function Layout({ children }) {
     window.addEventListener('resize', setVH);
     window.addEventListener('orientationchange', setVH);
     
-    document.body.style.overflowY = 'auto';
-    document.body.style.height = 'auto';
+    // Apply styles to html and body for proper height handling
+    document.documentElement.style.height = '100%';
+    document.body.style.height = '100%';
+    document.body.style.margin = '0';
+    document.body.style.position = 'relative';
+    document.body.style.overflow = 'hidden'; // Prevent body scrolling on all devices
     
     return () => {
       window.removeEventListener('resize', setVH);
       window.removeEventListener('orientationchange', setVH);
+      // Reset styles on component unmount
+      document.documentElement.style.height = '';
+      document.body.style.height = '';
+      document.body.style.margin = '';
+      document.body.style.position = '';
+      document.body.style.overflow = '';
     };
   }, []);
 
@@ -107,7 +166,7 @@ function Layout({ children }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-onyx overflow-x-hidden" id="root-container">
+    <div className="flex flex-col min-h-screen bg-onyx overflow-hidden" id="root-container">
       <div 
         ref={bgRef}
         className={`fixed inset-0 z-0 transition-opacity duration-300 ease-in-out bg-onyx bg-center bg-cover bg-no-repeat ${isHomePage ? 'opacity-100' : 'opacity-0'} ${isMobile ? 'fixed-bg' : 'bg-fixed-custom'}`}
@@ -140,13 +199,22 @@ function Layout({ children }) {
         </div>
       )}
       
-      <div className="layout-content relative z-10 flex flex-col flex-grow overflow-x-hidden">
+      <div 
+        ref={layoutContentRef}
+        className="layout-content relative z-10 flex flex-col min-h-screen overflow-y-auto"
+        style={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100%',
+          height: '100%'
+        }}
+      >
         <Helmet>
           <html lang={currentLang} />
           <title>{t('seo.title')}</title>
           <meta name="description" content={t('seo.description')} />
           <meta name="keywords" content={t('seo.keywords')} />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
           
           <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.formitable.com https://maps.googleapis.com https://maps.google.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com https://fonts.cdnfonts.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com https://www.google.com https://formitable.com; media-src 'self';" />
           <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -155,6 +223,66 @@ function Layout({ children }) {
           
           <style>
             {`
+              html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overscroll-behavior: none;
+              }
+
+              #root-container {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                width: 100%;
+                top: 0;
+                left: 0;
+              }
+              
+              .layout-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+                overscroll-behavior-y: none;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+                scroll-padding-bottom: env(safe-area-inset-bottom, 0px);
+              }
+              
+              /* Ensure footer sticks at the bottom */
+              .footer-container {
+                margin-top: auto;
+                min-height: max-content;
+                flex-shrink: 0;
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                background-color: #3e3e3e;
+              }
+
+              /* Adjust page content spacing */
+              main {
+                padding-top: 0;
+                display: flex;
+                flex-direction: column;
+              }
+
+              /* Fix gap between navbar and page content */
+              h1, .page-title, .section-title {
+                margin-top: 0;
+              }
+
+              /* Ensure content fills available space but doesn't overflow */
+              .layout-content > main {
+                flex: 1 0 auto;
+                min-height: 0;
+              }
+
               @media (max-width: 767px) {
                 .bg-fixed-container, 
                 [style*="height: 100vh"] {
@@ -174,11 +302,16 @@ function Layout({ children }) {
                 }
                 
                 nav.fixed-nav {
+                  position: sticky !important;
+                  top: 0;
+                  z-index: 50;
+                  width: 100%;
                   transform: translateZ(0);
                   -webkit-transform: translateZ(0);
                   backface-visibility: hidden;
                   perspective: 1000;
                   will-change: transform;
+                  transition: background-color 0.3s ease;
                 }
                 
                 nav.fixed-nav[data-scrolled="true"] {
@@ -196,12 +329,67 @@ function Layout({ children }) {
                   left: 0;
                   z-index: -2;
                 }
+
+                .footer-container {
+                  border-bottom: 0px solid transparent;
+                  padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px);
+                }
+
+                /* Ensure main content has proper spacing after footer */
+                main {
+                  min-height: 0;
+                  flex: 1 0 auto;
+                  padding-bottom: 0;
+                  display: flex;
+                  flex-direction: column;
+                }
+
+                /* Content spacing fix for mobile */
+                section, .page-content {
+                  padding-top: 0.5rem;
+                }
+
+                /* Ensure the layout content doesn't scroll past footer */
+                .layout-content::after {
+                  content: '';
+                  display: block;
+                  height: 1px;
+                  background-color: transparent;
+                  margin-top: -1px;
+                }
+
+                /* Fix for iOS Safari and Chrome */
+                @supports (-webkit-touch-callout: none) {
+                  .layout-content {
+                    height: -webkit-fill-available;
+                  }
+                }
               }
               
               @media (orientation: landscape) {
                 .bg-fixed-container {
                   min-height: 100%;
                 }
+              }
+
+              /* Page specific content spacing */
+              .page-container {
+                padding-top: 0;
+              }
+
+              .page-header {
+                margin-top: 0;
+                padding-top: 0;
+              }
+
+              /* Section spacing within pages */
+              section {
+                padding-top: 0.5rem;
+              }
+
+              /* First section in page needs no padding */
+              section:first-child {
+                padding-top: 0;
               }
             `}
           </style>
@@ -281,9 +469,10 @@ function Layout({ children }) {
             })}
           </script>
         </Helmet>
-        <Navbar />
         
-        <main className="flex-grow reservation-main-wrapper mobile-scroll-fix">
+        <Navbar isScrolled={isScrolled} />
+        
+        <main ref={mainRef} className="flex-grow flex flex-col w-full mt-0 md:mt-0" style={{ paddingTop: 0 }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -291,7 +480,8 @@ function Layout({ children }) {
               animate="animate"
               exit="exit"
               variants={pageVariants}
-              className="w-full mobile-scroll-fix"
+              className="w-full flex-grow"
+              style={{ paddingTop: isMobile ? '0.5rem' : '1rem' }}
             >
               {children}
             </motion.div>

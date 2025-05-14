@@ -6,9 +6,9 @@ import { FaHome, FaUtensils, FaCocktail, FaInfoCircle } from 'react-icons/fa';
 import { setLanguage } from '../../utils/language';
 import Logo from '../Logo';
 
-function Navbar() {
+const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: propCurrentLang }, ref) => {
   const location = useLocation();
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(initialIsScrolled || false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
@@ -17,6 +17,7 @@ function Navbar() {
   const menuDropdownRef = useRef(null);
   const menuTimeoutRef = useRef(null);
   const scrollPositionRef = useRef(0);
+  const navRef = useRef(null);
   
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
@@ -265,22 +266,52 @@ function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const applyScrolledStyle = (element, isScrolled) => {
+      if (!element) return;
+      
+      element.setAttribute('data-scrolled', isScrolled ? 'true' : 'false');
+      
+      if (isScrolled) {
+        element.style.backgroundColor = 'rgba(62, 62, 62, 0.95)';
+        element.style.backdropFilter = 'blur(4px)';
+        element.style.webkitBackdropFilter = 'blur(4px)';
+      } else {
+        element.style.backgroundColor = 'transparent';
+        element.style.backdropFilter = 'none';
+        element.style.webkitBackdropFilter = 'none';
+      }
+    };
+    
+    if (navRef.current) {
+      applyScrolledStyle(navRef.current, scrolled);
+    }
+    
+    if (ref && ref.current) {
+      applyScrolledStyle(ref.current, scrolled);
+    }
+  }, [scrolled, ref]);
+
+  useEffect(() => {
+    setScrolled(initialIsScrolled);
+  }, [initialIsScrolled]);
+
   return (
     <nav 
-      className={`fixed fixed-nav top-0 left-0 right-0 z-[1000] transition-all duration-400 ease-in-out will-change-transform ${
-        scrolled 
-          ? 'bg-onyx/95 backdrop-blur-sm shadow-lg py-5'
-          : 'bg-transparent py-5 md:py-8'
-      }`}
-      style={{
-        transform: `translate3d(0, 0, 0)`,
-        WebkitTransform: 'translate3d(0, 0, 0)',
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
-        perspective: '1000px',
-        WebkitPerspective: '1000px'
-      }}
+      ref={ref}
+      className={`fixed-nav fixed top-0 left-0 right-0 z-50 py-4 ${
+        scrolled ? 'bg-onyx/95 backdrop-blur-sm' : 'bg-transparent'
+      } transition-all duration-300 ease-in-out`}
       data-scrolled={scrolled ? 'true' : 'false'}
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        boxShadow: scrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none',
+        backgroundColor: scrolled ? 'rgba(62, 62, 62, 0.95)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(4px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(4px)' : 'none',
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex justify-between items-center h-16 md:h-20">
@@ -424,7 +455,7 @@ function Navbar() {
               : '-translate-y-[45%] scale-90 lg:scale-100'
           } z-10`}>
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <div className={`logo-container navbar-logo ${scrolled ? 'py-2' : ''}`}> 
+              <div className={`logo-container navbar-logo ${scrolled ? 'py-1' : 'py-2'}`}> 
                 <Logo className={`transition-transform duration-300 ease-out`} /> 
               </div>
             </Link>
@@ -632,6 +663,12 @@ function Navbar() {
       </AnimatePresence>
     </nav>
   );
-}
+});
+
+Navbar.defaultProps = {
+  isScrolled: false
+};
+
+Navbar.displayName = 'Navbar';
 
 export default Navbar; 
