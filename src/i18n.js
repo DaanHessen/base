@@ -42,7 +42,7 @@ i18n
     
     defaultNS: 'common',
     
-    ns: ['common', 'home', 'menu', 'about'],
+    ns: ['common', 'home', 'menu', 'about', 'reservations'],
     
     detection: {
       order: ['localStorage', 'cookie', 'navigator'],

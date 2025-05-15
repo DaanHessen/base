@@ -107,17 +107,16 @@ function Home() {
             />
             
             <div className="max-w-xl w-full">
-              <motion.div className="relative mb-2 sm:mb-3" variants={itemVariants} style={{ transform: 'translate3d(0, 0, 0)' }}>
+              <motion.div className="subtitle-container" variants={itemVariants} style={{ transform: 'translate3d(0, 0, 0)' }}>
                 <motion.h2 
                   className="text-[clamp(0.875rem,2vw+0.5rem,1rem)] md:text-[clamp(1rem,2.5vw+0.5rem,1.125rem)] text-thistle font-light tracking-wide relative z-10 px-4 py-2 break-words"
                 >
                   {t('home:hero.subtitle')}
                 </motion.h2>
-                <div className="absolute -left-0 -right-0 top-0 bottom-0 bg-onyx/70 rounded-lg -z-10"></div>
               </motion.div>
               
               <motion.div
-                className="text-sm sm:text-base md:text-lg text-thistle backdrop-blur-sm px-4 py-3 rounded-lg bg-onyx/50"
+                className="content-container"
                 variants={itemVariants}
                 style={{ transform: 'translate3d(0, 0, 0)' }}
               >
@@ -132,13 +131,13 @@ function Home() {
                 >
                   <Link 
                     to={getLocalizedPath('/reservations')} 
-                    className="px-6 py-3 sm:py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
+                    className="reservation-button"
                   >
                     {t('home:buttons.reservation')}
                   </Link>
                   <Link 
                     to={getLocalizedPath('/menu')} 
-                    className="px-6 py-3 sm:py-3.5 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
+                    className="menu-button"
                   >
                     {t('home:buttons.menu')}
                   </Link>

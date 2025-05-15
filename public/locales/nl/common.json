@@ -4,7 +4,9 @@
     "menu": "Menu",
     "about": "Over Ons",
     "selectLanguage": "Selecteer taal",
-    "reservations": "Reserveer een Tafel"
+    "reservations": "Reserveer een Tafel",
+    "foodMenu": "Eten Menu",
+    "drinksMenu": "Dranken Menu"
   },
   "seo": {
     "title": "BASE - Restaurant en Bar",

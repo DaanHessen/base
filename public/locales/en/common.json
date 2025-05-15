@@ -4,7 +4,9 @@
     "menu": "Menu",
     "about": "About Us",
     "selectLanguage": "Select language",
-    "reservations": "Book a Table"
+    "reservations": "Book a Table",
+    "foodMenu": "Food Menu",
+    "drinksMenu": "Drinks Menu"
   },
   "seo": {
     "title": "BASE - Restaurant and Bar",

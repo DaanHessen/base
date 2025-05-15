@@ -51,24 +51,19 @@ function DrinksMenu() {
   return (
     <>
       <Helmet>
-        <title>{`${t('menu:drinks.title')} - ${t('common:seo.title')}`}</title>
-        <meta name="description" content={t('menu:drinks.description')} />
-        <link rel="canonical" href={`${window.location.origin}/menu/drinks/${currentLang === 'en' ? 'en/' : ''}`} />
-        {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/menu/drinks/en/`} />}
-        {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/menu/drinks/`} />}
+        <title>{t('drinksMenu.pageTitle', { ns: 'menu' })} | BASE by Monsees</title>
+        <meta name="description" content={t('drinksMenu.pageDescription', { ns: 'menu' })} />
       </Helmet>
       
-      {/* Standardized top padding */}
-      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
-          <div className="home-title mb-8">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
-              {t('menu:drinks.title')}
+      <section className="py-16 sm:py-20 md:py-24 min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 md:mb-12">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia">
+              {t('drinksMenu.title', { ns: 'menu' })}
             </h1>
-            <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
           </div>
           
-          {/* Categories selection on mobile */}
+          {/* Quick navigation for mobile */}
           {hasSubcategories && (
             <div className="md:hidden overflow-x-auto pb-4 mb-4 whitespace-nowrap no-scrollbar">
               <div className="flex space-x-3">
@@ -77,7 +72,7 @@ function DrinksMenu() {
                     key={subcategory.id}
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById(`subcategory-${subcategory.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      document.getElementById(`subcategory-${subcategory.id}`)?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="px-4 py-2 text-sm rounded-full border border-gold/30 bg-onyx/70 text-gold whitespace-nowrap flex-shrink-0 hover:bg-gold/20 transition-all duration-150"
                   >

@@ -33,24 +33,19 @@ function FoodMenu() {
   return (
     <>
       <Helmet>
-        <title>{`${t('menu:food.title')} - ${t('common:seo.title')}`}</title>
-        <meta name="description" content={t('menu:food.description')} />
-        <link rel="canonical" href={`${window.location.origin}/menu/food/${currentLang === 'en' ? 'en/' : ''}`} />
-        {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/menu/food/en/`} />}
-        {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/menu/food/`} />}
+        <title>{t('foodMenu.pageTitle', { ns: 'menu' })} | BASE by Monsees</title>
+        <meta name="description" content={t('foodMenu.pageDescription', { ns: 'menu' })} />
       </Helmet>
       
-      {/* Standardized top padding */}
-      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
-          <div className="home-title mb-8">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
-              {t('menu:food.title')}
+      <section className="py-16 sm:py-20 md:py-24 min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 md:mb-12">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia">
+              {t('foodMenu.title', { ns: 'menu' })}
             </h1>
-            <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
           </div>
           
-          {/* Categories selection on mobile */}
+          {/* Quick navigation for mobile */}
           <div className="md:hidden overflow-x-auto pb-4 mb-4 whitespace-nowrap no-scrollbar">
             <div className="flex space-x-3">
               {foodCategories.map((category) => (
@@ -58,9 +53,9 @@ function FoodMenu() {
                   key={category.id}
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById(`category-${category.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById(`category-${category.id}`)?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="px-4 py-2 text-sm rounded-full border border-gold/30 bg-onyx/70 text-gold whitespace-nowrap flex-shrink-0 hover:bg-gold/20 transition-all duration-150"
+                  className="px-4 py-2 text-sm rounded-md border border-gold/30 bg-onyx/70 text-gold whitespace-nowrap flex-shrink-0 hover:bg-gold/20 transition-all duration-200"
                 >
                   {category.name[currentLang]}
                 </button>
@@ -68,68 +63,67 @@ function FoodMenu() {
             </div>
           </div>
           
-          {/* Desktop order: voorgerechten & hoofdgerechten in first row, tussengerechten & desserts in second row, sides centered in third row */}
-          <div className="home-content">
-            {/* Mobile view - all categories in one column */}
-            <div className="block md:hidden">
+          {/* Mobile view - all categories in one column */}
+          <div className="block md:hidden">
             {foodCategories.map((category) => (
               <div 
                 id={`category-${category.id}`} 
                 key={category.id}
-                  className="menu-category-item mb-10 transition-all duration-150 hover:translate-y-[-2px] scroll-mt-28"
-                >
-                  <CategoryHeading>
-                    {category.name[currentLang]}
-                  </CategoryHeading>
-                  
-                  <MenuCategory category={category} />
-                </div>
-              ))}
+                className="menu-category-item mb-10 transition-all duration-150 hover:translate-y-[-2px] scroll-mt-28"
+              >
+                <CategoryHeading>
+                  {category.name[currentLang]}
+                </CategoryHeading>
+                
+                <MenuCategory category={category} />
+              </div>
+            ))}
+          </div>
+          
+          {/* Desktop view - custom grid layout */}
+          <div className="hidden md:block">
+            {/* First row: voorgerechten & hoofdgerechten */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-10 mb-16">
+              {foodCategories
+                .filter(cat => cat.id === 'voorgerechten' || cat.id === 'hoofdgerechten')
+                .sort((a, b) => a.id === 'voorgerechten' ? -1 : 1)
+                .map((category) => (
+                  <div 
+                    id={`category-${category.id}`} 
+                    key={category.id}
+                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
+                  >
+                    <CategoryHeading>
+                      {category.name[currentLang]}
+                    </CategoryHeading>
+                    
+                    <MenuCategory category={category} />
+                  </div>
+                ))}
             </div>
             
-            {/* Desktop view - custom grid layout */}
-            <div className="hidden md:block">
-              {/* First row: voorgerechten & hoofdgerechten */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-10 mb-16">
-                {foodCategories
-                  .filter(cat => cat.id === 'voorgerechten' || cat.id === 'hoofdgerechten')
-                  .sort((a, b) => a.id === 'voorgerechten' ? -1 : 1)
-                  .map((category) => (
-                    <div 
-                      id={`category-${category.id}`} 
-                      key={category.id}
-                      className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
-                    >
-                      <CategoryHeading>
-                        {category.name[currentLang]}
-                      </CategoryHeading>
-                      
-                      <MenuCategory category={category} />
-                    </div>
-                  ))}
-              </div>
-              
-              {/* Second row: tussengerechten & desserts */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-10 mb-16">
-                {foodCategories
-                  .filter(cat => cat.id === 'tussengerechten' || cat.id === 'desserts')
-                  .sort((a, b) => a.id === 'tussengerechten' ? -1 : 1)
-                  .map((category) => (
-                    <div 
-                      id={`category-${category.id}`} 
-                      key={category.id}
-                      className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
-                    >
-                      <CategoryHeading>
-                        {category.name[currentLang]}
-                      </CategoryHeading>
-                      
-                      <MenuCategory category={category} />
-                    </div>
-                  ))}
-              </div>
-              
-              {/* Third row: sides centered */}
+            {/* Second row: tussengerechten & desserts */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-10 mb-16">
+              {foodCategories
+                .filter(cat => cat.id === 'tussengerechten' || cat.id === 'desserts')
+                .sort((a, b) => a.id === 'tussengerechten' ? -1 : 1)
+                .map((category) => (
+                  <div 
+                    id={`category-${category.id}`} 
+                    key={category.id}
+                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] scroll-mt-28 w-full"
+                  >
+                    <CategoryHeading>
+                      {category.name[currentLang]}
+                    </CategoryHeading>
+                    
+                    <MenuCategory category={category} />
+                  </div>
+                ))}
+            </div>
+            
+            {/* Third row: sides centered */}
+            {foodCategories.some(cat => cat.id === 'sides') && (
               <div className="md:w-1/2 mx-auto">
                 {foodCategories
                   .filter(cat => cat.id === 'sides')
@@ -147,7 +141,7 @@ function FoodMenu() {
                     </div>
                   ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>

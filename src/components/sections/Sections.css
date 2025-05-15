@@ -44,6 +44,122 @@
   background-color: rgba(62, 62, 62, 0.5);
 }
 
+/* Subtitle container with background for Home page */
+.subtitle-container {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle-container::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(62, 62, 62, 0.7);
+  border-radius: 0.5rem;
+  z-index: -1;
+}
+
+@media (min-width: 640px) {
+  .subtitle-container {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* Content container with background for Home page */
+.content-container {
+  font-size: 0.875rem;
+  color: var(--thistle);
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: rgba(62, 62, 62, 0.5);
+}
+
+@media (min-width: 640px) {
+  .content-container {
+    font-size: 1rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .content-container {
+    font-size: 1.125rem;
+  }
+}
+
+/* Reservation button styling */
+.reservation-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--gold);
+  color: var(--onyx);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease;
+  box-shadow: 4px 4px 0px rgba(197, 167, 95, 0.6);
+  text-align: center;
+  white-space: nowrap;
+  flex: 1;
+  font-size: 0.875rem;
+}
+
+.reservation-button:hover {
+  background-color: rgba(212, 175, 55, 0.9);
+  box-shadow: 2px 2px 0px rgba(197, 167, 95, 0.8);
+  transform: translate(1px, 1px);
+}
+
+@media (min-width: 640px) {
+  .reservation-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 400px) {
+  .reservation-button {
+    flex: 0 1 auto;
+  }
+}
+
+/* Menu button styling */
+.menu-button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(248, 241, 255, 0.3);
+  color: var(--magnolia);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease;
+  box-shadow: 4px 4px 0px rgba(62, 62, 62, 0.3);
+  text-align: center;
+  white-space: nowrap;
+  flex: 1;
+  font-size: 0.875rem;
+}
+
+.menu-button:hover {
+  background-color: rgba(248, 241, 255, 0.1);
+  border-color: rgba(248, 241, 255, 0.5);
+  box-shadow: 2px 2px 0px rgba(62, 62, 62, 0.5);
+  transform: translate(1px, 1px);
+}
+
+@media (min-width: 640px) {
+  .menu-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 400px) {
+  .menu-button {
+    flex: 0 1 auto;
+  }
+}
+
 @media (min-width: 640px) {
   .home-content {
     font-size: 1rem;

@@ -63,21 +63,22 @@ function AboutUs() {
         <meta name="og:description" content={t('about:seo.description')} />
       </Helmet>
       
-      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <section className="py-16 sm:py-20 md:py-24 min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 md:mb-12">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia mb-4">
+              {t('about:title')}
+            </h1>
+            
+            <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
+          </div>
+          
           <motion.div 
             className="space-y-12 sm:space-y-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants}>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
-                {t('about:title')}
-              </h1>
-              <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
-            </motion.div>
-            
             <motion.div variants={itemVariants}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8">
                 {/* Mobile image placement */}

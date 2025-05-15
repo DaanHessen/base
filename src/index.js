@@ -19,11 +19,11 @@ window.addEventListener('resize', setViewportHeight);
 window.addEventListener('orientationchange', setViewportHeight);
 
 const LoadingIndicator = () => (
-  <div className="min-h-screen flex items-center justify-center bg-onyx">
+  <div className="loading-indicator">
     <div className="flex space-x-2">
-      <div className="w-3 h-3 bg-gold rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-      <div className="w-3 h-3 bg-gold rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-      <div className="w-3 h-3 bg-gold rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+      <div className="loading-dot"></div>
+      <div className="loading-dot"></div>
+      <div className="loading-dot"></div>
     </div>
   </div>
 );

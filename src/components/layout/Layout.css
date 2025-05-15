@@ -16,6 +16,23 @@ main {
   flex: 1;
 }
 
+/* Home background styles */
+.home-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  transition: opacity 500ms ease-in-out;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  box-shadow: inset 0 0 0 2000px rgba(62, 62, 62, 0.6);
+}
+
+.home-background.background-loaded {
+  opacity: 1;
+}
+
 /* Page content styles */
 .page-content {
   width: 100%;
@@ -96,12 +113,13 @@ main {
     height: calc(var(--vh, 1vh) * 100) !important;
   }
 
-  body, html {
-    height: auto !important;
+  html, body {
+    height: 100% !important;
     min-height: 100%;
-    overflow-y: auto !important;
+    overflow-x: hidden;
     position: relative;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y; /* Enable vertical scrolling */
   }
   
   #root {
@@ -109,7 +127,7 @@ main {
     min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
-    overflow: visible;
+    overflow-x: hidden;
     height: auto !important;
   }
   
@@ -117,12 +135,16 @@ main {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
+    overflow-y: auto; /* Allow scrolling */
+    -webkit-overflow-scrolling: touch;
   }
 
   main {
     flex: 1 0 auto;
     position: relative;
     padding-bottom: 2rem; /* Add spacing before footer */
+    overflow-y: auto; /* Allow scrolling */
+    -webkit-overflow-scrolling: touch;
   }
   
   /* Content below navbar adjustments */
@@ -137,17 +159,31 @@ main {
   .layout-content > * {
     padding-top: 56px;
   }
+  
+  /* Home background on mobile */
+  .home-background {
+    background-attachment: scroll;
+  }
+
+  /* Fix for body when menu is closed */
+  body:not(.mobile-menu-open) {
+    overflow-y: auto !important;
+    position: static !important;
+  }
 }
 
 /* Specific mobile fixes */
 @media (max-width: 767px) {
+  body {
+    overflow-y: auto !important;
+  }
+  
   #root {
     min-height: 100vh;
     min-height: -webkit-fill-available;
     min-height: calc(var(--vh, 1vh) * 100);
-    max-height: 100vh; /* Restrict the maximum height to prevent overscroll */
-    max-height: calc(var(--vh, 1vh) * 100);
-    overflow: hidden; /* Hide overflow at root level */
+    height: auto !important;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
   }
@@ -206,22 +242,30 @@ html.wf-active, html.wf-inactive {
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
     body {
-      /* Prevent overscroll bounce on iOS */
-      position: fixed;
-      width: 100%;
+      /* Prevent overscroll bounce on iOS, but don't fix position */
+      -webkit-overflow-scrolling: touch;
       height: 100%;
-      overflow: hidden;
+      width: 100%;
+      overflow-y: auto;
     }
     
     /* Move scrolling container to layout-content for iOS */
     .layout-content {
-      position: absolute;
+      position: relative;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix mobile menu body freeze */
+    body.mobile-menu-open {
+      position: fixed;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
     }
   }
 }
@@ -324,5 +368,107 @@ section {
     padding-left: 0.65rem !important;
     padding-right: 0.65rem !important;
     font-size: 0.8rem !important;
+  }
+}
+
+/* Layout component styles */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  background-color: var(--onyx);
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Main content area */
+.layout-content {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Background image transition effect */
+.bg-fixed-custom {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.5s ease;
+}
+
+/* iOS doesn't support fixed backgrounds well */
+@supports (-webkit-touch-callout: none) {
+  .bg-fixed-custom {
+    background-attachment: scroll;
+  }
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1), transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hardware acceleration for smoother animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Prevent content shift on page load */
+.no-content-shift {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 5000px;
+}
+
+/* Enhance smoothness for header transitions */
+.header, .fixed-nav {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Fix header during scroll */
+.header-scrolled {
+  will-change: transform, background-color, box-shadow;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Force hardware acceleration on Safari/iOS */
+@supports (-webkit-touch-callout: none) {
+  .header, .fixed-nav, .scroll-nav {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
   }
 } 

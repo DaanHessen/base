@@ -48,7 +48,8 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       })
     : [];
   
-  const handleToggleExpand = () => {
+  const handleToggleExpand = (e) => {
+    e.stopPropagation();
     setIsExpanded(!isExpanded);
   };
   
@@ -57,20 +58,25 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
       className="menu-item group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(!isHovered)}
+      onTouchStart={(e) => {
+        if (isMobile) {
+          e.preventDefault();
+          setIsHovered(true);
+        }
+      }}
     >
       <div className="menu-item-border-top"></div>
       <div className="menu-item-border-right"></div>
       <div className="menu-item-border-bottom"></div>
       <div className="menu-item-border-left"></div>
       
-      <div className="p-2 sm:p-3 flex flex-col relative">
-        <div className="flex justify-between items-start gap-2 mb-2.5">
-          <div className="flex-1 min-w-0">
+      <div className="menu-item-content">
+        <div className="menu-item-header">
+          <div className="menu-item-title-wrapper">
             <h3 className="menu-item-title">
-              <span className="break-words pr-1 block truncate">{name}</span>
+              <span>{name}</span>
               {showVeganInfo && (
-                <div className="ml-1 flex-shrink-0" title={t('vegan')}>
+                <div className="menu-item-vegan-icon" title={t('vegan')}>
                   <VeganIcon />
                 </div>
               )}
@@ -79,23 +85,15 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
           <span className="menu-item-price">{price}</span>
         </div>
         
-        <div className="">
-          <p className={`menu-item-description ${isMobile ? 'line-clamp-2' : ''}`}>
+        <div className="menu-item-description-wrapper">
+          <p className={`menu-item-description ${!isExpanded && isMobile ? 'line-clamp-3' : ''}`}>
             {description}
           </p>
           
-          {description.length > 80 && isMobile && (
+          {description && description.length > 80 && isMobile && (
             <button 
               onClick={handleToggleExpand}
-              className="text-xs text-gold/80 hover:text-gold mt-1 focus:outline-none"
-            >
-              {isExpanded ? t('readLess') : t('readMore')}
-            </button>
-          )}
-          {!isMobile && description.length > 100 && (
-            <button 
-              onClick={handleToggleExpand}
-              className="text-xs text-gold/80 hover:text-gold mt-1 focus:outline-none"
+              className="menu-item-expand-button"
             >
               {isExpanded ? t('readLess') : t('readMore')}
             </button>
@@ -103,14 +101,10 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
         </div>
         
         {showAllergens && (
-          <div 
-            className={`menu-item-allergens ${!isMobile ? 'border-t border-onyx/80' : ''} ${
-              isHovered || isMobile ? 'opacity-100' : 'opacity-70'
-            }`}
-          >
+          <div className="menu-item-allergens">
             <p className="menu-item-allergens-text">
-              <span className="mr-1 text-xs mt-0.5">⚠</span>
-              <span className="leading-tight break-words">{t('allergens.title')}: {translatedAllergens.join(', ')}</span>
+              <span className="allergen-warning">⚠</span>
+              <span className="allergen-list">{t('allergens.title')}: {translatedAllergens.join(', ')}</span>
             </p>
           </div>
         )}

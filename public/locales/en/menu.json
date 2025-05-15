@@ -21,6 +21,7 @@
   "categories": {
     "voorgerechten": "Starters",
     "hoofdgerechten": "Main Courses",
+    "tussengerechten": "Intermediate Courses",
     "desserts": "Desserts",
     "dranken": "Drinks"
   },
@@ -38,5 +39,17 @@
   },
   "dietary": {
     "glutenFree": "Gluten Free"
+  },
+  "foodMenu": {
+    "title": "Food Menu",
+    "subtitle": "Discover our delicious food menu. From starters to desserts, we offer a variety of dishes to satisfy your taste buds.",
+    "pageTitle": "Food Menu",
+    "pageDescription": "Explore our food menu featuring locally sourced ingredients prepared with creativity and passion."
+  },
+  "drinksMenu": {
+    "title": "Drinks Menu",
+    "subtitle": "Explore our carefully selected drinks menu featuring craft cocktails, fine wines, and specialty drinks.",
+    "pageTitle": "Drinks Menu",
+    "pageDescription": "Discover our selection of craft cocktails, wines, beers and non-alcoholic options at BASE."
   }
 } 

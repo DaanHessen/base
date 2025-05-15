@@ -1,0 +1,22 @@
+{
+  "pageTitle": "Book a Table",
+  "pageDescription": "Make a reservation at BASE by Monsees, the new streetfood bar at the Groest in Hilversum.",
+  "title": "Make a Reservation",
+  "subtitle": "Join us for an unforgettable experience. Book your table today or inquire about hosting an event with us.",
+  "openHours": "Open Wednesday to Sunday from 15:00 to 22:00",
+  "eventInfo": "Please provide details about your group size, date, time, and any special requirements",
+  
+  "dinner": {
+    "title": "Reserve a Table",
+    "description": "Join us for dinner and experience our unique streetfood menu paired with craft cocktails in a vibrant atmosphere.",
+    "callToAction": "Call us to make a reservation",
+    "buttonText": "Call Now"
+  },
+  
+  "events": {
+    "title": "Host Your Event",
+    "description": "Planning a special occasion? We offer private dining and event hosting options for your celebration.",
+    "callToAction": "Email us with your event details",
+    "buttonText": "Send Email"
+  }
+} 

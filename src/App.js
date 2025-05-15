@@ -8,6 +8,7 @@ import FoodMenu from './components/sections/FoodMenu';
 import DrinksMenu from './components/sections/DrinksMenu';
 import AboutUs from './components/sections/AboutUs';
 import Reservations from './components/sections/Reservations';
+import './App.css';
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -71,11 +72,13 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <AppContent />
-      <Analytics />
-      <SpeedInsights />
-    </Router>
+    <div className="app-container">
+      <Router>
+        <AppContent />
+        <Analytics />
+        <SpeedInsights />
+      </Router>
+    </div>
   );
 }
 

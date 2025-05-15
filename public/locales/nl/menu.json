@@ -21,6 +21,7 @@
   "categories": {
     "voorgerechten": "Voorgerechten",
     "hoofdgerechten": "Hoofdgerechten",
+    "tussengerechten": "Tussengerechten",
     "desserts": "Desserts",
     "dranken": "Drinken"
   },
@@ -40,5 +41,17 @@
     "vegan": "Veganistisch",
     "vegetarian": "Vegetarisch",
     "glutenFree": "Glutenvrij"
+  },
+  "foodMenu": {
+    "title": "Eten Menu",
+    "subtitle": "Ontdek ons heerlijke menu. Van voorgerechten tot desserts, we bieden een verscheidenheid aan gerechten om je smaakpapillen te verwennen.",
+    "pageTitle": "Eten Menu",
+    "pageDescription": "Ontdek ons eten menu met lokaal geproduceerde ingrediënten, bereid met creativiteit en passie."
+  },
+  "drinksMenu": {
+    "title": "Dranken Menu",
+    "subtitle": "Ontdek onze zorgvuldig geselecteerde drankenkaart met ambachtelijke cocktails, wijnen en speciale dranken.",
+    "pageTitle": "Dranken Menu",
+    "pageDescription": "Ontdek onze selectie ambachtelijke cocktails, wijnen, bieren en alcoholvrije opties bij BASE."
   }
 }  

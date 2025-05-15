@@ -1,82 +1,107 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import Reservation from '../Reservation';
 import { Helmet } from 'react-helmet-async';
-import { FaUsers, FaCalendarAlt, FaEnvelope } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import Reservation from '../Reservation';
 import './Sections.css';
 
-const Reservations = () => {
-  const { t, i18n } = useTranslation('common');
-  const currentLang = i18n.language;
+function Reservations() {
+  const { t } = useTranslation(['reservations', 'common']);
 
   return (
-    <div className="w-full bg-onyx min-h-screen reservation-page">
+    <>
       <Helmet>
-        <title>{`${t('reservation.title')} - ${t('seo.title')}`}</title>
-        <meta name="description" content={t('seo.description')} />
-        <link rel="canonical" href={`${window.location.origin}/reservations/${currentLang === 'en' ? 'en/' : ''}`} />
-        {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/reservations/en/`} />}
-        {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/reservations/`} />}
+        <title>{t('pageTitle', { ns: 'reservations' })} | BASE by Monsees</title>
+        <meta name="description" content={t('pageDescription', { ns: 'reservations' })} />
       </Helmet>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 md:pt-40 lg:pt-48 pb-12 md:pb-20">
-        <div className="mb-6 md:mb-10">
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
-            {t('reservation.title')}
-          </h1>
-          <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
-        </div>
-        
-        {/* Reservation Containers - Side by side on larger screens */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Regular Reservation */}
-          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full mb-12 lg:mb-0">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
-              <FaCalendarAlt className="inline-block mr-2 mb-1" />
-              {t('reservation.buttonText')}
-            </h2>
-            <div className="h-[calc(100%-3rem)]">
-              <Reservation className="h-full" />
-            </div>
+      <section className="py-16 sm:py-20 md:py-24 min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 md:mb-12">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia">
+              {t('reservation.title', { ns: 'common' })}
+            </h1>
           </div>
           
-          {/* Group/Party Reservation */}
-          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full pt-4 lg:pt-0">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
-              <FaUsers className="inline-block mr-2 mb-1" />
-              {t('reservation.bookForGroups')}
-            </h2>
-            
-            <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden h-[calc(100%-3rem)] flex flex-col">
-              <div className="text-center py-6 flex-1 flex flex-col justify-center">
-                <FaUsers className="text-gold text-4xl mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gold mb-3">
-                  {t('reservation.hostEvent')}
-                </h3>
-                <p className="text-magnolia/90 max-w-lg mx-auto mb-6">
-                  {t('reservation.groupsInfo')}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+            {/* Dinner reservations */}
+            <div className="bg-onyx/50 border border-gold/20 rounded-lg p-6 backdrop-blur-sm">
+              <div className="flex items-center mb-6">
+                <div className="mr-4 text-gold">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-heading font-semibold text-gold">
+                  {t('dinner.title', { ns: 'reservations' })}
+                </h2>
+              </div>
+              
+              <div className="text-center mb-8">
+                <p className="text-magnolia mb-4">
+                  {t('dinner.description', { ns: 'reservations' })}
                 </p>
                 
-                <div className="mt-auto space-y-4">
-                  <a 
-                    href={`mailto:${t('footer.contact.email')}`}
-                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
-                  >
-                    <FaEnvelope className="mr-2" />
-                    {t('reservation.sendEmail')}
-                  </a>
-                  
-                  <p className="block text-sm text-thistle mt-4">
-                    {t('reservation.groupEmailHint')}
-                  </p>
+                <div className="inline-block bg-onyx/70 text-magnolia/80 rounded-md py-2 px-4 border border-gold/20 mb-6">
+                  <p>{t('dinner.callToAction', { ns: 'reservations' })}</p>
                 </div>
+                
+                <motion.a
+                  href="tel:+31612345678"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="block w-full py-3 px-6 bg-gold text-onyx font-medium rounded-md text-center shadow-lg hover:bg-gold/90 transition-all"
+                >
+                  {t('dinner.buttonText', { ns: 'reservations' })}
+                </motion.a>
               </div>
+              
+              <p className="text-sm text-magnolia/60 text-center">
+                {t('openHours', { ns: 'reservations' })}
+              </p>
+            </div>
+            
+            {/* Events */}
+            <div className="bg-onyx/50 border border-gold/20 rounded-lg p-6 backdrop-blur-sm">
+              <div className="flex items-center mb-6">
+                <div className="mr-4 text-gold">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-heading font-semibold text-gold">
+                  {t('events.title', { ns: 'reservations' })}
+                </h2>
+              </div>
+              
+              <div className="text-center mb-8">
+                <p className="text-magnolia mb-4">
+                  {t('events.description', { ns: 'reservations' })}
+                </p>
+                
+                <div className="inline-block bg-onyx/70 text-magnolia/80 rounded-md py-2 px-4 border border-gold/20 mb-6">
+                  <p>{t('events.callToAction', { ns: 'reservations' })}</p>
+                </div>
+                
+                <motion.a
+                  href="mailto:info@basebymonsees.nl"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="block w-full py-3 px-6 bg-gold text-onyx font-medium rounded-md text-center shadow-lg hover:bg-gold/90 transition-all"
+                >
+                  {t('events.buttonText', { ns: 'reservations' })}
+                </motion.a>
+              </div>
+              
+              <p className="text-sm text-magnolia/60 text-center">
+                {t('eventInfo', { ns: 'reservations' })}
+              </p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
-};
+}
 
-export default Reservations; 
+export default memo(Reservations); 

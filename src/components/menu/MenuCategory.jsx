@@ -1,34 +1,44 @@
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import MenuItem from './MenuItem';
+import './Menu.css';
 
 function MenuCategory({ category }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('menu');
   const currentLang = i18n.language;
-
-  if (!category || !Array.isArray(category.items)) {
-    return <div className="text-red-500">Error: Invalid category data</div>;
+  
+  if (!category || !category.items || category.items.length === 0) {
+    return (
+      <div className="py-4 px-3 bg-onyx/50 rounded-md text-center">
+        <p className="text-magnolia/70">{t('noItems')}</p>
+      </div>
+    );
   }
-
-  const isDrinks = category.id === 'drinks' || (category.parentId === 'drinks');
-
+  
+  const isDrinks = category.parentId === 'drinks' || category.id === 'drinks';
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 px-1 sm:px-0 w-full max-w-full mx-auto md:max-w-5xl">
+    <div className="menu-grid">
       {category.items.map((item, index) => {
-        if (!item || !item.name || !item.description) {
-          console.error('Invalid menu item:', item);
-          return null;
-        }
-
-        const name = item.name && (item.name[currentLang] || item.name.en || item.name.nl || 'Unnamed Item');
-        const description = item.description && (item.description[currentLang] || item.description.en || item.description.nl || '');
-        
+        const name = item.name && item.name[currentLang] 
+          ? item.name[currentLang] 
+          : (item.name?.en || item.name?.nl || 'Unnamed Item');
+          
+        const description = item.description && item.description[currentLang]
+          ? item.description[currentLang]
+          : (item.description?.en || item.description?.nl || '');
+          
+        // Get allergens with language-specific handling
         let allergens = [];
         if (item.allergens) {
-          if (typeof item.allergens === 'object' && !Array.isArray(item.allergens)) {
-            allergens = item.allergens[currentLang] || item.allergens.en || item.allergens.nl || [];
-          } else if (Array.isArray(item.allergens)) {
+          if (Array.isArray(item.allergens)) {
             allergens = item.allergens;
+          } else if (item.allergens[currentLang]) {
+            allergens = item.allergens[currentLang];
+          } else if (item.allergens.en) {
+            allergens = item.allergens.en;
+          } else if (item.allergens.nl) {
+            allergens = item.allergens.nl;
           }
         }
         
