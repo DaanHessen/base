@@ -1,0 +1,252 @@
+/* Navbar styles */
+
+/* Base navbar styling */
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  transition: background-color 0.3s ease, min-height 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease !important;
+  /* Default to scrolled state values, will be overridden by [data-scrolled="false"] */
+  min-height: 70px; /* Adjusted for slightly larger scrolled bar */
+  padding: 0.5rem 0;
+  background-color: rgba(62, 62, 62, 0.95) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Navbar styles when NOT scrolled - BIGGER AND TRANSPARENT */
+.fixed-nav[data-scrolled="false"] {
+  min-height: 90px;
+  padding: 1rem 0; /* More padding for larger state */
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Navbar styles when scrolled - SOLID BACKGROUND AND SLIGHTLY LARGER THAN ORIGINAL SMALL */
+.fixed-nav[data-scrolled="true"] {
+  min-height: 70px; /* Consistent with base, explicitly stated */
+  padding: 0.5rem 0; /* Consistent with base */
+  background-color: rgba(62, 62, 62, 0.95) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Navigation link styling */
+header nav a {
+  position: relative;
+}
+
+header nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: var(--gold);
+  transition: width 0.15s ease-in-out;
+}
+
+header nav a:hover::after {
+  width: 100%;
+}
+
+/* Logo container styling */
+.logo-container {
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logo positioning */
+.navbar-logo-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Base transform, scale will be added */
+  z-index: 10;
+  transition: all 0.3s ease;
+  /* height will be determined by content/scale */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Default logo scale for scrolled state (true) */
+.fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+  transform: translate(-50%, -50%) scale(0.6); /* Slightly larger for the new "small" bar */
+  height: 42px; /* Corresponds to 70px bar height * 0.6 scale */
+}
+
+/* Logo scale for unscrolled state (false) */
+.fixed-nav[data-scrolled="false"] .navbar-logo-wrapper {
+  transform: translate(-50%, -50%) scale(0.8); /* Larger logo for unscrolled bar */
+  height: 72px; /* Corresponds to 90px bar height * 0.8 scale */
+}
+
+/* SVG hover effects */
+stop {
+  transition: .4s ease;
+}
+
+svg:hover stop:first-child {
+  stop-color: #d4af37;
+}
+
+svg:hover stop:last-child {
+  stop-color: #d4af37;
+}
+
+/* Small mobile screens */
+@media (max-width: 374px) {
+  .fixed-nav[data-scrolled="false"] { /* Unscrolled */
+    min-height: 80px;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .fixed-nav[data-scrolled="false"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.7);
+    height: 56px; /* 80px * 0.7 */
+  }
+  
+  .fixed-nav[data-scrolled="true"] { /* Scrolled */
+    min-height: 60px; /* Smaller bar for very small screens */
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+  .fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.55);
+    height: 33px; /* 60px * 0.55 */
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .fixed-nav { /* Base for mobile */
+    transform: translate3d(0,0,0) !important;
+    -webkit-transform: translate3d(0,0,0) !important;
+    /* transform-style: preserve-3d; /* Might not be needed with simpler setup */
+    will-change: transform, background-color, min-height, padding; /* Added properties */
+    z-index: 1000 !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem !important; /* Base padding for mobile, overridden by states */
+  }
+
+  /* Mobile Unscrolled (false) */
+  .fixed-nav[data-scrolled="false"] {
+    min-height: 80px; /* Tall bar */
+    padding: 0.75rem !important;
+    background-color: transparent !important; /* Explicitly transparent */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  .fixed-nav[data-scrolled="false"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.75);
+    height: 60px; /* 80px * 0.75 */
+  }
+
+  /* Mobile Scrolled (true) */
+  .fixed-nav[data-scrolled="true"] {
+    min-height: 70px; /* Slightly larger scrolled bar */
+    padding: 0.5rem !important; /* Default scrolled padding */
+    background-color: rgba(62, 62, 62, 0.95) !important; /* Solid background */
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+  .fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.65); /* Adjusted for 70px bar */
+    height: 45.5px; /* 70px * 0.65 */
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  nav.fixed-nav {
+    transition: background-color 0.3s ease, padding 0.3s ease;
+  }
+  
+  nav.fixed-nav .logo-container {
+    transition: all 0.3s ease;
+  }
+  
+  /* Desktop Unscrolled (false) */
+  nav.fixed-nav[data-scrolled="false"] {
+    min-height: 90px; /* Tall bar */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    /* background, filter, shadow inherited from general .fixed-nav[data-scrolled="false"] */
+  }
+  nav.fixed-nav[data-scrolled="false"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.8); /* Larger logo */
+    height: 72px; /* 90px * 0.8 */
+  }
+  
+  /* Desktop Scrolled (true) */
+  nav.fixed-nav[data-scrolled="true"] {
+    min-height: 70px; /* Consistent height for scrolled desktop */
+    height: 70px; /* Explicit height */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    /* background, filter, shadow inherited from general .fixed-nav[data-scrolled="true"] */
+  }
+  nav.fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.65); /* Adjusted logo for 70px bar */
+    height: 45.5px; /* 70px * 0.65 */
+  }
+}
+
+/* Extremely small screens */
+@media (max-width: 320px) {
+  .navbar-logo {
+    transform: scale(0.5) !important; 
+  }
+  
+  .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.45);
+    height: 25px;
+  }
+  
+  .fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  
+  button, a.button, [role="button"] {
+    padding-left: 0.65rem !important;
+    padding-right: 0.65rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.65);
+  }
+  
+  .fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  nav.fixed-nav[data-scrolled="false"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.85); /* Slightly larger logo on very wide screens */
+    height: 76.5px; /* 90px * 0.85 */
+  }
+  nav.fixed-nav[data-scrolled="true"] .navbar-logo-wrapper {
+    transform: translate(-50%, -50%) scale(0.7); 
+    height: 49px; /* 70px * 0.7 */
+  }
+} 

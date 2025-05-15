@@ -52,8 +52,8 @@ const Reservation = ({ className }) => {
   };
 
   return (
-    <div className={`reservation-widget ${className || ''}`}>
-      <div className="bg-onyx/70 backdrop-blur-sm p-3 sm:p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden h-full">
+    <div className={`reservation-widget w-full ${className || ''}`}>
+      <div className="bg-onyx/70 backdrop-blur-sm p-3 sm:p-6 border border-gold/30 rounded-lg shadow-lg w-full">
         {restaurantId ? (
           // Only show the iframe when we have a restaurant ID
           <>
@@ -70,7 +70,7 @@ const Reservation = ({ className }) => {
             
             {/* Show a loading state if the iframe hasn't loaded yet */}
             {iframeStatus === 'loading' && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex items-center justify-center py-8">
                 <div className="p-4 text-center">
                   <div className="spinner mb-4 mx-auto w-8 h-8 border-4 border-gold/20 border-t-gold rounded-full animate-spin"></div>
                   <p className="text-magnolia">{t('reservation.loading')}</p>
@@ -80,7 +80,7 @@ const Reservation = ({ className }) => {
             
             {/* Show an error message if the iframe failed to load */}
             {iframeStatus === 'error' && (
-              <div className="text-center py-4">
+              <div className="text-center py-8">
                 <p className="text-magnolia">{t('reservation.error')}</p>
                 <p className="text-sm text-magnolia/80 mt-2">
                   {t('reservation.alternativeContact')}
@@ -88,7 +88,7 @@ const Reservation = ({ className }) => {
                 <div className="mt-6">
                   <a 
                     href={`tel:${t('footer.contact.phone').replace(/\s+/g, '')}`}
-                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
+                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap w-full sm:w-auto text-sm sm:text-base"
                   >
                     <FaPhone className="mr-2" />
                     {t('reservation.callUs')}
@@ -99,7 +99,7 @@ const Reservation = ({ className }) => {
           </>
         ) : (
           // Show a fallback reservation interface when restaurantId is not available
-          <div className="text-center py-4 sm:py-6 h-full flex flex-col justify-center">
+          <div className="text-center py-6 flex flex-col justify-center">
             <FaCalendarAlt className="text-gold text-3xl sm:text-4xl mx-auto mb-3 sm:mb-4" />
             <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">{t('reservation.notConfigured')}</h3>
             <p className="text-magnolia/90 max-w-lg mx-auto mb-4 sm:mb-6 text-sm sm:text-base">
@@ -109,7 +109,7 @@ const Reservation = ({ className }) => {
             <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
               <a 
                 href={`tel:${t('footer.contact.phone').replace(/\s+/g, '')}`}
-                className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
+                className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap w-full sm:w-auto text-sm sm:text-base"
               >
                 <FaPhone className="mr-2" />
                 {t('reservation.callUs')}

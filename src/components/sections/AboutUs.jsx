@@ -65,41 +65,39 @@ function AboutUs() {
       <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div 
-            className="space-y-12 sm:space-y-16"
+            className="flex flex-col gap-8 sm:gap-12 md:gap-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="mb-2 md:mb-0">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
                 {t('about:title')}
               </h1>
               <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
             </motion.div>
             
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8">
                 {/* Mobile image placement */}
-                <div className="block md:hidden">
-                  <div className="w-full max-w-xs mx-auto mb-6">
-                    <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group will-change-transform">
-                      <img 
-                        src={Image} 
-                        alt={t('about:imageAlt', 'Loes & Sander')}
-                        className="w-full h-full object-cover transform-gpu translate-z-0 transition-transform duration-300 group-hover:scale-105"
-                        loading="lazy"
-                        width="600"
-                        height="800"
-                        style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
-                      />
-                      <div className="absolute inset-0 shadow-inner pointer-events-none border border-white/10 rounded-lg"></div>
-                    </div>
+                <div className="block md:hidden w-full max-w-xs mx-auto mb-4">
+                  <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group will-change-transform">
+                    <img 
+                      src={Image} 
+                      alt={t('about:imageAlt', 'Loes & Sander')}
+                      className="w-full h-full object-cover transform-gpu translate-z-0 transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      width="600"
+                      height="800"
+                      style={{ transform: 'translate3d(0, 0, 0)', backfaceVisibility: 'hidden' }}
+                    />
+                    <div className="absolute inset-0 shadow-inner pointer-events-none border border-white/10 rounded-lg"></div>
                   </div>
                 </div>
                 
                 <div className="md:col-span-2">
-                  <div className="flex flex-col h-full space-y-6">
-                    <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                  <div className="flex flex-col gap-6 w-full">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-4 sm:p-6 border border-gold/30 rounded-lg shadow-lg w-full">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.0.title`)}
                       </h3>
@@ -108,7 +106,7 @@ function AboutUs() {
                       </div>
                     </div>
 
-                    <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-4 sm:p-6 border border-gold/30 rounded-lg shadow-lg w-full">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.1.title`)}
                       </h3>
@@ -139,7 +137,7 @@ function AboutUs() {
               </div>
             </motion.div>
           
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="w-full mt-4 md:mt-0">
               <div className="bg-onyx/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gold/30">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                   <div className="md:col-span-3 h-full">

@@ -2,7 +2,7 @@
 <Files *.xml>
     Header set Content-Type "application/xml; charset=utf-8"
 </Files>
-
+ 
 # Ensure sitemap is accessible
 <Files "sitemap.xml">
     Order Allow,Deny

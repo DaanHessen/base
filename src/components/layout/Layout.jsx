@@ -46,7 +46,7 @@ function Layout({ children }) {
         ? (layoutContentRef.current?.scrollTop || 0) 
         : window.scrollY;
         
-      if (scrollPosition > 10) {
+      if (scrollPosition > 5) {
         setIsScrolled(true);
         document.querySelector('.fixed-nav')?.setAttribute('data-scrolled', 'true');
       } else {
@@ -62,8 +62,11 @@ function Layout({ children }) {
       window.addEventListener('scroll', handleScroll, { passive: true });
     }
     
-    // Initial check
-    handleScroll();
+    // Initial check - set scrolled by default
+    setTimeout(() => {
+      setIsScrolled(true);
+      document.querySelector('.fixed-nav')?.setAttribute('data-scrolled', 'true');
+    }, 100);
     
     return () => {
       if (layoutContentRef.current) {
@@ -205,8 +208,12 @@ function Layout({ children }) {
         style={{ 
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '100%',
-          height: '100%'
+          minHeight: '100vh',
+          height: '100vh',
+          height: 'calc(var(--vh, 1vh) * 100)',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          WebkitOverflowScrolling: 'touch'
         }}
       >
         <Helmet>
@@ -221,178 +228,18 @@ function Layout({ children }) {
           <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
           <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
           
-          <style>
-            {`
-              html, body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                overscroll-behavior: none;
-              }
-
-              #root-container {
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                position: fixed;
-                width: 100%;
-                top: 0;
-                left: 0;
-              }
-              
-              .layout-content {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: 100%;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                overflow-x: hidden;
-                overscroll-behavior-y: none;
-                padding-bottom: env(safe-area-inset-bottom, 0px);
-                scroll-padding-bottom: env(safe-area-inset-bottom, 0px);
-              }
-              
-              /* Ensure footer sticks at the bottom */
-              .footer-container {
-                margin-top: auto;
-                min-height: max-content;
-                flex-shrink: 0;
-                position: relative;
-                z-index: 1;
-                width: 100%;
-                background-color: #3e3e3e;
-              }
-
-              /* Adjust page content spacing */
-              main {
-                padding-top: 0;
-                display: flex;
-                flex-direction: column;
-              }
-
-              /* Fix gap between navbar and page content */
-              h1, .page-title, .section-title {
-                margin-top: 0;
-              }
-
-              /* Ensure content fills available space but doesn't overflow */
-              .layout-content > main {
-                flex: 1 0 auto;
-                min-height: 0;
-              }
-
-              @media (max-width: 767px) {
-                .bg-fixed-container, 
-                [style*="height: 100vh"] {
-                  height: calc(var(--vh, 1vh) * 100) !important;
-                }
-                
-                .overflow-container {
-                  max-width: 100vw;
-                  overflow-x: hidden;
-                  word-break: break-word;
-                }
-                
-                h1, h2, h3, p {
-                  max-width: 100%;
-                  overflow-wrap: break-word;
-                  word-wrap: break-word;
-                }
-                
-                nav.fixed-nav {
-                  position: sticky !important;
-                  top: 0;
-                  z-index: 50;
-                  width: 100%;
-                  transform: translateZ(0);
-                  -webkit-transform: translateZ(0);
-                  backface-visibility: hidden;
-                  perspective: 1000;
-                  will-change: transform;
-                  transition: background-color 0.3s ease;
-                }
-                
-                nav.fixed-nav[data-scrolled="true"] {
-                  background-color: rgba(62, 62, 62, 0.95) !important;
-                  backdrop-filter: blur(4px);
-                  -webkit-backdrop-filter: blur(4px);
-                }
-                
-                .bg-fixed-container {
-                  height: calc(var(--vh, 1vh) * 100) !important;
-                  overflow: hidden;
-                  position: fixed;
-                  width: 100%;
-                  top: 0;
-                  left: 0;
-                  z-index: -2;
-                }
-
-                .footer-container {
-                  border-bottom: 0px solid transparent;
-                  padding-bottom: max(env(safe-area-inset-bottom, 16px), 16px);
-                }
-
-                /* Ensure main content has proper spacing after footer */
-                main {
-                  min-height: 0;
-                  flex: 1 0 auto;
-                  padding-bottom: 0;
-                  display: flex;
-                  flex-direction: column;
-                }
-
-                /* Content spacing fix for mobile */
-                section, .page-content {
-                  padding-top: 0.5rem;
-                }
-
-                /* Ensure the layout content doesn't scroll past footer */
-                .layout-content::after {
-                  content: '';
-                  display: block;
-                  height: 1px;
-                  background-color: transparent;
-                  margin-top: -1px;
-                }
-
-                /* Fix for iOS Safari and Chrome */
-                @supports (-webkit-touch-callout: none) {
-                  .layout-content {
-                    height: -webkit-fill-available;
-                  }
-                }
-              }
-              
-              @media (orientation: landscape) {
-                .bg-fixed-container {
-                  min-height: 100%;
-                }
-              }
-
-              /* Page specific content spacing */
-              .page-container {
-                padding-top: 0;
-              }
-
-              .page-header {
-                margin-top: 0;
-                padding-top: 0;
-              }
-
-              /* Section spacing within pages */
-              section {
-                padding-top: 0.5rem;
-              }
-
-              /* First section in page needs no padding */
-              section:first-child {
-                padding-top: 0;
-              }
-            `}
-          </style>
+          {/* CSS styles have been moved to external files:
+             - base.css: Global styles and variables
+             - layout.css: Layout specific styles
+             - navbar.css: Navigation styles
+             - responsive.css: Media queries and responsive adjustments
+          */}
+          
+          {/* activeRouteConfig?.header && (
+            <div className="hero-header">
+              {activeRouteConfig.header}
+            </div>
+          )} */}
           
           <link rel="canonical" href={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
           {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/en${currentPath}`} />}
@@ -451,28 +298,37 @@ function Layout({ children }) {
               "openingHoursSpecification": [
                 {
                   "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Sunday"],
-                  "opens": "00:00",
-                  "closes": "00:00"
+                  "dayOfWeek": "Monday",
+                  "opens": "17:00",
+                  "closes": "22:00"
                 },
                 {
                   "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Wednesday", "Thursday", "Friday", "Saturday"],
-                  "opens": "15:00",
+                  "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Sunday"],
+                  "opens": "12:00",
                   "closes": "22:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Friday", "Saturday"],
+                  "opens": "12:00",
+                  "closes": "23:00"
                 }
               ],
-              "servesCuisine": "Streetfood",
-              "priceRange": "$$",
-              "menu": `${window.location.origin}/menu/`,
-              "acceptsReservations": "True"
+              "priceRange": "€€",
+              "servesCuisine": ["Dutch", "International", "European"],
+              "paymentAccepted": "Credit Card, Cash",
+              "currenciesAccepted": "EUR"
             })}
           </script>
         </Helmet>
         
-        <Navbar isScrolled={isScrolled} />
+        <Navbar
+          isScrolled={isScrolled}
+          currentLang={currentLang}
+        />
         
-        <main ref={mainRef} className="flex-grow flex flex-col w-full mt-0 md:mt-0" style={{ paddingTop: 0 }}>
+        <main ref={mainRef} className="flex-1 relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -480,14 +336,19 @@ function Layout({ children }) {
               animate="animate"
               exit="exit"
               variants={pageVariants}
-              className="w-full flex-grow"
-              style={{ paddingTop: isMobile ? '0.5rem' : '1rem' }}
+              className={`min-h-full w-full flex flex-col ${ 
+                !isHomePage ? 'pt-[114px]' : ''
+              }`}
+              style={{ 
+              }}
             >
               {children}
             </motion.div>
           </AnimatePresence>
         </main>
+        
         <Footer />
+        
         <CookieConsent />
       </div>
     </div>

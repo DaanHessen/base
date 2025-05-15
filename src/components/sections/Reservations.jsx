@@ -9,7 +9,7 @@ const Reservations = () => {
   const currentLang = i18n.language;
 
   return (
-    <div className="w-full bg-onyx min-h-screen reservation-page">
+    <div className="w-full bg-onyx reservation-page">
       <Helmet>
         <title>{`${t('reservation.title')} - ${t('seo.title')}`}</title>
         <meta name="description" content={t('seo.description')} />
@@ -19,7 +19,7 @@ const Reservations = () => {
       </Helmet>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 md:pt-40 lg:pt-48 pb-12 md:pb-20">
-        <div className="mb-6 md:mb-10">
+        <div className="mb-6 md:mb-8">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
             {t('reservation.title')}
           </h1>
@@ -27,27 +27,27 @@ const Reservations = () => {
         </div>
         
         {/* Reservation Containers - Side by side on larger screens */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Regular Reservation */}
-          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full mb-12 lg:mb-0">
+          <div className="w-full max-w-2xl lg:max-w-full mx-auto mb-8 lg:mb-0">
             <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
               <FaCalendarAlt className="inline-block mr-2 mb-1" />
               {t('reservation.buttonText')}
             </h2>
-            <div className="h-[calc(100%-3rem)]">
-              <Reservation className="h-full" />
+            <div className="w-full h-auto">
+              <Reservation className="h-auto" />
             </div>
           </div>
           
           {/* Group/Party Reservation */}
-          <div className="w-full max-w-2xl lg:max-w-full mx-auto h-full pt-4 lg:pt-0">
+          <div className="w-full max-w-2xl lg:max-w-full mx-auto pt-2 lg:pt-0">
             <h2 className="text-lg sm:text-xl md:text-2xl font-heading font-medium text-gold mb-4">
               <FaUsers className="inline-block mr-2 mb-1" />
               {t('reservation.bookForGroups')}
             </h2>
             
-            <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden h-[calc(100%-3rem)] flex flex-col">
-              <div className="text-center py-6 flex-1 flex flex-col justify-center">
+            <div className="bg-onyx/70 backdrop-blur-sm p-4 sm:p-6 border border-gold/30 rounded-lg shadow-lg overflow-hidden w-full">
+              <div className="text-center py-4 sm:py-6 flex flex-col justify-center">
                 <FaUsers className="text-gold text-4xl mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gold mb-3">
                   {t('reservation.hostEvent')}
@@ -56,10 +56,10 @@ const Reservations = () => {
                   {t('reservation.groupsInfo')}
                 </p>
                 
-                <div className="mt-auto space-y-4">
+                <div className="mt-4 space-y-4">
                   <a 
                     href={`mailto:${t('footer.contact.email')}`}
-                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap flex-1 xs:flex-auto text-sm sm:text-base"
+                    className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] hover:translate-y-[1px] text-center whitespace-nowrap text-sm sm:text-base w-full sm:w-auto"
                   >
                     <FaEnvelope className="mr-2" />
                     {t('reservation.sendEmail')}

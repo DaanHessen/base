@@ -1,0 +1,51 @@
+/* Tailwind imports and custom utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-body bg-dark text-light overflow-x-hidden;
+    background-color: var(--onyx) !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .filter-gold {
+    filter: invert(71%) sepia(99%) saturate(408%) hue-rotate(358deg) brightness(89%) contrast(90%);
+  }
+  
+  .mobile-focus-ring {
+    @apply focus:outline-none focus-visible:ring focus-visible:ring-gold/50 focus-visible:ring-opacity-75;
+  }
+  
+  .scroll-mt-28 {
+    scroll-margin-top: 7rem;
+  }
+  
+  .bg-fixed-custom {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .scale-65 {
+    --tw-scale-x: 0.65;
+    --tw-scale-y: 0.65;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+  
+  .will-change-transform {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    perspective: 1000px;
+  }
+} 

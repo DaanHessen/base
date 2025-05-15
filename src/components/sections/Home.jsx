@@ -89,7 +89,7 @@ function Home() {
         <meta name="og:description" content={t('home:seo.description')} />
       </Helmet>
       
-      <section className="min-h-screen flex items-center pt-28 pb-12 sm:pt-32 md:pt-20 md:pb-0">
+      <section className="min-h-screen flex items-center pt-28 pb-12 sm:pt-32 md:pt-20 md:pb-0" style={{ minHeight: 'calc(100vh)' }}>
         <div className="w-full px-4 sm:px-8 max-w-screen-xl mx-auto">
           <motion.div 
             className="flex flex-col items-start text-left"

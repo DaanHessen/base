@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FaInstagram, FaEnvelope, FaLinkedin, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import monseesLogo from '../../assets/monsees-optimized.svg';
@@ -8,7 +8,7 @@ const SocialIconLink = ({ href, label, children }) => (
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="text-magnolia hover:text-gold transition-colors duration-200 group z-10"
+    className="text-magnolia hover:text-gold transition-colors duration-200 group"
     aria-label={label}
   >
     {children}
@@ -20,7 +20,7 @@ const MonseesLink = ({ href, label }) => (
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center justify-center w-full h-full z-10"
+    className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center justify-center w-full h-full"
     aria-label={label}
   >
     <svg
@@ -96,17 +96,7 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative border-t border-gold/20 footer-container" 
-      style={{
-        marginTop: 'auto',
-        marginBottom: 0,
-        position: 'relative',
-        zIndex: 2,
-        width: '100%',
-        flexShrink: 0,
-        overflow: 'hidden'
-      }}
-    >
+    <footer className="bg-onyx text-magnolia pt-8 pb-6 relative border-t border-gold/20">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
         <div className="hidden md:grid md:grid-cols-12 gap-8">
           <div className="col-span-4 bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-6 rounded-lg border border-gold/20 hover:border-gold/30 transition-all duration-300 shadow-lg hover:shadow-xl">
@@ -117,7 +107,7 @@ function Footer() {
               <div className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                 <button 
-                  className="text-sm hover:text-gold transition-colors duration-200 text-left z-10"
+                  className="text-sm hover:text-gold transition-colors duration-200 text-left"
                   onClick={() => openMaps(t('footer.address'))}
                 >
                   {t('footer.address')}
@@ -126,7 +116,7 @@ function Footer() {
               <div className="flex items-start space-x-3">
                 <FaPhone className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                 <button 
-                  className="text-sm hover:text-gold transition-colors duration-200 z-10"
+                  className="text-sm hover:text-gold transition-colors duration-200"
                   onClick={handlePhoneClick}
                 >
                   {t('footer.contact.phone')}
@@ -135,7 +125,7 @@ function Footer() {
               <div className="flex items-start space-x-3">
                 <FaEnvelope className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
                 <button 
-                  className="text-sm hover:text-gold transition-colors duration-200 z-10"
+                  className="text-sm hover:text-gold transition-colors duration-200"
                   onClick={handleEmailClick}
                 >
                   {t('footer.contact.email')}
@@ -203,7 +193,7 @@ function Footer() {
                 <div className="flex items-start space-x-2.5">
                   <FaMapMarkerAlt className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                   <button 
-                    className="text-xs hover:text-gold transition-colors duration-200 text-left z-10"
+                    className="text-xs hover:text-gold transition-colors duration-200 text-left"
                     onClick={() => openMaps(t('footer.address'))}
                   >
                     {t('footer.address')}
@@ -212,7 +202,7 @@ function Footer() {
                 <div className="flex items-start space-x-2.5">
                   <FaPhone className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                   <button 
-                    className="text-xs hover:text-gold transition-colors duration-200 z-10"
+                    className="text-xs hover:text-gold transition-colors duration-200"
                     onClick={handlePhoneClick}
                   >
                     {t('footer.contact.phone')}
@@ -221,7 +211,7 @@ function Footer() {
                 <div className="flex items-start space-x-2.5">
                   <FaEnvelope className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                   <button 
-                    className="text-xs hover:text-gold transition-colors duration-200 z-10"
+                    className="text-xs hover:text-gold transition-colors duration-200"
                     onClick={handleEmailClick}
                   >
                     {t('footer.contact.email')}
@@ -251,12 +241,12 @@ function Footer() {
             </h3>
             <div className="flex flex-col space-y-4 mt-3">
               <div className="flex items-center justify-between">
-                <SocialIconLink href="https://instagram.com/base-by-monsees/" label="Instagram">
+                <SocialIconLink href="https://instagram.com/base" label="Instagram">
                   <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-[42px] h-[42px] flex items-center justify-center">
                     <FaInstagram size={18} />
                   </div>
                 </SocialIconLink>
-                <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
+                <SocialIconLink href="https://linkedin.com/company/base" label="LinkedIn">
                   <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-[42px] h-[42px] flex items-center justify-center">
                     <FaLinkedin size={18} />
                   </div>
@@ -292,13 +282,6 @@ function Footer() {
           )}
         </div>
       </div>
-      
-      {/* Add padding at bottom to prevent overscroll on iOS */}
-      {isMobile && <div className="h-safe-bottom w-full" style={{ 
-        height: 'env(safe-area-inset-bottom, 0px)', 
-        margin: 0,
-        padding: 0
-      }}></div>}
     </footer>
   );
 }

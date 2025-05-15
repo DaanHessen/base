@@ -1,0 +1,230 @@
+/* Layout styles */
+
+/* Layout container */
+.layout-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Main content area */
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 70px); /* Subtract navbar height */
+}
+
+/* General page content */
+.page-content {
+  width: 100%;
+  position: relative;
+}
+
+/* Footer positioning */
+.footer-container {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* Ensure content fills available space but doesn't overflow */
+.layout-content > main {
+  flex: 1 0 auto;
+  min-height: calc(100vh - 70px);
+  position: relative;
+  z-index: 1;
+}
+
+/* Page content padding to account for navbar */
+section:first-of-type {
+  padding-top: 70px;
+}
+
+/* Set explicit padding for page content sections */
+.py-14, .pt-28, .pt-32, .pt-40, .pt-48 {
+  padding-top: 5rem !important; 
+}
+
+/* Background container for fixed backgrounds */
+.bg-fixed-container,
+.fixed-bg,
+[class*="bg-fixed"] {
+  background-color: var(--onyx) !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-color: var(--onyx);
+  }
+  
+  .fixed-bg {
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    height: 100vh !important; 
+    height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  .bg-fixed-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    z-index: -1;
+    overflow: hidden;
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+    transform-style: preserve-3d;
+  }
+  
+  .layout-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--onyx);
+    overflow-y: auto; /* Allow scrolling at this level */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  main {
+    flex: 1 0 auto;
+    position: relative;
+    padding-bottom: 2rem; /* Add spacing before footer */
+  }
+  
+  footer {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+    margin-top: auto;
+    width: 100%;
+    /* Prevent iOS overscroll */
+    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+  }
+  
+  /* Prevent container overlapping on small screens */
+  .grid-cols-1 > div {
+    width: 100%;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Reset any fixed heights that could cause overlap */
+  [style*="height:"] {
+    height: auto !important;
+    min-height: auto !important;
+  }
+  
+  /* Ensure sections have enough spacing */
+  section {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Fix heading styles */
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+  
+  /* Content containers */
+  .container, .max-w-7xl, .max-w-6xl, .max-w-5xl, .max-w-4xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Ensure proper padding for first section to account for navbar */
+  section:first-of-type,
+  .pt-28, .pt-32, .pt-40, .pt-48 {
+    padding-top: 5rem !important;
+  }
+  
+  .py-14, .py-16, .py-20 {
+    padding-top: 4rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Improve mobile footer spacing */
+  .footer-container {
+    margin-top: auto;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  
+  /* Fix spacing for About page container */
+  .space-y-12, .space-y-16 {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .space-y-12 > *, .space-y-16 > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Reservation page styling */
+  .reservation-page {
+    min-height: auto !important;
+    padding-bottom: 3rem !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative;
+  }
+  
+  .mobile-scroll-fix {
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Page content */
+  .page-content {
+    padding-bottom: 2rem;
+  }
+}
+
+/* Fix for very small screens */
+@media (max-width: 320px) {
+  html, body {
+    font-size: 13px;
+  }
+  
+  .py-4 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .px-4 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
+
+.reservation-main-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .reservation-main-wrapper {
+    margin-top: 0;
+  }
+} 

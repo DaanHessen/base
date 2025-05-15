@@ -150,10 +150,10 @@ const Logo = ({ className }) => {
   }, [states]);
   
   return (
-    <div className={`relative ${className || 'w-auto h-auto'}`} style={{ marginTop: '0.2rem' }}>
+    <div className={`relative ${className || 'w-auto h-auto'}`}>
       <div 
         ref={glowLayerRef}
-        className="absolute -inset-6 z-0 opacity-0 blur-md hover:cursor-pointer"
+        className="absolute -inset-4 z-0 opacity-0 blur-md hover:cursor-pointer"
         aria-hidden="true"
         style={{ background: states.initial.glow, opacity: states.initial.intensity }}
       ></div>
@@ -162,11 +162,12 @@ const Logo = ({ className }) => {
         ref={logoRef}
         src={logo} 
         alt="BASE" 
-        className="relative z-10 w-auto max-h-28 md:max-h-32 lg:max-h-40"
-        width="192"
-        height="48"
+        className="relative z-10 w-auto h-auto"
+        width="160"
+        height="40"
         style={{
-          maxHeight: 'clamp(7.5rem, 9vw + 3.5rem, 10rem)',
+          maxHeight: 'clamp(2.5rem, 7vw + 0.5rem, 4rem)',
+          maxWidth: '100%',
           objectFit: 'contain',
           aspectRatio: 'auto',
           filter: states.initial.filter

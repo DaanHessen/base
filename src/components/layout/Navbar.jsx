@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaHome, FaUtensils, FaCocktail, FaInfoCircle } from 'react-icons/fa';
 import { setLanguage } from '../../utils/language';
 import Logo from '../Logo';
+// Import CSS moved to index.css through imports
 
 const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: propCurrentLang }, ref) => {
   const location = useLocation();
@@ -54,91 +55,63 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
-    const newScrolledState = currentScrollY > 5;
+    const newScrolledState = currentScrollY > 80; 
     setScrolled(newScrolledState);
   }, []);
 
   useEffect(() => {
-    const localScrollListener = () => {
-      handleScroll();
-    };
+    if (typeof initialIsScrolled === 'boolean') {
+      setScrolled(initialIsScrolled);
+    }
+    handleScroll();
+  }, [initialIsScrolled, handleScroll]);
 
-    window.addEventListener('scroll', localScrollListener, { passive: true });
-
-    const initialCheckTimeout = setTimeout(() => {
-      handleScroll();
-    }, 100);
-
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    const timer = setTimeout(handleScroll, 100);
     return () => {
-      clearTimeout(initialCheckTimeout);
-      window.removeEventListener('scroll', localScrollListener);
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
     };
   }, [handleScroll]);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (!isMobile) return;
-    
-    setScrolled(true);
-    
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setScrolled(true);
-      }
-    };
-    
-    window.addEventListener('resize', handleResize, { passive: true });
-    
+    window.addEventListener('resize', handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleScroll);
     };
+  }, [handleScroll]);
+
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen(prevState => {
+      const newState = !prevState;
+      if (newState) {
+        scrollPositionRef.current = window.scrollY;
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+      return newState;
+    });
   }, []);
 
   useEffect(() => {
     if (mobileMenuOpen) {
-      const storedScrollY = window.scrollY;
-      scrollPositionRef.current = storedScrollY;
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${storedScrollY}px`;
-      document.body.style.width = '100%';
     } else {
-      if (document.body.style.position === 'fixed') {
-        const scrollYToRestore = scrollPositionRef.current;
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        if (scrollYToRestore > 0) {
-          window.scrollTo(0, scrollYToRestore);
-        }
-        scrollPositionRef.current = 0;
-      }
+      document.body.style.overflow = '';
+      // Restore scroll position when menu closes
+      window.scrollTo({ top: scrollPositionRef.current, behavior: 'instant' });
     }
-    
     return () => {
-      if (document.body.style.position === 'fixed') {
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-      }
+      document.body.style.overflow = '';
     };
   }, [mobileMenuOpen]);
   
   const changeLanguage = useCallback((lang) => {
     setLangDropdownOpen(false);
-    
     const basePath = getBasePath(location.pathname);
-    
     setLanguage(lang);
-    
-    const newPath = lang === 'en' 
-      ? `/en${basePath}` 
-      : basePath;
-    
+    const newPath = lang === 'en' ? `/en${basePath}` : basePath;
     window.location.replace(`/#${newPath}`);
-    
     window.location.reload();
   }, [location.pathname]);
 
@@ -157,7 +130,6 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
   
   const handleMenuLinkClick = useCallback(() => {
     setMenuDropdownOpen(false);
-    
     if (currentPath === '/menu' || currentPath === '/menu/food' || currentPath === '/menu/drinks') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -176,7 +148,6 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
         }
       }
     };
-    
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -184,479 +155,195 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
   }, []);
   
   const mobileMenuVariants = {
-    closed: {
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-        ease: [0.33, 1, 0.68, 1]
-      }
-    },
-    open: {
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1],
-        staggerChildren: 0.07,
-        delayChildren: 0.1
-      }
-    }
+    closed: { opacity: 0, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } },
+    open: { opacity: 1, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1], staggerChildren: 0.07, delayChildren: 0.1 } }
   };
   
-  const mobileMenuItemVariants = {
-    closed: { 
-      opacity: 0, 
-      y: 10,
-      transition: { duration: 0.2 }  
-    },
-    open: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.3 } 
-    }
+  const mobileMenuItemVariants = { closed: { y: -10, opacity: 0 }, open: { y: 0, opacity: 1 } };
+  
+  const mobileDropdownVariants = {
+    closed: { opacity: 0, y: -10, height: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+    open: { opacity: 1, y: 0, height: "auto", transition: { duration: 0.3, ease: "easeOut" } }
   };
   
-  const langDropdownMobileVariants = {
-    closed: { 
-      opacity: 0,
-      y: -10,
-      height: 0,
-      transition: { 
-        duration: 0.2,
-        ease: "easeInOut"
-      }
-    },
-    open: { 
-      opacity: 1,
-      y: 0,
-      height: "auto",
-      transition: { 
-        duration: 0.3,
-        ease: "easeOut"
-      }
-    }
-  };
-  
-  const toggleMobileMenu = useCallback(() => {
-    setMobileMenuOpen(prev => !prev);
-  }, []);
-
-  const topBarVariants = {
-    closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { rotate: 45, y: 5, transition: { duration: 0.3, ease: "easeInOut" } }, 
-  };
-  const middleBarVariants = {
-    closed: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { opacity: 0, transition: { duration: 0.08, ease: "easeInOut" } },
-  };
-  const bottomBarVariants = {
-    closed: { rotate: 0, y: 0, transition: { duration: 0.3, ease: "easeInOut" } },
-    open: { rotate: -45, y: -6, transition: { duration: 0.3, ease: "easeInOut" } }, 
-  };
+  const topBarVariants = { closed: { rotate: 0, y: 0 }, open: { rotate: 45, y: 5 } };
+  const middleBarVariants = { closed: { opacity: 1 }, open: { opacity: 0 } };
+  const bottomBarVariants = { closed: { rotate: 0, y: 0 }, open: { rotate: -45, y: -6 } };
 
   useEffect(() => {
-    const checkScreenWidth = () => {
-      setIsNarrowScreen(window.innerWidth <= 1159);
-    };
-    
+    const checkScreenWidth = () => setIsNarrowScreen(window.innerWidth <= 1159);
     checkScreenWidth();
     window.addEventListener('resize', checkScreenWidth);
-    
-    return () => {
-      window.removeEventListener('resize', checkScreenWidth);
-    };
+    return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
-
-  useEffect(() => {
-    const applyScrolledStyle = (element, isScrolled) => {
-      if (!element) return;
-      
-      element.setAttribute('data-scrolled', isScrolled ? 'true' : 'false');
-      
-      if (isScrolled) {
-        element.style.backgroundColor = 'rgba(62, 62, 62, 0.95)';
-        element.style.backdropFilter = 'blur(4px)';
-        element.style.webkitBackdropFilter = 'blur(4px)';
-      } else {
-        element.style.backgroundColor = 'transparent';
-        element.style.backdropFilter = 'none';
-        element.style.webkitBackdropFilter = 'none';
-      }
-    };
-    
-    if (navRef.current) {
-      applyScrolledStyle(navRef.current, scrolled);
-    }
-    
-    if (ref && ref.current) {
-      applyScrolledStyle(ref.current, scrolled);
-    }
-  }, [scrolled, ref]);
-
-  useEffect(() => {
-    setScrolled(initialIsScrolled);
-  }, [initialIsScrolled]);
 
   return (
     <nav 
-      ref={ref}
-      className={`fixed-nav fixed top-0 left-0 right-0 z-50 py-4 ${
-        scrolled ? 'bg-onyx/95 backdrop-blur-sm' : 'bg-transparent'
-      } transition-all duration-300 ease-in-out`}
+      ref={navRef}
+      className={`fixed-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out`}
       data-scrolled={scrolled ? 'true' : 'false'}
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        boxShadow: scrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none',
-        backgroundColor: scrolled ? 'rgba(62, 62, 62, 0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(4px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(4px)' : 'none',
-      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex justify-between items-center h-16 md:h-20">
+        <div className="relative flex justify-between items-center h-full">
+          {/* Hamburger Button */}
           <div className="flex items-center xl:hidden">
             <button
               onClick={toggleMobileMenu}
               className="relative z-[1001] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
               aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={mobileMenuOpen ? t('navigation.closeMenu') : t('navigation.openMenu')}
             >
-              <motion.div 
-                animate={mobileMenuOpen ? "open" : "closed"} 
-                initial={false}
-                className="flex flex-col justify-between w-5 h-3.5"
-              >
-                <motion.span
-                  variants={topBarVariants}
-                  className="block h-0.5 w-full bg-current rounded-full"
-                  style={{ originX: "0.5", originY: "0" }}
-                ></motion.span>
-                <motion.span
-                  variants={middleBarVariants}
-                  className="block h-0.5 w-full bg-current rounded-full"
-                ></motion.span>
-                <motion.span
-                  variants={bottomBarVariants}
-                  className="block h-0.5 w-full bg-current rounded-full"
-                  style={{ originX: "0.5", originY: "1" }}
-                ></motion.span>
+              <motion.div animate={mobileMenuOpen ? "open" : "closed"} initial={false} className="flex flex-col justify-between w-5 h-3.5">
+                <motion.span variants={topBarVariants} className="block h-0.5 w-full bg-current rounded-full" style={{ originX: "0.5", originY: "0" }} transition={{ duration: 0.3, ease: "easeInOut" }}></motion.span>
+                <motion.span variants={middleBarVariants} className="block h-0.5 w-full bg-current rounded-full" transition={{ duration: 0.2, ease: "easeInOut" }}></motion.span>
+                <motion.span variants={bottomBarVariants} className="block h-0.5 w-full bg-current rounded-full" style={{ originX: "0.5", originY: "1" }} transition={{ duration: 0.3, ease: "easeInOut" }}></motion.span>
               </motion.div>
             </button>
           </div>
+
+          {/* Desktop Links */}
           <div className="hidden xl:flex items-center space-x-8">
-            <Link
-              to={getLocalizedPath('/', currentLang)}
-              className={`font-medium ${
-                currentPath === '/' 
-                  ? 'text-gold' 
-                  : 'text-magnolia hover:text-gold transition-colors duration-300'
-              }`}
-            >
-              {t('navigation.home')}
-            </Link>
-            
-            <div 
-              className="relative" 
-              ref={menuDropdownRef}
-              onMouseEnter={openMenuDropdown}
-              onMouseLeave={closeMenuDropdown}
-            >
-              <Link
-                to={getLocalizedPath('/menu', currentLang)}
-                onClick={handleMenuLinkClick}
-                className={`font-medium inline-flex items-center ${
-                  currentPath === '/menu' || currentPath === '/menu/food' || currentPath === '/menu/drinks'
-                    ? 'text-gold' 
-                    : 'text-magnolia hover:text-gold transition-colors duration-300'
-                }`}
-                aria-expanded={menuDropdownOpen}
-              >
+            <Link to={getLocalizedPath('/', currentLang)} className={`font-medium ${currentPath === '/' ? 'text-gold' : 'text-magnolia hover:text-gold transition-colors duration-300'}`}>{t('navigation.home')}</Link>
+            <div className="relative" ref={menuDropdownRef} onMouseEnter={openMenuDropdown} onMouseLeave={closeMenuDropdown}>
+              <Link to={getLocalizedPath('/menu', currentLang)} onClick={handleMenuLinkClick} className={`font-medium inline-flex items-center ${(currentPath === '/menu' || currentPath === '/menu/food' || currentPath === '/menu/drinks') ? 'text-gold' : 'text-magnolia hover:text-gold transition-colors duration-300'}`} aria-expanded={menuDropdownOpen}>
                 {t('navigation.menu')}
-                <svg 
-                  className={`ml-1 h-4 w-4 text-gold transition-transform duration-300 ${menuDropdownOpen ? 'rotate-180' : ''}`} 
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <svg className={`ml-1 h-4 w-4 text-gold transition-transform duration-300 ${menuDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
               </Link>
               <AnimatePresence>
                 {menuDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.1 }}
-                    className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-50 py-1 overflow-hidden"
-                  >
-                    <Link
-                      to={getLocalizedPath('/menu/food', currentLang)}
-                      onClick={handleMenuLinkClick}
-                      className={`block px-4 py-2.5 text-sm ${
-                        currentPath === '/menu' || currentPath === '/menu/food' 
-                          ? 'text-gold bg-onyx/80' 
-                          : 'text-magnolia hover:text-gold hover:bg-onyx/70'
-                      } transition-all duration-150 w-full text-left`}
-                    >
-                      <div className="flex items-center">
-                        <span className="mr-2 text-gold">🍽️</span>
-                        {currentLang === 'nl' ? 'Eten' : 'Food'}
-                      </div>
-                    </Link>
-                    <Link
-                      to={getLocalizedPath('/menu/drinks', currentLang)}
-                      onClick={handleMenuLinkClick}
-                      className={`block px-4 py-2.5 text-sm ${
-                        currentPath === '/menu/drinks' 
-                          ? 'text-gold bg-onyx/80' 
-                          : 'text-magnolia hover:text-gold hover:bg-onyx/70'
-                      } transition-all duration-150 w-full text-left`}
-                    >
-                      <div className="flex items-center">
-                        <span className="mr-2 text-gold">🍹</span>
-                        {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
-                      </div>
-                    </Link>
+                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.1 }} className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-50 py-1 overflow-hidden">
+                    <Link to={getLocalizedPath('/menu/food', currentLang)} onClick={handleMenuLinkClick} className={`block px-4 py-2.5 text-sm ${(currentPath === '/menu' || currentPath === '/menu/food') ? 'text-gold bg-onyx/80' : 'text-magnolia hover:text-gold hover:bg-onyx/70'} transition-all duration-150 w-full text-left`}><div className="flex items-center"><span className="mr-2 text-gold">🍽️</span>{currentLang === 'nl' ? 'Eten' : 'Food'}</div></Link>
+                    <Link to={getLocalizedPath('/menu/drinks', currentLang)} onClick={handleMenuLinkClick} className={`block px-4 py-2.5 text-sm ${currentPath === '/menu/drinks' ? 'text-gold bg-onyx/80' : 'text-magnolia hover:text-gold hover:bg-onyx/70'} transition-all duration-150 w-full text-left`}><div className="flex items-center"><span className="mr-2 text-gold">🍹</span>{currentLang === 'nl' ? 'Dranken' : 'Drinks'}</div></Link>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-            
-            <Link
-              to={getLocalizedPath('/about', currentLang)}
-              className={`font-medium ${
-                currentPath === '/about' 
-                  ? 'text-gold' 
-                  : 'text-magnolia hover:text-gold transition-colors duration-300'
-              }`}
-            >
-              {t('navigation.about')}
-            </Link>
-
-            <Link
-              to={getLocalizedPath('/reservations', currentLang)}
-              className={`font-medium ${
-                currentPath === '/reservations' 
-                  ? 'text-gold' 
-                  : 'text-magnolia hover:text-gold transition-colors duration-300'
-              }`}
-            >
-              {t('navigation.reservations')}
-            </Link>
+            <Link to={getLocalizedPath('/about', currentLang)} className={`font-medium ${currentPath === '/about' ? 'text-gold' : 'text-magnolia hover:text-gold transition-colors duration-300'}`}>{t('navigation.about')}</Link>
+            <Link to={getLocalizedPath('/reservations', currentLang)} className={`font-medium ${currentPath === '/reservations' ? 'text-gold' : 'text-magnolia hover:text-gold transition-colors duration-300'}`}>{t('navigation.reservations')}</Link>
           </div>
           
-          <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-300 ease-out ${
-            scrolled 
-              ? '-translate-y-1/2 scale-75 lg:scale-75' 
-              : '-translate-y-[45%] scale-90 lg:scale-100'
-          } z-10`}>
+          {/* Logo */}
+          <div className="navbar-logo-wrapper">
             <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-              <div className={`logo-container navbar-logo ${scrolled ? 'py-1' : 'py-2'}`}> 
-                <Logo className={`transition-transform duration-300 ease-out`} /> 
-              </div>
+              <div className="logo-container navbar-logo transition-all duration-300"><Logo /></div>
             </Link>
           </div>
           
+          {/* Language Switcher */}
           <div className="flex items-center">
             <div className="hidden xl:block relative" ref={langDropdownRef}>
-              <button
-                type="button"
-                onClick={toggleLangDropdown}
-                className="inline-flex items-center px-3 py-1.5 border border-gold/30 rounded-md text-magnolia bg-onyx/70 hover:bg-onyx/90 transition-all duration-300 shadow-sm hover:shadow-gold/10"
-                aria-expanded={langDropdownOpen}
-              >
+              <button type="button" onClick={toggleLangDropdown} className="inline-flex items-center px-3 py-1.5 border border-gold/30 rounded-md text-magnolia bg-onyx/70 hover:bg-onyx/90 transition-all duration-300 shadow-sm hover:shadow-gold/10" aria-expanded={langDropdownOpen}>
                 <span className="mr-1.5 font-medium text-sm">{currentLang === 'nl' ? '🇳🇱 NL' : '🇬🇧 EN'}</span>
-                <svg 
-                  className={`h-3.5 w-3.5 text-gold transition-transform duration-300 ${langDropdownOpen ? 'rotate-180' : ''}`} 
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <svg className={`h-3.5 w-3.5 text-gold transition-transform duration-300 ${langDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
               </button>
               <AnimatePresence>
                 {langDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.1 }}
-                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-50 overflow-hidden"
-                  >
+                  <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.1 }} className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-50 overflow-hidden">
                     <div className="p-3 grid grid-cols-1 gap-2">
-                      <button
-                        onClick={() => changeLanguage('nl')}
-                        className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'nl' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}
-                      >
-                        <div className="flex items-center">
-                          <span className="mr-2 text-base">🇳🇱</span>
-                          <span>Nederlands</span>
-                        </div>
-                      </button>
-                      <button
-                        onClick={() => changeLanguage('en')}
-                        className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
-                          currentLang === 'en' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}
-                      >
-                        <div className="flex items-center">
-                          <span className="mr-2 text-base">🇬🇧</span>
-                          <span>English</span>
-                        </div>
-                      </button>
+                      <button onClick={() => changeLanguage('nl')} className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${currentLang === 'nl' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}><div className="flex items-center"><span className="mr-2 text-base">🇳🇱</span><span>Nederlands</span></div></button>
+                      <button onClick={() => changeLanguage('en')} className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${currentLang === 'en' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}><div className="flex items-center"><span className="mr-2 text-base">🇬🇧</span><span>English</span></div></button>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
+            {/* Mobile Language Switcher (Icon only, dropdown appears inside mobile menu) */}
             <div className="md:hidden relative">
-              <button
-                onClick={toggleLangDropdown}
-                className="flex items-center justify-center h-10 px-3 rounded-md bg-onyx/70 border border-gold/30 shadow-sm"
-                aria-label={`Switch language from ${currentLang === 'nl' ? 'Dutch' : 'English'}`}
-              >
-                <span className="text-base mr-1.5">{currentLang === 'nl' ? '🇳🇱' : '🇬🇧'}</span>
-                <span className="text-sm text-magnolia">{currentLang === 'nl' ? 'NL' : 'EN'}</span>
+              <button onClick={toggleMobileMenu} className="flex items-center justify-center h-10 px-3 rounded-md bg-onyx/70 border border-gold/30 shadow-sm" aria-label={t('navigation.openMenu')}>
+                 <span className="text-base mr-1.5">{currentLang === 'nl' ? '🇳🇱' : '🇬🇧'}</span>
+                 <span className="text-sm text-magnolia">{currentLang === 'nl' ? 'NL' : 'EN'}</span>
               </button>
-              <AnimatePresence>
-                {langDropdownOpen && (
-                  <motion.div
-                    variants={langDropdownMobileVariants}
-                    initial="closed"
-                    animate="open"
-                    exit="closed"
-                    className="absolute right-0 top-12 w-36 rounded-md shadow-lg bg-onyx/95 border border-gold/30 backdrop-blur-lg z-40 overflow-hidden"
-                    ref={langDropdownRef}
-                  >
-                    <div className="p-2 flex flex-col gap-1">
-                      <button
-                        onClick={() => changeLanguage('nl')}
-                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${currentLang === 'nl' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'} transition-all duration-150 justify-center`}
-                      >
-                        <div className="flex items-center">
-                          <span className="mr-2 text-base">🇳🇱</span>
-                          <span>Nederlands</span>
-                        </div>
-                      </button>
-                      <button
-                        onClick={() => changeLanguage('en')}
-                        className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${currentLang === 'en' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'} transition-all duration-150 justify-center`}
-                      >
-                        <div className="flex items-center">
-                          <span className="mr-2 text-base">🇬🇧</span>
-                          <span>English</span>
-                        </div>
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
         </div>
       </div>
       
+      {/* === MOBILE MENU === */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             key="mobile-menu"
+            className="xl:hidden fixed inset-0 z-[1050] bg-red-500"
             initial="closed"
             animate="open"
             exit="closed"
             variants={mobileMenuVariants}
-            className="md:hidden fixed inset-0 bg-onyx/95 backdrop-blur-sm shadow-xl z-[1000] h-screen overflow-y-auto pt-16"
           >
-            <div className="absolute inset-0 bg-pattern opacity-5 z-0"></div>
-            
-            <div 
-              className="relative z-10 min-h-full flex flex-col items-center justify-center pb-16"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <nav className="w-full max-w-xs mx-auto px-4 flex flex-col items-center">
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center">
-                  <Link
-                    to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
-                      currentPath === '/' 
-                        ? 'text-gold' 
-                        : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <FaHome className="mr-2 text-gold/80" />
-                    {t('navigation.home')}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
-                  <Link
-                    to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
-                      currentPath === '/menu' || currentPath === '/menu/food' 
-                        ? 'text-gold' 
-                        : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <FaUtensils className="mr-2 text-gold/80" />
-                    {currentLang === 'nl' ? 'Eten' : 'Food'}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
-                  <Link
-                    to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
-                      currentPath === '/menu/drinks' 
-                        ? 'text-gold' 
-                        : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <FaCocktail className="mr-2 text-gold/80" />
-                    {currentLang === 'nl' ? 'Dranken' : 'Drinks'}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
-                  <Link
-                    to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
-                      currentPath === '/about' 
-                        ? 'text-gold' 
-                        : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <FaInfoCircle className="mr-2 text-gold/80" />
-                    {t('navigation.about')}
-                  </Link>
-                </motion.div>
-
-                <motion.div variants={mobileMenuItemVariants} className="w-full text-center border-t border-gold/10 mt-1 pt-1">
-                  <Link
-                    to={getLocalizedPath('/reservations', currentLang)}
-                    className={`flex items-center justify-center text-base font-medium py-2.5 px-4 ${
-                      currentPath === '/reservations' 
-                        ? 'text-gold' 
-                        : 'text-magnolia hover:text-gold'
-                    } transition-all duration-200 max-w-[160px] mx-auto rounded-lg bg-onyx/40`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-gold/80" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd" />
-                    </svg>
-                    {t('navigation.reservations')}
-                  </Link>
-                </motion.div>
-              </nav>
+            <div className="w-full h-full flex flex-col py-6 bg-onyx/90 backdrop-blur-md shadow-xl overflow-y-auto">
+              {/* Mobile Menu Header */}
+              <div className="px-4 sm:px-6 mb-6">
+                <div className="flex items-center justify-between">
+                  <div className="logo-container">
+                    <Link to={getLocalizedPath('/', currentLang)} className="block" onClick={() => setMobileMenuOpen(false)}>
+                      <Logo className="h-10 w-auto" />
+                    </Link>
+                  </div>
+                  {/* Consider adding an explicit close button here if hamburger toggle feels insufficient */}
+                </div>
+              </div>
+              {/* Mobile Menu Navigation */}
+              <div className="mt-6 relative">
+                <nav className="grid gap-y-4 px-5 sm:gap-x-8 text-center">
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/', currentLang)}
+                      className={`flex items-center justify-center text-base font-medium py-2.5 px-4 max-w-[160px] mx-auto rounded-lg bg-onyx/40 ${currentPath === '/' ? 'text-gold' : 'text-magnolia hover:text-gold'} transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaHome className="mr-2 text-gold/80" /> {t('navigation.home')}
+                    </Link>
+                  </motion.div>
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/menu', currentLang)}
+                      className={`flex items-center justify-center text-base font-medium py-2.5 px-4 max-w-[160px] mx-auto rounded-lg bg-onyx/40 ${(currentPath === '/menu' || currentPath === '/menu/food' || currentPath === '/menu/drinks') ? 'text-gold' : 'text-magnolia hover:text-gold'} transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaUtensils className="mr-2 text-gold/80" /> {t('navigation.menu')}
+                    </Link>
+                  </motion.div>
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/about', currentLang)}
+                      className={`flex items-center justify-center text-base font-medium py-2.5 px-4 max-w-[160px] mx-auto rounded-lg bg-onyx/40 ${currentPath === '/about' ? 'text-gold' : 'text-magnolia hover:text-gold'} transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaInfoCircle className="mr-2 text-gold/80" /> {t('navigation.about')}
+                    </Link>
+                  </motion.div>
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/reservations', currentLang)}
+                      className={`flex items-center justify-center text-base font-medium py-2.5 px-4 max-w-[160px] mx-auto rounded-lg bg-onyx/40 ${currentPath === '/reservations' ? 'text-gold' : 'text-magnolia hover:text-gold'} transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaCocktail className="mr-2 text-gold/80" /> {t('navigation.reservations')}
+                    </Link>
+                  </motion.div>
+                  {/* Mobile Menu Language Dropdown */}
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <button
+                      onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                      className={`w-full inline-flex items-center justify-center text-base font-medium py-2.5 px-4 max-w-[160px] mx-auto rounded-lg bg-onyx/40 ${langDropdownOpen ? 'text-gold' : 'text-magnolia hover:text-gold'} transition-all duration-200`}
+                      aria-expanded={langDropdownOpen}
+                    >
+                      <span>{currentLang === 'nl' ? t('language.label_nl') : t('language.label_en')}</span>
+                      <svg className={`ml-1 -mr-1 h-5 w-5 text-gold transition-transform duration-300 ${langDropdownOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                    </button>
+                    <AnimatePresence>
+                      {langDropdownOpen && (
+                        <motion.div
+                          className="w-full max-w-[160px] mx-auto mt-2 rounded-lg overflow-hidden bg-onyx/90 border border-gold/20 backdrop-blur-sm"
+                          initial="closed" animate="open" exit="closed" variants={mobileDropdownVariants}
+                        >
+                          <button onClick={() => { changeLanguage('en'); setMobileMenuOpen(false); }} className={`block w-full text-left px-4 py-2 text-sm ${currentLang === 'en' ? 'text-gold bg-onyx/60' : 'text-magnolia hover:text-gold hover:bg-onyx/60'} transition-colors duration-150`}>{t('language.english')}</button>
+                          <button onClick={() => { changeLanguage('nl'); setMobileMenuOpen(false); }} className={`block w-full text-left px-4 py-2 text-sm ${currentLang === 'nl' ? 'text-gold bg-onyx/60' : 'text-magnolia hover:text-gold hover:bg-onyx/60'} transition-colors duration-150`}>{t('language.dutch')}</button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </nav>
+              </div>
             </div>
           </motion.div>
         )}
@@ -666,7 +353,8 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
 });
 
 Navbar.defaultProps = {
-  isScrolled: false
+  isScrolled: false,
+  // currentLang: 'nl', // propCurrentLang should be used or i18n.language
 };
 
 Navbar.displayName = 'Navbar';

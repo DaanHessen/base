@@ -1,0 +1,194 @@
+/* Responsive styles */
+
+/* Mobile first base responsive styles */
+@media (max-width: 768px) {
+  button, a {
+    touch-action: manipulation;
+  }
+  
+  button, a.button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .shadow-lg, .shadow-md, .shadow-xl {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  h1, h2, h3 {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100 - 56px);
+  }
+  
+  section {
+    padding-top: 4rem; /* Approx 64px, can be overridden by page-specific pt- utilities */
+  }
+  
+  /* Prevent horizontal overflow */
+  .overflow-x-hidden {
+    overflow-x: hidden !important;
+  }
+  
+  /* Ensure buttons are properly sized */
+  button, a.button, [role="button"] {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Layout improvements for small screens */
+  .container {
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Reservation page responsive adjustments */
+  .reservation-page .max-w-2xl > .bg-onyx\/70 {
+    padding: 1rem;
+  }
+  
+  .reservation-page h2 {
+    font-size: 1.15rem;
+  }
+  
+  .reservation-page h3 {
+    font-size: 1.1rem;
+  }
+  
+  .reservation-page {
+    padding-bottom: 4rem !important;
+  }
+  
+  .reservation-page .grid-cols-1 {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .reservation-page .grid-cols-1 > div {
+    margin-bottom: 0 !important;
+  }
+  
+  /* Fix button sizing on small screens */
+  .reservation-page button,
+  .reservation-page a.button,
+  .reservation-page a[class*="bg-gold"] {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Extremely small mobile devices */
+@media (max-width: 360px) {
+  html, body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: clamp(1.5rem, 4vw + 1rem, 3rem) !important;
+  }
+  
+  /* Adjust spacing for very small screens */
+  .py-12 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .my-8 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Reduce padding for containers */
+  .p-6 {
+    padding: 1rem !important;
+  }
+  
+  .px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .py-6 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  /* Smaller rounded corners to save space */
+  .rounded-lg {
+    border-radius: 0.375rem !important;
+  }
+}
+
+/* Tiny mobile devices */
+@media (max-width: 320px) {
+  html, body {
+    font-size: 13px;
+  }
+}
+
+/* Very large screens */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1280px !important;
+  }
+}
+
+/* Special orientation-specific fixes */
+
+/* Portrait mode on phone */
+@media screen and (max-width: 767px) and (orientation: portrait) {
+  .min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+}
+
+/* Landscape mode on phone */
+@media (max-height: 480px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: 480px !important;
+  }
+  
+  .py-12, .py-16, .py-20 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  /* Adjust navbar in landscape */
+  .fixed-nav {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .bg-fixed-container {
+    height: 100% !important;
+  }
+}
+
+/* Special fixes for tall/narrow phones */
+@media (max-height: 720px) and (max-width: 480px) {
+  .min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  .py-16, .py-20, .py-24 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Reduce unnecessary margins/paddings */
+  .space-y-8 > * + * {
+    margin-top: 1.5rem !important;
+  }
+} 
