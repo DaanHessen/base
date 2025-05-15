@@ -10,7 +10,6 @@ function Home() {
   const { t, i18n } = useTranslation(['home', 'common']);
   const currentLang = i18n.language;
   const [isMobile, setIsMobile] = useState(false);
-  const [animationPlayed, setAnimationPlayed] = useState(false);
 
   // Helper function to generate properly localized paths
   const getLocalizedPath = (basePath) => {
@@ -29,9 +28,6 @@ function Home() {
     
     // Add event listener for window resize
     window.addEventListener('resize', checkIsMobile);
-    
-    // Always enable animation on mount
-    setAnimationPlayed(false);
     
     // Cleanup
     return () => {
@@ -125,7 +121,7 @@ function Home() {
                 </p>
                 
                 <motion.div 
-                  className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-start"
+                  className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-start equal-width-buttons"
                   variants={itemVariants}
                   style={{ transform: 'translate3d(0, 0, 0)' }}
                 >

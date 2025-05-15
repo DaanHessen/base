@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import Reservation from '../Reservation';
 import './Sections.css';
 
 function Reservations() {
@@ -21,6 +20,7 @@ function Reservations() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia">
               {t('reservation.title', { ns: 'common' })}
             </h1>
+            <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
@@ -38,13 +38,9 @@ function Reservations() {
               </div>
               
               <div className="text-center mb-8">
-                <p className="text-magnolia mb-4">
+                <p className="text-magnolia mb-6">
                   {t('dinner.description', { ns: 'reservations' })}
                 </p>
-                
-                <div className="inline-block bg-onyx/70 text-magnolia/80 rounded-md py-2 px-4 border border-gold/20 mb-6">
-                  <p>{t('dinner.callToAction', { ns: 'reservations' })}</p>
-                </div>
                 
                 <motion.a
                   href="tel:+31612345678"
@@ -75,13 +71,9 @@ function Reservations() {
               </div>
               
               <div className="text-center mb-8">
-                <p className="text-magnolia mb-4">
+                <p className="text-magnolia mb-6">
                   {t('events.description', { ns: 'reservations' })}
                 </p>
-                
-                <div className="inline-block bg-onyx/70 text-magnolia/80 rounded-md py-2 px-4 border border-gold/20 mb-6">
-                  <p>{t('events.callToAction', { ns: 'reservations' })}</p>
-                </div>
                 
                 <motion.a
                   href="mailto:info@basebymonsees.nl"

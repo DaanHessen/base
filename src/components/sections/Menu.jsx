@@ -62,6 +62,7 @@ function Menu() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia">
               {t('title', { ns: 'menu' })}
             </h1>
+            <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-x-12 md:gap-y-8">

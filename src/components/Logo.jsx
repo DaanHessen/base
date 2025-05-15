@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useMemo, memo } from 'react';
-import logo from '../assets/base-logo.svg';
+import baseLogo from '../assets/base-logo.svg';
+import baseLogoCompact from '../assets/base.svg';
 
-const Logo = ({ className }) => {
+const Logo = ({ className, compact = false }) => {
+  const logoSrc = compact ? baseLogoCompact : baseLogo;
+  
   const primaryColor = useMemo(() => ({ 
     r: 255, 
     g: 192, 
@@ -150,26 +153,38 @@ const Logo = ({ className }) => {
   }, [states]);
   
   return (
-    <div className={`relative ${className || 'w-auto h-auto'}`} style={{ marginTop: '0.2rem' }}>
+    <div className={`relative ${className || 'w-auto h-auto'}`} style={{ 
+      marginTop: compact ? '0.1rem' : '48px',
+      transition: 'margin 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
+    }}>
       <div 
         ref={glowLayerRef}
         className="absolute -inset-6 z-0 opacity-0 blur-md hover:cursor-pointer"
         aria-hidden="true"
-        style={{ background: states.initial.glow, opacity: states.initial.intensity }}
+        style={{ 
+          background: states.initial.glow, 
+          opacity: states.initial.intensity,
+          transition: 'opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1), background 0.3s cubic-bezier(0.2, 0, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
+          transform: compact ? 'scale(0.85)' : 'scale(1)'
+        }}
       ></div>
       
       <img 
         ref={logoRef}
-        src={logo} 
+        src={logoSrc} 
         alt="BASE" 
-        className="relative z-10 w-auto max-h-28 md:max-h-32 lg:max-h-40"
-        width="192"
-        height="48"
+        className="relative z-10 w-auto"
+        width={compact ? "150" : "250"}
+        height={compact ? "50" : "60"}
         style={{
-          maxHeight: 'clamp(7.5rem, 9vw + 3.5rem, 10rem)',
+          maxHeight: compact ? 'clamp(4.5rem, 6vw + 2.5rem, 6rem)' : 'clamp(8.5rem, 10vw + 4.5rem, 12rem)',
           objectFit: 'contain',
           aspectRatio: 'auto',
-          filter: states.initial.filter
+          filter: states.initial.filter,
+          padding: compact ? '0.25rem 0' : '0',
+          transition: 'all 0.3s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1), filter 0.3s cubic-bezier(0.2, 0, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
+          transformOrigin: 'center center',
+          opacity: 1
         }}
         loading="eager"
         fetchpriority="high"

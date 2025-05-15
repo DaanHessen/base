@@ -14,6 +14,9 @@
 
 main {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 /* Home background styles */
@@ -26,7 +29,7 @@ main {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  box-shadow: inset 0 0 0 2000px rgba(62, 62, 62, 0.6);
+  box-shadow: inset 0 0 0 2000px rgba(42, 42, 42, 0.7);
 }
 
 .home-background.background-loaded {
@@ -37,11 +40,13 @@ main {
 .page-content {
   width: 100%;
   position: relative;
+  flex: 1;
 }
 
 @media (max-width: 768px) {
   .page-content {
     padding-bottom: 2rem;
+    min-height: calc(100vh - 160px);
   }
   
   .shadow-lg, .shadow-md, .shadow-xl {
@@ -111,6 +116,7 @@ main {
   .h-full, 
   [style*="height: 100vh"] {
     height: calc(var(--vh, 1vh) * 100) !important;
+    max-height: none !important;
   }
 
   html, body {
@@ -135,16 +141,21 @@ main {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-    overflow-y: auto; /* Allow scrolling */
+    overflow-y: visible; /* Allow scrolling */
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    min-height: calc(100vh - 60px);
+    padding-bottom: 0; /* Remove fixed padding */
   }
 
   main {
     flex: 1 0 auto;
     position: relative;
-    padding-bottom: 2rem; /* Add spacing before footer */
-    overflow-y: auto; /* Allow scrolling */
+    padding-bottom: 0; /* Remove fixed padding */
+    overflow-y: visible; /* Allow scrolling */
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    min-height: auto; /* Allow content to determine height */
   }
   
   /* Content below navbar adjustments */
@@ -170,6 +181,19 @@ main {
     overflow-y: auto !important;
     position: static !important;
   }
+  
+  /* Ensure footer is always visible */
+  footer {
+    position: relative !important;
+    z-index: 10 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+    margin-top: auto !important;
+  }
 }
 
 /* Specific mobile fixes */
@@ -190,7 +214,7 @@ main {
   
   .layout-content {
     flex: 1;
-    overflow-y: auto; /* Allow scrolling at this level */
+    overflow-y: visible; /* Allow scrolling at this level */
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     display: flex;
@@ -203,6 +227,37 @@ main {
     backface-visibility: hidden;
     perspective: 1000;
     will-change: transform;
+  }
+  
+  /* Hide scrolling UI on both mobile and desktop */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background: transparent;
+  }
+  
+  /* Hide scrollbar for FireFox */
+  * {
+    scrollbar-width: none;
+  }
+  
+  /* Hide scrollbar for IE and Edge */
+  * {
+    -ms-overflow-style: none;
+  }
+  
+  /* Make categories in mobile view wrap to multiple rows */
+  .flex.flex-row.items-center {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Make menu categories fully visible and wrap if needed */
+  .flex.flex-row.space-x-4 {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -227,6 +282,33 @@ main {
     position: relative; /* Ensure positioned elements receive events */
     z-index: 5; /* Ensure links are above other elements */
   }
+  
+  /* Improve mobile About Us page */
+  .about-us {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .about-us h1, .about-us h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 1rem 0;
+  }
+  
+  .about-us p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  .about-us img {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+  }
 }
 
 /* Prevent flash of unstyled content */
@@ -249,110 +331,99 @@ html.wf-active, html.wf-inactive {
       overflow-y: auto;
     }
     
-    /* Move scrolling container to layout-content for iOS */
     .layout-content {
-      position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      min-height: calc(100vh - 60px) !important;
+      overflow-y: visible !important;
     }
     
-    /* Fix mobile menu body freeze */
     body.mobile-menu-open {
-      position: fixed;
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
+      overflow: hidden !important;
+      position: fixed !important;
+      width: 100% !important;
     }
   }
 }
 
-/* Landscape mode adjustments */
 @media (max-height: 480px) and (orientation: landscape) {
   .min-h-screen {
-    min-height: 480px !important;
+    min-height: auto !important;
+    height: auto !important;
   }
   
   .py-12, .py-16, .py-20 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
   }
   
   .bg-fixed-container {
-    height: 100% !important;
+    position: absolute !important;
   }
 }
 
-/* Content section styles */
 section {
   position: relative;
+  z-index: 1;
+  overflow: visible;
 }
 
-/* Small screen typography adjustments */
 @media (max-width: 480px) {
   h1, h2, h3 {
-    overflow-wrap: break-word;
     word-wrap: break-word;
+    overflow-wrap: break-word;
     hyphens: auto;
   }
   
   section {
-    padding-top: 4rem; /* Approx 64px, can be overridden by page-specific pt- utilities */
-  }
-  
-  /* Prevent horizontal overflow */
-  .overflow-x-hidden {
-    overflow-x: hidden !important;
-  }
-  
-  /* Ensure buttons are properly sized */
-  button, a.button, [role="button"] {
-    font-size: 0.875rem !important;
-  }
-  
-  /* Layout improvements for small screens */
-  .container {
-    width: 100% !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
+  
+  .overflow-x-hidden {
+    overflow: visible !important;
+  }
+  
+  button, a.button, [role="button"] {
+    min-height: 44px;
+  }
+  
+  .container {
+    width: 100% !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
 }
 
-/* Tall/narrow phones adjustments */
 @media (max-height: 720px) and (max-width: 480px) {
   .min-h-screen {
-    min-height: calc(var(--vh, 1vh) * 100) !important;
+    min-height: auto !important;
+    height: auto !important;
   }
   
   .py-16, .py-20, .py-24 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
-  
-  /* Reduce unnecessary margins/paddings */
-  .space-y-8 > * + * {
-    margin-top: 1.5rem !important;
-  }
-}
-
-/* Very small screens spacing adjustments */
-@media (max-width: 360px) {
-  /* Adjust spacing for very small screens */
-  .py-12 {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
   }
   
-  .my-8 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
+  /* Reduce spacing in packed content */
+  .space-y-8 > * + * {
+    margin-top: 1rem !important;
   }
 }
 
-/* Very small screens padding adjustments */
+@media (max-width: 360px) {
+  /* More compact spacing for very small screens */
+  .py-12 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .my-8 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Really tiny screens */
 @media (max-width: 320px) {
   .py-4 {
     padding-top: 0.5rem !important;
@@ -360,64 +431,70 @@ section {
   }
   
   .px-4 {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
   
   button, a.button, [role="button"] {
-    padding-left: 0.65rem !important;
-    padding-right: 0.65rem !important;
-    font-size: 0.8rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    font-size: 0.875rem !important;
   }
 }
 
-/* Layout component styles */
+/* Root container */
 .layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100);
-  background-color: var(--onyx);
-  overflow-x: hidden;
-  position: relative;
   width: 100%;
+  position: relative;
+  overflow-x: hidden;
+  background-color: var(--onyx);
 }
 
-/* Main content area */
+/* Content container */ 
 .layout-content {
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
   position: relative;
   z-index: 1;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Background image transition effect */
+/* Background image for fixed backgrounds */
 .bg-fixed-custom {
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  transition: opacity 0.5s ease;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
-/* iOS doesn't support fixed backgrounds well */
 @supports (-webkit-touch-callout: none) {
   .bg-fixed-custom {
     background-attachment: scroll;
   }
 }
 
-/* Smooth page transitions */
+/* Page transition animations */
 .page-transition-enter {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(8px);
 }
 
 .page-transition-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 300ms, transform 300ms;
 }
 
 .page-transition-exit {
@@ -427,48 +504,54 @@ section {
 
 .page-transition-exit-active {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1), transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-8px);
+  transition: opacity 200ms, transform 200ms;
 }
 
-/* Hardware acceleration for smoother animations */
+/* Performance optimizations */
 .will-change-transform {
   will-change: transform;
+  transform: translateZ(0);
 }
 
 .will-change-opacity {
   will-change: opacity;
+  transform: translateZ(0);
 }
 
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
 }
 
-/* Prevent content shift on page load */
 .no-content-shift {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 5000px;
-}
-
-/* Enhance smoothness for header transitions */
-.header, .fixed-nav {
-  will-change: transform;
-  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translateZ(0);
+  perspective: 1000px;
 }
 
-/* Fix header during scroll */
+/* Ensure header is consistently styled on mobile */
+.header, .fixed-nav {
+  background-color: rgba(42, 42, 42, 0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
 .header-scrolled {
-  will-change: transform, background-color, box-shadow;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background-color: rgba(42, 42, 42, 0.97) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
 }
 
-/* Force hardware acceleration on Safari/iOS */
-@supports (-webkit-touch-callout: none) {
+@media (max-width: 767px) {
   .header, .fixed-nav, .scroll-nav {
-    -webkit-transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
+    background-color: rgba(42, 42, 42, 0.97) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
   }
 } 

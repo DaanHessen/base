@@ -1,5 +1,36 @@
 /* Section components styles */
 
+/* Page title spacing with top bar */
+.section-padding {
+  padding-top: 3.5rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 10rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 12rem;
+  }
+}
+
+/* Add margin to page titles */
+h1.text-2xl, h1.text-3xl, h1.text-4xl {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
 /* Home page section styles */
 .home-title h1 {
   font-size: clamp(1.75rem, 5vw + 1rem, 4rem);
@@ -104,24 +135,32 @@
   white-space: nowrap;
   flex: 1;
   font-size: 0.875rem;
+  min-width: 150px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
 }
 
 .reservation-button:hover {
   background-color: rgba(212, 175, 55, 0.9);
   box-shadow: 2px 2px 0px rgba(197, 167, 95, 0.8);
   transform: translate(1px, 1px);
+  color: var(--onyx);
 }
 
 @media (min-width: 640px) {
   .reservation-button {
     padding: 0.875rem 1.5rem;
     font-size: 1rem;
+    min-width: 170px;
   }
 }
 
 @media (min-width: 400px) {
   .reservation-button {
     flex: 0 1 auto;
+    width: 170px !important;
   }
 }
 
@@ -138,6 +177,11 @@
   white-space: nowrap;
   flex: 1;
   font-size: 0.875rem;
+  min-width: 150px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
 }
 
 .menu-button:hover {
@@ -151,12 +195,14 @@
   .menu-button {
     padding: 0.875rem 1.5rem;
     font-size: 1rem;
+    min-width: 170px;
   }
 }
 
 @media (min-width: 400px) {
   .menu-button {
     flex: 0 1 auto;
+    width: 170px !important;
   }
 }
 
@@ -196,31 +242,6 @@
 @media (min-width: 768px) {
   .home-decoration {
     display: none;
-  }
-}
-
-/* Section spacing */
-.section-padding {
-  padding-top: 3.5rem;
-  padding-bottom: 3rem;
-}
-
-@media (min-width: 640px) {
-  .section-padding {
-    padding-top: 8rem;
-    padding-bottom: 5rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding-top: 10rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-padding {
-    padding-top: 12rem;
   }
 }
 
@@ -285,4 +306,23 @@
 
 .animated-button:hover {
   transform: translate(1px, 1px);
+}
+
+/* Equal width buttons */
+.equal-width-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 400px) {
+  .equal-width-buttons {
+    flex-direction: row;
+    width: auto;
+  }
+  
+  .equal-width-buttons > a {
+    flex: 1 0 auto;
+    min-width: 0;
+    width: 170px !important;
+  }
 } 

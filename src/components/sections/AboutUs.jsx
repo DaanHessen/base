@@ -105,7 +105,7 @@ function AboutUs() {
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.0.title`)}
                       </h3>
-                      <div className="text-thistle font-light text-sm sm:text-base leading-relaxed">
+                      <div className="text-magnolia font-light text-sm sm:text-base leading-relaxed">
                         {t(`about:sections.0.content`)}
                       </div>
                     </div>
@@ -114,7 +114,7 @@ function AboutUs() {
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.1.title`)}
                       </h3>
-                      <div className="text-thistle font-light text-sm sm:text-base leading-relaxed">
+                      <div className="text-magnolia font-light text-sm sm:text-base leading-relaxed">
                         {t(`about:sections.1.content`)}
                       </div>
                     </div>
@@ -174,7 +174,7 @@ function AboutUs() {
                           <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Adres' : 'Address'}
                           </h4>
-                          <p className="text-thistle text-sm sm:text-base">{t('about:location.address')}</p>
+                          <p className="text-magnolia text-sm sm:text-base">{t('about:location.address')}</p>
                         </div>
                       </div>
                       
@@ -196,7 +196,7 @@ function AboutUs() {
                           <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Parkeren' : 'Parking'}
                           </h4>
-                          <p className="text-thistle text-sm sm:text-base">{t('about:location.parking')}</p>
+                          <p className="text-magnolia text-sm sm:text-base">{t('about:location.parking')}</p>
                         </div>
                       </div>
                       

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaHome, FaUtensils, FaCocktail, FaInfoCircle, FaCalendarAlt } from 'react-icons/fa';
+import { FaHome, FaUtensils, FaCocktail, FaInfoCircle, FaCalendarAlt, FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { setLanguage } from '../../utils/language';
 import Logo from '../Logo';
 import './Header.css';
@@ -257,9 +257,9 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
       if (!element) return;
       
       if (isScrolled) {
-        element.style.backgroundColor = 'rgba(62, 62, 62, 0.95)';
-        element.style.backdropFilter = 'blur(4px)';
-        element.style.webkitBackdropFilter = 'blur(4px)';
+        element.style.backgroundColor = 'rgba(42, 42, 42, 0.97)';
+        element.style.backdropFilter = 'blur(8px)';
+        element.style.webkitBackdropFilter = 'blur(8px)';
       } else {
         element.style.backgroundColor = 'transparent';
         element.style.backdropFilter = 'none';
@@ -415,12 +415,15 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             
             <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-300 ease-out ${
               scrolled 
-                ? '-translate-y-1/2 scale-85 lg:scale-90' 
+                ? '-translate-y-1/2 scale-90 lg:scale-95' 
                 : '-translate-y-[45%] scale-95 lg:scale-100'
             } z-10 hidden md:block`}>
               <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-                <div className={`logo-container navbar-logo ${scrolled ? 'py-2' : 'py-3'}`}> 
-                  <Logo className={`transition-transform duration-500 ease-out`} /> 
+                <div className={`logo-container navbar-logo py-3 ${scrolled ? 'pt-4 pb-3' : 'py-4'}`}> 
+                  <Logo 
+                    className={`transition-transform duration-500 ease-out`} 
+                    compact={scrolled}
+                  /> 
                 </div>
               </Link>
             </div>
@@ -496,12 +499,13 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                       initial="closed"
                       animate="open"
                       exit="closed"
-                      className="absolute right-0 top-12 w-36 rounded-md shadow-lg bg-onyx/95 border border-gold/30 backdrop-blur-lg z-40 overflow-hidden"
+                      className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-onyx/90 border border-gold/30 backdrop-blur-md ring-1 ring-gold/20 z-[1001] overflow-hidden"
                     >
-                      <div className="p-2 flex flex-col gap-1">
+                      <div className="p-3 grid grid-cols-1 gap-2">
                         <button
                           onClick={() => changeLanguage('nl')}
-                          className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${currentLang === 'nl' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'} transition-all duration-150 justify-center`}
+                          className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
+                            currentLang === 'nl' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}
                         >
                           <div className="flex items-center">
                             <span className="mr-2 text-base">🇳🇱</span>
@@ -510,7 +514,8 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                         </button>
                         <button
                           onClick={() => changeLanguage('en')}
-                          className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${currentLang === 'en' ? 'bg-gold/90 text-onyx shadow-md' : 'bg-onyx/80 text-magnolia hover:bg-onyx/60'} transition-all duration-150 justify-center`}
+                          className={`px-4 py-2.5 rounded-md text-sm font-medium flex items-center ${
+                            currentLang === 'en' ? 'bg-gold text-onyx shadow-md' : 'bg-onyx/80 border border-gold/30 text-magnolia hover:text-gold hover:border-gold/50'} transition-all duration-150 justify-center`}
                         >
                           <div className="flex items-center">
                             <span className="mr-2 text-base">🇬🇧</span>
@@ -530,93 +535,151 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
       {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
-            className="fixed inset-0 z-[1000] bg-onyx/98 backdrop-blur-xl"
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={mobileMenuVariants}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-[1000] md:hidden"
+            onClick={toggleMobileMenu}
           >
-            <div className="flex flex-col h-full max-h-screen overflow-y-auto py-20 px-6">
-              {/* Mobile logo */}
-              <div className="flex justify-center mb-8">
-                <div className="w-24 h-24">
-                  <Logo className="w-full h-full" />
-                </div>
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="fixed top-0 left-0 bottom-0 w-full max-w-xs bg-onyx/97 shadow-lg backdrop-blur-md z-[1001] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Logo for mobile menu */}
+              <div className="flex justify-center py-8 border-b border-gold/20">
+                <Link 
+                  to={getLocalizedPath('/', currentLang)} 
+                  className="block"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Logo compact={false} className="w-32" />
+                </Link>
               </div>
-            
-              <nav className="flex flex-col gap-6">
-                <motion.div variants={mobileMenuItemVariants}>
-                  <Link
-                    to={getLocalizedPath('/', currentLang)}
-                    className={`flex items-center text-xl ${currentPath === '/' ? 'text-gold' : 'text-magnolia'}`}
-                    onClick={toggleMobileMenu}
-                  >
-                    <FaHome className="mr-3 h-5 w-5" />
-                    {t('navigation.home')}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants}>
-                  <Link
-                    to={getLocalizedPath('/menu/food', currentLang)}
-                    className={`flex items-center text-xl ${
-                      currentPath === '/menu/food'
-                        ? 'text-gold' 
-                        : 'text-magnolia'
-                    }`}
-                    onClick={toggleMobileMenu}
-                  >
-                    <FaUtensils className="mr-3 h-5 w-5" />
-                    {t('navigation.foodMenu')}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants}>
-                  <Link
-                    to={getLocalizedPath('/menu/drinks', currentLang)}
-                    className={`flex items-center text-xl ${
-                      currentPath === '/menu/drinks'
-                        ? 'text-gold' 
-                        : 'text-magnolia'
-                    }`}
-                    onClick={toggleMobileMenu}
-                  >
-                    <FaCocktail className="mr-3 h-5 w-5" />
-                    {t('navigation.drinksMenu')}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants}>
-                  <Link
-                    to={getLocalizedPath('/about', currentLang)}
-                    className={`flex items-center text-xl ${currentPath === '/about' ? 'text-gold' : 'text-magnolia'}`}
-                    onClick={toggleMobileMenu}
-                  >
-                    <FaInfoCircle className="mr-3 h-5 w-5" />
-                    {t('navigation.about')}
-                  </Link>
-                </motion.div>
-                
-                <motion.div variants={mobileMenuItemVariants}>
-                  <Link
-                    to={getLocalizedPath('/reservations', currentLang)}
-                    className={`flex items-center text-xl ${currentPath === '/reservations' ? 'text-gold' : 'text-magnolia'}`}
-                    onClick={toggleMobileMenu}
-                  >
-                    <FaCalendarAlt className="mr-3 h-5 w-5" />
-                    {t('navigation.reservations')}
-                  </Link>
+              
+              <nav className="px-4 py-6 space-y-6">
+                <motion.div
+                  variants={mobileMenuVariants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  className="space-y-6"
+                >
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/', currentLang)}
+                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                        currentPath === '/' 
+                          ? 'text-gold bg-gold/5' 
+                          : 'text-magnolia hover:text-gold hover:bg-gold/5'
+                      } transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaHome className="mr-3 text-gold" />
+                      {t('navigation.home')}
+                    </Link>
+                  </motion.div>
+                  
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/menu/food', currentLang)}
+                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                        currentPath === '/menu' || currentPath === '/menu/food'
+                          ? 'text-gold bg-gold/5' 
+                          : 'text-magnolia hover:text-gold hover:bg-gold/5'
+                      } transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaUtensils className="mr-3 text-gold" />
+                      {t('navigation.foodMenu')}
+                    </Link>
+                  </motion.div>
+                  
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/menu/drinks', currentLang)}
+                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                        currentPath === '/menu/drinks'
+                          ? 'text-gold bg-gold/5' 
+                          : 'text-magnolia hover:text-gold hover:bg-gold/5'
+                      } transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaCocktail className="mr-3 text-gold" />
+                      {t('navigation.drinksMenu')}
+                    </Link>
+                  </motion.div>
+                  
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/about', currentLang)}
+                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                        currentPath === '/about' 
+                          ? 'text-gold bg-gold/5' 
+                          : 'text-magnolia hover:text-gold hover:bg-gold/5'
+                      } transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaInfoCircle className="mr-3 text-gold" />
+                      {t('navigation.about')}
+                    </Link>
+                  </motion.div>
+                  
+                  <motion.div variants={mobileMenuItemVariants}>
+                    <Link
+                      to={getLocalizedPath('/reservations', currentLang)}
+                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                        currentPath === '/reservations' 
+                          ? 'text-gold bg-gold/5' 
+                          : 'text-magnolia hover:text-gold hover:bg-gold/5'
+                      } transition-all duration-200`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaCalendarAlt className="mr-3 text-gold" />
+                      {t('navigation.reservations')}
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </nav>
-            </div>
+              
+              {/* Social media icons */}
+              <div className="social-icons px-6 py-6 border-t border-gold/20 flex justify-center space-x-6 mt-auto">
+                <a 
+                  href="https://facebook.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-onyx/70 border border-gold/30 flex items-center justify-center text-magnolia hover:text-gold hover:border-gold/50 transition-colors duration-200"
+                >
+                  <FaFacebookF className="text-xl" />
+                </a>
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-onyx/70 border border-gold/30 flex items-center justify-center text-magnolia hover:text-gold hover:border-gold/50 transition-colors duration-200"
+                >
+                  <FaInstagram className="text-xl" />
+                </a>
+                <a 
+                  href="https://twitter.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-onyx/70 border border-gold/30 flex items-center justify-center text-magnolia hover:text-gold hover:border-gold/50 transition-colors duration-200"
+                >
+                  <FaTwitter className="text-xl" />
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 });
-
-Navbar.displayName = 'Navbar';
 
 export default Navbar; 

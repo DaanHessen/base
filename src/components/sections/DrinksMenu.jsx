@@ -61,6 +61,7 @@ function DrinksMenu() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia">
               {t('drinksMenu.title', { ns: 'menu' })}
             </h1>
+            <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
           </div>
           
           {/* Quick navigation for mobile */}

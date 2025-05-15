@@ -20,7 +20,17 @@ header nav a:hover::after {
 
 .logo-container {
   transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+  padding: 2rem 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure the logo always has enough padding */
+.navbar-logo {
   padding: 1rem 0;
+  margin: 0.5rem 0;
 }
 
 /* Fixed navigation styles */
@@ -40,13 +50,14 @@ header nav a:hover::after {
               box-shadow 0.3s cubic-bezier(0.2, 0, 0.2, 1);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0);
 }
 
 /* Ensure navbar background shows when scrolled */
 .fixed-nav[data-scrolled="true"] {
-  background-color: rgba(62, 62, 62, 0.95) !important;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background-color: rgba(42, 42, 42, 0.97) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -55,10 +66,23 @@ header nav a:hover::after {
 /* Mobile navbar styles */
 @media (max-width: 767px) {
   .fixed-nav {
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.2, 0, 0.2, 1),
+                padding 0.3s cubic-bezier(0.2, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.2, 0, 0.2, 1),
+                height 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+    height: auto;
+    min-height: 60px;
+  }
+  
+  .fixed-nav[data-scrolled="true"] {
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
     height: auto !important;
     min-height: 60px !important;
+    background-color: rgba(42, 42, 42, 0.97) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
   
   .fixed-nav button {
@@ -66,7 +90,7 @@ header nav a:hover::after {
     margin-bottom: 0 !important;
   }
   
-  .fixed-nav .logo-container {
+  .fixed-nav[data-scrolled="true"] .logo-container {
     transform: scale(0.75) !important;
   }
   
@@ -109,15 +133,20 @@ header nav a:hover::after {
 
 /* Navbar logo scaling */
 .navbar-logo {
-  transform: scale(0.85);
+  transform: scale(1);
   will-change: transform;
   transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), padding 0.3s ease;
   padding: 0.75rem 0;
 }
 
+.fixed-nav[data-scrolled="true"] .navbar-logo {
+  transform: scale(0.85);
+  padding: 0.5rem 0;
+}
+
 @media (max-width: 320px) {
   .navbar-logo {
-    transform: scale(0.7) !important; 
+    transform: scale(0.75) !important; 
   }
 }
 
@@ -131,7 +160,7 @@ header nav a:hover::after {
   height: 4rem;
   transform: translateY(-100%);
   transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
-  background-color: rgba(62, 62, 62, 0.95);
+  background-color: rgba(42, 42, 42, 0.97);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -189,8 +218,22 @@ header nav a:hover::after {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--onyx);
+    background-color: rgba(42, 42, 42, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     overflow-y: auto;
+  }
+  
+  /* Make sure the logo is visible on mobile */
+  .absolute.left-1\/2.top-1\/2.transform.-translate-x-1\/2 {
+    display: block !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 auto !important;
+    width: 70% !important;
+    max-width: 200px !important;
   }
 }
 
@@ -208,7 +251,7 @@ header nav a:hover::after {
 }
 
 .header-scrolled {
-  background-color: rgba(62, 62, 62, 0.9);
+  background-color: rgba(42, 42, 42, 0.97);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -233,5 +276,37 @@ header nav a:hover::after {
     overflow: hidden;
     position: fixed;
     width: 100%;
+  }
+  
+  /* Center social media icons */
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem auto;
+  }
+  
+  /* Hide scrollbar */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    background: transparent;
+  }
+  
+  /* Make categories wrap to multiple rows */
+  .flex.flex-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Better mobile hover effects for buttons */
+  button:hover, a.button:hover, [role="button"]:hover {
+    background-color: inherit;
+    color: var(--onyx) !important;
+  }
+  
+  .bg-gold:hover, .bg-accent:hover {
+    color: var(--onyx) !important;
   }
 } 

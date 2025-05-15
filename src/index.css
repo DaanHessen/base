@@ -154,6 +154,42 @@ body * {
   }
 }
 
+/* Hide scrolling UI on both mobile and desktop */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  background: transparent;
+}
+
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+* {
+  -ms-overflow-style: none;
+}
+
+/* Button hover fixes */
+.bg-gold:hover, .bg-accent:hover {
+  color: var(--onyx) !important;
+}
+
+.text-gold:hover {
+  color: var(--gold) !important;
+}
+
+button.bg-gold:hover, a.bg-gold:hover {
+  background-color: var(--gold) !important;
+  color: var(--onyx) !important;
+}
+
+button.bg-onyx:hover, a.bg-onyx:hover {
+  background-color: var(--onyx) !important;
+  color: var(--gold) !important;
+}
+
 /* Mobile accessibility improvements */
 @media (max-width: 768px) {
   button, a {
@@ -163,6 +199,15 @@ body * {
   button, a.button, [role="button"] {
     min-height: 44px;
     min-width: 44px;
+  }
+  
+  /* Make categories in mobile view wrap to multiple rows */
+  .flex.flex-row.items-center,
+  .flex.flex-row.space-x-4 {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1rem !important;
   }
 }
 
@@ -223,11 +268,14 @@ body * {
 /* Fixed header styles */
 .header {
   @apply sticky top-0 z-50 w-full transition-all duration-300;
-  background-color: var(--onyx);
+  background-color: rgba(42, 42, 42, 0.97);
 }
 
 .header-scrolled {
   @apply bg-onyx/90 backdrop-blur-md shadow-md;
+  background-color: rgba(42, 42, 42, 0.97) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
@@ -245,4 +293,37 @@ body * {
 
 .scroll-nav.visible {
   transform: translateY(0);
+}
+
+/* Improve visibility of logo on mobile */
+@media (max-width: 768px) {
+  .md\:block {
+    display: block !important;
+  }
+  
+  .header .relative.flex.justify-between {
+    justify-content: center !important;
+  }
+  
+  .absolute.left-1\/2.top-1\/2.transform.-translate-x-1\/2 {
+    display: block !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 auto !important;
+    width: 70% !important;
+    max-width: 200px !important;
+  }
+  
+  /* Fix footer issues */
+  footer {
+    position: relative !important;
+    z-index: 10 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
 }
