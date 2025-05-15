@@ -1,0 +1,328 @@
+/* Layout styles */
+#root {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Page content styles */
+.page-content {
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding-bottom: 2rem;
+  }
+  
+  .shadow-lg, .shadow-md, .shadow-xl {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Background pattern */
+.bg-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Fixed background container for mobile */
+.bg-fixed-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  z-index: -1;
+  overflow: hidden;
+  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
+  transform-style: preserve-3d;
+}
+
+/* Fixed background element */
+.fixed-bg {
+  background-attachment: scroll !important;
+  background-size: cover !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  height: 100vh !important; 
+  height: calc(var(--vh, 1vh) * 100) !important;
+}
+
+/* Background fallbacks */
+.bg-fixed-container,
+.fixed-bg,
+[class*="bg-fixed"] {
+  background-color: var(--onyx) !important;
+}
+
+/* Mobile layout adjustments */
+@media (max-width: 767px) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-color: var(--onyx);
+  }
+
+  * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .h-screen, 
+  .min-h-screen, 
+  .h-full, 
+  [style*="height: 100vh"] {
+    height: calc(var(--vh, 1vh) * 100) !important;
+  }
+
+  body, html {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  #root {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    height: auto !important;
+  }
+  
+  .layout-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+    position: relative;
+    padding-bottom: 2rem; /* Add spacing before footer */
+  }
+  
+  /* Content below navbar adjustments */
+  .layout-content > div {
+    padding-top: 56px; /* Approximate height of mobile navbar */
+  }
+
+  .layout-content > section {
+    padding-top: 56px;
+  }
+
+  .layout-content > * {
+    padding-top: 56px;
+  }
+}
+
+/* Specific mobile fixes */
+@media (max-width: 767px) {
+  #root {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: calc(var(--vh, 1vh) * 100);
+    max-height: 100vh; /* Restrict the maximum height to prevent overscroll */
+    max-height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden; /* Hide overflow at root level */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .layout-content {
+    flex: 1;
+    overflow-y: auto; /* Allow scrolling at this level */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    /* Add iOS-friendly bottom padding for content */
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    /* Force hardware acceleration and smooth scrolling on iOS */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    will-change: transform;
+  }
+}
+
+/* Mobile scroll fix helper class */
+.mobile-scroll-fix {
+  width: 100%;
+  position: relative;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .mobile-scroll-fix {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch;
+    position: static !important;
+    min-height: unset !important;
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+  
+  a, button {
+    position: relative; /* Ensure positioned elements receive events */
+    z-index: 5; /* Ensure links are above other elements */
+  }
+}
+
+/* Prevent flash of unstyled content */
+html.wf-loading {
+  visibility: hidden;
+}
+
+html.wf-active, html.wf-inactive {
+  visibility: visible;
+}
+
+/* iOS specific overscroll prevention */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    body {
+      /* Prevent overscroll bounce on iOS */
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    /* Move scrolling container to layout-content for iOS */
+    .layout-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 480px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: 480px !important;
+  }
+  
+  .py-12, .py-16, .py-20 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .bg-fixed-container {
+    height: 100% !important;
+  }
+}
+
+/* Content section styles */
+section {
+  position: relative;
+}
+
+/* Small screen typography adjustments */
+@media (max-width: 480px) {
+  h1, h2, h3 {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  section {
+    padding-top: 4rem; /* Approx 64px, can be overridden by page-specific pt- utilities */
+  }
+  
+  /* Prevent horizontal overflow */
+  .overflow-x-hidden {
+    overflow-x: hidden !important;
+  }
+  
+  /* Ensure buttons are properly sized */
+  button, a.button, [role="button"] {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Layout improvements for small screens */
+  .container {
+    width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Tall/narrow phones adjustments */
+@media (max-height: 720px) and (max-width: 480px) {
+  .min-h-screen {
+    min-height: calc(var(--vh, 1vh) * 100) !important;
+  }
+  
+  .py-16, .py-20, .py-24 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Reduce unnecessary margins/paddings */
+  .space-y-8 > * + * {
+    margin-top: 1.5rem !important;
+  }
+}
+
+/* Very small screens spacing adjustments */
+@media (max-width: 360px) {
+  /* Adjust spacing for very small screens */
+  .py-12 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  
+  .my-8 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+/* Very small screens padding adjustments */
+@media (max-width: 320px) {
+  .py-4 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .px-4 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  button, a.button, [role="button"] {
+    padding-left: 0.65rem !important;
+    padding-right: 0.65rem !important;
+    font-size: 0.8rem !important;
+  }
+} 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaInstagram, FaEnvelope, FaLinkedin, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import monseesLogo from '../../assets/monsees-optimized.svg';
+import './Footer.css';
 
 const SocialIconLink = ({ href, label, children }) => (
   <a 

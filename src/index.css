@@ -12,11 +12,11 @@
   --dim-gray: #656176;
   --onyx: #3e3e3e;
   --gold: #d4af37;
-  
-  background-color: var(--onyx);
   --vh: 1vh;
+  background-color: var(--onyx);
 }
 
+/* Base HTML elements */
 html, body {
   background-color: var(--onyx);
   min-height: 100%;
@@ -30,16 +30,17 @@ html, body {
   height: auto !important;
 }
 
+html::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 640px) {
   html, body {
     font-size: 15px;
   }
 }
 
-html::-webkit-scrollbar {
-  display: none;
-}
-
+/* Tailwind extensions */
 @layer base {
   body {
     @apply font-body bg-dark text-light overflow-x-hidden;
@@ -55,191 +56,7 @@ html::-webkit-scrollbar {
   }
 }
 
-@media (max-width: 767px) {
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    background-color: var(--onyx);
-  }
-
-  .fixed-bg {
-    background-attachment: scroll !important;
-    background-size: cover !important;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    will-change: transform;
-    height: 100vh !important; 
-    height: calc(var(--vh, 1vh) * 100) !important;
-  }
-  
-  .fixed-nav {
-    transform: translate3d(0,0,0) !important;
-    -webkit-transform: translate3d(0,0,0) !important;
-    transform-style: preserve-3d;
-    will-change: transform;
-    z-index: 1000 !important;
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    transition: background-color 0.3s ease;
-  }
-
-  /* Ensure navbar background shows when scrolled */
-  .fixed-nav[data-scrolled="true"] {
-    background-color: rgba(62, 62, 62, 0.95) !important;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
-  
-  .bg-fixed-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
-    z-index: -1;
-    overflow: hidden;
-    transform: translate3d(0,0,0);
-    -webkit-transform: translate3d(0,0,0);
-    transform-style: preserve-3d;
-  }
-  
-  html {
-    height: -webkit-fill-available;
-  }
-  
-  body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    overflow-x: hidden;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-  }
-  
-  #root {
-    isolation: isolate;
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .layout-content {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1 0 auto;
-    position: relative;
-    padding-bottom: 2rem; /* Add spacing before footer */
-  }
-
-  footer {
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10;
-    margin-top: auto;
-    width: 100%;
-    /* Prevent iOS overscroll */
-    padding-bottom: env(safe-area-inset-bottom, 0.5rem);
-  }
-  
-  /* Set maximum scroll range */
-  .mobile-scroll-fix {
-    position: relative;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-@media (min-width: 400px) {
-  .xs\:flex-row {
-    flex-direction: row;
-  }
-  
-  .xs\:flex-auto {
-    flex: 1 1 auto;
-  }
-  
-  .xs\:w-auto {
-    width: auto;
-  }
-  
-  .xs\:block {
-    display: block;
-  }
-}
-
-@media (max-width: 768px) {
-  button, a {
-    @apply touch-manipulation;
-  }
-  
-  button, a.button, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-header nav a {
-  position: relative;
-}
-
-header nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 0;
-  height: 2px;
-  background-color: var(--gold);
-  transition: width 0.15s ease-in-out;
-}
-
-header nav a:hover::after {
-  width: 100%;
-}
-
-.logo-container {
-  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-@media (max-width: 768px) {
-  .page-content {
-    padding-bottom: 2rem;
-  }
-  
-  .shadow-lg, .shadow-md, .shadow-xl {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-}
-
-.page-content {
-  width: 100%;
-  position: relative;
-}
-
-.price-tag {
-  letter-spacing: -0.05em;
-  font-size: 0.75rem;
-}
-
-.bg-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-
+/* Global utility classes */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -249,6 +66,7 @@ header nav a:hover::after {
   display: none;
 }
 
+/* Animation keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -264,6 +82,7 @@ header nav a:hover::after {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+/* SVG styling */
 svg {
   display: inline-block;
 }
@@ -280,6 +99,7 @@ svg:hover stop:last-child {
   stop-color: #d4af37;
 }
 
+/* Iframe styling */
 iframe {
   border: 0;
   width: 100%;
@@ -288,6 +108,7 @@ iframe {
   transition: none !important;
 }
 
+/* Performance optimizations */
 body * {
   will-change: auto;
 }
@@ -298,6 +119,7 @@ body * {
   perspective: 1000px;
 }
 
+/* Reduced motion preference */
 @media (prefers-reduced-motion: no-preference) {
   .transition-all {
     transition-property: all;
@@ -305,6 +127,7 @@ body * {
   }
 }
 
+/* Custom Tailwind utilities */
 @layer utilities {
   .filter-gold {
     filter: invert(71%) sepia(99%) saturate(408%) hue-rotate(358deg) brightness(89%) contrast(90%);
@@ -323,79 +146,46 @@ body * {
     background-size: cover;
     background-position: center;
   }
-}
-
-@media (max-width: 767px) {
-  * {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
   
-  .h-screen, 
-  .min-h-screen, 
-  .h-full, 
-  [style*="height: 100vh"] {
-    height: calc(var(--vh, 1vh) * 100) !important;
-  }
-
-  body, html {
-    height: auto !important;
-    min-height: 100%;
-    overflow-y: auto !important;
-    position: relative;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  #root {
-    min-height: 100vh;
-    min-height: calc(var(--vh, 1vh) * 100);
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-    height: auto !important;
-  }
-  
-  footer {
-    position: relative;
-    width: 100%;
-    bottom: auto;
+  .scale-65 {
+    --tw-scale-x: 0.65;
+    --tw-scale-y: 0.65;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 }
 
-@media (max-width: 480px) {
-  h1, h2, h3 {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
+/* Mobile accessibility improvements */
+@media (max-width: 768px) {
+  button, a {
+    @apply touch-manipulation;
   }
   
-  .min-h-screen {
-    min-height: calc(var(--vh, 1vh) * 100 - 56px);
-  }
-  
-  section {
-    padding-top: 4rem; /* Approx 64px, can be overridden by page-specific pt- utilities */
-  }
-  
-  /* Prevent horizontal overflow */
-  .overflow-x-hidden {
-    overflow-x: hidden !important;
-  }
-  
-  /* Ensure buttons are properly sized */
   button, a.button, [role="button"] {
-    font-size: 0.875rem !important;
-  }
-  
-  /* Layout improvements for small screens */
-  .container {
-    width: 100% !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
-/* Additional font size control for very small screens */
+/* Extra small screen utility classes */
+@media (min-width: 400px) {
+  .xs\:flex-row {
+    flex-direction: row;
+  }
+  
+  .xs\:flex-auto {
+    flex: 1 1 auto;
+  }
+  
+  .xs\:w-auto {
+    width: auto;
+  }
+  
+  .xs\:block {
+    display: block;
+  }
+}
+
+/* Font size control for very small screens */
 @media (max-width: 360px) {
   html, body {
     font-size: 14px;
@@ -404,78 +194,17 @@ body * {
   h1 {
     font-size: clamp(1.5rem, 4vw + 1rem, 3rem) !important;
   }
-  
-  /* Adjust spacing for very small screens */
-  .py-12 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
-  
-  .my-8 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+  html, body {
+    font-size: 13px;
   }
 }
 
-/* Special fixes for tall/narrow phones */
-@media (max-height: 720px) and (max-width: 480px) {
-  .min-h-screen {
-    min-height: calc(var(--vh, 1vh) * 100) !important;
-  }
-  
-  .py-16, .py-20, .py-24 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
-  
-  /* Reduce unnecessary margins/paddings */
-  .space-y-8 > * + * {
-    margin-top: 1.5rem !important;
-  }
-}
-
-/* Fixes for landscape mode on mobile */
-@media (max-height: 480px) and (orientation: landscape) {
-  .min-h-screen {
-    min-height: 480px !important;
-  }
-  
-  .py-12, .py-16, .py-20 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-  }
-  
-  /* Adjust navbar in landscape */
-  .fixed-nav {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-  
-  .bg-fixed-container {
-    height: 100% !important;
-  }
-}
-
-/* Prevent flash of unstyled content and grey screen issues */
-html.wf-loading {
-  visibility: hidden;
-}
-
-html.wf-active, html.wf-inactive {
-  visibility: visible;
-}
-
-/* Add proper fallback for backgrounds */
-.bg-fixed-container,
-.fixed-bg,
-[class*="bg-fixed"] {
-  background-color: var(--onyx) !important;
-}
-
-/* Improve reliability of fixed elements on mobile */
+/* iOS specific fixes */
 @supports (-webkit-touch-callout: none) {
-  /* iOS specific fixes */
-  .fixed-bg,
   .bg-fixed-custom {
     background-attachment: scroll !important;
   }
@@ -484,265 +213,6 @@ html.wf-active, html.wf-inactive {
     min-height: -webkit-fill-available !important;
     min-height: calc(var(--vh, 1vh) * 100) !important;
   }
-  
-  body, html {
-    position: relative;
-    width: 100%;
-    overflow-x: hidden;
-  }
-  
-  body {
-    /* Prevent body from getting stuck */
-    touch-action: manipulation;
-  }
-}
-
-/* Ensure React app container spans full height */
-#root {
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100);
-  display: flex;
-  flex-direction: column;
-}
-
-/* Additional mobile optimizations for very small screens */
-@media (max-width: 320px) {
-  html, body {
-    font-size: 13px;
-  }
-  
-  .navbar-logo {
-    /* Slightly smaller logo on very small screens if needed */
-    transform: scale(0.55) !important; 
-  }
-  
-  .py-4 {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-  
-  .px-4 {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
-  }
-  
-  button, a.button, [role="button"] {
-    padding-left: 0.65rem !important; /* Adjusted padding */
-    padding-right: 0.65rem !important; /* Adjusted padding */
-    font-size: 0.8rem !important; /* Adjusted font size */
-  }
-}
-
-/* Fix for mobile navbar height and logo scaling */
-@media (max-width: 480px) {
-  .fixed-nav {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-  
-  /* .logo-container specific scaling already handled by navbar-logo and inline classes */
-  
-  /* Universal adjustment for page content starting point below fixed navbar */
-  /* This selector targets direct children of Layout that are likely page containers */
-  .layout-content > div {
-    padding-top: 56px; /* Approximate height of mobile navbar */
-  }
-
-  /* More specific for sections if they are direct children, otherwise rely on page containers */
-  .layout-content > section {
-     padding-top: 56px;
-  }
-
-  /* Fallback for other direct children that might be pages */
-  .layout-content > * {
-    padding-top: 56px;
-  }
-
-  /* Ensure this doesn't over-pad nested elements by being too general */
-  /* The above selectors are more targeted. This is a broader override that might not be needed if pages structure correctly */
-  /* .pt-32, .pt-40 { 
-    padding-top: 4rem !important; 
-  } */
-}
-
-/* Fix iOS Safari 100vh issue more aggressively */
-@supports (-webkit-touch-callout: none) {
-  .min-h-screen {
-    min-height: -webkit-fill-available !important;
-    min-height: calc(var(--vh, 1vh) * 100) !important;
-  }
-  
-  /* Force hardware acceleration */
-  .fixed-nav, .bg-fixed-container {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-  
-  /* Prevent content shift when address bar appears/disappears */
-  body {
-    min-height: -webkit-fill-available;
-  }
-}
-
-/* Add scale-65 utility class for navbar logo */
-.scale-65 {
-  --tw-scale-x: 0.65;
-  --tw-scale-y: 0.65;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-/* Ensure root has full height on mobile */
-#root {
-  min-height: 100vh;
-  min-height: calc(var(--vh, 1vh) * 100);
-  display: flex;
-  flex-direction: column;
-}
-
-/* Update the navbar height calculation for content positioning */
-/* Ensures the layout-content has enough space below the navbar */
-.layout-content > div {
-  padding-top: 0; /* Reset any existing padding */
-}
-
-.reservation-page {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-/* Ensure navbar doesn't take too much vertical space on mobile */
-@media (max-width: 480px) {
-  nav.fixed-nav {
-    height: auto !important;
-    min-height: 60px !important;
-  }
-  
-  /* Ensure buttons stay within navbar bounds */
-  nav.fixed-nav button {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-}
-
-/* Ensure the main content wrapper has the right spacing */
-.reservation-main-wrapper {
-  min-height: 100vh;
-  width: 100%;
-  position: relative;
-}
-
-@media (max-width: 768px) {
-  .reservation-main-wrapper {
-    margin-top: 0;
-  }
-}
-
-/* Remove the logo offset when not scrolled which causes extra space */
-@media (max-width: 768px) {
-  nav.fixed-nav .logo-container {
-    transform: scale(0.75) !important;
-  }
-}
-
-/* Group booking section responsive adjustments */
-@media (max-width: 480px) {
-  .reservation-page .max-w-2xl > .bg-onyx\/70 {
-    padding: 1rem;
-  }
-  
-  .reservation-page h2 {
-    font-size: 1.15rem;
-  }
-  
-  .reservation-page h3 {
-    font-size: 1.1rem;
-  }
-}
-
-/* Consistent spacing for all page sections */
-section {
-  position: relative;
-}
-
-/* Mobile scroll fix helper class */
-.mobile-scroll-fix {
-  width: 100%;
-  position: relative;
-  display: block;
-}
-
-@media (max-width: 767px) {
-  .mobile-scroll-fix {
-    touch-action: pan-y !important;
-    -webkit-overflow-scrolling: touch;
-    position: static !important;
-    min-height: unset !important;
-    height: auto !important;
-    overflow-y: visible !important;
-  }
-}
-
-/* Replace the existing mobile scroll fixes with cleaner ones */
-@media screen and (max-width: 767px) {
-  html, body {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    position: relative !important;
-    height: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  #root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    min-height: calc(var(--vh, 1vh) * 100);
-    min-height: -webkit-fill-available;
-  }
-
-  .layout-content, 
-  main {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Make navigation links and menu bigger touch targets */
-  .fixed-nav a, 
-  .fixed-nav button {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Ensure footer creates a natural boundary */
-  footer {
-    position: relative;
-    z-index: 10;
-    margin-top: auto; 
-    /* Stop at screen bottom */
-    max-height: calc(100vh - 100px);
-  }
-  
-  /* Fix page change issue */
-  a, button {
-    position: relative; /* Ensure positioned elements receive events */
-    z-index: 5; /* Ensure links are above other elements */
-  }
-}
-
-/* Fix for iOS momentum scrolling */
-@supports (-webkit-touch-callout: none) {
-  @media (max-width: 767px) {
-    body {
-      -webkit-overflow-scrolling: touch;
-    }
-    
-    .fixed-nav {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-  }
 }
 
 /* Fix iOS height issues */
@@ -750,98 +220,29 @@ section {
   --vh: 1vh;
 }
 
-/* Prevent scrolling past footer */
-html {
-  height: 100%;
-  scroll-padding-bottom: 0;
+/* Fixed header styles */
+.header {
+  @apply sticky top-0 z-50 w-full transition-all duration-300;
+  background-color: var(--onyx);
 }
 
-body {
-  min-height: 100%;
-  position: relative;
-  overflow-x: hidden;
+.header-scrolled {
+  @apply bg-onyx/90 backdrop-blur-md shadow-md;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.header-transparent {
+  background-color: transparent;
 }
 
-.layout-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+/* Small navigation bar that appears on scroll */
+.scroll-nav {
+  @apply fixed top-0 left-0 right-0 z-50 transform transition-transform duration-300 bg-onyx/95 backdrop-blur-md shadow-md;
+  height: 3.5rem;
+  transform: translateY(-100%);
 }
 
-main {
-  flex: 1;
-}
-
-footer {
-  margin-top: auto;
-}
-
-/* Specific mobile fixes */
-@media (max-width: 767px) {
-  #root {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: calc(var(--vh, 1vh) * 100);
-    max-height: 100vh; /* Restrict the maximum height to prevent overscroll */
-    max-height: calc(var(--vh, 1vh) * 100);
-    overflow: hidden; /* Hide overflow at root level */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .layout-content {
-    flex: 1;
-    overflow-y: auto; /* Allow scrolling at this level */
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    flex-direction: column;
-    /* Add iOS-friendly bottom padding for content */
-    padding-bottom: env(safe-area-inset-bottom, 0);
-  }
-  
-  main {
-    flex: 1 0 auto;
-  }
-  
-  footer {
-    flex-shrink: 0; /* Prevent footer from shrinking */
-  }
-  
-  /* Force hardware acceleration and smooth scrolling on iOS */
-  .layout-content {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000;
-    will-change: transform;
-  }
-}
-
-/* iOS specific overscroll prevention */
-@supports (-webkit-touch-callout: none) {
-  body {
-    /* Prevent overscroll bounce on iOS */
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  /* Move scrolling container to layout-content for iOS */
-  .layout-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+.scroll-nav.visible {
+  transform: translateY(0);
 }

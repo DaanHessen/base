@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Reservation from '../Reservation';
 import { Helmet } from 'react-helmet-async';
 import { FaUsers, FaCalendarAlt, FaEnvelope } from 'react-icons/fa';
+import './Sections.css';
 
 const Reservations = () => {
   const { t, i18n } = useTranslation('common');

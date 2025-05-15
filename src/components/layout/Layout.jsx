@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieConsent from '../CookieConsent';
 import { motion, AnimatePresence } from 'framer-motion';
+import './Layout.css';
 
 function Layout({ children }) {
   const location = useLocation();

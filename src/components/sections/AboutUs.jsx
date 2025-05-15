@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaParking, FaClock, FaPhone } from 'react-icons/fa';
 import Image from '../../assets/loes-en-sander.jpg';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import './Sections.css';
 
 const MapSkeleton = () => (
   <div className="w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] bg-gray-800/50 animate-pulse flex items-center justify-center rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl">

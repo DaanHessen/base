@@ -1,0 +1,32 @@
+/* Reservation page/component styles */
+.reservation-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.reservation-main-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .reservation-main-wrapper {
+    margin-top: 0;
+  }
+}
+
+/* Group booking section responsive adjustments */
+@media (max-width: 480px) {
+  .reservation-page .max-w-2xl > .bg-onyx\/70 {
+    padding: 1rem;
+  }
+  
+  .reservation-page h2 {
+    font-size: 1.15rem;
+  }
+  
+  .reservation-page h3 {
+    font-size: 1.1rem;
+  }
+} 

@@ -1,11 +1,12 @@
 import React, { useState, memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaLeaf } from 'react-icons/fa';
+import './Menu.css';
 
 // TODO: how do I solve the problem where long titles and descriptions are cut off?
 
 const VeganIcon = memo(() => (
-  <FaLeaf className="w-4 h-4 text-green-500" />
+  <FaLeaf className="vegan-icon" />
 ));
 
 VeganIcon.displayName = 'Vegan';
@@ -53,20 +54,20 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
   
   return (
     <div 
-      className="flex flex-col p-3 sm:p-4 bg-onyx/70 backdrop-blur-sm border border-gold/30 rounded-lg shadow-lg transition-all duration-150 hover:shadow-[0_4px_20px_-2px_rgba(212,175,55,0.4)] hover:bg-dim-gray/20 hover:border-gold/40 group w-full relative overflow-hidden hover:-translate-y-1 mx-auto"
+      className="menu-item group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(!isHovered)}
     >
-      <div className="absolute top-0 left-0 w-0 h-0.5 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:w-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
-      <div className="absolute top-0 right-0 w-0.5 h-0 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:h-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
-      <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:w-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
-      <div className="absolute bottom-0 left-0 w-0.5 h-0 bg-gold/60 shadow-[0_0_5px_0px_rgba(212,175,55,0.2)] transition-all duration-150 group-hover:h-full group-hover:bg-gold group-hover:shadow-[0_0_5px_2px_rgba(212,175,55,0.4)]"></div>
+      <div className="menu-item-border-top"></div>
+      <div className="menu-item-border-right"></div>
+      <div className="menu-item-border-bottom"></div>
+      <div className="menu-item-border-left"></div>
       
       <div className="p-2 sm:p-3 flex flex-col relative">
         <div className="flex justify-between items-start gap-2 mb-2.5">
           <div className="flex-1 min-w-0">
-            <h3 className="text-base font-heading font-semibold text-magnolia group-hover:text-gold transition-colors duration-150 flex items-center">
+            <h3 className="menu-item-title">
               <span className="break-words pr-1 block truncate">{name}</span>
               {showVeganInfo && (
                 <div className="ml-1 flex-shrink-0" title={t('vegan')}>
@@ -75,11 +76,11 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
               )}
             </h3>
           </div>
-          <span className="text-gold font-body font-medium price-tag flex-shrink-0 bg-onyx/80 px-2 py-0.5 rounded-md shadow-sm flex items-center justify-center self-start whitespace-nowrap">{price}</span>
+          <span className="menu-item-price">{price}</span>
         </div>
         
         <div className="">
-          <p className={`text-thistle/90 font-body text-sm leading-relaxed mb-2 break-words ${isMobile ? 'line-clamp-2' : ''}`}>
+          <p className={`menu-item-description ${isMobile ? 'line-clamp-2' : ''}`}>
             {description}
           </p>
           
@@ -103,11 +104,11 @@ function MenuItem({ name, description, price, allergens, vegan, isDrinks }) {
         
         {showAllergens && (
           <div 
-            className={`mt-auto pt-1.5 ${!isMobile ? 'border-t border-onyx/80' : ''} transition-all duration-150 ${
+            className={`menu-item-allergens ${!isMobile ? 'border-t border-onyx/80' : ''} ${
               isHovered || isMobile ? 'opacity-100' : 'opacity-70'
             }`}
           >
-            <p className="text-xs text-gray-400/90 flex items-start">
+            <p className="menu-item-allergens-text">
               <span className="mr-1 text-xs mt-0.5">⚠</span>
               <span className="leading-tight break-words">{t('allergens.title')}: {translatedAllergens.join(', ')}</span>
             </p>

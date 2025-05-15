@@ -1,0 +1,99 @@
+/* Header and Navbar styles */
+header nav a {
+  position: relative;
+}
+
+header nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: var(--gold);
+  transition: width 0.15s ease-in-out;
+}
+
+header nav a:hover::after {
+  width: 100%;
+}
+
+.logo-container {
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Fixed navigation styles */
+.fixed-nav {
+  transform: translate3d(0,0,0) !important;
+  -webkit-transform: translate3d(0,0,0) !important;
+  transform-style: preserve-3d;
+  will-change: transform;
+  z-index: 1000 !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+/* Ensure navbar background shows when scrolled */
+.fixed-nav[data-scrolled="true"] {
+  background-color: rgba(62, 62, 62, 0.95) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Mobile navbar styles */
+@media (max-width: 480px) {
+  .fixed-nav {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    height: auto !important;
+    min-height: 60px !important;
+  }
+  
+  .fixed-nav button {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .fixed-nav .logo-container {
+    transform: scale(0.75) !important;
+  }
+  
+  .fixed-nav a, 
+  .fixed-nav button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Landscape mode navbar adjustment */
+@media (max-height: 480px) and (orientation: landscape) {
+  .fixed-nav {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+/* Force hardware acceleration on mobile */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .fixed-nav {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+  }
+}
+
+/* Navbar logo scaling */
+.navbar-logo {
+  transform: scale(0.65);
+}
+
+@media (max-width: 320px) {
+  .navbar-logo {
+    transform: scale(0.55) !important; 
+  }
+} 

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaHome, FaUtensils, FaCocktail, FaInfoCircle } from 'react-icons/fa';
 import { setLanguage } from '../../utils/language';
 import Logo from '../Logo';
+import './Header.css';
 
 const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: propCurrentLang }, ref) => {
   const location = useLocation();

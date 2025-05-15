@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { getLanguage } from '../../utils/language';
+import './Sections.css';
 
 function Home() {
   const { t, i18n } = useTranslation(['home', 'common']);

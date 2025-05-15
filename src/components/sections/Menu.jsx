@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import MenuCategory from '../menu/MenuCategory';
 import menuData from '../../data/menu.json';
+import '../menu/Menu.css';
+import './Sections.css';
 
 function Menu() {
   const { t, i18n } = useTranslation(['menu', 'common']);
@@ -30,20 +32,14 @@ function Menu() {
   const drinksCategory = menuData.categories.find(cat => cat.id === 'drinks');
 
   const SectionHeading = ({ children, id }) => (
-    <div className="relative mb-12">
-      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-magnolia mb-3 sm:mb-4 leading-tight">
-        {children}
-      </h2>
-      <div className="w-12 sm:w-14 md:w-16 h-1 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.3)] mb-4 sm:mb-6"></div>
+    <div className="menu-section-heading">
+      <h2>{children}</h2>
     </div>
   );
 
   const CategoryHeading = ({ children }) => (
-    <div className="relative mb-8 mt-4">
-      <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-gold inline-block pr-4">
-        {children}
-        <span className="absolute bottom-[-6px] left-0 w-3/4 h-px bg-gold/50"></span>
-      </h3>
+    <div className="menu-category-heading">
+      <h3>{children}</h3>
     </div>
   );
 
@@ -59,7 +55,7 @@ function Menu() {
         <meta name="og:description" content={t('menu:seo.description')} />
       </Helmet>
       
-      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
+      <section className="section-padding overflow-hidden">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 w-full">
           <div id="food" ref={foodRef} className="mb-16 home-title">
             <SectionHeading>
@@ -71,7 +67,7 @@ function Menu() {
                 <div 
                   id={`category-${category.id}`} 
                   key={category.id}
-                  className="menu-category-item transition-all duration-150 hover:translate-y-[-5px]"
+                  className="menu-category-item"
                 >
                   <CategoryHeading>
                     {category.name[currentLang]}
@@ -94,7 +90,7 @@ function Menu() {
                   <div 
                     id={`category-${subcat.id}`} 
                     key={subcat.id}
-                    className="menu-category-item transition-all duration-150 hover:translate-y-[-5px] w-full"
+                    className="menu-category-item w-full"
                   >
                     <CategoryHeading>
                       {subcat.name[currentLang]}

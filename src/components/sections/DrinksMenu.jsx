@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import MenuCategory from '../menu/MenuCategory';
 import menuData from '../../data/menu.json';
+import '../menu/Menu.css';
+import './Sections.css';
 
 function DrinksMenu() {
   const { t, i18n } = useTranslation(['menu', 'common']);

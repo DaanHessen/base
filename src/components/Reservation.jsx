@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCalendarAlt, FaPhone } from 'react-icons/fa';
+import './Reservation.css';
 
 const Reservation = ({ className }) => {
   const { t, i18n } = useTranslation('common');
