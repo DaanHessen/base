@@ -1,30 +1,48 @@
-# Mobile Optimization Tasks
+# BASE Website UI Fixes
 
-## 1. Fix Mobile Navigation
-- [x] Implement full-screen overlay navigation
-- [x] Center navigation items vertically in the screen
-- [x] Ensure proper background with opacity/blur is applied
-- [x] Fix scrolling issues (ensure menu works when user has scrolled)
-- [x] Improve animation transitions for menu items
-- [x] Test navigation at different screen sizes
+## Completed Tasks
 
-## 2. Fix Mobile Animations
-- [x] Debug why landing animations aren't playing on mobile
-- [x] Ensure animations are optimized for mobile performance
-- [x] Test animations on different mobile devices/browsers
+1. **Footer Copyright Text**
+   - Fixed the copyright text in the footer by removing duplicate year display
+   - Now displays as "© [current year] BASE by Monsees." 
 
-## 3. Fix Item Cards on Mobile
-- [x] Remove divider between item and allergens on mobile
-- [x] Ensure proper spacing and layout on mobile view
-- [x] Test different screen widths for item cards
+2. **Footer Social Icons**
+   - Completely redesigned the "follow us" section in the footer
+   - Improved visual appearance with rounded icons and consistent spacing
+   - Enhanced hover states and transitions for better user interaction
 
-## 4. Fix Image Scrolling Issue on Mobile
-- [x] Identify why images move during scrolling on mobile
-- [x] Apply appropriate CSS fixes to prevent image movement
-- [x] Test scrolling behavior across different mobile devices
+3. **Mobile Navigation Improvements**
+   - Placed social media icons (Instagram, LinkedIn, Email) at the bottom of the mobile overlay
+   - Removed the "send us an email" button from the mobile navigation
+   - Made the logo in the mobile nav bigger to match the page logo size when not scrolled
+   - Reduced the darkening of the backdrop blur on mobile nav for better visibility
 
-## 5. Fix Brasserie Monsees SVG Logo
-- [x] Fix aspect ratio of the SVG logo
-- [x] Ensure logo maintains proper size on mobile
-- [x] Keep hover effects working properly
-- [x] Test logo appearance at different screen sizes 
+4. **Header/Navigation Transitions**
+   - Fixed the transition of the logo when scrolling, making it smoother and more elegant
+   - Updated the navigation bar behavior on mobile to match desktop:
+     - Transparent background when not scrolled
+     - Transitions smoothly to background with blur when scrolled
+   - Improved overall scroll responsiveness
+
+5. **Menu Category Layout**
+   - Fixed the menu categories on mobile to wrap to a new line when they don't fit
+   - Added proper spacing and centering for a better mobile experience
+
+6. **About Us Mobile Layout**
+   - Improved the About Us component's mobile layout with better spacing and structure
+   - Adjusted the image size and placement for mobile view
+   - Optimized the map display and surrounding information section
+
+## Benefits of Changes
+
+- **Improved Mobile Experience**: The website now has a more consistent and polished experience on mobile devices
+- **Better Visual Hierarchy**: Design elements now have proper spacing and transitions
+- **Enhanced Performance**: Smoother transitions and better responsiveness when scrolling
+- **Consistent Design Language**: Unified design elements across desktop and mobile
+
+## Technical Improvements
+
+- Updated transition timing and easing functions for smoother animations
+- Implemented proper responsive design techniques
+- Fixed layout issues on various screen sizes
+- Enhanced accessibility by improving interactive elements 
