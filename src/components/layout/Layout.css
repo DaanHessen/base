@@ -33,7 +33,46 @@ main {
   position: relative;
 }
 
-/* Home background styles */
+/* Home background styles - UPDATED to fix white blur edges */
+.home-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  will-change: opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+  background-color: var(--onyx);
+}
+
+.home-background-inner {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* filter: blur(4px); */
+  /* opacity: 0.15; */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  background-color: var(--onyx);
+}
+
+.background-loaded {
+  opacity: 1;
+}
+
+/* Legacy home background styles - keeping for reference */
 .home-background {
   position: fixed;
   top: 0;
@@ -52,10 +91,6 @@ main {
   transform: translateZ(0);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-}
-
-.background-loaded {
-  opacity: 0.12;
 }
 
 /* Page content styles */
@@ -126,6 +161,7 @@ main {
     height: 100%;
     z-index: -2;
     background-color: var(--onyx);
+    pointer-events: none;
   }
 
   * {
@@ -149,6 +185,8 @@ main {
     position: relative;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
   
   html {
@@ -157,63 +195,62 @@ main {
   
   #root {
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     min-height: calc(var(--vh, 1vh) * 100);
+    height: auto !important;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
-    height: auto !important;
   }
   
   .layout-content {
-    min-height: calc(100vh - 110px);
-    min-height: calc((var(--vh, 1vh) * 100) - 110px);
+    flex: 1;
+    overflow-y: visible;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 
   main {
     flex: 1 0 auto;
     position: relative;
-    padding-bottom: 0; /* Remove fixed padding */
-    overflow-y: visible; /* Allow scrolling */
+    padding-bottom: 0;
+    overflow-y: visible;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    min-height: auto; /* Allow content to determine height */
+    min-height: auto;
   }
   
-  /* Content below navbar adjustments */
+  main > div, main > section {
+    min-height: calc(100vh - 200px);
+    padding-bottom: 30px;
+  }
+  
+  /* Enhanced mobile scroll helper */
+  .mobile-scroll-helper {
+    content: '';
+    display: block;
+    height: 60px; /* Increased height for better footer visibility */
+    width: 100%;
+    position: relative;
+    pointer-events: auto; /* Allow interactions to help with scrolling */
+    margin-top: auto;
+    opacity: 0;
+  }
+  
+  .about-us-section {
+    padding-top: 80px !important;
+    padding-bottom: 40px !important;
+  }
+  
   .layout-content > div {
-    padding-top: 56px; /* Approximate height of mobile navbar */
+    padding-top: 56px;
   }
 
   .layout-content > section {
     padding-top: 56px;
-  }
-
-  .layout-content > * {
-    padding-top: 56px;
-  }
-  
-  /* Home background on mobile */
-  .home-background {
-    background-attachment: scroll;
-  }
-
-  /* Fix for body when menu is closed */
-  body:not(.mobile-menu-open) {
-    overflow-y: auto !important;
-    position: static !important;
-  }
-  
-  /* Ensure footer is always visible */
-  footer {
-    position: relative !important;
-    z-index: 10 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    flex-shrink: 0 !important;
-    margin-top: auto !important;
   }
 }
 
@@ -235,50 +272,12 @@ main {
   
   .layout-content {
     flex: 1;
-    overflow-y: visible; /* Allow scrolling at this level */
+    overflow-y: visible;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
-    /* Add iOS-friendly bottom padding for content */
-    padding-bottom: env(safe-area-inset-bottom, 0);
-    /* Force hardware acceleration and smooth scrolling on iOS */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000;
-    will-change: transform;
-  }
-  
-  /* Hide scrolling UI on both mobile and desktop */
-  ::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    display: none;
-  }
-  
-  /* Hide scrollbar for FireFox */
-  * {
-    scrollbar-width: none;
-  }
-  
-  /* Hide scrollbar for IE and Edge */
-  * {
-    -ms-overflow-style: none;
-  }
-  
-  /* Make categories in mobile view wrap to multiple rows */
-  .flex.flex-row.items-center {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  /* Make menu categories fully visible and wrap if needed */
-  .flex.flex-row.space-x-4 {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 }
 
@@ -300,11 +299,10 @@ main {
   }
   
   a, button {
-    position: relative; /* Ensure positioned elements receive events */
-    z-index: 5; /* Ensure links are above other elements */
+    position: relative;
+    z-index: 5;
   }
   
-  /* Improve mobile About Us page */
   .about-us {
     display: flex;
     flex-direction: column;
@@ -345,7 +343,6 @@ html.wf-active, html.wf-inactive {
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
     body {
-      /* Prevent overscroll bounce on iOS, but don't fix position */
       -webkit-overflow-scrolling: touch;
       height: 100%;
       width: 100%;
@@ -425,14 +422,12 @@ section {
     padding-bottom: 2rem !important;
   }
   
-  /* Reduce spacing in packed content */
   .space-y-8 > * + * {
     margin-top: 1rem !important;
   }
 }
 
 @media (max-width: 360px) {
-  /* More compact spacing for very small screens */
   .py-12 {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
@@ -602,6 +597,7 @@ body.mobile-menu-open {
 /* Custom viewport height variable for iOS */
 :root {
   --vh: 1vh;
+  overscroll-behavior: none;
 }
 
 /* Use custom viewport height */
@@ -611,6 +607,7 @@ body.mobile-menu-open {
     height: 100vh;
     height: calc(var(--vh, 1vh) * 100);
     overflow-x: hidden;
+    position: relative;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
   }
@@ -695,5 +692,21 @@ body.mobile-menu-open {
     width: 0;
     height: 0;
     display: none;
+  }
+}
+
+/* Fix footer positioning to ensure it's always reachable */
+footer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+/* Remove any fixed positioning that might interfere with scrolling */
+@media (max-width: 767px) {
+  .fixed-bottom, .fixed-footer {
+    position: relative !important;
   }
 } 

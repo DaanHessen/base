@@ -63,7 +63,7 @@ function AboutUs() {
         <meta name="og:description" content={t('about:seo.description')} />
       </Helmet>
       
-      <section className="py-16 sm:py-20 md:py-24 min-h-screen">
+      <section className="py-16 sm:py-20 md:py-24 min-h-screen about-us-section">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8 md:mb-12">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-left text-magnolia mb-4">
@@ -74,16 +74,16 @@ function AboutUs() {
           </div>
           
           <motion.div 
-            className="space-y-12 sm:space-y-16"
+            className="space-y-10 sm:space-y-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             <motion.div variants={itemVariants}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8">
-                {/* Mobile image placement */}
-                <div className="block md:hidden">
-                  <div className="w-full max-w-xs mx-auto mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                {/* Mobile image placement - proper sizing and position */}
+                <div className="md:hidden flex justify-center items-center mb-6">
+                  <div className="w-3/4 sm:w-1/2 max-w-[280px] mx-auto">
                     <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group will-change-transform">
                       <img 
                         src={Image} 
@@ -100,8 +100,8 @@ function AboutUs() {
                 </div>
                 
                 <div className="md:col-span-2">
-                  <div className="flex flex-col h-full space-y-6">
-                    <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                  <div className="flex flex-col h-full space-y-4 md:space-y-6">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-5 md:p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.0.title`)}
                       </h3>
@@ -110,7 +110,7 @@ function AboutUs() {
                       </div>
                     </div>
 
-                    <div className="bg-onyx/70 backdrop-blur-sm p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-5 md:p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.1.title`)}
                       </h3>
@@ -141,7 +141,7 @@ function AboutUs() {
               </div>
             </motion.div>
           
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="mt-8 sm:mt-12">
               <div className="bg-onyx/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gold/30">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                   <div className="md:col-span-3 h-full">

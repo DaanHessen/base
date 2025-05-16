@@ -164,36 +164,29 @@ function Footer() {
               {t('footer.follow')}
             </h3>
             <div className="flex flex-col space-y-6">
-              <div className="grid grid-cols-3 gap-3">
+              <div className="flex justify-center space-x-4">
                 <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
-                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-300 w-full h-16 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
-                    <FaInstagram size={22} className="text-gold mb-1" />
-                    <span className="text-xs font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Instagram</span>
+                  <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-12 h-12 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <FaInstagram size={22} className="text-gold" />
                   </div>
                 </SocialIconLink>
                 <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
-                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-300 w-full h-16 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
-                    <FaLinkedin size={22} className="text-gold mb-1" />
-                    <span className="text-xs font-medium text-magnolia group-hover:text-gold transition-colors duration-200">LinkedIn</span>
+                  <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-12 h-12 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <FaLinkedin size={22} className="text-gold" />
                   </div>
                 </SocialIconLink>
-                <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
-                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-300 w-full h-16 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
-                    <div className="w-22 h-6 flex items-center justify-center mb-1">
-                      <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
-                    </div>
-                    <span className="text-xs font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Monsees</span>
+                <SocialIconLink href="mailto:info@basebymonsees.nl" label="Email">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-12 h-12 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <FaEnvelope size={22} className="text-gold" />
                   </div>
                 </SocialIconLink>
               </div>
-              <div>
-                <a 
-                  href={`mailto:${t('footer.contact.email')}`}
-                  className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-br from-gold to-gold/90 hover:from-gold/90 hover:to-gold/80 text-onyx font-medium rounded-md transition-all duration-300 shadow-md hover:shadow-lg text-center whitespace-nowrap text-sm w-full border border-transparent hover:border-gold/50"
-                >
-                  <FaEnvelope className="mr-2" />
-                  {t('reservation.sendEmail')}
-                </a>
+              <div className="flex justify-center pt-2">
+                <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-lg transition-all duration-300 w-40 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                  </div>
+                </SocialIconLink>
               </div>
             </div>
           </div>
@@ -256,42 +249,37 @@ function Footer() {
               {t('footer.follow')}
             </h3>
             <div className="flex flex-col space-y-4">
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex justify-center space-x-4 mt-2">
                 <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
-                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-2 rounded-md transition-all duration-300 w-full h-14 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
-                    <FaInstagram size={18} className="text-gold mb-1" />
-                    <span className="text-[10px] font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Instagram</span>
+                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-full transition-all duration-300 w-10 h-10 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <FaInstagram size={18} className="text-gold" />
                   </div>
                 </SocialIconLink>
                 <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
-                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-2 rounded-md transition-all duration-300 w-full h-14 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
-                    <FaLinkedin size={18} className="text-gold mb-1" />
-                    <span className="text-[10px] font-medium text-magnolia group-hover:text-gold transition-colors duration-200">LinkedIn</span>
+                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-full transition-all duration-300 w-10 h-10 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <FaLinkedin size={18} className="text-gold" />
                   </div>
                 </SocialIconLink>
-                <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
-                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-2 rounded-md transition-all duration-300 w-full h-14 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
-                    <div className="w-full h-4 flex items-center justify-center mb-1">
-                      <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
-                    </div>
-                    <span className="text-[10px] font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Monsees</span>
+                <SocialIconLink href="mailto:info@basebymonsees.nl" label="Email">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-full transition-all duration-300 w-10 h-10 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <FaEnvelope size={18} className="text-gold" />
                   </div>
                 </SocialIconLink>
               </div>
-              <a 
-                href={`mailto:${t('footer.contact.email')}`}
-                className="inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-br from-gold to-gold/90 hover:from-gold/90 hover:to-gold/80 text-onyx font-medium rounded-md transition-all duration-300 shadow-md hover:shadow-lg text-center whitespace-nowrap text-xs w-full border border-transparent hover:border-gold/50"
-              >
-                <FaEnvelope className="mr-1.5" size={12} />
-                {t('reservation.sendEmail')}
-              </a>
+              <div className="flex justify-center pt-1">
+                <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2 rounded-lg transition-all duration-300 w-32 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                    <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                  </div>
+                </SocialIconLink>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mt-8 pt-4 border-t border-gold/10 text-center">
           <p className="text-sm text-magnolia/60">
-            &copy; {currentYear} BASE by Monsees. {t('footer.copyright', { year: '' })}
+            &copy; {currentYear} BASE by Monsees
           </p>
           {copyMessage && (
             <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gold text-onyx px-4 py-2 rounded-md text-sm font-medium shadow-lg z-50">

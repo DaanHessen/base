@@ -33,16 +33,17 @@ const Logo = ({ className, compact = false }) => {
     },
     bright: {
       filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
               drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.85))
               drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.75))
-              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.5))`,
+              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.55))
+              drop-shadow(0 0 8px rgba(${primaryColor.rgb}, 0.35))`,
       glow: `radial-gradient(ellipse at center, 
              rgba(${primaryColor.rgb}, 0.2) 0%, 
              rgba(${primaryColor.rgb}, 0.1) 40%, 
              rgba(${primaryColor.rgb}, 0.05) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.75
+      intensity: 0.8
     },
     dim: {
       filter: `brightness(0) invert(1) 
@@ -73,10 +74,10 @@ const Logo = ({ className, compact = false }) => {
     const applyState = (state, duration) => {
       if (!logo || !glowLayer) return;
       
-      logo.style.transition = `filter ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1)`;
+      logo.style.transition = `filter ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1.0)`;
       logo.style.filter = state.filter;
       
-      glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1), background ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1)`;
+      glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1.0), background ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1.0)`;
       glowLayer.style.background = state.glow;
       glowLayer.style.opacity = state.intensity;
     };
@@ -84,7 +85,7 @@ const Logo = ({ className, compact = false }) => {
     const startupSequence = () => {
       // Start with the initial state already visible
       requestAnimationFrame(() => {
-        applyState(states.bright, 300);
+        applyState(states.bright, 500);
         
         // Start the flicker animation after initial startup
         setTimeout(() => {
@@ -155,7 +156,7 @@ const Logo = ({ className, compact = false }) => {
   return (
     <div className={`relative ${className || 'w-auto h-auto'}`} style={{ 
       marginTop: compact ? '0.1rem' : '48px',
-      transition: 'margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+      transition: 'margin 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
     }}>
       <div 
         ref={glowLayerRef}
@@ -164,7 +165,7 @@ const Logo = ({ className, compact = false }) => {
         style={{ 
           background: states.initial.glow, 
           opacity: states.initial.intensity,
-          transition: 'opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          transition: 'opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           transform: compact ? 'scale(0.85)' : 'scale(1)',
           transformOrigin: 'center center',
         }}
@@ -183,7 +184,7 @@ const Logo = ({ className, compact = false }) => {
           aspectRatio: 'auto',
           filter: states.initial.filter,
           padding: compact ? '0.25rem 0' : '0',
-          transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           transformOrigin: 'center center',
           opacity: 1
         }}

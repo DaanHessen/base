@@ -435,7 +435,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
               </Link>
             </div>
             
-            <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ease-out ${
+            <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out ${
               scrolled 
                 ? '-translate-y-1/2 scale-90 lg:scale-95' 
                 : '-translate-y-[45%] scale-95 lg:scale-100'
@@ -443,7 +443,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
               <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
                 <div className={`logo-container navbar-logo py-3 ${scrolled ? 'pt-4 pb-3' : 'py-4'}`}> 
                   <Logo 
-                    className={`transition-transform duration-500 ease-out`} 
+                    className={`transition-all duration-300 ease-in-out`} 
                     compact={scrolled}
                   /> 
                 </div>
@@ -562,7 +562,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md z-[1000] md:hidden"
+            className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-md z-[1000] md:hidden"
             onClick={toggleMobileMenu}
           >
             <motion.div
@@ -570,27 +570,27 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="fixed inset-0 flex items-center justify-center z-[1001] overflow-hidden"
+              className="fixed inset-0 flex flex-col items-center justify-between z-[1001] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Logo for mobile menu - stays in the top of the overlay */}
-              <div className="absolute top-0 left-0 right-0 flex justify-center py-4 z-[1002]">
+              {/* Logo for mobile menu - positioned exactly like the header logo */}
+              <div className="absolute top-0 left-0 right-0 flex justify-center mt-12 z-[1002]">
                 <Link 
                   to={getLocalizedPath('/', currentLang)} 
                   className="block"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Logo compact={false} className="w-32" />
+                  <Logo compact={false} className="w-full max-w-[250px]" />
                 </Link>
               </div>
               
-              <nav className="px-4 py-6 w-full">
+              <nav className="px-4 py-6 w-full mt-28 flex-1 flex flex-col">
                 <motion.div
                   variants={mobileMenuVariants}
                   initial="closed"
                   animate="open"
                   exit="closed"
-                  className="flex flex-col items-center justify-center space-y-6 mt-20"
+                  className="flex flex-col items-center justify-center space-y-6 flex-1"
                 >
                   <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
@@ -666,38 +666,30 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                       {t('navigation.reservations')}
                     </Link>
                   </motion.div>
-                  
-                  {/* Social media icons using the footer style */}
-                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs pt-6 mt-6">
-                    <div className="grid grid-cols-3 gap-3">
-                      <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
-                        <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-200 w-full h-16 flex flex-col items-center justify-center shadow-sm hover:shadow-md hover:translate-y-[-2px]">
-                          <FaInstagram size={22} className="text-gold mb-1" />
-                          <span className="text-xs font-medium text-magnolia transition-colors duration-200">Instagram</span>
-                        </div>
-                      </SocialIconLink>
-                      <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
-                        <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-200 w-full h-16 flex flex-col items-center justify-center shadow-sm hover:shadow-md hover:translate-y-[-2px]">
-                          <FaLinkedin size={22} className="text-gold mb-1" />
-                          <span className="text-xs font-medium text-magnolia transition-colors duration-200">LinkedIn</span>
-                        </div>
-                      </SocialIconLink>
-                      <SocialIconLink href="mailto:info@basebymonsees.nl" label="Email">
-                        <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-200 w-full h-16 flex flex-col items-center justify-center shadow-sm hover:shadow-md hover:translate-y-[-2px]">
-                          <FaEnvelope size={22} className="text-gold mb-1" />
-                          <span className="text-xs font-medium text-magnolia transition-colors duration-200">Email</span>
-                        </div>
-                      </SocialIconLink>
-                    </div>
-                    
-                    <button
-                      onClick={handleEmailClick}
-                      className="w-full mt-4 inline-flex items-center justify-center px-6 py-3 bg-gradient-to-br from-gold to-gold/90 hover:from-gold/90 hover:to-gold/80 text-onyx font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg hover:translate-y-[-2px] text-center whitespace-nowrap text-sm border border-transparent"
-                    >
-                      <FaEnvelope className="mr-2" />
-                      {t('reservation.sendEmail')}
-                    </button>
-                  </motion.div>
+                </motion.div>
+                
+                {/* Social media icons at the bottom */}
+                <motion.div 
+                  variants={mobileMenuItemVariants}
+                  className="w-full flex justify-center py-6 mt-auto mb-6"
+                >
+                  <div className="flex justify-center space-x-6">
+                    <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
+                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-14 h-14 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                        <FaInstagram size={26} className="text-gold" />
+                      </div>
+                    </SocialIconLink>
+                    <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
+                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-14 h-14 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                        <FaLinkedin size={26} className="text-gold" />
+                      </div>
+                    </SocialIconLink>
+                    <SocialIconLink href="mailto:info@basebymonsees.nl" label="Email">
+                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-14 h-14 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                        <FaEnvelope size={26} className="text-gold" />
+                      </div>
+                    </SocialIconLink>
+                  </div>
                 </motion.div>
               </nav>
             </motion.div>

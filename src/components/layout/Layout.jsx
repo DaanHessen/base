@@ -193,9 +193,13 @@ function Layout({ children }) {
       {isHomePage && (
         <div 
           ref={bgRef}
-          className={`home-background ${bgImage ? 'background-loaded' : ''}`}
-          style={{ backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})` }}
-        ></div>
+          className={`home-background-container ${bgImage ? 'background-loaded' : ''}`}
+        >
+          <div 
+            className="home-background-inner"
+            style={{ backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})` }}
+          ></div>
+        </div>
       )}
       
       {/* Navbar */}
@@ -224,6 +228,9 @@ function Layout({ children }) {
             {children}
           </motion.div>
         </AnimatePresence>
+        
+        {/* Mobile scroll helper - improves scrolling to footer on mobile */}
+        {isMobile && <div className="mobile-scroll-helper" aria-hidden="true"></div>}
       </main>
       
       {/* Footer */}

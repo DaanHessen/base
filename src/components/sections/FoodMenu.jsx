@@ -48,7 +48,7 @@ function FoodMenu() {
           
           {/* Quick navigation for mobile */}
           <div className="md:hidden overflow-x-auto pb-4 mb-4 whitespace-nowrap no-scrollbar">
-            <div className="flex space-x-3">
+            <div className="flex flex-wrap gap-2">
               {foodCategories.map((category) => (
                 <button 
                   key={category.id}
