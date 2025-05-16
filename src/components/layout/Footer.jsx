@@ -164,27 +164,32 @@ function Footer() {
               {t('footer.follow')}
             </h3>
             <div className="flex flex-col space-y-6">
-              <div className="flex justify-between items-center">
+              <div className="grid grid-cols-3 gap-3">
                 <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-md transition-colors duration-200 w-12 h-12 flex items-center justify-center footer-social-icon">
-                    <FaInstagram size={24} />
+                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-300 w-full h-16 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
+                    <FaInstagram size={22} className="text-gold mb-1" />
+                    <span className="text-xs font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Instagram</span>
                   </div>
                 </SocialIconLink>
                 <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-md transition-colors duration-200 w-12 h-12 flex items-center justify-center footer-social-icon">
-                    <FaLinkedin size={24} />
+                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-300 w-full h-16 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
+                    <FaLinkedin size={22} className="text-gold mb-1" />
+                    <span className="text-xs font-medium text-magnolia group-hover:text-gold transition-colors duration-200">LinkedIn</span>
                   </div>
                 </SocialIconLink>
                 <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-3 rounded-md transition-colors duration-200 flex items-center justify-center w-auto h-12 px-4 footer-social-icon">
-                    <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-300 w-full h-16 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
+                    <div className="w-22 h-6 flex items-center justify-center mb-1">
+                      <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                    </div>
+                    <span className="text-xs font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Monsees</span>
                   </div>
                 </SocialIconLink>
               </div>
               <div>
                 <a 
                   href={`mailto:${t('footer.contact.email')}`}
-                  className="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg text-center whitespace-nowrap text-sm w-full"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-br from-gold to-gold/90 hover:from-gold/90 hover:to-gold/80 text-onyx font-medium rounded-md transition-all duration-300 shadow-md hover:shadow-lg text-center whitespace-nowrap text-sm w-full border border-transparent hover:border-gold/50"
                 >
                   <FaEnvelope className="mr-2" />
                   {t('reservation.sendEmail')}
@@ -247,36 +252,39 @@ function Footer() {
           </div>
 
           <div className="bg-gradient-to-br from-onyx/80 to-onyx/60 backdrop-blur-sm p-5 rounded-lg border border-gold/20 shadow-md footer-card">
-            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3 pb-1.5 border-b border-gold/20">
+            <h3 className="text-gold text-sm font-medium uppercase tracking-wide mb-3 border-b border-gold/20 pb-1.5">
               {t('footer.follow')}
             </h3>
             <div className="flex flex-col space-y-4">
-              <div className="flex justify-evenly items-center w-full">
+              <div className="grid grid-cols-3 gap-2">
                 <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-10 h-10 flex items-center justify-center footer-social-icon">
-                    <FaInstagram size={20} />
+                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-2 rounded-md transition-all duration-300 w-full h-14 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
+                    <FaInstagram size={18} className="text-gold mb-1" />
+                    <span className="text-[10px] font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Instagram</span>
                   </div>
                 </SocialIconLink>
                 <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 w-10 h-10 flex items-center justify-center footer-social-icon">
-                    <FaLinkedin size={20} />
+                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-2 rounded-md transition-all duration-300 w-full h-14 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
+                    <FaLinkedin size={18} className="text-gold mb-1" />
+                    <span className="text-[10px] font-medium text-magnolia group-hover:text-gold transition-colors duration-200">LinkedIn</span>
                   </div>
                 </SocialIconLink>
                 <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-2.5 rounded-md transition-colors duration-200 flex items-center justify-center w-auto px-3 h-10 footer-social-icon">
-                    <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                  <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-2 rounded-md transition-all duration-300 w-full h-14 flex flex-col items-center justify-center footer-social-icon group shadow-sm hover:shadow-md">
+                    <div className="w-full h-4 flex items-center justify-center mb-1">
+                      <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
+                    </div>
+                    <span className="text-[10px] font-medium text-magnolia group-hover:text-gold transition-colors duration-200">Monsees</span>
                   </div>
                 </SocialIconLink>
               </div>
-              <div className="w-full">
-                <a 
-                  href={`mailto:${t('footer.contact.email')}`}
-                  className="flex items-center justify-center px-4 py-2.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg text-center whitespace-nowrap text-xs w-full"
-                >
-                  <FaEnvelope className="mr-2 text-xs" />
-                  {t('reservation.sendEmail')}
-                </a>
-              </div>
+              <a 
+                href={`mailto:${t('footer.contact.email')}`}
+                className="inline-flex items-center justify-center px-4 py-2.5 bg-gradient-to-br from-gold to-gold/90 hover:from-gold/90 hover:to-gold/80 text-onyx font-medium rounded-md transition-all duration-300 shadow-md hover:shadow-lg text-center whitespace-nowrap text-xs w-full border border-transparent hover:border-gold/50"
+              >
+                <FaEnvelope className="mr-1.5" size={12} />
+                {t('reservation.sendEmail')}
+              </a>
             </div>
           </div>
         </div>

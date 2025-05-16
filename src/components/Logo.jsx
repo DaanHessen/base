@@ -73,10 +73,10 @@ const Logo = ({ className, compact = false }) => {
     const applyState = (state, duration) => {
       if (!logo || !glowLayer) return;
       
-      logo.style.transition = `filter ${duration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
+      logo.style.transition = `filter ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1)`;
       logo.style.filter = state.filter;
       
-      glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.23, 1, 0.32, 1), background ${duration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
+      glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1), background ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1)`;
       glowLayer.style.background = state.glow;
       glowLayer.style.opacity = state.intensity;
     };
@@ -155,7 +155,7 @@ const Logo = ({ className, compact = false }) => {
   return (
     <div className={`relative ${className || 'w-auto h-auto'}`} style={{ 
       marginTop: compact ? '0.1rem' : '48px',
-      transition: 'margin 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
+      transition: 'margin 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
     }}>
       <div 
         ref={glowLayerRef}
@@ -164,8 +164,9 @@ const Logo = ({ className, compact = false }) => {
         style={{ 
           background: states.initial.glow, 
           opacity: states.initial.intensity,
-          transition: 'opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1), background 0.3s cubic-bezier(0.2, 0, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
-          transform: compact ? 'scale(0.85)' : 'scale(1)'
+          transition: 'opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          transform: compact ? 'scale(0.85)' : 'scale(1)',
+          transformOrigin: 'center center',
         }}
       ></div>
       
@@ -182,7 +183,7 @@ const Logo = ({ className, compact = false }) => {
           aspectRatio: 'auto',
           filter: states.initial.filter,
           padding: compact ? '0.25rem 0' : '0',
-          transition: 'all 0.3s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1), filter 0.3s cubic-bezier(0.2, 0, 0.2, 1), transform 0.3s cubic-bezier(0.2, 0, 0.2, 1)',
+          transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
           transformOrigin: 'center center',
           opacity: 1
         }}

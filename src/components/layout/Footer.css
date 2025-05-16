@@ -19,18 +19,26 @@ footer {
 
 /* Social media icons styling */
 .footer-social-icon {
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-out;
+  position: relative;
+  overflow: hidden;
 }
 
 .footer-social-icon:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  background: linear-gradient(to bottom right, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+}
+
+/* Simplified hover effect - removed complex animation */
+.footer-social-icon:hover span {
+  color: var(--gold);
 }
 
 /* Footer cards styling */
 .footer-card {
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
 }
 
 .footer-card:hover {

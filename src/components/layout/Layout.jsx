@@ -48,11 +48,23 @@ function Layout({ children }) {
     // Toggle body class to prevent scrolling when menu is open
     if (isOpen) {
       document.body.classList.add('mobile-menu-open');
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
     } else {
       document.body.classList.remove('mobile-menu-open');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      
       // Fix iOS scrolling - small timeout to let animations complete
       setTimeout(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({
+          top: window.scrollY,
+          behavior: 'auto'
+        });
       }, 50);
     }
   };
@@ -102,6 +114,10 @@ function Layout({ children }) {
   useEffect(() => {
     return () => {
       document.body.classList.remove('mobile-menu-open');
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
     };
   }, []);
 
@@ -193,16 +209,17 @@ function Layout({ children }) {
       {/* Main content */}
       <main 
         ref={mainRef}
-        className={`flex-grow z-10 relative layout-content ${mobileMenuOpen ? 'pointer-events-none' : ''}`}
+        className="flex-grow z-10 relative layout-content"
+        style={{ transition: 'filter 0.4s ease' }}
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
+            variants={pageVariants}
             initial="initial"
             animate="animate"
             exit="exit"
-            variants={pageVariants}
-            className="min-h-full"
+            className="h-full"
           >
             {children}
           </motion.div>
@@ -212,7 +229,7 @@ function Layout({ children }) {
       {/* Footer */}
       <Footer />
       
-      {/* Cookie consent */}
+      {/* Cookie Consent */}
       <CookieConsent />
     </div>
   );

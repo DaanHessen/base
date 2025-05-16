@@ -2,10 +2,22 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaHome, FaUtensils, FaCocktail, FaInfoCircle, FaCalendarAlt, FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaHome, FaUtensils, FaCocktail, FaInfoCircle, FaCalendarAlt, FaFacebookF, FaInstagram, FaTwitter, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { setLanguage } from '../../utils/language';
 import Logo from '../Logo';
 import './Header.css';
+
+const SocialIconLink = ({ href, label, children }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="text-magnolia hover:text-gold transition-colors duration-200 group z-10"
+    aria-label={label}
+  >
+    {children}
+  </a>
+);
 
 const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: propCurrentLang, onMobileMenuToggle }, ref) => {
   const location = useLocation();
@@ -85,11 +97,13 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     const isMobile = window.innerWidth < 768;
     if (!isMobile) return;
     
-    setScrolled(true);
+    // On mobile, we follow the same scrolling behavior as desktop
+    handleScroll();
     
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setScrolled(true);
+        // On mobile, check scroll position to set the background
+        handleScroll();
       }
     };
     
@@ -98,7 +112,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -260,10 +274,14 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
         element.style.backgroundColor = 'rgba(42, 42, 42, 0.97)';
         element.style.backdropFilter = 'blur(8px)';
         element.style.webkitBackdropFilter = 'blur(8px)';
+        element.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+        element.style.borderBottom = '1px solid rgba(212, 175, 55, 0.2)';
       } else {
         element.style.backgroundColor = 'transparent';
         element.style.backdropFilter = 'none';
         element.style.webkitBackdropFilter = 'none';
+        element.style.boxShadow = 'none';
+        element.style.borderBottom = '1px solid transparent';
       }
     };
     
@@ -279,6 +297,10 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
   useEffect(() => {
     setScrolled(initialIsScrolled);
   }, [initialIsScrolled]);
+
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:info@basebymonsees.nl';
+  };
 
   return (
     <>
@@ -413,7 +435,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
               </Link>
             </div>
             
-            <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-300 ease-out ${
+            <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ease-out ${
               scrolled 
                 ? '-translate-y-1/2 scale-90 lg:scale-95' 
                 : '-translate-y-[45%] scale-95 lg:scale-100'
@@ -539,20 +561,20 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-[1000] md:hidden"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-md z-[1000] md:hidden"
             onClick={toggleMobileMenu}
           >
             <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="fixed top-0 left-0 bottom-0 w-full max-w-xs bg-onyx/97 shadow-lg backdrop-blur-md z-[1001] overflow-y-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="fixed inset-0 flex items-center justify-center z-[1001] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Logo for mobile menu */}
-              <div className="flex justify-center py-8 border-b border-gold/20">
+              {/* Logo for mobile menu - stays in the top of the overlay */}
+              <div className="absolute top-0 left-0 right-0 flex justify-center py-4 z-[1002]">
                 <Link 
                   to={getLocalizedPath('/', currentLang)} 
                   className="block"
@@ -562,22 +584,22 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                 </Link>
               </div>
               
-              <nav className="px-4 py-6 space-y-6">
+              <nav className="px-4 py-6 w-full">
                 <motion.div
                   variants={mobileMenuVariants}
                   initial="closed"
                   animate="open"
                   exit="closed"
-                  className="space-y-6"
+                  className="flex flex-col items-center justify-center space-y-6 mt-20"
                 >
-                  <motion.div variants={mobileMenuItemVariants}>
+                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
                       to={getLocalizedPath('/', currentLang)}
-                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                      className={`flex items-center justify-center py-3 px-4 rounded-md font-medium text-xl ${
                         currentPath === '/' 
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200`}
+                      } transition-all duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaHome className="mr-3 text-gold" />
@@ -585,14 +607,14 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                     </Link>
                   </motion.div>
                   
-                  <motion.div variants={mobileMenuItemVariants}>
+                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
                       to={getLocalizedPath('/menu/food', currentLang)}
-                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                      className={`flex items-center justify-center py-3 px-4 rounded-md font-medium text-xl ${
                         currentPath === '/menu' || currentPath === '/menu/food'
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200`}
+                      } transition-all duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaUtensils className="mr-3 text-gold" />
@@ -600,14 +622,14 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                     </Link>
                   </motion.div>
                   
-                  <motion.div variants={mobileMenuItemVariants}>
+                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
                       to={getLocalizedPath('/menu/drinks', currentLang)}
-                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                      className={`flex items-center justify-center py-3 px-4 rounded-md font-medium text-xl ${
                         currentPath === '/menu/drinks'
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200`}
+                      } transition-all duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaCocktail className="mr-3 text-gold" />
@@ -615,14 +637,14 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                     </Link>
                   </motion.div>
                   
-                  <motion.div variants={mobileMenuItemVariants}>
+                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
                       to={getLocalizedPath('/about', currentLang)}
-                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                      className={`flex items-center justify-center py-3 px-4 rounded-md font-medium text-xl ${
                         currentPath === '/about' 
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200`}
+                      } transition-all duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaInfoCircle className="mr-3 text-gold" />
@@ -630,50 +652,54 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                     </Link>
                   </motion.div>
                   
-                  <motion.div variants={mobileMenuItemVariants}>
+                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
                       to={getLocalizedPath('/reservations', currentLang)}
-                      className={`flex items-center py-3 px-4 rounded-md font-medium text-lg ${
+                      className={`flex items-center justify-center py-3 px-4 rounded-md font-medium text-xl ${
                         currentPath === '/reservations' 
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200`}
+                      } transition-all duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaCalendarAlt className="mr-3 text-gold" />
                       {t('navigation.reservations')}
                     </Link>
                   </motion.div>
+                  
+                  {/* Social media icons using the footer style */}
+                  <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs pt-6 mt-6">
+                    <div className="grid grid-cols-3 gap-3">
+                      <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
+                        <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-200 w-full h-16 flex flex-col items-center justify-center shadow-sm hover:shadow-md hover:translate-y-[-2px]">
+                          <FaInstagram size={22} className="text-gold mb-1" />
+                          <span className="text-xs font-medium text-magnolia transition-colors duration-200">Instagram</span>
+                        </div>
+                      </SocialIconLink>
+                      <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
+                        <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-200 w-full h-16 flex flex-col items-center justify-center shadow-sm hover:shadow-md hover:translate-y-[-2px]">
+                          <FaLinkedin size={22} className="text-gold mb-1" />
+                          <span className="text-xs font-medium text-magnolia transition-colors duration-200">LinkedIn</span>
+                        </div>
+                      </SocialIconLink>
+                      <SocialIconLink href="mailto:info@basebymonsees.nl" label="Email">
+                        <div className="bg-gradient-to-br from-gold/10 to-gold/5 hover:from-gold/15 hover:to-gold/10 p-3 rounded-md transition-all duration-200 w-full h-16 flex flex-col items-center justify-center shadow-sm hover:shadow-md hover:translate-y-[-2px]">
+                          <FaEnvelope size={22} className="text-gold mb-1" />
+                          <span className="text-xs font-medium text-magnolia transition-colors duration-200">Email</span>
+                        </div>
+                      </SocialIconLink>
+                    </div>
+                    
+                    <button
+                      onClick={handleEmailClick}
+                      className="w-full mt-4 inline-flex items-center justify-center px-6 py-3 bg-gradient-to-br from-gold to-gold/90 hover:from-gold/90 hover:to-gold/80 text-onyx font-medium rounded-md transition-all duration-200 shadow-md hover:shadow-lg hover:translate-y-[-2px] text-center whitespace-nowrap text-sm border border-transparent"
+                    >
+                      <FaEnvelope className="mr-2" />
+                      {t('reservation.sendEmail')}
+                    </button>
+                  </motion.div>
                 </motion.div>
               </nav>
-              
-              {/* Social media icons */}
-              <div className="social-icons px-6 py-6 border-t border-gold/20 flex justify-center space-x-6 mt-auto">
-                <a 
-                  href="https://facebook.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-onyx/70 border border-gold/30 flex items-center justify-center text-magnolia hover:text-gold hover:border-gold/50 transition-colors duration-200"
-                >
-                  <FaFacebookF className="text-xl" />
-                </a>
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-onyx/70 border border-gold/30 flex items-center justify-center text-magnolia hover:text-gold hover:border-gold/50 transition-colors duration-200"
-                >
-                  <FaInstagram className="text-xl" />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-onyx/70 border border-gold/30 flex items-center justify-center text-magnolia hover:text-gold hover:border-gold/50 transition-colors duration-200"
-                >
-                  <FaTwitter className="text-xl" />
-                </a>
-              </div>
             </motion.div>
           </motion.div>
         )}
