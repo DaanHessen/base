@@ -29,6 +29,9 @@ export const setLanguage = (lang) => {
       console.warn('Failed to save language cookie:', e);
     }
     
+    // Add a smooth transition effect
+    document.documentElement.classList.add('language-transition');
+    
     // Update i18next
     i18n.changeLanguage(lang);
     
@@ -37,5 +40,10 @@ export const setLanguage = (lang) => {
     
     // Dispatch event for any listeners
     window.dispatchEvent(new CustomEvent('languageChange', { detail: { language: lang } }));
+    
+    // Remove transition class after animation completes
+    setTimeout(() => {
+      document.documentElement.classList.remove('language-transition');
+    }, 500);
   }
 }; 

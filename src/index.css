@@ -370,3 +370,28 @@ body.overflow-hidden {
   position: fixed;
   width: 100%;
 }
+
+/* Language transition effect */
+.language-transition {
+  transition: opacity 0.3s ease-out;
+  opacity: 0.8;
+}
+
+.page-transition {
+  transition: opacity 0.3s ease-out;
+  opacity: 0.8;
+}
+
+/* Add a transition to all content elements for language change */
+.page-content, 
+main,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button {
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.language-transition .page-content,
+.language-transition main {
+  opacity: 0.8;
+  transform: translateY(5px);
+}

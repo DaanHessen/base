@@ -7,9 +7,9 @@ const Logo = ({ className, compact = false }) => {
   
   const primaryColor = useMemo(() => ({ 
     r: 255, 
-    g: 205, 
-    b: 210, 
-    rgb: '255, 205, 210'
+    g: 182, 
+    b: 193, 
+    rgb: '255, 182, 193'
   }), []);
   
   const logoRef = useRef(null);
@@ -21,39 +21,39 @@ const Logo = ({ className, compact = false }) => {
     initial: {
       filter: `brightness(0) invert(1) 
               drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.4))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.2))`,
-      glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.06) 0%, 
-             rgba(${primaryColor.rgb}, 0.03) 40%, 
-             rgba(${primaryColor.rgb}, 0.015) 60%, 
-             rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.3
-    },
-    bright: {
-      filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.85))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.45))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.3))
-              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.15))`,
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.5))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.3))`,
       glow: `radial-gradient(ellipse at center, 
              rgba(${primaryColor.rgb}, 0.09) 0%, 
              rgba(${primaryColor.rgb}, 0.05) 40%, 
              rgba(${primaryColor.rgb}, 0.025) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.4
+      intensity: 0.35
+    },
+    bright: {
+      filter: `brightness(0) invert(1) 
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.85))
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.55))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.4))
+              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.25))`,
+      glow: `radial-gradient(ellipse at center, 
+             rgba(${primaryColor.rgb}, 0.12) 0%, 
+             rgba(${primaryColor.rgb}, 0.07) 40%, 
+             rgba(${primaryColor.rgb}, 0.035) 60%, 
+             rgba(${primaryColor.rgb}, 0) 100%)`,
+      intensity: 0.45
     },
     dim: {
       filter: `brightness(0) invert(1) 
               drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.35))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.15))`,
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.45))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.25))`,
       glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.05) 0%, 
-             rgba(${primaryColor.rgb}, 0.025) 40%, 
-             rgba(${primaryColor.rgb}, 0.01) 60%, 
+             rgba(${primaryColor.rgb}, 0.07) 0%, 
+             rgba(${primaryColor.rgb}, 0.035) 40%, 
+             rgba(${primaryColor.rgb}, 0.015) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.25
+      intensity: 0.3
     }
   }), [primaryColor.rgb]);
   
@@ -71,10 +71,10 @@ const Logo = ({ className, compact = false }) => {
     const applyState = (state, duration) => {
       if (!logo || !glowLayer) return;
       
-      logo.style.transition = `filter ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1.0)`;
+      logo.style.transition = `filter ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`;
       logo.style.filter = state.filter;
       
-      glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1.0), background ${duration}ms cubic-bezier(0.25, 0.1, 0.25, 1.0)`;
+      glowLayer.style.transition = `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), background ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`;
       glowLayer.style.background = state.glow;
       glowLayer.style.opacity = state.intensity;
     };
@@ -82,12 +82,12 @@ const Logo = ({ className, compact = false }) => {
     const startupSequence = () => {
       // Start with the initial state already visible
       requestAnimationFrame(() => {
-        applyState(states.bright, 500);
+        applyState(states.bright, 400);
         
         // Start the flicker animation after initial startup
         setTimeout(() => {
           flickerAnimation();
-        }, 2000);
+        }, 1500);
       });
     };
     
@@ -143,7 +143,7 @@ const Logo = ({ className, compact = false }) => {
   return (
     <div className={`relative ${className || 'w-auto h-auto'}`} style={{ 
       marginTop: compact ? '0.1rem' : '48px',
-      transition: 'margin 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+      transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
     }}>
       <div 
         ref={glowLayerRef}
@@ -152,8 +152,8 @@ const Logo = ({ className, compact = false }) => {
         style={{ 
           background: states.initial.glow, 
           opacity: states.initial.intensity,
-          transition: 'opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          transform: compact ? 'scale(0.85)' : 'scale(1)',
+          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+          transform: compact ? 'scale(0.9)' : 'scale(1)',
           transformOrigin: 'center center',
         }}
       ></div>
@@ -166,12 +166,12 @@ const Logo = ({ className, compact = false }) => {
         width={compact ? "150" : "250"}
         height={compact ? "50" : "60"}
         style={{
-          maxHeight: compact ? 'clamp(4.5rem, 6vw + 2.5rem, 6rem)' : 'clamp(8.5rem, 10vw + 4.5rem, 12rem)',
+          maxHeight: compact ? 'clamp(3.5rem, 5vw + 2rem, 5rem)' : 'clamp(7rem, 10vw + 3rem, 11rem)',
           objectFit: 'contain',
           aspectRatio: 'auto',
           filter: states.initial.filter,
           padding: compact ? '0.25rem 0' : '0',
-          transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
           transformOrigin: 'center center',
           opacity: 1
         }}

@@ -119,27 +119,24 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     
     const basePath = getBasePath(location.pathname);
     
-    setLanguage(lang);
-    
-    const newPath = lang === 'en' 
-      ? `/en${basePath}` 
-      : basePath;
-    
     // Store the current scroll position to restore it after reload
     sessionStorage.setItem('scrollPosition', window.scrollY.toString());
     
     // Add a transition class before redirecting
     document.body.classList.add('page-transition');
     
-    // Use cleaner redirect approach with proper hash handling
+    // Apply language change
+    setLanguage(lang);
+    
+    // Use a smoother transition with History API instead of page reload
+    const newPath = lang === 'en' 
+      ? `/en${basePath}` 
+      : basePath;
+    
+    // Update URL without a full page reload
     setTimeout(() => {
-      window.location.href = `/#${newPath}`;
-      
-      // Reload with a slight delay for smoother transition
-      setTimeout(() => {
-        window.location.reload();
-      }, 150);
-    }, 50);
+      window.history.pushState({}, '', newPath);
+    }, 150);
   }, [location.pathname]);
 
   const toggleLangDropdown = useCallback(() => setLangDropdownOpen(prev => !prev), []);
@@ -323,6 +320,18 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                   transition={{ duration: 0.2 }}
                 ></motion.span>
               </button>
+            </div>
+            
+            {/* Logo for mobile - always visible on pages */}
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 md:hidden">
+              <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0">
+                <div className="logo-container navbar-logo py-2">
+                  <Logo 
+                    className="transition-all duration-300 ease-in-out"
+                    compact={true}
+                  />
+                </div>
+              </Link>
             </div>
             
             <div className="hidden xl:flex items-center space-x-8">

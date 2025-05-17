@@ -31,7 +31,7 @@ header nav a:hover::after {
 .navbar-logo {
   padding: 1rem 0;
   margin: 0.5rem 0;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Fixed navigation styles */
@@ -84,11 +84,16 @@ header nav a:hover::after {
     transform: translateZ(0);
     will-change: transform;
     backface-visibility: hidden;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
   
   /* Improve logo rendering - keep padding consistent with desktop */
   .navbar-logo {
-    padding: 0.75rem 0;
+    padding: 0.5rem 0 !important;
     transform: scale(1) !important;
   }
 
@@ -106,13 +111,14 @@ header nav a:hover::after {
     padding: 0.75rem 0;
   }
   
-  /* Fix for sticky positioning */
+  /* Sticky header always on for mobile */
   .fixed-nav {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     right: 0;
     z-index: 50;
+    transform: translateY(0) !important;
   }
   
   /* Prevent menu items from jumping */
@@ -130,6 +136,13 @@ header nav a:hover::after {
   /* Reduce animation complexity */
   .mobile-menu-button span {
     transition: all 0.2s ease;
+  }
+  
+  /* Force scrolled styles for mobile header */
+  .fixed-nav {
+    background-color: var(--onyx) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   }
 }
 
@@ -156,16 +169,16 @@ header nav a:hover::after {
 .navbar-logo {
   transform: scale(1);
   will-change: transform;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              padding 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center center;
   padding: 0.75rem 0;
   opacity: 1;
 }
 
 .fixed-nav[data-scrolled="true"] .navbar-logo {
-  transform: scale(0.85);
+  transform: scale(0.9);
   padding: 0.5rem 0;
 }
 
@@ -211,14 +224,14 @@ header nav a:hover::after {
   }
   
   .header-transparent {
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+    background-color: var(--onyx) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   
   .fixed-nav[data-scrolled="true"] .logo-container {
-    transform: scale(0.85) !important;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scale(0.9) !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
   
   .fixed-inset-0 {
