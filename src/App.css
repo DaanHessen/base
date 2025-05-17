@@ -175,4 +175,62 @@ img.loaded {
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
+}
+
+/* App-specific global styles */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.text-gradient {
+  background: linear-gradient(180deg, var(--magnolia) 0%, var(--thistle) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.gold-gradient {
+  background: linear-gradient(90deg, var(--gold) 0%, #f3d77f 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  /* Enhance touch responsiveness */
+  a, button, input, select, textarea {
+    touch-action: manipulation;
+  }
+  
+  /* Prevent overscroll bounce effects */
+  .app-container {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Reduce motion for performance */
+  .app-container * {
+    transition-duration: 0.15s;
+  }
+  
+  /* Optimize rendering for fixed elements */
+  .fixed, .sticky {
+    will-change: transform;
+  }
+}
+
+/* iOS specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  .app-container {
+    min-height: -webkit-fill-available;
+  }
 } 

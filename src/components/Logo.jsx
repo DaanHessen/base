@@ -7,9 +7,9 @@ const Logo = ({ className, compact = false }) => {
   
   const primaryColor = useMemo(() => ({ 
     r: 255, 
-    g: 192, 
-    b: 203, 
-    rgb: '255, 192, 203'
+    g: 205, 
+    b: 210, 
+    rgb: '255, 205, 210'
   }), []);
   
   const logoRef = useRef(null);
@@ -20,43 +20,40 @@ const Logo = ({ className, compact = false }) => {
   const states = useMemo(() => ({
     initial: {
       filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.75))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.65))
-              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.45))`,
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.4))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.2))`,
       glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.15) 0%, 
-             rgba(${primaryColor.rgb}, 0.08) 40%, 
-             rgba(${primaryColor.rgb}, 0.04) 60%, 
+             rgba(${primaryColor.rgb}, 0.06) 0%, 
+             rgba(${primaryColor.rgb}, 0.03) 40%, 
+             rgba(${primaryColor.rgb}, 0.015) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.65
+      intensity: 0.3
     },
     bright: {
       filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.95))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.85))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.75))
-              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.55))
-              drop-shadow(0 0 8px rgba(${primaryColor.rgb}, 0.35))`,
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.85))
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.45))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.3))
+              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.15))`,
       glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.2) 0%, 
-             rgba(${primaryColor.rgb}, 0.1) 40%, 
-             rgba(${primaryColor.rgb}, 0.05) 60%, 
+             rgba(${primaryColor.rgb}, 0.09) 0%, 
+             rgba(${primaryColor.rgb}, 0.05) 40%, 
+             rgba(${primaryColor.rgb}, 0.025) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.8
+      intensity: 0.4
     },
     dim: {
       filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.85))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.65))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.55))
-              drop-shadow(0 0 5px rgba(${primaryColor.rgb}, 0.35))`,
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.35))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.15))`,
       glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.12) 0%, 
-             rgba(${primaryColor.rgb}, 0.06) 40%, 
-             rgba(${primaryColor.rgb}, 0.03) 60%, 
+             rgba(${primaryColor.rgb}, 0.05) 0%, 
+             rgba(${primaryColor.rgb}, 0.025) 40%, 
+             rgba(${primaryColor.rgb}, 0.01) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.55
+      intensity: 0.25
     }
   }), [primaryColor.rgb]);
   
@@ -117,21 +114,11 @@ const Logo = ({ className, compact = false }) => {
             }
           }, 120);
         } else {
-          // More noticeable flicker sequence
+          // More noticeable flicker sequence - simplified for better performance
           applyState(states.dim, 40);
           setTimeout(() => {
             if (isRunningRef.current) {
-              applyState(states.bright, 30);
-              setTimeout(() => {
-                if (isRunningRef.current) {
-                  applyState(states.dim, 50);
-                  setTimeout(() => {
-                    if (isRunningRef.current) {
-                      applyState(states.bright, 120);
-                    }
-                  }, 60);
-                }
-              }, 50);
+              applyState(states.bright, 120);
             }
           }, 70);
         }

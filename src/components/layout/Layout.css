@@ -10,11 +10,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 80vh;
-  z-index: 1;
-  position: relative;
   flex-grow: 1;
   flex-shrink: 0;
+  padding-top: var(--navbar-height, 4rem);
+  min-height: calc(100vh - var(--footer-height, 0px) - var(--navbar-height, 0px));
+  background-color: transparent; /* Ensures it doesn't obscure home bg */
+  position: relative;
+  z-index: 1; /* Above home background */
 }
 
 @supports (height: 100svh) {
@@ -54,18 +56,31 @@ main {
 
 .home-background-inner {
   position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* filter: blur(4px); */
-  /* opacity: 0.15; */
+  opacity: 1;
   transform: translateZ(0);
   backface-visibility: hidden;
-  background-color: var(--onyx);
+  background-color: transparent;
+}
+
+/* Background overlay to balance deep-fried effect */
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(1.5px) brightness(1.05);
+  -webkit-backdrop-filter: blur(1.5px) brightness(1.05);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .background-loaded {
@@ -152,17 +167,7 @@ main {
 
 /* Mobile layout adjustments */
 @media (max-width: 767px) {
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    background-color: var(--onyx);
-    pointer-events: none;
-  }
+  /* Removed body::before overlay that was causing deep-fried effect */
 
   * {
     -webkit-backface-visibility: hidden;
@@ -182,6 +187,7 @@ main {
     height: 100vh;
     height: calc(var(--vh, 1vh) * 100);
     overflow-x: hidden;
+    overflow-y: auto !important;
     position: relative;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
@@ -205,11 +211,9 @@ main {
   
   .layout-content {
     flex: 1;
-    overflow-y: visible;
+    overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    display: flex;
-    flex-direction: column;
     padding-bottom: env(safe-area-inset-bottom, 24px);
   }
 
@@ -261,23 +265,21 @@ main {
   }
   
   #root {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: calc(var(--vh, 1vh) * 100);
-    height: auto !important;
+    position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
   }
   
   .layout-content {
-    flex: 1;
-    overflow-y: visible;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: env(safe-area-inset-bottom, 24px);
+    /* Styles for mobile .layout-content are already defined above */
+    /* This ensures that mobile-specific layout-content styles are grouped */
+  }
+
+  body.mobile-menu-open {
+    /* overflow: hidden; Is handled by Layout.jsx JS by setting style.overflow on body */
+    /* position: fixed; Is handled by Layout.jsx JS */
+    /* width: 100%; Is handled by Layout.jsx JS */
+    /* height: 100%; Is handled by Layout.jsx JS */
+    /* top: value; Is handled by Layout.jsx JS */
   }
 }
 
@@ -471,16 +473,17 @@ section {
 }
 
 /* Content container */ 
-.layout-content {
-  position: relative;
-  z-index: 1;
-  flex-grow: 1;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
+/* The following .layout-content block is a duplicate and will be removed. */
+/* .layout-content { */
+/*   position: relative; */
+/*   z-index: 1; */
+/*   flex-grow: 1; */
+/*   width: 100%; */
+/*   max-width: 100%; */
+/*   overflow-x: hidden; */
+/*   display: flex; */
+/*   flex-direction: column; */
+/* } */
 
 /* Background image for fixed backgrounds */
 .bg-fixed-custom {
@@ -501,27 +504,30 @@ section {
   }
 }
 
+/* Language transition effect */
+body.page-transition {
+  opacity: 0.5;
+  transition: opacity 0.2s ease-out;
+  pointer-events: none;
+}
+
 /* Page transition animations */
 .page-transition-enter {
   opacity: 0;
-  transform: translateY(8px);
 }
 
 .page-transition-enter-active {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 300ms ease-out;
 }
 
 .page-transition-exit {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .page-transition-exit-active {
   opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 200ms, transform 200ms;
+  transition: opacity 200ms ease-in;
 }
 
 /* Performance optimizations */
@@ -549,26 +555,35 @@ section {
   perspective: 1000px;
 }
 
-/* Ensure header is consistently styled on mobile */
+/* Ensure header is consistently styled */
 .header, .fixed-nav {
-  background-color: rgba(42, 42, 42, 0.97);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: transparent;
   padding: 0.5rem 0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: none;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .header-scrolled {
   background-color: rgba(42, 42, 42, 0.97) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 @media (max-width: 767px) {
   .header, .fixed-nav, .scroll-nav {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  .header[data-scrolled="true"], 
+  .fixed-nav[data-scrolled="true"], 
+  .scroll-nav[data-scrolled="true"],
+  .header-scrolled {
     background-color: rgba(42, 42, 42, 0.97) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
 
@@ -708,5 +723,68 @@ footer {
 @media (max-width: 767px) {
   .fixed-bottom, .fixed-footer {
     position: relative !important;
+  }
+}
+
+/* Improved mobile menu styling for consistency */
+@media (max-width: 767px) {
+  .header {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .header-scrolled {
+    background-color: rgba(42, 42, 42, 0.97) !important;
+  }
+  
+  .header-transparent {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Apply consistent transform to logos */
+  .fixed-nav[data-scrolled="true"] .logo-container {
+    transform: scale(0.9) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  /* Ensure menu overlay covers entire screen */
+  .fixed-inset-0 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 50;
+    touch-action: none;
+  }
+
+  /* Ensure mobile menu animations are smooth */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(42, 42, 42, 0.97);
+    transition: opacity 0.3s ease-in-out;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Ensure mobile logo appears consistent with desktop */
+  .mobile-menu-logo, 
+  .mobile-menu .navbar-logo {
+    padding: 0.75rem 0;
+    margin: 0 auto;
+    max-width: 200px;
+    transform: scale(1) !important;
   }
 } 

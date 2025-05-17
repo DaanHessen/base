@@ -17,11 +17,23 @@ export const getLanguage = () => {
 export const setLanguage = (lang) => {
   if (lang !== getLanguage()) {
     // Save to both localStorage and cookies for redundancy
-    localStorage.setItem(LANGUAGE_KEY, lang);
-    Cookies.set(LANGUAGE_KEY, lang, { expires: COOKIE_EXPIRES, sameSite: 'strict' });
+    try {
+      localStorage.setItem(LANGUAGE_KEY, lang);
+    } catch(e) {
+      console.warn('Failed to save language to localStorage:', e);
+    }
+    
+    try {
+      Cookies.set(LANGUAGE_KEY, lang, { expires: COOKIE_EXPIRES, sameSite: 'strict' });
+    } catch(e) {
+      console.warn('Failed to save language cookie:', e);
+    }
     
     // Update i18next
     i18n.changeLanguage(lang);
+    
+    // Add a flag to indicate language is being changed
+    window.isLanguageChanging = true;
     
     // Dispatch event for any listeners
     window.dispatchEvent(new CustomEvent('languageChange', { detail: { language: lang } }));

@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieConsent from '../CookieConsent';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowUp } from 'react-icons/fa';
 import './Layout.css';
 
 function Layout({ children }) {
@@ -15,11 +16,13 @@ function Layout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const { t, i18n } = useTranslation('common');
   const currentLang = i18n.language;
   const bgRef = useRef(null);
   const mainRef = useRef(null);
   const navbarRef = useRef(null);
+  const scrollPositionRef = useRef(0);
   
   const getBasePath = (path) => {
     if (path.startsWith('/en')) return path.substring(3);
@@ -45,31 +48,29 @@ function Layout({ children }) {
   const handleMobileMenuToggle = (isOpen) => {
     setMobileMenuOpen(isOpen);
     
-    // Toggle body class to prevent scrolling when menu is open
     if (isOpen) {
+      const storedScrollY = window.scrollY;
+      scrollPositionRef.current = storedScrollY;
       document.body.classList.add('mobile-menu-open');
-      document.body.style.overflow = 'hidden';
+      document.body.style.top = `-${storedScrollY}px`;
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
-      document.body.style.height = '100%';
     } else {
+      const scrollYToRestore = scrollPositionRef.current;
       document.body.classList.remove('mobile-menu-open');
-      document.body.style.overflow = '';
+      document.body.style.top = '';
       document.body.style.position = '';
       document.body.style.width = '';
-      document.body.style.height = '';
-      
-      // Fix iOS scrolling - small timeout to let animations complete
+      document.body.style.overflow = '';
+
       setTimeout(() => {
-        window.scrollTo({
-          top: window.scrollY,
-          behavior: 'auto'
-        });
-      }, 50);
+        window.scrollTo(0, scrollYToRestore);
+      }, 0);
+      scrollPositionRef.current = 0;
     }
   };
 
-  // Handle scroll events to set navbar background
+  // Handle scroll events to set navbar background and show/hide back to top button
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -78,6 +79,13 @@ function Layout({ children }) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
+      }
+      
+      // Show back to top button when scrolled down 300px
+      if (scrollPosition > 300) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
       }
     };
     
@@ -90,6 +98,14 @@ function Layout({ children }) {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Back to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   // Update iOS viewport height variable for proper mobile height
   useEffect(() => {
@@ -129,7 +145,16 @@ function Layout({ children }) {
     if (mobileMenuOpen) {
       handleMobileMenuToggle(false);
     }
-  }, [location.pathname, mobileMenuOpen]);
+    
+    // Restore scroll position after language change
+    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    if (savedScrollPosition) {
+      setTimeout(() => {
+        window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        sessionStorage.removeItem('scrollPosition');
+      }, 100);
+    }
+  }, [location.pathname, mobileMenuOpen, handleMobileMenuToggle]);
 
   // Load background image for home page
   useEffect(() => {
@@ -160,6 +185,13 @@ function Layout({ children }) {
         setTimeout(() => {
           setBgImage('/home_placeholder.jpg');
         }, 50);
+      }
+      
+      // Reset language change flag when completed
+      if (window.isLanguageChanging) {
+        setTimeout(() => {
+          window.isLanguageChanging = false;
+        }, 300);
       }
     };
     
@@ -199,6 +231,8 @@ function Layout({ children }) {
             className="home-background-inner"
             style={{ backgroundImage: `url(${bgImage || '/home_placeholder.jpg'})` }}
           ></div>
+          {/* Add white overlay to balance deep-fried effect */}
+          <div className="background-overlay"></div>
         </div>
       )}
       
@@ -214,7 +248,6 @@ function Layout({ children }) {
       <main 
         ref={mainRef}
         className="flex-grow z-10 relative layout-content"
-        style={{ transition: 'filter 0.4s ease' }}
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -232,6 +265,23 @@ function Layout({ children }) {
         {/* Mobile scroll helper - improves scrolling to footer on mobile */}
         {isMobile && <div className="mobile-scroll-helper" aria-hidden="true"></div>}
       </main>
+      
+      {/* Back to top button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            onClick={scrollToTop}
+            className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50 bg-gold/90 hover:bg-gold text-onyx rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 focus:outline-none"
+            aria-label={currentLang === 'nl' ? 'Terug naar boven' : 'Back to top'}
+          >
+            <FaArrowUp className="w-5 h-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
       
       {/* Footer */}
       <Footer />

@@ -268,7 +268,7 @@ function Footer() {
               </div>
               <div className="flex justify-center pt-1">
                 <SocialIconLink href="https://brasseriemonsees.nl" label="Brasserie Monsees">
-                  <div className="bg-gold/10 hover:bg-gold/20 p-2 rounded-lg transition-all duration-300 w-32 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
+                  <div className="bg-gold/10 hover:bg-gold/20 p-2 rounded-lg transition-all duration-300 w-32 h-10 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
                     <MonseesLink href="https://brasseriemonsees.nl" label="Brasserie Monsees" />
                   </div>
                 </SocialIconLink>

@@ -82,7 +82,7 @@ function AboutUs() {
             <motion.div variants={itemVariants}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 {/* Mobile image placement - proper sizing and position */}
-                <div className="md:hidden flex justify-center items-center mb-6">
+                <div className="md:hidden flex justify-center items-center mb-4">
                   <div className="w-3/4 sm:w-1/2 max-w-[280px] mx-auto">
                     <div className="aspect-[3/4] w-full rounded-lg overflow-hidden shadow-xl relative group will-change-transform">
                       <img 
@@ -101,7 +101,7 @@ function AboutUs() {
                 
                 <div className="md:col-span-2">
                   <div className="flex flex-col h-full space-y-4 md:space-y-6">
-                    <div className="bg-onyx/70 backdrop-blur-sm p-5 md:p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-4 md:p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.0.title`)}
                       </h3>
@@ -110,7 +110,7 @@ function AboutUs() {
                       </div>
                     </div>
 
-                    <div className="bg-onyx/70 backdrop-blur-sm p-5 md:p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
+                    <div className="bg-onyx/70 backdrop-blur-sm p-4 md:p-6 border border-gold/30 rounded-lg shadow-lg flex-1">
                       <h3 className="text-lg sm:text-xl font-semibold text-gold mb-2 sm:mb-3">
                         {t(`about:sections.1.title`)}
                       </h3>
@@ -141,14 +141,14 @@ function AboutUs() {
               </div>
             </motion.div>
           
-            <motion.div variants={itemVariants} className="mt-8 sm:mt-12">
+            <motion.div variants={itemVariants} className="mt-6 sm:mt-12">
               <div className="bg-onyx/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gold/30">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
                   <div className="md:col-span-3 h-full">
                     {!mapLoaded ? (
                       <MapSkeleton />
                     ) : (
-                      <div className="w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] relative rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl overflow-hidden">
+                      <div className="w-full h-full min-h-[200px] sm:min-h-[250px] md:min-h-[350px] relative rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl overflow-hidden">
                         <iframe
                           title="Location Map"
                           width="100%"
@@ -166,8 +166,8 @@ function AboutUs() {
                     )}
                   </div>
                   
-                  <div className="md:col-span-2 p-5 sm:p-6 md:p-8 md:border-l border-gold/30">
-                    <div className="space-y-5 sm:space-y-6">
+                  <div className="md:col-span-2 p-4 sm:p-6 md:p-8 md:border-l border-gold/30">
+                    <div className="space-y-4 sm:space-y-6">
                       <div className="flex items-start">
                         <FaMapMarkerAlt className="text-gold text-xl mt-1 mr-3 shrink-0" />
                         <div>
@@ -205,7 +205,7 @@ function AboutUs() {
                           href="https://maps.google.com/?q=Biersteeg+10,+1211+GC+Hilversum" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-full px-6 py-3 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px]"
+                          className="inline-flex items-center justify-center w-full px-4 py-2 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px]"
                         >
                           <span>{currentLang === 'nl' ? 'Routebeschrijving' : 'Get Directions'}</span>
                           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -17,42 +17,40 @@ const IconLogo = ({ className }) => {
   const states = useMemo(() => ({
     initial: {
       filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.75))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.65))
-              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.45))`,
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.5))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.3))`,
       glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.15) 0%, 
-             rgba(${primaryColor.rgb}, 0.08) 40%, 
-             rgba(${primaryColor.rgb}, 0.04) 60%, 
+             rgba(${primaryColor.rgb}, 0.08) 0%, 
+             rgba(${primaryColor.rgb}, 0.04) 40%, 
+             rgba(${primaryColor.rgb}, 0.02) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.65
+      intensity: 0.4
     },
     bright: {
       filter: `brightness(0) invert(1) 
-              drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.85))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.75))
-              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.5))`,
-      glow: `radial-gradient(ellipse at center, 
-             rgba(${primaryColor.rgb}, 0.2) 0%, 
-             rgba(${primaryColor.rgb}, 0.1) 40%, 
-             rgba(${primaryColor.rgb}, 0.05) 60%, 
-             rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.75
-    },
-    dim: {
-      filter: `brightness(0) invert(1) 
               drop-shadow(0 0 1px rgba(255, 255, 255, 0.85))
-              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.65))
-              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.55))
-              drop-shadow(0 0 5px rgba(${primaryColor.rgb}, 0.35))`,
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.6))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.4))
+              drop-shadow(0 0 6px rgba(${primaryColor.rgb}, 0.2))`,
       glow: `radial-gradient(ellipse at center, 
              rgba(${primaryColor.rgb}, 0.12) 0%, 
              rgba(${primaryColor.rgb}, 0.06) 40%, 
              rgba(${primaryColor.rgb}, 0.03) 60%, 
              rgba(${primaryColor.rgb}, 0) 100%)`,
-      intensity: 0.55
+      intensity: 0.5
+    },
+    dim: {
+      filter: `brightness(0) invert(1) 
+              drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
+              drop-shadow(0 0 2px rgba(${primaryColor.rgb}, 0.45))
+              drop-shadow(0 0 4px rgba(${primaryColor.rgb}, 0.25))`,
+      glow: `radial-gradient(ellipse at center, 
+             rgba(${primaryColor.rgb}, 0.06) 0%, 
+             rgba(${primaryColor.rgb}, 0.03) 40%, 
+             rgba(${primaryColor.rgb}, 0.015) 60%, 
+             rgba(${primaryColor.rgb}, 0) 100%)`,
+      intensity: 0.3
     }
   }), [primaryColor.rgb]);
   
@@ -113,21 +111,11 @@ const IconLogo = ({ className }) => {
             }
           }, 120);
         } else {
-          // More noticeable flicker sequence
+          // More noticeable flicker sequence - simplified for better performance
           applyState(states.dim, 40);
           setTimeout(() => {
             if (isRunningRef.current) {
-              applyState(states.bright, 30);
-              setTimeout(() => {
-                if (isRunningRef.current) {
-                  applyState(states.dim, 50);
-                  setTimeout(() => {
-                    if (isRunningRef.current) {
-                      applyState(states.bright, 120);
-                    }
-                  }, 60);
-                }
-              }, 50);
+              applyState(states.bright, 120);
             }
           }, 70);
         }
@@ -155,7 +143,11 @@ const IconLogo = ({ className }) => {
         ref={glowLayerRef}
         className="absolute -inset-6 z-0 opacity-0 blur-md hover:cursor-pointer"
         aria-hidden="true"
-        style={{ background: states.initial.glow, opacity: states.initial.intensity }}
+        style={{ 
+          background: states.initial.glow, 
+          opacity: states.initial.intensity,
+          transition: 'opacity 0.3s ease, background 0.3s ease'
+        }}
       ></div>
       
       <img 
@@ -168,7 +160,8 @@ const IconLogo = ({ className }) => {
         style={{
           objectFit: 'contain',
           aspectRatio: 'auto',
-          filter: states.initial.filter
+          filter: states.initial.filter,
+          transition: 'filter 0.3s ease'
         }}
         loading="eager"
         fetchpriority="high"

@@ -35,12 +35,13 @@ function Home() {
     };
   }, []);
 
+  // Simplified variants with reduced intensity for better mobile performance
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: isMobile ? 0.1 : 0.15,
+        staggerChildren: isMobile ? 0.05 : 0.1,
         delayChildren: 0.05,
         ease: "easeOut"
       }
@@ -48,15 +49,13 @@ function Home() {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
       transition: { 
-        duration: 0.4, 
-        ease: "easeOut",
-        // Use hardware acceleration for better performance on mobile
-        type: "tween"
+        duration: 0.3, 
+        ease: "easeOut"
       }
     }
   };
@@ -64,11 +63,11 @@ function Home() {
   const decorationVariants = {
     hidden: { opacity: 0, width: 0 },
     visible: { 
-      opacity: 1, 
+      opacity: 0.7, 
       width: 96,
       transition: { 
-        delay: isMobile ? 0.6 : 0.8, 
-        duration: 0.5,
+        delay: isMobile ? 0.4 : 0.6, 
+        duration: 0.4,
         ease: "easeOut" 
       }
     }
@@ -93,17 +92,15 @@ function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            style={{ backfaceVisibility: 'hidden' }}
           >
             <motion.h1 
               className="text-[clamp(1.75rem,5vw+1rem,4rem)] md:text-[clamp(3rem,7vw+1rem,5rem)] lg:text-[clamp(4rem,8vw+1rem,7rem)] font-bold text-magnolia mb-3 sm:mb-6 leading-tight tracking-tight"
               variants={itemVariants}
               dangerouslySetInnerHTML={{ __html: t('home:hero.title') }}
-              style={{ transform: 'translate3d(0, 0, 0)' }}
             />
             
             <div className="max-w-xl w-full">
-              <motion.div className="subtitle-container" variants={itemVariants} style={{ transform: 'translate3d(0, 0, 0)' }}>
+              <motion.div className="subtitle-container" variants={itemVariants}>
                 <motion.h2 
                   className="text-[clamp(0.875rem,2vw+0.5rem,1rem)] md:text-[clamp(1rem,2.5vw+0.5rem,1.125rem)] text-thistle font-light tracking-wide relative z-10 px-4 py-2 break-words"
                 >
@@ -114,7 +111,6 @@ function Home() {
               <motion.div
                 className="content-container"
                 variants={itemVariants}
-                style={{ transform: 'translate3d(0, 0, 0)' }}
               >
                 <p className="mb-6 sm:mb-8 leading-relaxed">
                   {t('home:hero.description')}
@@ -123,7 +119,6 @@ function Home() {
                 <motion.div 
                   className="flex flex-col xs:flex-row gap-3 w-full xs:w-auto justify-start equal-width-buttons"
                   variants={itemVariants}
-                  style={{ transform: 'translate3d(0, 0, 0)' }}
                 >
                   <Link 
                     to={getLocalizedPath('/reservations')} 
@@ -144,7 +139,6 @@ function Home() {
             <motion.div 
               className="w-24 h-1 bg-gold/70 mt-12 rounded-full block md:hidden mx-auto shadow-[0_0_10px_rgba(212,175,55,0.5)]"
               variants={decorationVariants}
-              style={{ transform: 'translate3d(0, 0, 0)' }}
             />
           </motion.div>
         </div>

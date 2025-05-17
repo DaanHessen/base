@@ -28,6 +28,9 @@ html, body {
   scroll-behavior: smooth;
   position: relative;
   height: auto !important;
+  /* Improve scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 html::-webkit-scrollbar {
@@ -120,6 +123,15 @@ body * {
 }
 
 /* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .transition-all {
     transition-property: all;
@@ -201,6 +213,33 @@ button.bg-onyx:hover, a.bg-onyx:hover {
     min-width: 44px;
   }
   
+  /* Reduce motion on mobile */
+  .motion-reduce-mobile {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Force hardware acceleration for smoother scrolling */
+  .fixed-nav, 
+  .mobile-menu-button, 
+  .logo-container {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  
+  /* Fix buggy fixed element rendering on mobile */
+  .fixed, .sticky {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* Prevent overflow on mobile */
+  .overflow-x-hidden {
+    overflow-x: hidden !important;
+  }
+  
   /* Make categories in mobile view wrap to multiple rows */
   .flex.flex-row.items-center,
   .flex.flex-row.space-x-4 {
@@ -248,82 +287,86 @@ button.bg-onyx:hover, a.bg-onyx:hover {
   }
 }
 
-/* iOS specific fixes */
-@supports (-webkit-touch-callout: none) {
+/* Additional mobile fixes */
+.bg-fixed-custom {
+  background-attachment: initial;
+}
+
+/* Ensure proper rendering on iOS */
+@supports (-webkit-overflow-scrolling: touch) {
   .bg-fixed-custom {
-    background-attachment: scroll !important;
+    background-attachment: scroll;
   }
   
   .min-h-screen {
-    min-height: -webkit-fill-available !important;
-    min-height: calc(var(--vh, 1vh) * 100) !important;
+    min-height: -webkit-fill-available;
   }
 }
 
-/* Fix iOS height issues */
-:root {
-  --vh: 1vh;
-}
-
-/* Fixed header styles */
+/* Navbar style fixes */
 .header {
-  @apply sticky top-0 z-50 w-full transition-all duration-300;
-  background-color: rgba(42, 42, 42, 0.97);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
 }
 
 .header-scrolled {
-  @apply bg-onyx/90 backdrop-blur-md shadow-md;
-  background-color: rgba(42, 42, 42, 0.97) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  background-color: rgba(42, 42, 42, 0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .header-transparent {
   background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  border-bottom: 1px solid transparent;
 }
 
-/* Small navigation bar that appears on scroll */
 .scroll-nav {
-  @apply fixed top-0 left-0 right-0 z-50 transform transition-transform duration-300 bg-onyx/95 backdrop-blur-md shadow-md;
-  height: 3.5rem;
   transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 }
 
 .scroll-nav.visible {
   transform: translateY(0);
 }
 
-/* Improve visibility of logo on mobile */
 @media (max-width: 768px) {
   .md\:block {
     display: block !important;
   }
   
   .header .relative.flex.justify-between {
-    justify-content: center !important;
+    height: 60px !important;
   }
   
   .absolute.left-1\/2.top-1\/2.transform.-translate-x-1\/2 {
-    display: block !important;
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    margin: 0 auto !important;
-    width: 70% !important;
-    max-width: 200px !important;
+    display: none !important;
   }
   
-  /* Fix footer issues */
-  footer {
-    position: relative !important;
-    z-index: 10 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
+  /* Improve touch targets for mobile */
+  button, 
+  a, 
+  [role="button"] {
+    min-height: 40px;
+    min-width: 40px;
   }
+  
+  footer {
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+}
+
+/* Force body scroll to top when modal is closed */
+body.overflow-hidden {
+  height: 100% !important;
+  position: fixed;
+  width: 100%;
 }

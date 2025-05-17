@@ -114,38 +114,6 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     };
   }, [handleScroll]);
 
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      const storedScrollY = window.scrollY;
-      scrollPositionRef.current = storedScrollY;
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${storedScrollY}px`;
-      document.body.style.width = '100%';
-    } else {
-      if (document.body.style.position === 'fixed') {
-        const scrollYToRestore = scrollPositionRef.current;
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        if (scrollYToRestore > 0) {
-          window.scrollTo(0, scrollYToRestore);
-        }
-        scrollPositionRef.current = 0;
-      }
-    }
-    
-    return () => {
-      if (document.body.style.position === 'fixed') {
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-      }
-    };
-  }, [mobileMenuOpen]);
-  
   const changeLanguage = useCallback((lang) => {
     setLangDropdownOpen(false);
     
@@ -157,9 +125,21 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
       ? `/en${basePath}` 
       : basePath;
     
-    window.location.replace(`/#${newPath}`);
+    // Store the current scroll position to restore it after reload
+    sessionStorage.setItem('scrollPosition', window.scrollY.toString());
     
-    window.location.reload();
+    // Add a transition class before redirecting
+    document.body.classList.add('page-transition');
+    
+    // Use cleaner redirect approach with proper hash handling
+    setTimeout(() => {
+      window.location.href = `/#${newPath}`;
+      
+      // Reload with a slight delay for smoother transition
+      setTimeout(() => {
+        window.location.reload();
+      }, 150);
+    }, 50);
   }, [location.pathname]);
 
   const toggleLangDropdown = useCallback(() => setLangDropdownOpen(prev => !prev), []);
@@ -203,7 +183,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     };
   }, []);
 
-  // Mobile menu button animations
+  // Mobile menu button animations - simplified for better performance
   const toggleMobileMenu = () => {
     const newState = !mobileMenuOpen;
     setMobileMenuOpen(newState);
@@ -213,44 +193,47 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     if (onMobileMenuToggle) {
       onMobileMenuToggle(newState);
     }
+    
+    // Prevent body scrolling when menu is open
+    document.body.style.overflow = newState ? 'hidden' : '';
   };
 
   const topBarVariants = {
     closed: { rotate: 0, translateY: 0 },
-    open: { rotate: 45, translateY: 6 }
+    open: { rotate: 45, translateY: 6, transition: { duration: 0.2 } }
   };
 
   const middleBarVariants = {
     closed: { opacity: 1 },
-    open: { opacity: 0 }
+    open: { opacity: 0, transition: { duration: 0.2 } }
   };
 
   const bottomBarVariants = {
     closed: { rotate: 0, translateY: 0 },
-    open: { rotate: -45, translateY: -6 }
+    open: { rotate: -45, translateY: -6, transition: { duration: 0.2 } }
   };
 
   const mobileMenuVariants = {
-    closed: { opacity: 0, y: -20 },
+    closed: { opacity: 0, y: -10, transition: { duration: 0.2 } },
     open: { 
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: 0.3,
-        staggerChildren: 0.07,
-        delayChildren: 0.1
+        duration: 0.2,
+        staggerChildren: 0.05,
+        delayChildren: 0.05
       } 
     }
   };
 
   const mobileMenuItemVariants = {
-    closed: { opacity: 0, y: -10 },
-    open: { opacity: 1, y: 0 }
+    closed: { opacity: 0, y: -5, transition: { duration: 0.15 } },
+    open: { opacity: 1, y: 0, transition: { duration: 0.15 } }
   };
 
   const langDropdownMobileVariants = {
-    closed: { opacity: 0, scale: 0.9, y: -10 },
-    open: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.2 } }
+    closed: { opacity: 0, scale: 0.95, y: -5, transition: { duration: 0.15 } },
+    open: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.15 } }
   };
 
   useEffect(() => {
@@ -314,30 +297,31 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             <div className="flex items-center xl:hidden">
               <button
                 onClick={toggleMobileMenu}
-                className="relative z-[1001] inline-flex items-center justify-center p-2 rounded-md text-magnolia hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold/30 h-10 w-10 bg-onyx/70 border border-gold/30"
-                aria-expanded={mobileMenuOpen}
-                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                className="w-10 h-10 focus:outline-none xl:hidden flex flex-col justify-center items-center relative mobile-menu-button"
+                aria-label={mobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
+                style={{ 
+                  zIndex: 9999,
+                  position: 'relative'
+                }}
               >
-                <motion.div 
-                  animate={mobileMenuOpen ? "open" : "closed"} 
-                  initial={false}
-                  className="flex flex-col justify-between w-5 h-3.5"
-                >
-                  <motion.span
-                    variants={topBarVariants}
-                    className="block h-0.5 w-full bg-current rounded-full"
-                    style={{ originX: "0.5", originY: "0" }}
-                  ></motion.span>
-                  <motion.span
-                    variants={middleBarVariants}
-                    className="block h-0.5 w-full bg-current rounded-full"
-                  ></motion.span>
-                  <motion.span
-                    variants={bottomBarVariants}
-                    className="block h-0.5 w-full bg-current rounded-full"
-                    style={{ originX: "0.5", originY: "1" }}
-                  ></motion.span>
-                </motion.div>
+                <motion.span
+                  className="w-6 h-0.5 bg-gold mb-1.5 block"
+                  variants={topBarVariants}
+                  animate={mobileMenuOpen ? "open" : "closed"}
+                  transition={{ duration: 0.2 }}
+                ></motion.span>
+                <motion.span
+                  className="w-6 h-0.5 bg-gold mb-1.5 block"
+                  variants={middleBarVariants}
+                  animate={mobileMenuOpen ? "open" : "closed"}
+                  transition={{ duration: 0.2 }}
+                ></motion.span>
+                <motion.span
+                  className="w-6 h-0.5 bg-gold block"
+                  variants={bottomBarVariants}
+                  animate={mobileMenuOpen ? "open" : "closed"}
+                  transition={{ duration: 0.2 }}
+                ></motion.span>
               </button>
             </div>
             
@@ -561,26 +545,28 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-md z-[1000] md:hidden"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-onyx bg-opacity-95 z-[1000] md:hidden overscroll-none"
             onClick={toggleMobileMenu}
+            style={{ touchAction: 'none' }}
           >
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.25 }}
               className="fixed inset-0 flex flex-col items-center justify-between z-[1001] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
+              style={{ touchAction: 'pan-y' }}
             >
               {/* Logo for mobile menu - positioned exactly like the header logo */}
-              <div className="absolute top-0 left-0 right-0 flex justify-center mt-12 z-[1002]">
+              <div className="absolute top-0 left-0 right-0 flex justify-center mt-10 z-[1002]">
                 <Link 
                   to={getLocalizedPath('/', currentLang)} 
                   className="block"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Logo compact={false} className="w-full max-w-[250px]" />
+                  <Logo compact={false} className="w-full max-w-[200px]" />
                 </Link>
               </div>
               
@@ -590,7 +576,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                   initial="closed"
                   animate="open"
                   exit="closed"
-                  className="flex flex-col items-center justify-center space-y-6 flex-1"
+                  className="flex flex-col items-center justify-center space-y-4 flex-1"
                 >
                   <motion.div variants={mobileMenuItemVariants} className="w-full max-w-xs">
                     <Link
@@ -599,7 +585,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                         currentPath === '/' 
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200 w-full`}
+                      } transition-colors duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaHome className="mr-3 text-gold" />
@@ -614,7 +600,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                         currentPath === '/menu' || currentPath === '/menu/food'
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200 w-full`}
+                      } transition-colors duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaUtensils className="mr-3 text-gold" />
@@ -629,7 +615,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                         currentPath === '/menu/drinks'
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200 w-full`}
+                      } transition-colors duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaCocktail className="mr-3 text-gold" />
@@ -644,7 +630,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                         currentPath === '/about' 
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200 w-full`}
+                      } transition-colors duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaInfoCircle className="mr-3 text-gold" />
@@ -659,7 +645,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                         currentPath === '/reservations' 
                           ? 'text-gold bg-gold/5' 
                           : 'text-magnolia hover:text-gold hover:bg-gold/5'
-                      } transition-all duration-200 w-full`}
+                      } transition-colors duration-200 w-full`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <FaCalendarAlt className="mr-3 text-gold" />
@@ -671,22 +657,22 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                 {/* Social media icons at the bottom */}
                 <motion.div 
                   variants={mobileMenuItemVariants}
-                  className="w-full flex justify-center py-6 mt-auto mb-6"
+                  className="w-full flex justify-center py-4 mt-auto mb-4"
                 >
                   <div className="flex justify-center space-x-6">
                     <SocialIconLink href="https://www.instagram.com/base_by_monsees/" label="Instagram">
-                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-14 h-14 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <FaInstagram size={26} className="text-gold" />
+                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-colors duration-200 w-12 h-12 flex items-center justify-center">
+                        <FaInstagram size={22} className="text-gold" />
                       </div>
                     </SocialIconLink>
                     <SocialIconLink href="https://www.linkedin.com/company/brasserie-monsees-hilversum/" label="LinkedIn">
-                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-14 h-14 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <FaLinkedin size={26} className="text-gold" />
+                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-colors duration-200 w-12 h-12 flex items-center justify-center">
+                        <FaLinkedin size={22} className="text-gold" />
                       </div>
                     </SocialIconLink>
                     <SocialIconLink href="mailto:info@basebymonsees.nl" label="Email">
-                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-all duration-300 w-14 h-14 flex items-center justify-center shadow-sm hover:shadow-md hover:-translate-y-1">
-                        <FaEnvelope size={26} className="text-gold" />
+                      <div className="bg-gold/10 hover:bg-gold/20 p-4 rounded-full transition-colors duration-200 w-12 h-12 flex items-center justify-center">
+                        <FaEnvelope size={22} className="text-gold" />
                       </div>
                     </SocialIconLink>
                   </div>
