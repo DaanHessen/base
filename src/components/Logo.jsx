@@ -142,8 +142,8 @@ const Logo = ({ className, compact = false }) => {
   
   return (
     <div className={`relative ${className || 'w-auto h-auto'}`} style={{ 
-      marginTop: compact ? '0.1rem' : '48px',
-      transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+      marginTop: compact ? '0.1rem' : '0',
+      transition: 'all 0.25s ease',
     }}>
       <div 
         ref={glowLayerRef}
@@ -152,7 +152,7 @@ const Logo = ({ className, compact = false }) => {
         style={{ 
           background: states.initial.glow, 
           opacity: states.initial.intensity,
-          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: 'all 0.25s ease',
           transform: compact ? 'scale(0.9)' : 'scale(1)',
           transformOrigin: 'center center',
         }}
@@ -166,14 +166,15 @@ const Logo = ({ className, compact = false }) => {
         width={compact ? "150" : "250"}
         height={compact ? "50" : "60"}
         style={{
-          maxHeight: compact ? 'clamp(3.5rem, 5vw + 2rem, 5rem)' : 'clamp(7rem, 10vw + 3rem, 11rem)',
+          maxHeight: compact ? 'clamp(2.5rem, 5vw + 1rem, 3.5rem)' : 'clamp(3.5rem, 6vw + 1.5rem, 5rem)',
           objectFit: 'contain',
           aspectRatio: 'auto',
           filter: states.initial.filter,
           padding: compact ? '0.25rem 0' : '0',
-          transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: 'all 0.25s ease',
           transformOrigin: 'center center',
-          opacity: 1
+          opacity: 1,
+          display: 'block'
         }}
         loading="eager"
         fetchpriority="high"

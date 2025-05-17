@@ -29,7 +29,7 @@
 /* The blur is now only applied in the Navbar component on the background overlay */
 
 main {
-  flex: 1;
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -112,7 +112,7 @@ main {
 .page-content {
   width: 100%;
   position: relative;
-  flex: 1;
+  flex: 1 0 auto;
 }
 
 @media (max-width: 768px) {
@@ -167,8 +167,6 @@ main {
 
 /* Mobile layout adjustments */
 @media (max-width: 767px) {
-  /* Removed body::before overlay that was causing deep-fried effect */
-
   * {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -210,11 +208,11 @@ main {
   }
   
   .layout-content {
-    flex: 1;
+    flex: 1 0 auto;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: env(safe-area-inset-bottom, 24px);
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 
   main {
@@ -224,37 +222,29 @@ main {
     overflow-y: visible;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    min-height: auto;
+    display: flex;
+    flex-direction: column;
   }
   
-  main > div, main > section {
-    min-height: calc(100vh - 200px);
-    padding-bottom: 30px;
+  /* On homepage, optimize content for better display */
+  section {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
   }
   
-  /* Enhanced mobile scroll helper */
-  .mobile-scroll-helper {
-    content: '';
-    display: block;
-    height: 60px; /* Increased height for better footer visibility */
-    width: 100%;
-    position: relative;
-    pointer-events: auto; /* Allow interactions to help with scrolling */
+  /* Ensure homepage content is properly displayed */
+  body.scrolled .header {
+    background-color: rgba(42, 42, 42, 0.97) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+  }
+  
+  /* Footer always at the bottom */
+  footer, .footer-container {
     margin-top: auto;
-    opacity: 0;
-  }
-  
-  .about-us-section {
-    padding-top: 80px !important;
-    padding-bottom: 40px !important;
-  }
-  
-  .layout-content > div {
-    padding-top: 56px;
-  }
-
-  .layout-content > section {
-    padding-top: 56px;
+    flex-shrink: 0;
   }
 }
 

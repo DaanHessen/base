@@ -28,6 +28,12 @@ const MonseesLink = ({ href, label }) => (
       viewBox="0 0 96 24" 
       className="w-full h-auto max-h-[20px]"
       preserveAspectRatio="xMidYMid meet"
+      style={{
+        filter: `brightness(0) invert(1) 
+                drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
+                drop-shadow(0 0 2px rgba(255, 182, 193, 0.5))
+                drop-shadow(0 0 4px rgba(255, 182, 193, 0.3))`,
+      }}
     >
       <defs>
         <linearGradient id="monsees-footer-gradient" gradientUnits="userSpaceOnUse" fy="90%">

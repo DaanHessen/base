@@ -247,47 +247,45 @@ function Layout({ children }) {
       {/* Main content */}
       <main 
         ref={mainRef}
-        className="flex-grow z-10 relative layout-content"
+        className="flex flex-col flex-grow z-10 relative layout-content"
+        style={{ minHeight: isHomePage ? 'calc(100vh - 64px)' : 'auto' }}
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            variants={pageVariants}
             initial="initial"
             animate="animate"
             exit="exit"
-            className="h-full"
+            variants={pageVariants}
+            className="flex flex-col flex-grow"
           >
             {children}
           </motion.div>
         </AnimatePresence>
-        
-        {/* Mobile scroll helper - improves scrolling to footer on mobile */}
-        {isMobile && <div className="mobile-scroll-helper" aria-hidden="true"></div>}
       </main>
-      
-      {/* Back to top button */}
-      <AnimatePresence>
-        {showBackToTop && (
-          <motion.button 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            onClick={scrollToTop}
-            className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-50 bg-gold/90 hover:bg-gold text-onyx rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 focus:outline-none"
-            aria-label={currentLang === 'nl' ? 'Terug naar boven' : 'Back to top'}
-          >
-            <FaArrowUp className="w-5 h-5" />
-          </motion.button>
-        )}
-      </AnimatePresence>
       
       {/* Footer */}
       <Footer />
       
-      {/* Cookie Consent */}
+      {/* Cookie consent */}
       <CookieConsent />
+      
+      {/* Back to top button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            onClick={scrollToTop}
+            className="back-to-top-button"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            aria-label={t('backToTop')}
+          >
+            <FaArrowUp />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

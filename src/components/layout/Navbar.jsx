@@ -122,9 +122,6 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     // Store the current scroll position to restore it after reload
     sessionStorage.setItem('scrollPosition', window.scrollY.toString());
     
-    // Add a transition class before redirecting
-    document.body.classList.add('page-transition');
-    
     // Apply language change
     setLanguage(lang);
     
@@ -197,17 +194,17 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
 
   const topBarVariants = {
     closed: { rotate: 0, translateY: 0 },
-    open: { rotate: 45, translateY: 6, transition: { duration: 0.2 } }
+    open: { rotate: 45, translateY: 4, transition: { duration: 0.15 } }
   };
 
   const middleBarVariants = {
     closed: { opacity: 1 },
-    open: { opacity: 0, transition: { duration: 0.2 } }
+    open: { opacity: 0, transition: { duration: 0.15 } }
   };
 
   const bottomBarVariants = {
     closed: { rotate: 0, translateY: 0 },
-    open: { rotate: -45, translateY: -6, transition: { duration: 0.2 } }
+    open: { rotate: -45, translateY: -4, transition: { duration: 0.15 } }
   };
 
   const mobileMenuVariants = {
@@ -251,12 +248,14 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
       if (!element) return;
       
       if (isScrolled) {
+        element.style.transition = 'all 0.25s ease';
         element.style.backgroundColor = 'rgba(42, 42, 42, 0.97)';
-        element.style.backdropFilter = 'blur(8px)';
-        element.style.webkitBackdropFilter = 'blur(8px)';
+        element.style.backdropFilter = 'none';
+        element.style.webkitBackdropFilter = 'none';
         element.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
         element.style.borderBottom = '1px solid rgba(212, 175, 55, 0.2)';
       } else {
+        element.style.transition = 'all 0.25s ease';
         element.style.backgroundColor = 'transparent';
         element.style.backdropFilter = 'none';
         element.style.webkitBackdropFilter = 'none';
@@ -272,6 +271,13 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     if (ref && ref.current) {
       applyScrolledStyle(ref.current, scrolled);
     }
+
+    // Update body class for styling
+    if (scrolled) {
+      document.body.classList.add('scrolled');
+    } else {
+      document.body.classList.remove('scrolled');
+    }
   }, [scrolled, ref]);
 
   useEffect(() => {
@@ -281,6 +287,26 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
   const handleEmailClick = () => {
     window.location.href = 'mailto:info@basebymonsees.nl';
   };
+
+  // Add effect to handle mobile top bar behavior
+  useEffect(() => {
+    const handleScrollForMobile = () => {
+      if (window.innerWidth < 768) {
+        const currentScrollY = window.scrollY;
+        setScrolled(currentScrollY > 5);
+      }
+    };
+    
+    // Initial check
+    handleScrollForMobile();
+    
+    // Add event listener for mobile scroll
+    window.addEventListener('scroll', handleScrollForMobile, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScrollForMobile);
+    };
+  }, []);
 
   return (
     <>
@@ -298,39 +324,37 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
                 aria-label={mobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
                 style={{ 
                   zIndex: 9999,
-                  position: 'relative'
+                  position: 'relative',
+                  backgroundColor: 'rgba(42, 42, 42, 0.8)',
+                  borderRadius: '0.375rem',
+                  border: '1px solid rgba(212, 175, 55, 0.3)'
                 }}
               >
                 <motion.span
-                  className="w-6 h-0.5 bg-gold mb-1.5 block"
+                  className="w-5 h-0.5 bg-gold mb-1.5 block"
                   variants={topBarVariants}
                   animate={mobileMenuOpen ? "open" : "closed"}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.15 }}
                 ></motion.span>
                 <motion.span
-                  className="w-6 h-0.5 bg-gold mb-1.5 block"
+                  className="w-5 h-0.5 bg-gold mb-1.5 block"
                   variants={middleBarVariants}
                   animate={mobileMenuOpen ? "open" : "closed"}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.15 }}
                 ></motion.span>
                 <motion.span
-                  className="w-6 h-0.5 bg-gold block"
+                  className="w-5 h-0.5 bg-gold block"
                   variants={bottomBarVariants}
                   animate={mobileMenuOpen ? "open" : "closed"}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.15 }}
                 ></motion.span>
               </button>
             </div>
             
-            {/* Logo for mobile - always visible on pages */}
-            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 md:hidden">
-              <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0">
-                <div className="logo-container navbar-logo py-2">
-                  <Logo 
-                    className="transition-all duration-300 ease-in-out"
-                    compact={true}
-                  />
-                </div>
+            {/* Logo for mobile - always visible */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 md:hidden">
+              <Link to={getLocalizedPath('/', currentLang)} className="block" aria-label="BASE logo">
+                <Logo compact={scrolled} className={`w-auto transition-all duration-250 ease-in-out ${scrolled ? 'scale-90' : 'scale-110'}`} />
               </Link>
             </div>
             
@@ -428,15 +452,15 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
               </Link>
             </div>
             
-            <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out ${
+            <div className={`absolute left-1/2 top-1/2 transform -translate-x-1/2 transition-all duration-500 ease-in-out ${
               scrolled 
                 ? '-translate-y-1/2 scale-90 lg:scale-95' 
                 : '-translate-y-[45%] scale-95 lg:scale-100'
             } z-10 hidden md:block`}>
               <Link to={getLocalizedPath('/', currentLang)} className="flex-shrink-0 relative">
-                <div className={`logo-container navbar-logo py-3 ${scrolled ? 'pt-4 pb-3' : 'py-4'}`}> 
+                <div className={`logo-container navbar-logo py-3 transition-all duration-500 ease-in-out ${scrolled ? 'pt-4 pb-3' : 'py-4'}`}> 
                   <Logo 
-                    className={`transition-all duration-300 ease-in-out`} 
+                    className={`transition-all duration-500 ease-in-out`} 
                     compact={scrolled}
                   /> 
                 </div>
@@ -555,7 +579,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-onyx bg-opacity-95 z-[1000] md:hidden overscroll-none"
+            className="fixed inset-0 bg-onyx bg-opacity-95 z-[500] md:hidden overscroll-none"
             onClick={toggleMobileMenu}
             style={{ touchAction: 'none' }}
           >
@@ -564,22 +588,11 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 flex flex-col items-center justify-between z-[1001] overflow-hidden"
+              className="fixed inset-0 flex flex-col items-center justify-between z-[501] overflow-hidden pt-16"
               onClick={(e) => e.stopPropagation()}
               style={{ touchAction: 'pan-y' }}
             >
-              {/* Logo for mobile menu - positioned exactly like the header logo */}
-              <div className="absolute top-0 left-0 right-0 flex justify-center mt-10 z-[1002]">
-                <Link 
-                  to={getLocalizedPath('/', currentLang)} 
-                  className="block"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Logo compact={false} className="w-full max-w-[200px]" />
-                </Link>
-              </div>
-              
-              <nav className="px-4 py-6 w-full mt-28 flex-1 flex flex-col">
+              <nav className="px-4 py-6 w-full mt-14 flex-1 flex flex-col">
                 <motion.div
                   variants={mobileMenuVariants}
                   initial="closed"

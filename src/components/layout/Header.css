@@ -19,7 +19,7 @@ header nav a:hover::after {
 }
 
 .logo-container {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .logo-container img {
@@ -31,7 +31,7 @@ header nav a:hover::after {
 .navbar-logo {
   padding: 1rem 0;
   margin: 0.5rem 0;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease;
 }
 
 /* Fixed navigation styles */
@@ -45,28 +45,29 @@ header nav a:hover::after {
   top: 0;
   left: 0;
   width: 100%;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              background-color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              padding 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.25s ease;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   box-shadow: none;
   border-bottom: 1px solid transparent;
+  background-color: transparent;
 }
 
 /* Ensure navbar background shows when scrolled - with footer-like styling */
-.fixed-nav[data-scrolled="true"] {
-  background-color: var(--onyx) !important;
+.fixed-nav[data-scrolled="true"], 
+body.scrolled .header {
+  background-color: rgba(42, 42, 42, 0.97) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
 }
 
 /* Add footer-like divider - only when scrolled */
-.fixed-nav[data-scrolled="true"]::after {
+.fixed-nav[data-scrolled="true"]::after, 
+body.scrolled .header::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -82,28 +83,73 @@ header nav a:hover::after {
   .header {
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    will-change: transform;
+    will-change: transform, background-color;
     backface-visibility: hidden;
     position: fixed !important;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
+    z-index: 1000;
+    transition: all 0.25s ease;
+    height: 64px;
+    background-color: transparent;
+  }
+  
+  /* Header styles when scrolled */
+  .header-scrolled,
+  body.scrolled .header {
+    background-color: rgba(42, 42, 42, 0.97) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+  }
+  
+  /* Header styles when at the top */
+  .header-transparent:not([data-scrolled="true"]),
+  body:not(.scrolled) .header {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: none !important;
   }
   
   /* Improve logo rendering - keep padding consistent with desktop */
   .navbar-logo {
     padding: 0.5rem 0 !important;
     transform: scale(1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
-  /* Remove inconsistent mobile logo opacity settings */
-  .header-transparent .mobile-logo {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+  /* Enhanced mobile logo styling */
+  .header-transparent .mobile-logo,
+  .header .mobile-logo {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    display: block !important;
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
   
+  /* Mobile menu button styling - square not circular */
+  .mobile-menu-button {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+    z-index: 999 !important;
+    border-radius: 0.375rem !important;
+    background-color: rgba(42, 42, 42, 0.8) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    transition: all 0.15s ease !important;
+  }
+
   /* Consistent logo styling in mobile menu */
   .mobile-menu-logo {
     max-width: 200px;
@@ -121,28 +167,16 @@ header nav a:hover::after {
     transform: translateY(0) !important;
   }
   
-  /* Prevent menu items from jumping */
-  .mobile-menu-button {
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    z-index: 999;
-  }
-  
-  /* Reduce animation complexity */
+  /* Menu button bar animations */
   .mobile-menu-button span {
-    transition: all 0.2s ease;
+    transition: all 0.15s ease !important;
+    background-color: var(--gold) !important;
+    height: 2px !important;
+    margin-bottom: 4px !important;
   }
   
-  /* Force scrolled styles for mobile header */
-  .fixed-nav {
-    background-color: var(--onyx) !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  .mobile-menu-button span:last-child {
+    margin-bottom: 0 !important;
   }
 }
 
@@ -157,10 +191,10 @@ header nav a:hover::after {
 /* Force hardware acceleration on mobile */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
-    .fixed-nav {
+    .fixed-nav, .header {
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
-      will-change: transform;
+      will-change: transform, background-color;
     }
   }
 }
@@ -169,17 +203,17 @@ header nav a:hover::after {
 .navbar-logo {
   transform: scale(1);
   will-change: transform;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-              padding 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease;
   transform-origin: center center;
   padding: 0.75rem 0;
   opacity: 1;
 }
 
-.fixed-nav[data-scrolled="true"] .navbar-logo {
+.fixed-nav[data-scrolled="true"] .navbar-logo,
+body.scrolled .header .navbar-logo {
   transform: scale(0.9);
   padding: 0.5rem 0;
+  transition: all 0.25s ease;
 }
 
 @media (max-width: 320px) {
@@ -197,7 +231,7 @@ header nav a:hover::after {
   z-index: 50;
   height: 4rem;
   transform: translateY(-100%);
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.25s ease;
   background-color: var(--onyx);
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   will-change: transform;
@@ -216,53 +250,70 @@ header nav a:hover::after {
 /* Improved mobile menu */
 @media (max-width: 767px) {
   .header {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.25s ease;
+    height: 64px;
   }
   
-  .header-scrolled {
-    background-color: rgba(42, 42, 42, 0.97) !important;
+  body {
+    padding-top: 64px; /* Add padding to body to prevent content from going under fixed header */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
   }
   
-  .header-transparent {
-    background-color: var(--onyx) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
   
-  .fixed-nav[data-scrolled="true"] .logo-container {
-    transform: scale(0.9) !important;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Fix homepage layout */
+  main {
+    flex: 1 0 auto;
+    min-height: calc(100vh - 64px - 150px); /* viewport - header - approx footer */
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
   
+  section {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ensure proper footer positioning */
+  .footer-container {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    width: 100%;
+    flex-shrink: 0;
+  }
+  
+  /* Prevent the grey background issue at the bottom */
+  body::after {
+    display: none !important;
+  }
+  
+  /* Fix any glitches by enforcing hardware acceleration */
   .fixed-inset-0 {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 50;
+    transform: translateZ(0);
   }
-
-  /* Hide desktop menu on mobile */
-  .hidden {
-    display: none !important;
-  }
-
-  /* Make mobile menu full screen */
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(42, 42, 42, 0.97);
+  
+  /* Fix for Safari and iOS */
+  body, html, #root, main, section {
+    height: auto !important;
+    min-height: 100%;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -273,27 +324,28 @@ header nav a:hover::after {
   z-index: 50;
   width: 100%;
   background-color: transparent;
-  will-change: transform, opacity;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+  transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
 .header-scrolled {
-  background-color: var(--onyx);
+  background-color: rgba(42, 42, 42, 0.97);
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 /* Transparent header should not have shadows */
 .header-transparent {
   box-shadow: none !important;
-  border-bottom: 1px solid transparent !important;
+  border-bottom: none !important;
+  background-color: transparent !important;
 }
 
 /* Explicitly remove shadow & border when transparent */
 .fixed-nav:not([data-scrolled="true"]) {
   box-shadow: none !important;
-  border-bottom: 1px solid transparent !important;
+  border-bottom: none !important;
   background-color: transparent !important;
 }
 

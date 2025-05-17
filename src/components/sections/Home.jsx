@@ -29,9 +29,34 @@ function Home() {
     // Add event listener for window resize
     window.addEventListener('resize', checkIsMobile);
     
+    // Set fixed height for homepage to make footer immediately visible when scrolling down
+    const handleHomepageHeight = () => {
+      const viewportHeight = window.innerHeight;
+      const header = document.querySelector('.header');
+      const footer = document.querySelector('.footer-container');
+      
+      if (header && footer) {
+        const headerHeight = header.offsetHeight;
+        
+        // Set the section height to exactly viewport height minus header
+        const section = document.querySelector('.homepage-section');
+        if (section) {
+          section.style.height = `${viewportHeight - headerHeight}px`;
+          section.style.minHeight = `${viewportHeight - headerHeight}px`;
+          section.style.maxHeight = `${viewportHeight - headerHeight}px`;
+          section.style.overflow = 'hidden';
+          section.style.position = 'relative';
+        }
+      }
+    };
+    
+    handleHomepageHeight();
+    window.addEventListener('resize', handleHomepageHeight);
+    
     // Cleanup
     return () => {
       window.removeEventListener('resize', checkIsMobile);
+      window.removeEventListener('resize', handleHomepageHeight);
     };
   }, []);
 
@@ -85,7 +110,7 @@ function Home() {
         <meta name="og:description" content={t('home:seo.description')} />
       </Helmet>
       
-      <section className="min-h-screen flex items-center pt-28 pb-12 sm:pt-32 md:pt-20 md:pb-0">
+      <section className="homepage-section flex items-center justify-center" style={{ overflow: 'hidden' }}>
         <div className="w-full px-4 sm:px-8 max-w-screen-xl mx-auto">
           <motion.div 
             className="flex flex-col items-start text-left"

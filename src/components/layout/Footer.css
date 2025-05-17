@@ -10,11 +10,84 @@ footer {
 
 /* Footer container */
 .footer-container {
-  background-color: var(--onyx);
-  position: relative;
-  z-index: 10;
   margin-top: auto;
   width: 100%;
+  position: relative;
+  z-index: 10;
+  background-color: var(--onyx);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  overflow: hidden;
+}
+
+/* Fix for issues on mobile */
+@media (max-width: 767px) {  
+  footer {
+    display: block;
+    width: 100%;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+    background-color: var(--onyx);
+    margin-top: auto;
+  }
+  
+  .footer-container {
+    position: relative;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    background-color: var(--onyx);
+  }
+  
+  /* Prevent any space between content and footer */
+  body {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--onyx);
+  }
+  
+  /* Ensure main content takes up available space pushing footer to bottom */
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-height: 100vh;
+    background-color: transparent;
+  }
+  
+  /* Prevent the grey background from showing */
+  body::after,
+  #root::after,
+  footer::after,
+  .footer-container::after,
+  main::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+  }
+  
+  /* Ensure no margins causing gaps */
+  main {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    background-color: transparent;
+  }
+  
+  /* Ensure the background color doesn't change */
+  html {
+    background-color: var(--onyx);
+  }
+  
+  /* Fix for preventing grey background glitch */
+  .footer-container::before {
+    display: none !important;
+  }
 }
 
 /* Social media icons styling - Redesigned */
@@ -199,64 +272,33 @@ footer {
   100% { opacity: 0; transform: translate(-50%, -10px); }
 }
 
-/* Mobile footer styles */
-@media (max-width: 767px) {
-  .footer-container {
-    position: relative !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 10 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    margin-top: 2rem !important;
-    margin-bottom: 0 !important;
-    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 1rem) !important;
-  }
-  
-  /* Center social media icons on mobile */
-  .social-icons-mobile {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 1rem !important;
-    margin: 1rem auto !important;
-  }
-  
-  .footer-card {
-    margin-bottom: 1rem;
-  }
-  
-  /* Ensure footer text is readable */
-  .footer-container h3,
-  .footer-container p,
-  .footer-container span,
-  .footer-container a,
-  .footer-container button {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-  }
-  
-  /* Make cards more compact on mobile */
-  .footer-card {
-    padding: 1rem !important;
-  }
-  
-  /* Adjust spacing in mobile footer */
-  .footer-container .space-y-6 {
-    margin-bottom: 0 !important;
-  }
-  
-  /* Ensure footer is above other content */
-  .footer-container {
-    z-index: 50 !important;
-  }
+/* Center social media icons on mobile */
+.social-icons-mobile {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  margin: 1rem auto !important;
+}
+
+/* Ensure footer text is readable */
+.footer-container h3,
+.footer-container p,
+.footer-container span,
+.footer-container a,
+.footer-container button {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 /* Prevent footer from shrinking */
 @media (max-width: 767px) {
   footer {
     flex-shrink: 0;
+    margin-top: auto;
+  }
+  
+  body, #root, main, section {
+    background-color: transparent;
   }
 }
 

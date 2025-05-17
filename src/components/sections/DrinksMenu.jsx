@@ -66,8 +66,8 @@ function DrinksMenu() {
           
           {/* Quick navigation for mobile */}
           {hasSubcategories && (
-            <div className="md:hidden overflow-x-auto pb-4 mb-4 whitespace-nowrap no-scrollbar">
-              <div className="flex space-x-3">
+            <div className="md:hidden overflow-x-auto pb-4 mb-4 no-scrollbar">
+              <div className="flex flex-wrap gap-2">
                 {drinksCategory.subcategories.map((subcategory) => (
                   <button 
                     key={subcategory.id}
@@ -75,7 +75,7 @@ function DrinksMenu() {
                       e.preventDefault();
                       document.getElementById(`subcategory-${subcategory.id}`)?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className="px-4 py-2 text-sm rounded-full border border-gold/30 bg-onyx/70 text-gold whitespace-nowrap flex-shrink-0 hover:bg-gold/20 transition-all duration-150"
+                    className="px-4 py-2 text-sm rounded-md border border-gold/30 bg-onyx/70 text-gold flex-shrink-0 hover:bg-gold/20 transition-all duration-150"
                   >
                     {subcategory.name[currentLang]}
                   </button>

@@ -29,21 +29,25 @@ export const setLanguage = (lang) => {
       console.warn('Failed to save language cookie:', e);
     }
     
-    // Add a smooth transition effect
-    document.documentElement.classList.add('language-transition');
+    // Add an overlay element for smooth transition
+    const overlay = document.createElement('div');
+    overlay.classList.add('language-change-overlay');
+    document.body.appendChild(overlay);
     
     // Update i18next
     i18n.changeLanguage(lang);
     
-    // Add a flag to indicate language is being changed
-    window.isLanguageChanging = true;
-    
     // Dispatch event for any listeners
     window.dispatchEvent(new CustomEvent('languageChange', { detail: { language: lang } }));
     
-    // Remove transition class after animation completes
+    // Remove overlay after animation completes
     setTimeout(() => {
-      document.documentElement.classList.remove('language-transition');
-    }, 500);
+      overlay.classList.add('fade-out');
+      setTimeout(() => {
+        if (document.body.contains(overlay)) {
+          document.body.removeChild(overlay);
+        }
+      }, 300);
+    }, 200);
   }
 }; 
