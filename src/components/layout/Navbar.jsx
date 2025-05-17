@@ -68,13 +68,18 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
-    
-    // Show main nav background when scrolled a little
-    const newScrolledState = currentScrollY > 5;
+    const newScrolledState = currentScrollY > 10;
+
     setScrolled(newScrolledState);
-    
+
+    if (newScrolledState) {
+      document.body.classList.add('scrolled');
+    } else {
+      document.body.classList.remove('scrolled');
+    }
+
     setLastScrollY(currentScrollY);
-  }, [lastScrollY]);
+  }, []);
 
   useEffect(() => {
     const localScrollListener = () => {
@@ -83,34 +88,11 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
 
     window.addEventListener('scroll', localScrollListener, { passive: true });
 
-    const initialCheckTimeout = setTimeout(() => {
-      handleScroll();
-    }, 100);
-
-    return () => {
-      clearTimeout(initialCheckTimeout);
-      window.removeEventListener('scroll', localScrollListener);
-    };
-  }, [handleScroll]);
-
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (!isMobile) return;
-    
-    // On mobile, we follow the same scrolling behavior as desktop
+    // Initial check on mount
     handleScroll();
     
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        // On mobile, check scroll position to set the background
-        handleScroll();
-      }
-    };
-    
-    window.addEventListener('resize', handleResize, { passive: true });
-    
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', localScrollListener);
     };
   }, [handleScroll]);
 
@@ -254,6 +236,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
         element.style.webkitBackdropFilter = 'none';
         element.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
         element.style.borderBottom = '1px solid rgba(212, 175, 55, 0.2)';
+        element.dataset.scrolled = 'true';
       } else {
         element.style.transition = 'all 0.25s ease';
         element.style.backgroundColor = 'transparent';
@@ -261,6 +244,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
         element.style.webkitBackdropFilter = 'none';
         element.style.boxShadow = 'none';
         element.style.borderBottom = '1px solid transparent';
+        element.dataset.scrolled = 'false';
       }
     };
     
@@ -270,13 +254,6 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     
     if (ref && ref.current) {
       applyScrolledStyle(ref.current, scrolled);
-    }
-
-    // Update body class for styling
-    if (scrolled) {
-      document.body.classList.add('scrolled');
-    } else {
-      document.body.classList.remove('scrolled');
     }
   }, [scrolled, ref]);
 
@@ -288,32 +265,17 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
     window.location.href = 'mailto:info@basebymonsees.nl';
   };
 
-  // Add effect to handle mobile top bar behavior
-  useEffect(() => {
-    const handleScrollForMobile = () => {
-      if (window.innerWidth < 768) {
-        const currentScrollY = window.scrollY;
-        setScrolled(currentScrollY > 5);
-      }
-    };
-    
-    // Initial check
-    handleScrollForMobile();
-    
-    // Add event listener for mobile scroll
-    window.addEventListener('scroll', handleScrollForMobile, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScrollForMobile);
-    };
-  }, []);
-
   return (
     <>
       <header
         ref={navRef}
         className={`header ${scrolled ? 'header-scrolled' : 'header-transparent'} fixed-nav`}
         data-scrolled={scrolled}
+        style={{
+          backgroundColor: scrolled ? 'rgba(42, 42, 42, 0.97)' : 'transparent',
+          borderBottom: scrolled ? '1px solid rgba(212, 175, 55, 0.2)' : 'none',
+          transition: 'all 0.15s ease'
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex justify-between items-center h-16 md:h-20">
@@ -354,7 +316,7 @@ const Navbar = React.forwardRef(({ isScrolled: initialIsScrolled, currentLang: p
             {/* Logo for mobile - always visible */}
             <div className="absolute left-1/2 transform -translate-x-1/2 md:hidden">
               <Link to={getLocalizedPath('/', currentLang)} className="block" aria-label="BASE logo">
-                <Logo compact={scrolled} className={`w-auto transition-all duration-250 ease-in-out ${scrolled ? 'scale-90' : 'scale-110'}`} />
+                <Logo compact={scrolled} className={`w-auto transition-all duration-150 ease-in-out ${scrolled ? 'scale-90' : 'scale-160'}`} />
               </Link>
             </div>
             

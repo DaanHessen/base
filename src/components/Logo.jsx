@@ -143,7 +143,7 @@ const Logo = ({ className, compact = false }) => {
   return (
     <div className={`relative ${className || 'w-auto h-auto'}`} style={{ 
       marginTop: compact ? '0.1rem' : '0',
-      transition: 'all 0.25s ease',
+      transition: 'all 0.15s ease',
     }}>
       <div 
         ref={glowLayerRef}
@@ -152,7 +152,7 @@ const Logo = ({ className, compact = false }) => {
         style={{ 
           background: states.initial.glow, 
           opacity: states.initial.intensity,
-          transition: 'all 0.25s ease',
+          transition: 'all 0.15s ease',
           transform: compact ? 'scale(0.9)' : 'scale(1)',
           transformOrigin: 'center center',
         }}
@@ -166,12 +166,12 @@ const Logo = ({ className, compact = false }) => {
         width={compact ? "150" : "250"}
         height={compact ? "50" : "60"}
         style={{
-          maxHeight: compact ? 'clamp(2.5rem, 5vw + 1rem, 3.5rem)' : 'clamp(3.5rem, 6vw + 1.5rem, 5rem)',
+          maxHeight: compact ? 'clamp(2.75rem, 5vw + 1rem, 4rem)' : 'clamp(5rem, 8vw + 1.5rem, 7rem)',
           objectFit: 'contain',
           aspectRatio: 'auto',
           filter: states.initial.filter,
           padding: compact ? '0.25rem 0' : '0',
-          transition: 'all 0.25s ease',
+          transition: 'all 0.15s ease',
           transformOrigin: 'center center',
           opacity: 1,
           display: 'block'

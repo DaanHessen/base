@@ -24,28 +24,19 @@ const MonseesLink = ({ href, label }) => (
     className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center justify-center w-full h-full z-10"
     aria-label={label}
   >
-    <svg
-      viewBox="0 0 96 24" 
+    <img 
+      src={monseesLogo} 
+      alt="Brasserie Monsees"
       className="w-full h-auto max-h-[20px]"
-      preserveAspectRatio="xMidYMid meet"
       style={{
         filter: `brightness(0) invert(1) 
                 drop-shadow(0 0 1px rgba(255, 255, 255, 0.8))
                 drop-shadow(0 0 2px rgba(255, 182, 193, 0.5))
                 drop-shadow(0 0 4px rgba(255, 182, 193, 0.3))`,
+        maxWidth: '100%',
+        objectFit: 'contain'
       }}
-    >
-      <defs>
-        <linearGradient id="monsees-footer-gradient" gradientUnits="userSpaceOnUse" fy="90%">
-          <stop offset="0" stopColor="currentColor" />
-          <stop offset="1" stopColor="currentColor" />
-        </linearGradient>
-        <mask id="monsees-footer-mask">
-          <image href={monseesLogo} width="96" height="24" />
-        </mask>
-      </defs>
-      <rect width="96" height="24" fill="url(#monsees-footer-gradient)" mask="url(#monsees-footer-mask)" />
-    </svg>
+    />
   </a>
 );
 

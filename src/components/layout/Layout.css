@@ -213,6 +213,7 @@ main {
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     padding-bottom: env(safe-area-inset-bottom, 0);
+    padding-top: 15px; /* Add padding for content to start below larger header */
   }
 
   main {
@@ -233,12 +234,24 @@ main {
     flex-direction: column;
   }
   
-  /* Ensure homepage content is properly displayed */
-  body.scrolled .header {
+  /* Ensure header is consistently styled on mobile */
+  body.scrolled .header,
+  .header[data-scrolled="true"],
+  .header-scrolled {
     background-color: rgba(42, 42, 42, 0.97) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+    height: 64px !important;
+    transition: all 0.15s ease !important;
+  }
+  
+  body:not(.scrolled) .header,
+  .header[data-scrolled="false"],
+  .header-transparent {
+    height: 70px !important;
+    transition: all 0.15s ease !important;
+    background-color: transparent !important;
   }
   
   /* Footer always at the bottom */
@@ -701,12 +714,11 @@ body.mobile-menu-open {
 }
 
 /* Fix footer positioning to ensure it's always reachable */
-footer {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  flex-shrink: 0;
+footer, .footer-container {
   margin-top: auto;
+  flex-shrink: 0;
+  position: relative; /* Ensure footer is part of the normal document flow */
+  z-index: 2; /* Ensure footer is above other elements if overlapping */
 }
 
 /* Remove any fixed positioning that might interfere with scrolling */

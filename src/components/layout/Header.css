@@ -19,7 +19,7 @@ header nav a:hover::after {
 }
 
 .logo-container {
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .logo-container img {
@@ -31,7 +31,7 @@ header nav a:hover::after {
 .navbar-logo {
   padding: 1rem 0;
   margin: 0.5rem 0;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
 }
 
 /* Fixed navigation styles */
@@ -45,7 +45,7 @@ header nav a:hover::after {
   top: 0;
   left: 0;
   width: 100%;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   box-shadow: none;
@@ -91,35 +91,45 @@ body.scrolled .header::after {
     right: 0;
     width: 100%;
     z-index: 1000;
-    transition: all 0.25s ease;
-    height: 64px;
+    transition: background-color 0.15s ease, height 0.15s ease !important;
+    height: 70px; /* Increased height to accommodate bigger logo */
     background-color: transparent;
   }
   
   /* Header styles when scrolled */
-  .header-scrolled,
-  body.scrolled .header {
+  .header.header-scrolled,
+  body.scrolled .header,
+  .header[data-scrolled="true"] {
     background-color: rgba(42, 42, 42, 0.97) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+    height: 64px !important; /* Reduced height when scrolled */
   }
   
   /* Header styles when at the top */
-  .header-transparent:not([data-scrolled="true"]),
-  body:not(.scrolled) .header {
+  .header.header-transparent:not([data-scrolled="true"]),
+  body:not(.scrolled) .header,
+  .header[data-scrolled="false"] {
     background-color: transparent !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     border-bottom: none !important;
+    height: 70px !important;
+  }
+  
+  /* Force background-color application on scrolled state */
+  [data-scrolled="true"] {
+    background-color: rgba(42, 42, 42, 0.97) !important;
   }
   
   /* Improve logo rendering - keep padding consistent with desktop */
   .navbar-logo {
     padding: 0.5rem 0 !important;
-    transform: scale(1) !important;
     opacity: 1 !important;
     visibility: visible !important;
+    transform-origin: center center !important;
+    transition: transform 0.15s ease !important;
   }
 
   /* Enhanced mobile logo styling */
@@ -132,6 +142,18 @@ body.scrolled .header::after {
     position: absolute !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
+  }
+  
+  /* Ensure logo scales properly on scroll */
+  body:not(.scrolled) .header .navbar-logo,
+  .header-transparent:not([data-scrolled="true"]) .navbar-logo {
+    transform: scale(1) !important;
+  }
+  
+  body.scrolled .header .navbar-logo,
+  .header-scrolled .navbar-logo,
+  .fixed-nav[data-scrolled="true"] .navbar-logo {
+    transform: scale(0.9) !important;
   }
   
   /* Mobile menu button styling - square not circular */
@@ -180,6 +202,17 @@ body.scrolled .header::after {
   }
 }
 
+/* Adjust body padding to account for larger header on mobile */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px !important; /* Match the increased header height */
+  }
+  
+  body.scrolled {
+    padding-top: 64px !important; /* Match the scrolled header height */
+  }
+}
+
 /* Landscape mode navbar adjustment */
 @media (max-height: 480px) and (orientation: landscape) {
   .fixed-nav {
@@ -203,7 +236,7 @@ body.scrolled .header::after {
 .navbar-logo {
   transform: scale(1);
   will-change: transform;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   transform-origin: center center;
   padding: 0.75rem 0;
   opacity: 1;
@@ -213,7 +246,7 @@ body.scrolled .header::after {
 body.scrolled .header .navbar-logo {
   transform: scale(0.9);
   padding: 0.5rem 0;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
 }
 
 @media (max-width: 320px) {
@@ -231,7 +264,7 @@ body.scrolled .header .navbar-logo {
   z-index: 50;
   height: 4rem;
   transform: translateY(-100%);
-  transition: transform 0.25s ease;
+  transition: transform 0.15s ease;
   background-color: var(--onyx);
   border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   will-change: transform;
@@ -325,7 +358,7 @@ body.scrolled .header .navbar-logo {
   width: 100%;
   background-color: transparent;
   will-change: transform;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
