@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaHammer, FaCog, FaWrench } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 const ConstructionPopup = () => {
@@ -91,33 +91,6 @@ const ConstructionPopup = () => {
     }
   };
 
-  const iconVariants = {
-    hidden: { opacity: 0, scale: 0, rotate: -180 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      rotate: 0,
-      transition: { 
-        duration: 0.6,
-        ease: 'easeOut',
-        type: 'spring',
-        stiffness: 200
-      }
-    }
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [-5, 5, -5],
-      rotate: [-2, 2, -2],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: 'easeInOut'
-      }
-    }
-  };
-
   const buttonVariants = {
     hidden: { opacity: 0, y: 20, scale: 0.9 },
     visible: {
@@ -149,7 +122,7 @@ const ConstructionPopup = () => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="fixed inset-0 bg-onyx/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
+          className="fixed inset-0 bg-onyx/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 sm:p-6"
           onClick={(e) => e.target === e.currentTarget && handleClose()}
         >
           <motion.div
@@ -157,37 +130,12 @@ const ConstructionPopup = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-onyx/95 backdrop-blur-md border border-gold/30 rounded-xl shadow-2xl max-w-md w-full mx-auto relative overflow-hidden"
+            className="bg-onyx/95 backdrop-blur-md border border-gold/30 rounded-xl shadow-2xl w-full max-w-sm sm:max-w-md mx-auto relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
             style={{
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.1), inset 0 1px 0 rgba(212, 175, 55, 0.1)'
             }}
           >
-            {/* Floating construction icons */}
-            <motion.div 
-              className="absolute top-4 left-4 opacity-20"
-              variants={floatingVariants}
-              animate="animate"
-            >
-              <FaHammer className="text-gold text-lg" />
-            </motion.div>
-            <motion.div 
-              className="absolute top-6 right-12 opacity-15"
-              variants={floatingVariants}
-              animate="animate"
-              style={{ animationDelay: '1s' }}
-            >
-              <FaCog className="text-gold text-sm" />
-            </motion.div>
-            <motion.div 
-              className="absolute bottom-6 left-8 opacity-10"
-              variants={floatingVariants}
-              animate="animate"
-              style={{ animationDelay: '2s' }}
-            >
-              <FaWrench className="text-gold text-xs" />
-            </motion.div>
-
             {/* Close button */}
             <motion.button
               onClick={handleClose}
@@ -197,33 +145,21 @@ const ConstructionPopup = () => {
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaTimes size={20} />
+              <FaTimes size={18} />
             </motion.button>
 
             {/* Content */}
             <motion.div 
-              className="p-8 pt-12"
+              className="p-6 sm:p-8 pt-12 sm:pt-14"
               variants={contentVariants}
             >
-              {/* Header with animated icon */}
+              {/* Header */}
               <motion.div 
                 className="text-center mb-6"
                 variants={contentVariants}
               >
-                <motion.div
-                  className="mb-4 flex justify-center"
-                  variants={iconVariants}
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gold/20 rounded-full blur-xl"></div>
-                    <div className="relative bg-gradient-to-br from-gold to-gold/80 p-4 rounded-full shadow-lg">
-                      <FaHammer className="text-onyx text-2xl" />
-                    </div>
-                  </div>
-                </motion.div>
-                
                 <motion.h2 
-                  className="text-2xl font-bold text-magnolia mb-2"
+                  className="text-xl sm:text-2xl font-bold text-magnolia mb-3"
                   variants={contentVariants}
                 >
                   {t('constructionPopup.title')}
@@ -237,7 +173,7 @@ const ConstructionPopup = () => {
                 </motion.div>
                 
                 <motion.p 
-                  className="text-thistle/90 leading-relaxed text-sm"
+                  className="text-thistle/90 leading-relaxed text-sm sm:text-base"
                   variants={contentVariants}
                 >
                   {t('constructionPopup.description')}
@@ -287,7 +223,7 @@ const ConstructionPopup = () => {
               >
                 <motion.button
                   onClick={handleContinue}
-                  className="bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-onyx font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden"
+                  className="bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-onyx font-semibold py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden w-full sm:w-auto"
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
@@ -304,7 +240,7 @@ const ConstructionPopup = () => {
                       ease: 'linear'
                     }}
                   />
-                  <span className="relative z-10">
+                  <span className="relative z-10 text-sm sm:text-base">
                     {t('constructionPopup.continueButton')}
                   </span>
                 </motion.button>
