@@ -1,0 +1,85 @@
+{
+  "navigation": {
+    "home": "Home",
+    "menu": "Menu",
+    "about": "Over Ons",
+    "selectLanguage": "Selecteer taal",
+    "reservations": "Reserveer een Tafel"
+  },
+  "seo": {
+    "title": "BASE - Restaurant en Bar",
+    "description": "BASE, het zusterrestaurant van Brasserie Monsees (verhuist naar 's Gravenland), is een nieuwe streetfood bar op de Groest in Hilversum.",
+    "keywords": "BASE, restaurant, bar, eten, streetfood, dranken, cocktails, diner, lunch"
+  },
+  "buttons": {
+    "viewMenu": "Bekijk Menu",
+    "makeReservation": "Reserveer",
+    "readMore": "Lees Meer",
+    "close": "Sluiten",
+    "accept": "Is goed!",
+    "decline": "Nope, thanks..."
+  },
+  "cookieConsent": {
+    "title": "Cookie Melding",
+    "description": "Wij gebruiken cookies om je de beste ervaring te bieden op onze website. Door onze site te gebruiken, ga je akkoord met ons cookiebeleid.",
+    "accept": "Is goed!",
+    "settings": "Cookie Instellingen"
+  },
+  "loading": "Laden",
+  "error": {
+    "general": "Er is iets misgegaan. Probeer het later opnieuw.",
+    "notFound": "Pagina niet gevonden"
+  },
+  "reservation": {
+    "title": "Boek een Tafel",
+    "buttonText": "Dinner",
+    "subtitle": "Reserveer een tafel bij BASE. Wij reserveren alleen binnen, niet op ons terras.",
+    "loading": "Reserveringssysteem laden...",
+    "notConfigured": "Reserveringssysteem momenteel niet beschikbaar",
+    "success": "Je reservering is ontvangen. We kijken ernaar uit je te verwelkomen!",
+    "error": "Sorry, er is een probleem met het laden van het reserveringssysteem.",
+    "alternativeContact": "Neem telefonisch contact met ons op om een tafel te reserveren.",
+    "callUs": "Bel ons",
+    "openingHours": "Open woensdag tot zondag van 17:00 tot 23:00",
+    "bookForGroups": "Evenementen",
+    "hostEvent": "Organiseer uw event bij ons",
+    "groupsInfo": "Voor groepen vanaf 8 personen of voor het organiseren van een evenement, neem contact met ons op via e-mail.",
+    "sendEmail": "Stuur ons een e-mail",
+    "groupEmailHint": "Vermeld het aantal gasten, datum, tijd en gelegenheid"
+  },
+  "footer": {
+    "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
+    "copyright": "© {year} BASE.",
+    "monday": "Maandag",
+    "tuesday": "Dinsdag",
+    "wednesday": "Woensdag",
+    "thursday": "Donderdag",
+    "friday": "Vrijdag",
+    "saturday": "Zaterdag",
+    "sunday": "Zondag",
+    "openingHours": {
+      "title": "Openingstijden",
+      "monday": "GESLOTEN",
+      "tuesday": "GESLOTEN",
+      "wednesday": "15:00 - 22:00",
+      "thursday": "15:00 - 22:00",
+      "friday": "15:00 - 22:00",
+      "saturday": "15:00 - 22:00",
+      "sunday": "GESLOTEN"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "info@basebymonsees.nl",
+      "phone": "+31 (0)6 12345678",
+      "phoneType": "Telefoonnummer",
+      "emailType": "E-mailadres"
+    },
+    "follow": "Volg ons",
+    "newsletter": {
+      "title": "Stuur ons een bericht",
+      "subscribe": "Geef feedback of neem contact op",
+      "email": "E-mailadres",
+      "button": "Verstuur bericht"
+    }
+  }
+} 

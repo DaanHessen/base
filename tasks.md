@@ -1,48 +1,30 @@
-# BASE Website UI Fixes
+# Mobile Optimizations and Bug Fixes
 
-## Completed Tasks
+## Task List
 
-1. **Footer Copyright Text**
-   - Fixed the copyright text in the footer by removing duplicate year display
-   - Now displays as "© [current year] BASE by Monsees." 
-
-2. **Footer Social Icons**
-   - Completely redesigned the "follow us" section in the footer
-   - Improved visual appearance with rounded icons and consistent spacing
-   - Enhanced hover states and transitions for better user interaction
-
-3. **Mobile Navigation Improvements**
-   - Placed social media icons (Instagram, LinkedIn, Email) at the bottom of the mobile overlay
-   - Removed the "send us an email" button from the mobile navigation
-   - Made the logo in the mobile nav bigger to match the page logo size when not scrolled
-   - Reduced the darkening of the backdrop blur on mobile nav for better visibility
-
-4. **Header/Navigation Transitions**
-   - Fixed the transition of the logo when scrolling, making it smoother and more elegant
-   - Updated the navigation bar behavior on mobile to match desktop:
-     - Transparent background when not scrolled
-     - Transitions smoothly to background with blur when scrolled
-   - Improved overall scroll responsiveness
-
-5. **Menu Category Layout**
-   - Fixed the menu categories on mobile to wrap to a new line when they don't fit
-   - Added proper spacing and centering for a better mobile experience
-
-6. **About Us Mobile Layout**
-   - Improved the About Us component's mobile layout with better spacing and structure
-   - Adjusted the image size and placement for mobile view
-   - Optimized the map display and surrounding information section
-
-## Benefits of Changes
-
-- **Improved Mobile Experience**: The website now has a more consistent and polished experience on mobile devices
-- **Better Visual Hierarchy**: Design elements now have proper spacing and transitions
-- **Enhanced Performance**: Smoother transitions and better responsiveness when scrolling
-- **Consistent Design Language**: Unified design elements across desktop and mobile
-
-## Technical Improvements
-
-- Updated transition timing and easing functions for smoother animations
-- Implemented proper responsive design techniques
-- Fixed layout issues on various screen sizes
-- Enhanced accessibility by improving interactive elements 
+- **Investigate Footer Issue:**
+    - [ ] Identify pages where the footer overlaps content on mobile.
+    - [ ] Analyze CSS and JavaScript related to footer positioning and page layout, especially for the reservation page.
+    - [ ] Implement a fix to ensure the footer is always at the bottom of the page, without overlapping content, across all devices.
+- **Address Performance Issues (Mobile & Desktop):**
+    - [ ] Analyze existing CSS for performance bottlenecks (e.g., complex selectors, excessive repaints/reflows, inefficient animations).
+    - [ ] Review JavaScript for performance issues (e.g., long-running tasks, memory leaks, inefficient DOM manipulations).
+    - [ ] Identify opportunities for code splitting and lazy loading of components/assets.
+    - [ ] Optimize images and other static assets.
+- **Improve Image Loading:**
+    - [ ] Investigate current image loading strategy.
+    - [ ] Explore preloading critical images (e.g., via `<link rel="preload">` in `index.html` or similar techniques).
+    - [ ] Implement a solution to ensure the main background image is visible as early as possible.
+- **Eliminate Scroll Bars:**
+    - [ ] Identify the cause of unnecessary scroll bars on mobile and desktop.
+    - [ ] Review CSS for `overflow` properties, element widths/heights, and potential layout issues causing overflow.
+    - [ ] Ensure no horizontal or vertical scroll bars appear unless absolutely necessary for content scrolling within specific elements (not the main page).
+- **General Code Review & Refinement:**
+    - [ ] Review `Layout.css` and related layout components.
+    - [ ] Ensure all changes are consistent with existing design and functionality.
+    - [ ] Verify that no unintended visual changes occur.
+- **Testing & Validation:**
+    - [ ] Test all fixes and optimizations on various mobile devices and desktop browsers.
+    - [ ] Validate that all reported issues are resolved.
+    - [ ] Confirm no new issues have been introduced.
+    - [ ] Ensure the site remains visually unchanged where no changes were requested.

@@ -1,0 +1,42 @@
+{
+  "title": "Menu",
+  "description": "Discover our culinary creations. Our menu changes with the seasons and is made with the best local ingredients.",
+  "allergens": {
+    "title": "Allergens",
+    "gluten": "Gluten",
+    "lactose": "Lactose",
+    "nuts": "Nuts",
+    "noten": "Nuts",
+    "shellfish": "Shellfish",
+    "eggs": "Eggs",
+    "fish": "Fish",
+    "soy": "Soy",
+    "soja": "Soy",
+    "celery": "Celery"
+  },
+  "readMore": "Read more",
+  "readLess": "Read less",
+  "vegan": "Vegan",
+  "vegetarian": "Vegetarian",
+  "categories": {
+    "voorgerechten": "Starters",
+    "hoofdgerechten": "Main Courses",
+    "desserts": "Desserts",
+    "dranken": "Drinks"
+  },
+  "seo": {
+    "title": "Menu - BASE Restaurant and Bar",
+    "description": "Explore our menu at BASE. From street food classics to innovative cocktails, there's something for everyone."
+  },
+  "food": {
+    "title": "Food",
+    "description": "Explore our food menu at BASE. From street food classics to gourmet dishes, enjoy our chef's special creations."
+  },
+  "drinks": {
+    "title": "Drinks",
+    "description": "Explore our drinks menu at BASE. From craft cocktails to fine wines and specialty coffees."
+  },
+  "dietary": {
+    "glutenFree": "Gluten Free"
+  }
+} 

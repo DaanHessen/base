@@ -1,0 +1,44 @@
+{
+  "title": "Menu",
+  "description": "Ontdek onze culinaire creaties. Ons menu verandert met de seizoenen en is gemaakt met de beste lokale ingrediënten.",
+  "allergens": {
+    "title": "Allergenen",
+    "gluten": "Gluten",
+    "lactose": "Lactose",
+    "nuts": "Noten",
+    "noten": "Noten",
+    "shellfish": "Schaaldieren",
+    "eggs": "Eieren",
+    "fish": "Vis",
+    "soy": "Soja",
+    "soja": "Soja",
+    "celery": "Selderij"
+  },
+  "readMore": "Lees meer",
+  "readLess": "Lees minder",
+  "vegan": "Veganistisch",
+  "vegetarian": "Vegetarisch",
+  "categories": {
+    "voorgerechten": "Voorgerechten",
+    "hoofdgerechten": "Hoofdgerechten",
+    "desserts": "Desserts",
+    "dranken": "Drinken"
+  },
+  "seo": {
+    "title": "Menu - BASE Restaurant en Bar",
+    "description": "Ontdek ons menu bij BASE. Van streetfood klassiekers tot innovatieve cocktails, er is voor ieder wat wils."
+  },
+  "food": {
+    "title": "Eten",
+    "description": "Ontdek ons menu bij BASE. Van streetfood klassiekers tot verfijnde gerechten, geniet van onze chef's speciale creaties."
+  },
+  "drinks": {
+    "title": "Drinken",
+    "description": "Ontdek onze dranken- en cocktails bij BASE. Van ambachtelijke cocktails tot wijnen en speciale koffies."
+  },
+  "dietary": {
+    "vegan": "Veganistisch",
+    "vegetarian": "Vegetarisch",
+    "glutenFree": "Glutenvrij"
+  }
+}  

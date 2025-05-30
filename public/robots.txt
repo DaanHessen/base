@@ -1,0 +1,17 @@
+# https://www.robotstxt.org/robotstxt.html
+# Allow all web crawlers
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*
+
+# Crawl delay to prevent server overload
+Crawl-delay: 10
+
+# Explicitly allow sitemap access
+Allow: /sitemap.xml
+
+# Sitemap location
+Sitemap: https://www.basebymonsees.nl/sitemap.xml

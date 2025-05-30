@@ -1,0 +1,21 @@
+{
+  "hero": {
+    "title": "<span class=\"text-gold\">BASE</span> by Monsees",
+    "subtitle": "The streetfood bar at the Groest in Hilversum - Opening soon!",
+    "description": "With the moving of Monsees to 's-Graveland, it's time for something new. BASE is a new streetfood bar located at the Biersteeg in Hilversum. The best cocktails paired with the best streetfood."
+  }, 
+  "buttons": {
+    "reservation": "Reserve Now",
+    "menu": "View Menu"
+  },
+  "sections": {
+    "welcome": {
+      "title": "A place to enjoy",
+      "content": "BASE is a new streetfood bar located at the Biersteeg in Hilversum. The best cocktails paired with the best streetfood."
+    }
+  },
+  "seo": {
+    "title": "BASE Restaurant - Home",
+    "description": "BASE is a new streetfood bar located at the Biersteeg in Hilversum. The best cocktails paired with the best streetfood."
+  }
+} 

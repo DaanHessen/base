@@ -1,0 +1,83 @@
+{
+  "navigation": {
+    "home": "Home",
+    "menu": "Menu",
+    "about": "About Us",
+    "selectLanguage": "Select language",
+    "reservations": "Book a Table"
+  },
+  "seo": {
+    "title": "BASE - Restaurant and Bar",
+    "description": "BASE, the sister restaurant of Brasserie Monsees (moving to 's Gravenland), is a new streetfood bar located on the Groest in Hilversum.",
+    "keywords": "BASE, restaurant, bar, food, streetfood, drinks, cocktails, dinner, lunch"
+  },
+  "buttons": {
+    "viewMenu": "View Menu",
+    "makeReservation": "Make Reservation",
+    "readMore": "Read More",
+    "close": "Close",
+    "accept": "Sure!",
+    "decline": "Nah..."
+  },
+  "cookieConsent": {
+    "title": "Cookie Notice",
+    "description": "We use cookies to provide you with the best experience on our website. By using our site, you agree to our cookie policy.",
+    "accept": "Sure!",
+    "settings": "Cookie Settings"
+  },
+  "loading": "Loading",
+  "error": {
+    "general": "Something went wrong. Please try again later.",
+    "notFound": "Page not found"
+  },
+  "reservation": {
+    "title": "Book a Table",
+    "buttonText": "Dinner",
+    "notConfigured": "Reservation system currently unavailable",
+    "alternativeContact": "Please contact us directly by phone to make a reservation.",
+    "callUs": "Call us",
+    "loading": "Loading reservation system...",
+    "error": "Sorry, there was a problem loading the reservation system.",
+    "openingHours": "Open Wednesday to Sunday from 17:00 to 23:00",
+    "bookForGroups": "Events",
+    "hostEvent": "Host your event with us",
+    "groupsInfo": "For groups of 8 or more, or to organize a special event, please contact us via email.",
+    "sendEmail": "Send us an email",
+    "groupEmailHint": "Include number of guests, date, time and occasion"
+  },
+  "footer": {
+    "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
+    "copyright": "© {year} BASE.",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "openingHours": {
+      "title": "Opening Hours",
+      "monday": "CLOSED",
+      "tuesday": "CLOSED",
+      "wednesday": "15:00 - 22:00",
+      "thursday": "15:00 - 22:00",
+      "friday": "15:00 - 22:00",
+      "saturday": "15:00 - 22:00",
+      "sunday": "CLOSED"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "info@basebymonsees.nl",
+      "phone": "+31 (0)6 12345678",
+      "phoneType": "Phone number",
+      "emailType": "Email address"
+    },
+    "follow": "Follow us",
+    "newsletter": {
+      "title": "Send us a message",
+      "subscribe": "Provide feedback or contact us",
+      "email": "Email address",
+      "button": "Send Message"
+    }
+  }
+} 
