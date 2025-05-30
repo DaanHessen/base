@@ -58,18 +58,16 @@ const ConstructionPopup = () => {
     hidden: { 
       opacity: 0, 
       scale: 0.8, 
-      y: 50,
-      rotateX: -15 
+      y: 50
     },
     visible: { 
       opacity: 1, 
       scale: 1, 
       y: 0,
-      rotateX: 0,
       transition: { 
         duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
-        staggerChildren: 0.1,
+        staggerChildren: 0.15,
         delayChildren: 0.2
       }
     },
@@ -108,10 +106,10 @@ const ConstructionPopup = () => {
     }
   };
 
-  const floatingIconVariants = {
-    floating: {
+  const floatingVariants = {
+    animate: {
       y: [-5, 5, -5],
-      rotate: [-5, 5, -5],
+      rotate: [-2, 2, -2],
       transition: {
         duration: 4,
         repeat: Infinity,
@@ -143,18 +141,6 @@ const ConstructionPopup = () => {
     }
   };
 
-  const borderVariants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { duration: 1.2, ease: 'easeInOut' },
-        opacity: { duration: 0.3 }
-      }
-    }
-  };
-
   return (
     <AnimatePresence mode="wait">
       {isVisible && (
@@ -177,60 +163,36 @@ const ConstructionPopup = () => {
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.1), inset 0 1px 0 rgba(212, 175, 55, 0.1)'
             }}
           >
-            {/* Animated border overlay */}
-            <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 500">
-                <motion.rect
-                  x="1"
-                  y="1"
-                  width="398"
-                  height="498"
-                  rx="12"
-                  ry="12"
-                  fill="none"
-                  stroke="url(#goldGradient)"
-                  strokeWidth="2"
-                  variants={borderVariants}
-                  initial="hidden"
-                  animate="visible"
-                />
-                <defs>
-                  <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#d4af37" stopOpacity="0.6" />
-                    <stop offset="50%" stopColor="#d4af37" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#d4af37" stopOpacity="0.4" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
+            {/* Decorative corner elements */}
+            <div className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-gold/20 rounded-tl-xl"></div>
+            <div className="absolute top-0 right-0 w-16 h-16 border-r-2 border-t-2 border-gold/20 rounded-tr-xl"></div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 border-l-2 border-b-2 border-gold/20 rounded-bl-xl"></div>
+            <div className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-gold/20 rounded-br-xl"></div>
 
             {/* Floating construction icons */}
-            <div className="absolute top-4 left-4 opacity-20">
-              <motion.div
-                variants={floatingIconVariants}
-                animate="floating"
-              >
-                <FaHammer className="text-gold text-lg" />
-              </motion.div>
-            </div>
-            <div className="absolute top-6 right-12 opacity-15">
-              <motion.div
-                variants={floatingIconVariants}
-                animate="floating"
-                style={{ animationDelay: '1s' }}
-              >
-                <FaCog className="text-gold text-sm" />
-              </motion.div>
-            </div>
-            <div className="absolute bottom-6 left-8 opacity-10">
-              <motion.div
-                variants={floatingIconVariants}
-                animate="floating"
-                style={{ animationDelay: '2s' }}
-              >
-                <FaWrench className="text-gold text-xs" />
-              </motion.div>
-            </div>
+            <motion.div 
+              className="absolute top-4 left-4 opacity-20"
+              variants={floatingVariants}
+              animate="animate"
+            >
+              <FaHammer className="text-gold text-lg" />
+            </motion.div>
+            <motion.div 
+              className="absolute top-6 right-12 opacity-15"
+              variants={floatingVariants}
+              animate="animate"
+              style={{ animationDelay: '1s' }}
+            >
+              <FaCog className="text-gold text-sm" />
+            </motion.div>
+            <motion.div 
+              className="absolute bottom-6 left-8 opacity-10"
+              variants={floatingVariants}
+              animate="animate"
+              style={{ animationDelay: '2s' }}
+            >
+              <FaWrench className="text-gold text-xs" />
+            </motion.div>
 
             {/* Close button */}
             <motion.button
@@ -245,7 +207,10 @@ const ConstructionPopup = () => {
             </motion.button>
 
             {/* Content */}
-            <div className="p-8 pt-12">
+            <motion.div 
+              className="p-8 pt-12"
+              variants={contentVariants}
+            >
               {/* Header with animated icon */}
               <motion.div 
                 className="text-center mb-6"
@@ -333,11 +298,11 @@ const ConstructionPopup = () => {
                   whileHover="hover"
                   whileTap="tap"
                 >
-                  {/* Button background animation */}
+                  {/* Button shimmer effect */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-gold/20 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                     animate={{
-                      x: [-100, 300],
+                      x: [-100, 400],
                     }}
                     transition={{
                       duration: 3,
@@ -350,7 +315,7 @@ const ConstructionPopup = () => {
                   </span>
                 </motion.button>
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       )}
