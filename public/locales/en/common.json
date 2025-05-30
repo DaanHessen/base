@@ -46,10 +46,10 @@
     "groupEmailHint": "Include number of guests, date, time and occasion"
   },
   "constructionPopup": {
-    "title": "🚧 We're still working! 🚧",
-    "subtitle": "Website under development",
-    "description": "We are currently still working on our website and plan to officially open after the summer holidays.",
-    "notice": "Website is still under development, but you can already take a look",
+    "title": "🚧 Hold on! 🚧",
+    "subtitle": "We have been busy.",
+    "description": "We are planning to officially open after the summer holidays. More information soon!",
+    "notice": "Website is still under development, but you can already take a sneak peek",
     "continueButton": "View the website",
     "closeButton": "Close"
   },
