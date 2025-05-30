@@ -45,6 +45,14 @@
     "sendEmail": "Send us an email",
     "groupEmailHint": "Include number of guests, date, time and occasion"
   },
+  "constructionPopup": {
+    "title": "🚧 We're still working! 🚧",
+    "subtitle": "Website under development",
+    "description": "We are currently still working on our website and plan to officially open after the summer holidays.",
+    "notice": "Website is still under development, but you can already take a look",
+    "continueButton": "View the website",
+    "closeButton": "Close"
+  },
   "footer": {
     "address": "Biersteeg 10, Kampstraat 22, 1211 GC Hilversum",
     "copyright": "© {year} BASE.",

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaHammer, FaCog, FaWrench } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const ConstructionPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasBeenShown, setHasBeenShown] = useState(false);
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     // Check if we're not on localhost and popup hasn't been shown in this session
@@ -39,65 +41,319 @@ const ConstructionPopup = () => {
 
   if (!isVisible) return null;
 
+  // Animation variants
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    exit: { 
+      opacity: 0,
+      transition: { duration: 0.2, ease: 'easeIn' }
+    }
+  };
+
+  const modalVariants = {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.8, 
+      y: 50,
+      rotateX: -15 
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      rotateX: 0,
+      transition: { 
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 0.9, 
+      y: 30,
+      transition: { duration: 0.2, ease: 'easeIn' }
+    }
+  };
+
+  const contentVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        duration: 0.4,
+        ease: 'easeOut'
+      }
+    }
+  };
+
+  const iconVariants = {
+    hidden: { opacity: 0, scale: 0, rotate: -180 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      transition: { 
+        duration: 0.6,
+        ease: 'easeOut',
+        type: 'spring',
+        stiffness: 200
+      }
+    }
+  };
+
+  const floatingIconVariants = {
+    floating: {
+      y: [-5, 5, -5],
+      rotate: [-5, 5, -5],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: 'easeInOut'
+      }
+    }
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { 
+        duration: 0.4,
+        ease: 'easeOut',
+        delay: 0.3
+      }
+    },
+    hover: {
+      scale: 1.05,
+      y: -2,
+      transition: { duration: 0.2, ease: 'easeOut' }
+    },
+    tap: {
+      scale: 0.95,
+      transition: { duration: 0.1 }
+    }
+  };
+
+  const borderVariants = {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: {
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        pathLength: { duration: 1.2, ease: 'easeInOut' },
+        opacity: { duration: 0.3 }
+      }
+    }
+  };
+
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[9999] p-4"
-        onClick={(e) => e.target === e.currentTarget && handleClose()}
-      >
+    <AnimatePresence mode="wait">
+      {isVisible && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          className="bg-white rounded-lg shadow-2xl max-w-md w-full mx-auto relative overflow-hidden"
-          onClick={(e) => e.stopPropagation()}
+          variants={overlayVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="fixed inset-0 bg-onyx/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
+          onClick={(e) => e.target === e.currentTarget && handleClose()}
         >
-          {/* Close button */}
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
-            aria-label="Sluiten"
+          <motion.div
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="bg-onyx/95 backdrop-blur-md border border-gold/30 rounded-xl shadow-2xl max-w-md w-full mx-auto relative overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.1), inset 0 1px 0 rgba(212, 175, 55, 0.1)'
+            }}
           >
-            <FaTimes size={24} />
-          </button>
-
-          {/* Content */}
-          <div className="p-8 pt-12">
-            {/* Header */}
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                🚧 We zijn nog bezig! 🚧
-              </h2>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                We werken momenteel nog aan onze website en zijn van plan om na de zomervakantie officieel te openen.
-              </p>
+            {/* Animated border overlay */}
+            <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 500">
+                <motion.rect
+                  x="1"
+                  y="1"
+                  width="398"
+                  height="498"
+                  rx="12"
+                  ry="12"
+                  fill="none"
+                  stroke="url(#goldGradient)"
+                  strokeWidth="2"
+                  variants={borderVariants}
+                  initial="hidden"
+                  animate="visible"
+                />
+                <defs>
+                  <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#d4af37" stopOpacity="0.6" />
+                    <stop offset="50%" stopColor="#d4af37" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#d4af37" stopOpacity="0.4" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
 
-            {/* Divider */}
-            <div className="border-t border-gray-200 my-6"></div>
-
-            {/* Sub message */}
-            <div className="text-center mb-6">
-              <p className="text-sm text-gray-500 mb-4">
-                Website is nog in ontwikkeling, maar je kunt alvast een kijkje nemen
-              </p>
-            </div>
-
-            {/* Action button */}
-            <div className="text-center">
-              <button
-                onClick={handleContinue}
-                className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-transform"
+            {/* Floating construction icons */}
+            <div className="absolute top-4 left-4 opacity-20">
+              <motion.div
+                variants={floatingIconVariants}
+                animate="floating"
               >
-                Bekijk de website
-              </button>
+                <FaHammer className="text-gold text-lg" />
+              </motion.div>
             </div>
-          </div>
+            <div className="absolute top-6 right-12 opacity-15">
+              <motion.div
+                variants={floatingIconVariants}
+                animate="floating"
+                style={{ animationDelay: '1s' }}
+              >
+                <FaCog className="text-gold text-sm" />
+              </motion.div>
+            </div>
+            <div className="absolute bottom-6 left-8 opacity-10">
+              <motion.div
+                variants={floatingIconVariants}
+                animate="floating"
+                style={{ animationDelay: '2s' }}
+              >
+                <FaWrench className="text-gold text-xs" />
+              </motion.div>
+            </div>
+
+            {/* Close button */}
+            <motion.button
+              onClick={handleClose}
+              className="absolute top-4 right-4 text-magnolia/60 hover:text-gold transition-colors z-10 p-2"
+              aria-label={t('constructionPopup.closeButton')}
+              variants={contentVariants}
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaTimes size={20} />
+            </motion.button>
+
+            {/* Content */}
+            <div className="p-8 pt-12">
+              {/* Header with animated icon */}
+              <motion.div 
+                className="text-center mb-6"
+                variants={contentVariants}
+              >
+                <motion.div
+                  className="mb-4 flex justify-center"
+                  variants={iconVariants}
+                >
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gold/20 rounded-full blur-xl"></div>
+                    <div className="relative bg-gradient-to-br from-gold to-gold/80 p-4 rounded-full shadow-lg">
+                      <FaHammer className="text-onyx text-2xl" />
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.h2 
+                  className="text-2xl font-bold text-magnolia mb-2"
+                  variants={contentVariants}
+                >
+                  {t('constructionPopup.title')}
+                </motion.h2>
+                
+                <motion.div
+                  className="text-sm text-gold font-medium mb-4"
+                  variants={contentVariants}
+                >
+                  {t('constructionPopup.subtitle')}
+                </motion.div>
+                
+                <motion.p 
+                  className="text-thistle/90 leading-relaxed text-sm"
+                  variants={contentVariants}
+                >
+                  {t('constructionPopup.description')}
+                </motion.p>
+              </motion.div>
+
+              {/* Divider with animation */}
+              <motion.div 
+                className="relative my-6"
+                variants={contentVariants}
+              >
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gold/20"></div>
+                </div>
+                <div className="relative flex justify-center">
+                  <div className="bg-onyx px-4">
+                    <motion.div
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 1, 0.5]
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                      className="w-2 h-2 bg-gold rounded-full"
+                    ></motion.div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Sub message */}
+              <motion.div 
+                className="text-center mb-6"
+                variants={contentVariants}
+              >
+                <p className="text-sm text-thistle/70">
+                  {t('constructionPopup.notice')}
+                </p>
+              </motion.div>
+
+              {/* Action button */}
+              <motion.div 
+                className="text-center"
+                variants={contentVariants}
+              >
+                <motion.button
+                  onClick={handleContinue}
+                  className="bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-onyx font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  {/* Button background animation */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-gold/20 to-transparent"
+                    animate={{
+                      x: [-100, 300],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'linear'
+                    }}
+                  />
+                  <span className="relative z-10">
+                    {t('constructionPopup.continueButton')}
+                  </span>
+                </motion.button>
+              </motion.div>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </AnimatePresence>
   );
 };

@@ -81,5 +81,13 @@
       "email": "E-mailadres",
       "button": "Verstuur bericht"
     }
+  },
+  "constructionPopup": {
+    "title": "🚧 We zijn nog bezig! 🚧",
+    "subtitle": "Website in ontwikkeling",
+    "description": "We werken momenteel nog aan onze website en zijn van plan om na de zomervakantie officieel te openen.",
+    "notice": "Website is nog in ontwikkeling, maar je kunt alvast een kijkje nemen",
+    "continueButton": "Bekijk de website",
+    "closeButton": "Sluiten"
   }
 } 
