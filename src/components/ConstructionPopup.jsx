@@ -163,12 +163,6 @@ const ConstructionPopup = () => {
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.1), inset 0 1px 0 rgba(212, 175, 55, 0.1)'
             }}
           >
-            {/* Decorative corner elements */}
-            <div className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-gold/20 rounded-tl-xl"></div>
-            <div className="absolute top-0 right-0 w-16 h-16 border-r-2 border-t-2 border-gold/20 rounded-tr-xl"></div>
-            <div className="absolute bottom-0 left-0 w-16 h-16 border-l-2 border-b-2 border-gold/20 rounded-bl-xl"></div>
-            <div className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-gold/20 rounded-br-xl"></div>
-
             {/* Floating construction icons */}
             <motion.div 
               className="absolute top-4 left-4 opacity-20"
