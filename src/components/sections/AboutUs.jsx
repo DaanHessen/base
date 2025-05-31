@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 
 const MapSkeleton = () => (
-  <div className="w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] bg-gray-800/50 animate-pulse flex items-center justify-center rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl">
+  <div className="w-full h-[250px] sm:h-[300px] md:h-[350px] bg-gray-800/50 animate-pulse flex items-center justify-center rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl">
     <FaMapMarkerAlt className="text-gold/50 text-4xl" />
   </div>
 );
@@ -62,7 +62,9 @@ function AboutUs() {
         <meta name="og:description" content={t('about:seo.description')} />
       </Helmet>
       
-      <section className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden">
+      <section 
+        className="py-14 pt-28 sm:pt-32 md:pt-40 lg:pt-48 overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div 
             className="space-y-12 sm:space-y-16"
@@ -141,12 +143,81 @@ function AboutUs() {
           
             <motion.div variants={itemVariants}>
               <div className="bg-onyx/70 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gold/30">
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
-                  <div className="md:col-span-3 h-full">
+                {/* Mobile Layout */}
+                <div className="block md:hidden">
+                  <div className="w-full h-[250px] relative rounded-t-xl overflow-hidden">
+                    {!mapLoaded ? (
+                      <div className="w-full h-full bg-gray-800/50 animate-pulse flex items-center justify-center">
+                        <FaMapMarkerAlt className="text-gold/50 text-4xl" />
+                      </div>
+                    ) : (
+                      <iframe
+                        title="Location Map"
+                        width="100%"
+                        height="100%"
+                        style={{ 
+                          border: 0, 
+                          position: 'absolute', 
+                          top: 0, 
+                          left: 0, 
+                          right: 0, 
+                          bottom: 0
+                        }}
+                        loading="lazy"
+                        allowFullScreen
+                        src={mapUrl}
+                        frameBorder="0"
+                        scrolling="no"
+                        marginHeight="0"
+                        marginWidth="0"
+                      ></iframe>
+                    )}
+                  </div>
+                  
+                  <div className="p-5 space-y-5 border-t border-gold/30 bg-onyx/90 backdrop-blur-sm">
+                    <div className="flex items-start">
+                      <FaMapMarkerAlt className="text-gold text-xl mt-1 mr-3 shrink-0" />
+                      <div>
+                        <h4 className="text-magnolia font-medium mb-1">
+                          {currentLang === 'nl' ? 'Adres' : 'Address'}
+                        </h4>
+                        <p className="text-thistle text-sm">{t('about:location.address')}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <FaParking className="text-gold text-xl mt-1 mr-3 shrink-0" />
+                      <div>
+                        <h4 className="text-magnolia font-medium mb-1">
+                          {currentLang === 'nl' ? 'Parkeren' : 'Parking'}
+                        </h4>
+                        <p className="text-thistle text-sm">{t('about:location.parking')}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="pt-2 mt-2 border-t border-gold/30">
+                      <a 
+                        href="https://maps.google.com/?q=Biersteeg+10,+1211+GC+Hilversum" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center w-full px-6 py-3 border border-magnolia/30 text-magnolia hover:bg-magnolia/10 font-medium rounded-lg transition-all duration-150 hover:border-magnolia/50 shadow-[4px_4px_0px_rgba(62,62,62,0.3)] hover:shadow-[2px_2px_0px_rgba(62,62,62,0.5)] hover:translate-x-[1px] hover:translate-y-[1px]"
+                      >
+                        <span>{currentLang === 'nl' ? 'Routebeschrijving' : 'Get Directions'}</span>
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop Layout */}
+                <div className="hidden md:grid md:grid-cols-5 gap-0">
+                  <div className="md:col-span-3">
                     {!mapLoaded ? (
                       <MapSkeleton />
                     ) : (
-                      <div className="w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] relative rounded-xl md:rounded-l-none md:rounded-tl-xl md:rounded-bl-xl overflow-hidden">
+                      <div className="w-full h-[350px] relative rounded-l-none rounded-tl-xl rounded-bl-xl overflow-hidden">
                         <iframe
                           title="Location Map"
                           width="100%"
@@ -164,29 +235,17 @@ function AboutUs() {
                     )}
                   </div>
                   
-                  <div className="md:col-span-2 p-5 sm:p-6 md:p-8 md:border-l border-gold/30">
-                    <div className="space-y-5 sm:space-y-6">
+                  <div className="md:col-span-2 p-8 border-l border-gold/30">
+                    <div className="space-y-6">
                       <div className="flex items-start">
                         <FaMapMarkerAlt className="text-gold text-xl mt-1 mr-3 shrink-0" />
                         <div>
                           <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Adres' : 'Address'}
                           </h4>
-                          <p className="text-thistle text-sm sm:text-base">{t('about:location.address')}</p>
+                          <p className="text-thistle text-base">{t('about:location.address')}</p>
                         </div>
                       </div>
-                      
-                      {/* <div className="flex items-start">
-                        <FaClock className="text-gold text-xl mt-1 mr-3 shrink-0" />
-                        <div>
-                          <h4 className="text-magnolia font-medium mb-1">
-                            {currentLang === 'nl' ? 'Openingstijden' : 'Opening Hours'}
-                          </h4>
-                          <p className="text-thistle text-sm sm:text-base">
-                            {t('about:location.openingHours', 'Mon-Thu: 16:00-00:00\nFri-Sat: 16:00-01:00\nSun: Closed')}
-                          </p>
-                        </div>
-                      </div> */}
                       
                       <div className="flex items-start">
                         <FaParking className="text-gold text-xl mt-1 mr-3 shrink-0" />
@@ -194,7 +253,7 @@ function AboutUs() {
                           <h4 className="text-magnolia font-medium mb-1">
                             {currentLang === 'nl' ? 'Parkeren' : 'Parking'}
                           </h4>
-                          <p className="text-thistle text-sm sm:text-base">{t('about:location.parking')}</p>
+                          <p className="text-thistle text-base">{t('about:location.parking')}</p>
                         </div>
                       </div>
                       

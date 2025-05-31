@@ -211,9 +211,9 @@ function Layout({ children }) {
       >
         <Helmet>
           <html lang={currentLang} />
-          <title>{t('seo.title')}</title>
-          <meta name="description" content={t('seo.description')} />
-          <meta name="keywords" content={t('seo.keywords')} />
+          <title>{t('common:seo.title')}</title>
+          <meta name="description" content={t('common:seo.description')} />
+          <meta name="keywords" content={t('common:seo.keywords')} />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
           
           <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.formitable.com https://maps.googleapis.com https://maps.google.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com https://fonts.cdnfonts.com; connect-src 'self' https:; frame-src 'self' https://maps.google.com https://www.google.com https://formitable.com; media-src 'self';" />
@@ -435,16 +435,16 @@ function Layout({ children }) {
           <meta property="og:site_name" content="BASE" />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={`${window.location.origin}${currentLang === 'en' ? '/en' : ''}${currentPath}`} />
-          <meta property="og:title" content={t('seo.title')} />
-          <meta property="og:description" content={t('seo.description')} />
+          <meta property="og:title" content={t('common:seo.title')} />
+          <meta property="og:description" content={t('common:seo.description')} />
           <meta property="og:image" content={`${window.location.origin}/og-image.jpg`} />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
           <meta property="og:locale" content={currentLang === 'en' ? 'en_US' : 'nl_NL'} />
           
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={t('seo.title')} />
-          <meta name="twitter:description" content={t('seo.description')} />
+          <meta name="twitter:title" content={t('common:seo.title')} />
+          <meta name="twitter:description" content={t('common:seo.description')} />
           <meta name="twitter:image" content={`${window.location.origin}/og-image.jpg`} />
           <meta name="twitter:site" content="@baserestaurant" />
           

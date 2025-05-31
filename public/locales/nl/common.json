@@ -7,9 +7,9 @@
     "reservations": "Reserveer een Tafel"
   },
   "seo": {
-    "title": "BASE - Restaurant en Bar",
-    "description": "BASE, het zusterrestaurant van Brasserie Monsees (verhuist naar 's Gravenland), is een nieuwe streetfood bar op de Groest in Hilversum.",
-    "keywords": "BASE, restaurant, bar, eten, streetfood, dranken, cocktails, diner, lunch"
+    "title": "BASE - Nieuwe streetfoodbar Hilversum",
+    "description": "Nieuwe streetfoodbar in Hilversum! Na de zomervakantie gaan we open, binnenkort meer informatie.",
+    "keywords": "BASE, restaurant, bar, eten, streetfood, dranken, cocktails, diner, lunch, Hilversum"
   },
   "buttons": {
     "viewMenu": "Bekijk Menu",
@@ -83,9 +83,9 @@
     }
   },
   "constructionPopup": {
-    "title": "🚧 Wacht even! 🚧",
+    "title": "Hey!",
     "subtitle": "We zijn nog druk bezig.",
-    "description": "We zijn van plan om na de zomervakantie officieel te openen. Binnenkort meer informatie!",
+    "description": "Nieuwe streetfoodbar in Hilversum! Na de zomervakantie gaan we open, binnenkort meer informatie.",
     "notice": "Website is nog in ontwikkeling, maar je kunt alvast een kijkje nemen👀",
     "continueButton": "Doorgaan naar de website",
     "closeButton": "Sluiten"

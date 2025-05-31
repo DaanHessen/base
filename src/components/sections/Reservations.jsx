@@ -11,8 +11,8 @@ const Reservations = () => {
   return (
     <div className="w-full bg-onyx md:min-h-screen reservation-page">
       <Helmet>
-        <title>{`${t('reservation.title')} - ${t('seo.title')}`}</title>
-        <meta name="description" content={t('seo.description')} />
+        <title>{`${t('reservation.title')} - ${t('common:seo.title')}`}</title>
+        <meta name="description" content={t('common:seo.description')} />
         <link rel="canonical" href={`${window.location.origin}/reservations/${currentLang === 'en' ? 'en/' : ''}`} />
         {currentLang === 'nl' && <link rel="alternate" hrefLang="en" href={`${window.location.origin}/reservations/en/`} />}
         {currentLang === 'en' && <link rel="alternate" hrefLang="nl" href={`${window.location.origin}/reservations/`} />}

@@ -23,22 +23,16 @@ const MonseesLink = ({ href, label }) => (
     className="text-magnolia hover:text-gold transition-colors duration-200 group flex items-center justify-center w-full h-full z-10"
     aria-label={label}
   >
-    <svg
-      viewBox="0 0 96 24" 
-      className="w-full h-auto max-h-[20px]"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <defs>
-        <linearGradient id="monsees-footer-gradient" gradientUnits="userSpaceOnUse" fy="90%">
-          <stop offset="0" stopColor="currentColor" />
-          <stop offset="1" stopColor="currentColor" />
-        </linearGradient>
-        <mask id="monsees-footer-mask">
-          <image href={monseesLogo} width="96" height="24" />
-        </mask>
-      </defs>
-      <rect width="96" height="24" fill="url(#monsees-footer-gradient)" mask="url(#monsees-footer-mask)" />
-    </svg>
+    <img
+      src={monseesLogo}
+      alt="Monsees"
+      className="w-full h-auto max-h-[20px] filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity duration-200"
+      style={{ 
+        maxWidth: '96px',
+        height: 'auto',
+        objectFit: 'contain'
+      }}
+    />
   </a>
 );
 

@@ -8,6 +8,25 @@ const ConstructionPopup = () => {
   const [hasBeenShown, setHasBeenShown] = useState(false);
   const { t } = useTranslation('common');
 
+  // Lock/unlock body scroll
+  useEffect(() => {
+    if (isVisible) {
+      // Lock scroll
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`;
+    } else {
+      // Unlock scroll
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [isVisible]);
+
   useEffect(() => {
     // Always show popup on first visit, regardless of environment
     if (!hasBeenShown) {
