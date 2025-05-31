@@ -9,16 +9,8 @@ const ConstructionPopup = () => {
   const { t } = useTranslation('common');
 
   useEffect(() => {
-    // Check if we're not on localhost and popup hasn't been shown in this session
-    const isLocalhost = window.location.hostname === 'localhost' || 
-                       window.location.hostname === '127.0.0.1' ||
-                       window.location.hostname.includes('192.168') ||
-                       window.location.hostname.includes('10.0') ||
-                       window.location.port === '3000';
-    
-    const popupShown = sessionStorage.getItem('construction-popup-shown');
-    
-    if (!isLocalhost && !popupShown && !hasBeenShown) {
+    // Always show popup on first visit, regardless of environment
+    if (!hasBeenShown) {
       // Show popup after a short delay
       const timer = setTimeout(() => {
         setIsVisible(true);
@@ -122,7 +114,7 @@ const ConstructionPopup = () => {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="fixed inset-0 bg-onyx/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 sm:p-6"
+          className="fixed inset-0 bg-onyx/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-6"
           onClick={(e) => e.target === e.currentTarget && handleClose()}
         >
           <motion.div
@@ -130,7 +122,7 @@ const ConstructionPopup = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-onyx/95 backdrop-blur-md border border-gold/30 rounded-xl shadow-2xl w-full max-w-sm sm:max-w-md mx-auto relative overflow-hidden"
+            className="bg-onyx/95 backdrop-blur-md border border-gold/30 rounded-xl shadow-2xl w-full max-w-md mx-auto relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
             style={{
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.1), inset 0 1px 0 rgba(212, 175, 55, 0.1)'
@@ -139,7 +131,16 @@ const ConstructionPopup = () => {
             {/* Close button */}
             <motion.button
               onClick={handleClose}
-              className="absolute top-4 right-4 text-magnolia/60 hover:text-gold transition-colors z-10 p-2"
+              className="absolute top-4 right-4 text-magnolia/60 hover:text-gold transition-colors z-10 p-2 !w-auto !min-w-0 !min-h-0 !h-auto flex items-center justify-center"
+              style={{ 
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                width: 'auto',
+                height: 'auto',
+                minWidth: 'auto',
+                minHeight: 'auto'
+              }}
               aria-label={t('constructionPopup.closeButton')}
               variants={contentVariants}
               whileHover={{ scale: 1.1, rotate: 90 }}
@@ -150,7 +151,7 @@ const ConstructionPopup = () => {
 
             {/* Content */}
             <motion.div 
-              className="p-6 sm:p-8 pt-12 sm:pt-14"
+              className="p-8 pt-14"
               variants={contentVariants}
             >
               {/* Header */}
@@ -159,7 +160,7 @@ const ConstructionPopup = () => {
                 variants={contentVariants}
               >
                 <motion.h2 
-                  className="text-xl sm:text-2xl font-bold text-magnolia mb-3"
+                  className="text-2xl font-bold text-magnolia mb-3"
                   variants={contentVariants}
                 >
                   {t('constructionPopup.title')}
@@ -173,7 +174,7 @@ const ConstructionPopup = () => {
                 </motion.div>
                 
                 <motion.p 
-                  className="text-thistle/90 leading-relaxed text-sm sm:text-base"
+                  className="text-thistle/90 leading-relaxed text-base"
                   variants={contentVariants}
                 >
                   {t('constructionPopup.description')}
@@ -217,32 +218,18 @@ const ConstructionPopup = () => {
               </motion.div>
 
               {/* Action button */}
-              <motion.div 
+              <motion.div
                 className="text-center"
                 variants={contentVariants}
               >
                 <motion.button
                   onClick={handleContinue}
-                  className="bg-gradient-to-r from-gold to-gold/90 hover:from-gold/90 hover:to-gold text-onyx font-semibold py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden w-full sm:w-auto"
+                  className="inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold/90 text-onyx font-medium rounded-lg transition-all duration-150 shadow-[4px_4px_0px_rgba(197,167,95,0.6)] hover:shadow-[2px_2px_0px_rgba(197,167,95,0.8)] hover:translate-x-[1px] text-base !w-auto !min-w-0"
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
                 >
-                  {/* Button shimmer effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    animate={{
-                      x: [-100, 400],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: 'linear'
-                    }}
-                  />
-                  <span className="relative z-10 text-sm sm:text-base">
-                    {t('constructionPopup.continueButton')}
-                  </span>
+                  {t('constructionPopup.continueButton')}
                 </motion.button>
               </motion.div>
             </motion.div>
