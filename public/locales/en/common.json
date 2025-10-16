@@ -46,10 +46,10 @@
     "groupEmailHint": "Include number of guests, date, time and occasion"
   },
   "constructionPopup": {
-    "title": "Hey!",
-    "subtitle": "We have been busy.",
-    "description": "New streetfood bar in Hilversum! Opening after summer holidays, more information coming soon.",
-    "notice": "Website is still under development, but you can already take a sneak peek👀",
+    "title": "HI!",
+    "subtitle": "We're still very busy!",
+    "description": "more information coming soon.",
+    "notice": "",
     "continueButton": "Continue to the website",
     "closeButton": "Close"
   },
