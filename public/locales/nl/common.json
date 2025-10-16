@@ -83,10 +83,10 @@
     }
   },
   "constructionPopup": {
-    "title": "Hey!",
-    "subtitle": "We zijn nog druk bezig.",
-    "description": "Nieuwe streetfoodbar in Hilversum! Na de zomervakantie gaan we open, binnenkort meer informatie.",
-    "notice": "Website is nog in ontwikkeling, maar je kunt alvast een kijkje nemen👀",
+    "title": "HI!",
+    "subtitle": "We zijn nog druk bezig!",
+    "description": "binnenkort meer informatie.",
+    "notice": "",
     "continueButton": "Doorgaan naar de website",
     "closeButton": "Sluiten"
   }
